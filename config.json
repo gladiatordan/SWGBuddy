@@ -1,0 +1,10 @@
+{
+    "database": {
+        "type":     "",
+        "host":     "",
+        "port":     22,
+        "user":     "",
+        "secret":   "",
+        "db_name":  ""
+    }
+}
