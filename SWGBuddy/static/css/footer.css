@@ -3,10 +3,12 @@
 .site-footer {
     background-color: #050505;
     border-top: 1px solid var(--border-color);
-    padding: 30px 0;
-    margin-top: 40px; /* Space between table and footer */
+    padding: 15px 0;
+    margin-top: 0; /* Space between table and footer */
     color: var(--text-dim);
     font-family: 'Rajdhani', sans-serif;
+	flex-shrink: 0;
+	z-index: 100;
 }
 
 .footer-content {

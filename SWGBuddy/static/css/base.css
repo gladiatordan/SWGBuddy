@@ -6,7 +6,7 @@ body {
     overflow: hidden;
 	display: flex;
 	flex-direction: column;
-	min-height: 100vh;
+	height: 100vh;
 }
 
 .main-header {
@@ -58,16 +58,25 @@ body {
 
 .app-container {
     display: flex;
-	flex: 1 0 auto;
+	flex: 1;
     flex-direction: column;
-    height: 100vh;
+	overflow: hidden;
+    height: auto;
+}
+
+#main-content {
+    flex: 1; /* Ensures main fills the app-container */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .page-container {
     padding: 20px;
-    height: calc(100vh - 80px);
+    height: 100%;
     overflow-y: auto;
     display: none;
+	box-sizing: border-box;
 }
 
 .page-container.active { display: block; }
