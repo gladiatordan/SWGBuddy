@@ -58,15 +58,6 @@
 }
 
 /* Ensure the page pushes footer to bottom if content is short */
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.app-container {
-    flex: 1 0 auto; /* This grows to fill space, pushing footer down */
-}
 
 .site-footer {
     flex-shrink: 0;
