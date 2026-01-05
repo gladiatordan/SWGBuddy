@@ -640,3 +640,6 @@ select:focus,
     border-left: 2px solid var(--accent-blue);
     margin: 5px 20px;
 }
+
+/* Helpers */
+.hidden { display: none !important; }

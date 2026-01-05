@@ -1,0 +1,34 @@
+/* Resource Log Table Status */
+.status-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.status-text {
+    min-width: fit-content;
+    font-weight: bold;
+}
+.status-text.active { color: var(--stat-high); }
+.status-text.inactive { color: #ef4444; text-shadow: 0 0 5px rgba(255,0,0,0.3); }
+
+.toggle-status-btn {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.status-text.active + .toggle-status-btn {
+    background-color: #ef4444; 
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+}
+
+.status-text.inactive + .toggle-status-btn {
+    background-color: var(--stat-high);
+    box-shadow: 0 0 8px rgba(0, 255, 157, 0.5);
+}
