@@ -29,6 +29,12 @@ const COLUMN_CONFIG = {
 	// All stats default to 'numeric'
 };
 
+const STAT_FILTERS = {
+    'f-oq': 'res_oq', 'f-cr': 'res_cr', 'f-cd': 'res_cd', 'f-dr': 'res_dr', 
+    'f-fl': 'res_fl', 'f-hr': 'res_hr', 'f-ma': 'res_ma', 'f-pe': 'res_pe', 
+    'f-sr': 'res_sr', 'f-ut': 'res_ut'
+};
+
 // Initialize Stack: Date (Up) is Primary, Status (Up) is Secondary
 // Stack Order: [Primary, Secondary, ...]
 let sortStack = [
@@ -68,21 +74,63 @@ function applyAllTableTransforms() {
 }
 
 function applyFilters() {
-	const searchInput = document.querySelector('.search-input');
+	const searchInput = document.getElementById('search-input');
 	const searchTerm = searchInput ? searchInput.value.toLowerCase() : "";
-	
+    
+    // 1. Get Taxonomy Filter
 	const isRoot = !currentSelectedLabel || currentSelectedLabel === "Resources" || currentSelectedLabel === "All Resources";
 	const validLabels = isRoot ? [] : [currentSelectedLabel.toLowerCase(), ...getDescendantLabels(currentSelectedLabel)];
 
-	// Filter raw data into the global filteredData array
+    // 2. Get Stat Thresholds
+    const activeStatFilters = {};
+    for (const [domId, key] of Object.entries(STAT_FILTERS)) {
+        const el = document.getElementById(domId);
+        if (el && el.value) {
+            activeStatFilters[key] = parseInt(el.value);
+        }
+    }
+
+    // 3. Get Active Planet Filters
+    const planetChecks = document.querySelectorAll('.planet-filter:checked');
+    const selectedPlanets = Array.from(planetChecks).map(cb => cb.value); // e.g. ["Tatooine", "Naboo"]
+
+    // 4. Get Active Status Filter
+    const activeOnly = document.getElementById('filter-active-only')?.checked;
+
+	// Filter raw data
 	filteredData = rawResourceData.filter(res => {
+        // A. Search
 		const name = (res.name || "").toLowerCase();
 		const type = (res.type || "").toLowerCase();
-		
 		const matchesSearch = name.includes(searchTerm) || type.includes(searchTerm);
-		const matchesCategory = isRoot || validLabels.includes(type);
+        if (!matchesSearch) return false;
 		
-		return matchesSearch && matchesCategory;
+        // B. Taxonomy
+		const matchesCategory = isRoot || validLabels.includes(type);
+        if (!matchesCategory) return false;
+
+        // C. Stat Filters (Greater Than or Equal)
+        // Note: If resource value is null/undefined, it fails the check against any positive integer.
+        for (const [key, minVal] of Object.entries(activeStatFilters)) {
+            const resVal = res[key];
+            if (resVal == null || resVal < minVal) return false;
+        }
+
+        // D. Planet Filter (OR Logic)
+        // If planets are selected, resource MUST exist on at least one of them.
+        if (selectedPlanets.length > 0) {
+            const resPlanets = res.planet || res.planets || [];
+            // Handle both string "Tatooine" and array ["Tatooine"]
+            const pList = Array.isArray(resPlanets) ? resPlanets : [resPlanets];
+            
+            const hasMatch = pList.some(p => selectedPlanets.includes(p));
+            if (!hasMatch) return false;
+        }
+
+        // E. Active Only
+        if (activeOnly && !res.is_active) return false;
+		
+		return true;
 	});
 }
 

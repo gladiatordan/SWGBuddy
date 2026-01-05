@@ -75,27 +75,72 @@
             </div>
 
 			<section id="resources-container" class="page-container active">
-				<div class="resource-filters-row">
-					<div class="filter-input-wrapper">
-						<div class="custom-dropdown" id="taxonomy-dropdown">
-							<div class="dropdown-selected" onclick="toggleDropdown()">All Resources</div>
-							<div class="dropdown-list" id="taxonomy-list">
-								<div class="dropdown-item root-item" onclick="selectCategory('', 'Resources', 'All Resources')">All Resources</div>
+				<div class="filters-container">
+					<div class="filters-row action-row">
+						<button id="btn-add-resource" class="add-resource-btn hidden" onclick="openAddResourceModal()">
+							<i class="fa-solid fa-plus"></i> Add Resource
+						</button>
+					</div>
+
+					<div class="filters-row primary-filters">
+						<div class="filter-input-wrapper grow-item">
+							<input type="text" placeholder="Search resources..." class="search-input" id="search-input" oninput="applyAllTableTransforms()">
+							<button class="reset-filter-btn" id="reset-search" title="Clear Search" onclick="clearSearch()">
+								<i class="fa-solid fa-circle-xmark"></i>
+							</button>
+						</div>
+
+						<div class="filter-input-wrapper grow-item">
+							<div class="custom-dropdown" id="taxonomy-dropdown">
+								<div class="dropdown-selected" onclick="toggleDropdown()">All Resources</div>
+								<div class="dropdown-list" id="taxonomy-list">
+									</div>
+							</div>
+							<button class="reset-filter-btn" id="reset-category" title="Reset Category" onclick="selectCategory('', 'Resources', 'All Resources')">
+								<i class="fa-solid fa-circle-xmark"></i>
+							</button>
+						</div>
+					</div>
+
+					<div class="filters-row stats-filters">
+						<input type="number" class="stat-filter-input" id="f-oq" placeholder="OQ" oninput="applyAllTableTransforms()">
+						<input type="number" class="stat-filter-input" id="f-cr" placeholder="CR" oninput="applyAllTableTransforms()">
+						<input type="number" class="stat-filter-input" id="f-cd" placeholder="CD" oninput="applyAllTableTransforms()">
+						<input type="number" class="stat-filter-input" id="f-dr" placeholder="DR" oninput="applyAllTableTransforms()">
+						<input type="number" class="stat-filter-input" id="f-fl" placeholder="FL" oninput="applyAllTableTransforms()">
+						<input type="number" class="stat-filter-input" id="f-hr" placeholder="HR" oninput="applyAllTableTransforms()">
+						<input type="number" class="stat-filter-input" id="f-ma" placeholder="MA" oninput="applyAllTableTransforms()">
+						<input type="number" class="stat-filter-input" id="f-pe" placeholder="PE" oninput="applyAllTableTransforms()">
+						<input type="number" class="stat-filter-input" id="f-sr" placeholder="SR" oninput="applyAllTableTransforms()">
+						<input type="number" class="stat-filter-input" id="f-ut" placeholder="UT" oninput="applyAllTableTransforms()">
+					</div>
+
+					<div class="filters-row misc-filters">
+						<div class="planet-toggles-wrapper">
+							<label>Planets:</label>
+							<div class="planet-checkboxes">
+								<label><input type="checkbox" class="planet-filter" value="Corellia" onchange="applyAllTableTransforms()"> Corellia</label>
+								<label><input type="checkbox" class="planet-filter" value="Dantooine" onchange="applyAllTableTransforms()"> Dantooine</label>
+								<label><input type="checkbox" class="planet-filter" value="Dathomir" onchange="applyAllTableTransforms()"> Dathomir</label>
+								<label><input type="checkbox" class="planet-filter" value="Endor" onchange="applyAllTableTransforms()"> Endor</label>
+								<label><input type="checkbox" class="planet-filter" value="Lok" onchange="applyAllTableTransforms()"> Lok</label>
+								<label><input type="checkbox" class="planet-filter" value="Naboo" onchange="applyAllTableTransforms()"> Naboo</label>
+								<label><input type="checkbox" class="planet-filter" value="Rori" onchange="applyAllTableTransforms()"> Rori</label>
+								<label><input type="checkbox" class="planet-filter" value="Talus" onchange="applyAllTableTransforms()"> Talus</label>
+								<label><input type="checkbox" class="planet-filter" value="Tatooine" onchange="applyAllTableTransforms()"> Tatooine</label>
+								<label><input type="checkbox" class="planet-filter" value="Yavin IV" onchange="applyAllTableTransforms()"> Yavin IV</label>
 							</div>
 						</div>
-						<button class="reset-filter-btn" id="reset-category" title="Reset Category" onclick="selectCategory('', 'Resources', 'All Resources')">
-							<i class="fa-solid fa-circle-xmark"></i>
-						</button>
+
+						<div class="active-toggle-wrapper">
+							<label class="toggle-label">
+								<input type="checkbox" id="filter-active-only" onchange="applyAllTableTransforms()">
+								Only Show Active
+							</label>
+						</div>
 					</div>
-					<div class="filter-input-wrapper">
-                    	<input type="text" placeholder="Search resources..." class="search-input">
-						<button class="reset-filter-btn" id="reset-search" title="Clear Search" onclick="clearSearch()">
-							<i class="fa-solid fa-circle-xmark"></i>
-						</button>
-					</div>
-                    <button id="btn-add-resource" class="add-resource-btn hidden" onclick="openAddResourceModal()">Add Resource</button>
 					
-                    <div class="pagination-stack">
+					<div class="pagination-stack" style="margin-top: 10px;">
 						<div class="confirmation-toggle">
 							<label style="font-size: 11px; color: var(--text-dim); cursor: pointer;">
 								<input type="checkbox" id="skip-confirm-toggle" onchange="toggleConfirmPreference(this)">
@@ -115,10 +160,7 @@
 						<div id="page-nav-container" class="page-nav-container">
 							<button id="btn-first" class="page-nav-btn" onclick="goToPage('first')">«</button>
 							<button id="btn-prev" class="page-nav-btn" onclick="goToPage('prev')">‹</button>
-							
-							<select id="page-select" class="results-select" onchange="goToPage(this.value)">
-								</select>
-							
+							<select id="page-select" class="results-select" onchange="goToPage(this.value)"></select>
 							<button id="btn-next" class="page-nav-btn" onclick="goToPage('next')">›</button>
 							<button id="btn-last" class="page-nav-btn" onclick="goToPage('last')">»</button>
 						</div>
