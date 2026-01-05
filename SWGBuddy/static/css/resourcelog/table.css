@@ -1,0 +1,111 @@
+/* static/css/resourcelog/table.css */
+
+.resource-table {
+    width: 100%;
+    min-width: 800px;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 0.95rem;
+    margin-top: 0;
+}
+
+.resource-table th, 
+.resource-table td {
+    padding: 0;
+    border-bottom: 1px solid var(--border-color);
+    height: 45px;
+    vertical-align: middle;
+	font-size: 16px;
+}
+
+.resource-table th {
+    background-color: #000;
+    color: var(--accent-blue);
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    user-select: none;
+}
+
+.resource-table th[onclick] {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.resource-table th[onclick]:hover {
+    background-color: #1a1f26;
+}
+
+.resource-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.resource-table tr.highlighted-row {
+    background-color: rgba(0, 212, 255, 0.15) !important;
+    box-shadow: inset 0 0 10px rgba(0, 212, 255, 0.1);
+    transition: background-color 0.2s ease;
+}
+
+.resource-table tr.highlighted-row td:first-child {
+    border-left: 3px solid var(--accent-blue);
+}
+
+/* --- Column Definitions --- */
+.col-name { width: 14%; text-align: left; }
+.col-type { width: 16%; text-align: left; }
+.col-stat { width: 3.5%; text-align: center; font-family: 'Rajdhani', sans-serif; }
+.col-loc    { width: 15%; text-align: right; font-size: 18px !important; }
+.col-date   { width: 8%; text-align: center; color: var(--text-dim); }
+.col-status { width: 8%; text-align: center; }
+
+td.col-name, td.col-type { padding: 0 10px; }
+td.col-stat { font-weight: 700; }
+
+.col-loc .cell-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-right: 10px;
+}
+
+.res-name, .res-type {
+	padding-left: 8px !important;
+}
+
+.res-link {
+    color: var(--accent-blue);
+    text-decoration: none;
+    cursor: pointer;
+}
+.res-link:hover { text-shadow: 0 0 10px var(--accent-blue); }
+
+/* --- Sort Headers --- */
+.sort-wrapper {
+    display: flex;
+	flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    padding: 0 8px;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.sort-wrapper.left   { justify-content: flex-start; }
+.sort-wrapper.center { justify-content: center; }
+.sort-wrapper.right  { justify-content: flex-end; }
+
+.sort-btns {
+    display: flex;
+    flex-direction: column;
+    margin-left: 4px;
+    line-height: 0.9;
+    color: var(--text-dim);
+	flex-shrink: 0;
+}
+
+.sort-btns span { font-size: 10px; }
+.sort-btns span.active-up   { color: var(--stat-high); text-shadow: 0 0 5px var(--stat-high); }
+.sort-btns span.active-down { color: var(--stat-high); text-shadow: 0 0 5px var(--stat-high); }

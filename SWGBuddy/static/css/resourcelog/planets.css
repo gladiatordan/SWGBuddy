@@ -1,19 +1,5 @@
-/* Planet Colors */
-.corellia { background: #2190ac; color: #000; }
-.dantooine { background: #6a006a; }
-.dathomir { background: #8f5120; }
-.endor { background: #6f9975; color: #000; }
-.kashyyyk { background: #146e54; color: #000; }
-.lok { background: #a84909; }
-.mustafar { background: #67120d; }
-.naboo { background: #415c71; }
-.rori { background: #827660; color: #000; }
-.talus { background: #677449; color: #000; }
-.tatooine { background: #e0c37b; color: #000; }
-.yavin { background: #71bb9a; color: #000; }
+/* static/css/resourcelog/planets.css */
 
-
-/* Resource Log Table Planets Container */
 .planets-container {
     display: inline-flex;
     gap: 4px;
@@ -64,3 +50,17 @@
     filter: brightness(1.2);
     text-decoration: line-through;
 }
+
+/* Planet Colors */
+.corellia { background: #2190ac; color: #000; }
+.dantooine { background: #6a006a; }
+.dathomir { background: #8f5120; }
+.endor { background: #6f9975; color: #000; }
+.kashyyyk { background: #146e54; color: #000; }
+.lok { background: #a84909; }
+.mustafar { background: #67120d; }
+.naboo { background: #415c71; }
+.rori { background: #827660; color: #000; }
+.talus { background: #677449; color: #000; }
+.tatooine { background: #e0c37b; color: #000; }
+.yavin { background: #71bb9a; color: #000; }
