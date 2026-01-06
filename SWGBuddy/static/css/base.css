@@ -74,12 +74,13 @@ body {
 .page-container {
     padding: 20px;
     height: 100%;
-    overflow-y: auto;
+    overflow: hidden;
     display: none;
 	box-sizing: border-box;
+	flex-direction: column;
 }
 
-.page-container.active { display: block; }
+.page-container.active { display: flex; }
 
 /* User Profile Styles */
 .user-profile-container {
