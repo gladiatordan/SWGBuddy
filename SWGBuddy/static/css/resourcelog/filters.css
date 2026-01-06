@@ -279,24 +279,24 @@
 /* Main Layout Grid */
 .filters-layout-grid {
     display: flex;
-    gap: 15px;
-    padding: 10px;
+    gap: 10px;
+    padding: 10px 15px;
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid var(--border-color);
     border-radius: 6px;
     margin-bottom: 10px;
-    align-items: stretch; /* Make all columns same height */
-    height: 140px; /* Fixed height for consistency */
+    align-items: stretch;
+    height: 130px; /* Adjusted height */
 }
 
-/* --- Column 1: Add Button --- */
+/* --- Column 1: Add Button (Expanded) --- */
 .filter-col-add {
+    flex: 0 0 120px; /* Fixed width, larger than before */
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 80px;
     border-right: 1px solid var(--border-color);
-    padding-right: 15px;
+    padding-right: 10px;
 }
 
 .add-resource-btn {
@@ -306,26 +306,40 @@
     border: 1px dashed var(--accent-blue);
     color: var(--accent-blue);
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* Icon and text side-by-side */
     align-items: center;
     justify-content: center;
-    gap: 5px;
-    font-size: 12px;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: 'Orbitron', sans-serif;
 }
 .add-resource-btn:hover {
     background: rgba(0, 212, 255, 0.15);
-    box-shadow: none;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.1);
 }
 
-/* --- Column 2: Search Inputs --- */
+/* --- Column 2: Search Inputs (~20%) --- */
 .filter-col-search {
+    flex: 2; 
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 10px;
-    width: 220px;
+    gap: 8px;
     border-right: 1px solid var(--border-color);
-    padding-right: 15px;
+    padding-right: 10px;
+    min-width: 180px;
+}
+
+/* --- Column 3: Stats Grid (~25%) --- */
+.filter-col-stats {
+    flex: 2.5; 
+    border-right: 1px solid var(--border-color);
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .filter-input-wrapper {
@@ -371,9 +385,9 @@
 
 .stats-grid-wrapper {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 Columns */
-    grid-template-rows: repeat(3, 1fr);    /* 3 Rows */
-    gap: 6px;
+    grid-template-columns: repeat(5, 1fr); /* 4 Columns */
+    /* grid-template-rows: repeat(3, 1fr); */
+    gap: 6px 8px;
 }
 
 .stat-input-wrapper {
@@ -386,13 +400,14 @@
     width: 100%;
     background: #000;
     border: 1px solid var(--border-color);
-    color: var(--text-main);
-    padding: 4px 18px 4px 4px; /* Right padding for tiny X */
+    color: var(--stat-high);
+    padding: 6px 16px 6px 4px; /* Room for X */
     font-family: 'Rajdhani', sans-serif;
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: bold;
     text-align: center;
     border-radius: 3px;
-    appearance: textfield; /* Remove spinner */
+    appearance: textfield;
 }
 .stat-filter-input::-webkit-outer-spin-button,
 .stat-filter-input::-webkit-inner-spin-button {
@@ -402,22 +417,23 @@
 
 .stat-clear {
     position: absolute;
-    right: 4px;
-    font-size: 10px;
-    color: #555;
+    right: 3px;
+    font-size: 14px; /* Larger */
+    font-weight: bold;
+    color: #666;
     cursor: pointer;
-    display: none; /* Show when value exists */
+    display: none;
+    line-height: 1;
+    padding: 0 2px;
 }
-.stat-filter-input:not(:placeholder-shown) + .stat-clear {
-    display: block;
-}
-.stat-clear:hover { color: #f00; }
+.stat-clear:hover { color: #f44; }
+.stat-filter-input:not(:placeholder-shown) + .stat-clear { display: block; }
 
 /* --- Column 4: Planet Grid --- */
 .filter-col-planets {
-    width: 200px;
+    flex: 3;
     border-right: 1px solid var(--border-color);
-    padding-right: 15px;
+    padding-right: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -425,28 +441,30 @@
 
 .planets-grid-wrapper {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 4px;
+    /* 3 Columns x 4 Rows = 12 Planets. Fits full names. */
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 2px 10px;
 }
 
 .planet-check {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 2px;
-    font-size: 10px;
+    gap: 4px;
+    font-size: 11px;
     cursor: pointer;
     color: var(--text-dim);
-    user-select: none;
+    white-space: nowrap;
 }
-.planet-check:hover { color: #fff; }
-.planet-check input { cursor: pointer; }
+.planet-check span { margin-top: 1px; }
+.planet-check:hover { color: var(--accent-blue); }
 
 /* --- Column 5: Pagination --- */
 .filter-col-page {
-    min-width: 100px;
+    flex: 0 0 auto;
+    min-width: 140px;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-left: 5px;
 }

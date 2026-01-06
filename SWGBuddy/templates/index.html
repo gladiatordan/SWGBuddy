@@ -86,62 +86,37 @@
         
 					<div class="filter-col-add">
 						<button id="btn-add-resource" class="add-resource-btn hidden" onclick="openAddResourceModal()">
-							<i class="fa-solid fa-plus"></i><br>ADD
+							<i class="fa-solid fa-plus"></i> Add Resource
 						</button>
 					</div>
 
 					<div class="filter-col-search">
-						<div class="filter-input-wrapper">
-							<input type="text" placeholder="Search Name..." class="search-input" id="search-input" oninput="applyAllTableTransforms()">
-							<button class="reset-filter-btn" id="reset-search" title="Clear" onclick="clearSearch()">
-								<i class="fa-solid fa-times"></i>
-							</button>
 						</div>
-						<div class="filter-input-wrapper">
-							<div class="custom-dropdown" id="taxonomy-dropdown">
-								</div>
-							<button class="reset-filter-btn" id="reset-category" title="Reset" onclick="selectCategory('', 'Resources', 'All Resources')">
-								<i class="fa-solid fa-times"></i>
-							</button>
-						</div>
-					</div>
 
 					<div class="filter-col-stats">
 						<div class="stats-grid-wrapper">
-							<div class="stat-input-wrapper"><input type="number" id="f-oq" placeholder="OQ" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-oq')">×</span></div>
-							<div class="stat-input-wrapper"><input type="number" id="f-cr" placeholder="CR" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-cr')">×</span></div>
-							<div class="stat-input-wrapper"><input type="number" id="f-cd" placeholder="CD" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-cd')">×</span></div>
-							<div class="stat-input-wrapper"><input type="number" id="f-dr" placeholder="DR" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-dr')">×</span></div>
-							
-							<div class="stat-input-wrapper"><input type="number" id="f-fl" placeholder="FL" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-fl')">×</span></div>
-							<div class="stat-input-wrapper"><input type="number" id="f-hr" placeholder="HR" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-hr')">×</span></div>
-							<div class="stat-input-wrapper"><input type="number" id="f-ma" placeholder="MA" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-ma')">×</span></div>
-							<div class="stat-input-wrapper"><input type="number" id="f-pe" placeholder="PE" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-pe')">×</span></div>
-							
-							<div class="stat-input-wrapper"><input type="number" id="f-sr" placeholder="SR" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-sr')">×</span></div>
-							<div class="stat-input-wrapper"><input type="number" id="f-ut" placeholder="UT" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-ut')">×</span></div>
-						</div>
+							</div>
 					</div>
 
 					<div class="filter-col-planets">
 						<div class="planets-grid-wrapper">
-							<label class="planet-check" title="Corellia"><input type="checkbox" class="planet-filter" value="Corellia" onchange="applyAllTableTransforms()"> <span>Cor</span></label>
-							<label class="planet-check" title="Dantooine"><input type="checkbox" class="planet-filter" value="Dantooine" onchange="applyAllTableTransforms()"> <span>Dan</span></label>
-							<label class="planet-check" title="Dathomir"><input type="checkbox" class="planet-filter" value="Dathomir" onchange="applyAllTableTransforms()"> <span>Dat</span></label>
-							<label class="planet-check" title="Endor"><input type="checkbox" class="planet-filter" value="Endor" onchange="applyAllTableTransforms()"> <span>End</span></label>
+							<label class="planet-check" title="Corellia"><input type="checkbox" class="planet-filter" value="Corellia" onchange="applyAllTableTransforms()"> <span>Corellia</span></label>
+							<label class="planet-check" title="Dantooine"><input type="checkbox" class="planet-filter" value="Dantooine" onchange="applyAllTableTransforms()"> <span>Dantooine</span></label>
+							<label class="planet-check" title="Dathomir"><input type="checkbox" class="planet-filter" value="Dathomir" onchange="applyAllTableTransforms()"> <span>Dathomir</span></label>
+							<label class="planet-check" title="Endor"><input type="checkbox" class="planet-filter" value="Endor" onchange="applyAllTableTransforms()"> <span>Endor</span></label>
 							
 							<label class="planet-check" title="Lok"><input type="checkbox" class="planet-filter" value="Lok" onchange="applyAllTableTransforms()"> <span>Lok</span></label>
-							<label class="planet-check" title="Naboo"><input type="checkbox" class="planet-filter" value="Naboo" onchange="applyAllTableTransforms()"> <span>Nab</span></label>
-							<label class="planet-check" title="Rori"><input type="checkbox" class="planet-filter" value="Rori" onchange="applyAllTableTransforms()"> <span>Ror</span></label>
-							<label class="planet-check" title="Talus"><input type="checkbox" class="planet-filter" value="Talus" onchange="applyAllTableTransforms()"> <span>Tal</span></label>
+							<label class="planet-check" title="Naboo"><input type="checkbox" class="planet-filter" value="Naboo" onchange="applyAllTableTransforms()"> <span>Naboo</span></label>
+							<label class="planet-check" title="Rori"><input type="checkbox" class="planet-filter" value="Rori" onchange="applyAllTableTransforms()"> <span>Rori</span></label>
+							<label class="planet-check" title="Talus"><input type="checkbox" class="planet-filter" value="Talus" onchange="applyAllTableTransforms()"> <span>Talus</span></label>
 							
-							<label class="planet-check" title="Tatooine"><input type="checkbox" class="planet-filter" value="Tatooine" onchange="applyAllTableTransforms()"> <span>Tat</span></label>
-							<label class="planet-check" title="Yavin IV"><input type="checkbox" class="planet-filter" value="Yavin IV" onchange="applyAllTableTransforms()"> <span>Yav</span></label>
-							<label class="planet-check" title="Mustafar"><input type="checkbox" class="planet-filter" value="Mustafar" onchange="applyAllTableTransforms()"> <span>Mus</span></label>
-							<label class="planet-check" title="Kashyyyk"><input type="checkbox" class="planet-filter" value="Kashyyyk" onchange="applyAllTableTransforms()"> <span>Kas</span></label>
+							<label class="planet-check" title="Tatooine"><input type="checkbox" class="planet-filter" value="Tatooine" onchange="applyAllTableTransforms()"> <span>Tatooine</span></label>
+							<label class="planet-check" title="Yavin IV"><input type="checkbox" class="planet-filter" value="Yavin IV" onchange="applyAllTableTransforms()"> <span>Yavin</span></label>
+							<label class="planet-check" title="Mustafar"><input type="checkbox" class="planet-filter" value="Mustafar" onchange="applyAllTableTransforms()"> <span>Mustafar</span></label>
+							<label class="planet-check" title="Kashyyyk"><input type="checkbox" class="planet-filter" value="Kashyyyk" onchange="applyAllTableTransforms()"> <span>Kashyyyk</span></label>
 						</div>
-						<div style="margin-top: 4px; text-align: center;">
-							<label class="toggle-label" style="justify-content: center; font-size: 10px;">
+						<div style="margin-top: 6px; text-align: center;">
+							<label class="toggle-label" style="justify-content: center; font-size: 11px;">
 								<input type="checkbox" id="filter-active-only" onchange="applyAllTableTransforms()"> Active Only
 							</label>
 						</div>
@@ -149,12 +124,30 @@
 
 					<div class="filter-col-page">
 						<div class="pagination-stack">
+							<div class="pagination-controls">
+								<label for="results-per-page" style="white-space: nowrap;">Show Results:</label>
+								<select id="results-per-page" class="results-select" onchange="changeResultsPerPage()">
+									<option value="10">10</option>
+									<option value="25">25</option>
+									<option value="50" selected>50</option>
+									<option value="100">100</option>
+								</select>
+							</div>
+							
+							<div id="page-nav-container" class="page-nav-container">
+								<button id="btn-prev" class="page-nav-btn" onclick="goToPage('prev')">‹</button>
+								<span id="page-display" style="font-size: 13px; color: var(--accent-blue); font-weight:bold; min-width: 40px; text-align:center;">1 / 1</span>
+								<button id="btn-next" class="page-nav-btn" onclick="goToPage('next')">›</button>
+							</div>
+
 							<div class="confirmation-toggle">
 								<label style="font-size: 10px; color: var(--text-dim); cursor: pointer;">
 									<input type="checkbox" id="skip-confirm-toggle" onchange="toggleConfirmPreference(this)">
-									No Confirm
+									Disable Confirmation Popups
 								</label>
 							</div>
+						</div>
+					</div>
 							<div class="pagination-controls">
 								<select id="results-per-page" class="results-select" onchange="changeResultsPerPage()">
 									<option value="10">10</option>
