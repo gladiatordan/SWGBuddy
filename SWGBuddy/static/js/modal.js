@@ -55,11 +55,6 @@ const Modal = {
 
 		this.elements.nameInput.addEventListener('input', () => this.checkDirty());
 		this.elements.notesInput.addEventListener('input', () => this.checkDirty());
-		
-		document.getElementById('modal-type-selected').addEventListener('click', (e) => {
-			e.stopPropagation();
-			if (this.mode !== 'DETAILS') this.toggleDropdown();
-		});
 
 		this.elements.form.addEventListener('submit', (e) => {
 			e.preventDefault();
@@ -68,7 +63,9 @@ const Modal = {
 		
 		document.addEventListener('click', (e) => {
 			const list = document.getElementById('modal-type-list');
-			if (list.style.display === 'block' && !this.elements.typeDropdown.contains(e.target)) {
+			const searchInput = document.getElementById('modal-type-search');
+            const isClickInside = this.elements.typeDropdown.contains(e.target) || (searchInput && searchInput.contains(e.target));
+			if (list && list.style.display === 'block' && !isClickInside) {
 				list.style.display = 'none';
 			}
 		});
@@ -209,7 +206,10 @@ const Modal = {
 		this.elements.nameInput.value = res.name;
 		this.elements.notesInput.value = res.notes || "";
 		this.elements.typeInput.value = res.type;
-		document.getElementById('modal-type-selected').textContent = res.type;
+		// document.getElementById('modal-type-selected').textContent = res.type;
+
+		const searchInput = document.getElementById('modal-type-search');
+        if (searchInput) searchInput.value = res.type;
 
 		Object.keys(STAT_MAPPING).forEach(key => {
 			const input = this.elements.inputs[key];
@@ -349,7 +349,9 @@ const Modal = {
 	selectType(label) {
 		if (this.mode === 'DETAILS') return; 
 		this.elements.typeInput.value = label;
-		document.getElementById('modal-type-selected').textContent = label;
+		const searchInput = document.getElementById('modal-type-search');
+        if (searchInput) searchInput.value = label;
+
 		document.getElementById('modal-type-list').style.display = 'none';
 		this.updateStatFields(label);
 		this.checkDirty();
@@ -385,7 +387,8 @@ const Modal = {
 		this.elements.statusBar.className = "status-bar";
 		this.elements.loader.classList.add('hidden');
 		this.isSubmitting = false;
-		document.getElementById('modal-type-selected').textContent = "Select Resource Type...";
+		const searchInput = document.getElementById('modal-type-search');
+        if (searchInput) searchInput.value = "";
 	},
 
 	importClipboard: async function() {
