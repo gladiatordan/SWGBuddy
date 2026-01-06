@@ -3,24 +3,36 @@
 .pagination-stack {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 8px;
-    margin-left: auto;
+    align-items: center; /* Center everything in the column */
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
 }
 
 .pagination-controls {
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
+    gap: 6px;
     color: var(--text-dim);
-    font-size: 13px;
+    font-size: 11px;
+    font-weight: 600;
     text-transform: uppercase;
 }
 
 .page-nav-container {
     display: flex;
     align-items: center;
-    gap: 5px;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(0,0,0,0.3);
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid #333;
+}
+
+.confirmation-toggle {
+    margin-top: 2px;
 }
 
 .results-select {
