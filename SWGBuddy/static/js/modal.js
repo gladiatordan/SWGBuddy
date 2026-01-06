@@ -311,92 +311,39 @@ const Modal = {
 
 	// ... Tree Helpers (populateTypeTree, selectType, updateStatFields, toggleDropdown, resetState) ...
 	populateTypeTree() {
-		const list = document.getElementById('modal-type-list');
-		list.innerHTML = `
-			<div class="dropdown-search-wrapper">
-				<input type="text" 
-					   placeholder="Search types..." 
-					   class="dropdown-search" 
-					   oninput="filterModalTree(this)" 
-					   onclick="event.stopPropagation()">
-			</div>
-		`; 
-		if (!window.TAXONOMY_TREE || window.TAXONOMY_TREE.length === 0) return;
+		const container = document.getElementById('modal-type-dropdown');
 		
-		const createNode = (node, depth) => {
-			const isLeaf = !node.children || node.children.length === 0;
-			const isValid = window.validResources && window.validResources.hasOwnProperty(node.label);
-			
-			// if node if a leaf but isn't valid we don't even show it
-			if (isLeaf && !isValid) return null;
+		// 1. Transform dropdown trigger into a Search Input
+		container.innerHTML = `
+			<input type="text" 
+				id="modal-type-search" 
+				class="modal-search-input" 
+				placeholder="Search Resource Type..." 
+				oninput="Modal.filterTypes(this.value)"
+				onfocus="Modal.filterTypes(this.value)">
+			<div class="dropdown-list" id="modal-type-list"></div>
+		`;
+	},
 
-			const container = document.createElement('div');
-			container.className = 'modal-tree-node';
-			
-			const header = document.createElement('div');
-			header.className = 'modal-tree-label';
-			header.style.paddingLeft = (depth * 15 + 5) + 'px';
+	filterTypes(term) {
+		const list = document.getElementById('modal-type-list');
+		const termLower = term.toLowerCase();
+		
+		// Use window.validResources which only contains actual spawnable types
+		const matches = Object.keys(window.validResources).filter(type => 
+			type.toLowerCase().includes(termLower)
+		);
 
-			const icon = document.createElement('span');
-			icon.className = 'tree-toggle';
-			icon.innerText = isLeaf ? '•' : '▶'; 
-			icon.style.opacity = isLeaf ? '0.3' : '1';
-			header.appendChild(icon);
-			
-			const text = document.createElement('span');
-			text.innerText = node.label;
-			header.appendChild(text);
-			
-			let childrenContainer = null;
-
-			if (isValid) {
-				header.classList.add('selectable');
-				header.addEventListener('click', () => this.selectType(node.label));
-			} else if (!isLeaf) {
-				header.addEventListener('click', (e) => {
-					e.stopPropagation();
-					if (childrenContainer) {
-						childrenContainer.classList.toggle('collapsed');
-						icon.innerText = childrenContainer.classList.contains('collapsed') ? '▶' : '▼';
-					}
-				});
-			}
-			container.appendChild(header);
-
-			if (!isLeaf) {
-				childrenContainer = document.createElement('div');
-				childrenContainer.className = 'modal-tree-children collapsed';
-
-				let hasVisibleChildren = false;
-				
-				node.children.forEach(child => {
-					const childNode = createNode(child, depth + 1);
-					if (childNode) {
-						childrenContainer.appendChild(childNode);
-						hasVisibleChildren = true;
-					}
-				})
-
-				// If folder ends up empty after filtering leaves, hide it
-				if (!hasVisibleChildren && !isValid) return null;
-
-				container.appendChild(childrenContainer);
-				
-				icon.onclick = (e) => {
-					e.stopPropagation();
-					childrenContainer.classList.toggle('collapsed');
-					icon.innerText = childrenContainer.classList.contains('collapsed') ? '▶' : '▼';
-				};
-
-				if (!hasVisibleChildren && !isValid) return null;
-			}
-			return container;
-		};
-		// window.TAXONOMY_TREE.forEach(rootNode => list.appendChild(createNode(rootNode, 0)));
-		window.TAXONOMY_TREE.forEach(rootNode => {
-			const root = createNode(rootNode, 0);
-			if (root) list.appendChild(root);
-		})
+		list.style.display = 'block';
+		list.innerHTML = matches.map(type => `
+			<div class="dropdown-item selectable" onclick="Modal.selectType('${type}')">
+				${type}
+			</div>
+		`).join('');
+		
+		if (matches.length === 0) {
+			list.innerHTML = '<div class="dropdown-item disabled">No matching types found</div>';
+		}
 	},
 
 	selectType(label) {

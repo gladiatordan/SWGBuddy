@@ -51,139 +51,51 @@ function flattenTree(nodes) {
  * Renders the nested dropdown for filtering.
  */
 function renderTaxonomyDropdown() {
-	const list = document.getElementById('taxonomy-list');
-	if (!list) return;
+    const container = document.getElementById('taxonomy-dropdown');
+    if (!container) return;
 
-	list.innerHTML = '';
+    // 1. Replace static label with Search Input
+    container.innerHTML = `
+        <input type="text" 
+               id="taxonomy-search-input"
+               class="dropdown-search-input" 
+               placeholder="Search Category..." 
+               onfocus="this.value=''; showTaxonomyResults()"
+               oninput="filterTaxonomyResults(this.value)">
+        <div class="dropdown-list" id="taxonomy-list"></div>
+    `;
 
-	// Add sticky search box
-	const searchWrapper = document.createElement('div');
-	searchWrapper.className = 'dropdown-search-wrapper';
-	searchWrapper.innerHTML = `
-		<input type="text" 
-               class="dropdown-search" 
-               placeholder="Filter Category..." 
-               oninput="filterTaxonomyList(this.value)" 
-               onclick="event.stopPropagation()">
-	`;
-	list.appendChild(searchWrapper);
-
-	// Root Option
-	const rootDiv = document.createElement('div');
-	rootDiv.className = 'dropdown-item root-item';
-	rootDiv.textContent = 'All Resources';
-	rootDiv.onclick = () => selectCategory(null, 'All Resources');
-	list.appendChild(rootDiv);
-
-	// Recursive Tree Builder
-	const createNode = (node, depth) => {
-		const container = document.createElement('div');
-		container.className = 'branch-container';
-
-		// Row Label
-		const row = document.createElement('div');
-		row.className = 'dropdown-item';
-		row.style.paddingLeft = (depth * 15 + 10) + 'px';
-		row.style.display = 'flex';
-		row.style.alignItems = 'center';
-
-		const isLeaf = !node.children || node.children.length === 0;
-
-		// 1. Toggle Icon
-		const icon = document.createElement('span');
-		icon.className = 'toggle-icon';
-		icon.style.width = '20px';
-		icon.style.cursor = 'pointer';
-		icon.style.color = 'var(--accent-color)';
-		icon.innerText = isLeaf ? '•' : '▶'; 
-		
-		// 2. Label Text
-		const text = document.createElement('span');
-		text.innerText = node.label;
-		text.style.cursor = 'pointer';
-		text.style.flex = '1';
-		text.className = 'item-label';
-
-		row.appendChild(icon);
-		row.appendChild(text);
-		container.appendChild(row);
-
-		// 3. Children Container
-		// let childrenContainer = null;
-		if (!isLeaf) {
-			const childrenContainer = document.createElement('div');
-			// FIX: Add specific class for the filter to find later
-            childrenContainer.className = 'branch-children';
-			childrenContainer.style.display = 'none'; // Default Collapsed
-			
-			node.children.forEach(child => {
-				childrenContainer.appendChild(createNode(child, depth + 1));
-			});
-			container.appendChild(childrenContainer);
-
-			// Toggle Logic
-			const toggle = (e) => {
-				e.stopPropagation(); // Prevent selection
-				const isHidden = childrenContainer.style.display === 'none';
-				childrenContainer.style.display = isHidden ? 'block' : 'none';
-				icon.innerText = isHidden ? '▼' : '▶';
-			};
-			icon.onclick = toggle;
-		}
-
-		// Selection Logic (Clicking text selects the category)
-		text.onclick = () => {
-			// Note: Filter allows selecting Folders (e.g. "Inorganic")
-			selectCategory(node.label, node.label);
-		};
-
-		return container;
-	};
-
-	TAXONOMY_TREE.forEach(node => {
-		list.appendChild(createNode(node, 0));
-	});
+    // 2. Pre-generate flattened data for fast searching
+    window.FLATTENED_TAXONOMY = flattenTree(window.TAXONOMY_TREE);
 }
 
-window.filterTaxonomyList = function(term) {
+function filterTaxonomyResults(term) {
+    const list = document.getElementById('taxonomy-list');
     term = term.toLowerCase();
-    const roots = document.querySelectorAll('#taxonomy-list > .branch-container');
+    
+    // Always show results when typing
+    list.style.display = 'block';
 
-    function processNode(container) {
-        const label = container.querySelector('.item-label').textContent.toLowerCase();
-        // FIX: Select by class, not style, to avoid grabbing the row element
-        const childrenContainer = container.querySelector('.branch-children'); 
-        
-        let childMatched = false;
-        if (childrenContainer) {
-            const childBranches = childrenContainer.querySelectorAll(':scope > .branch-container');
-            childBranches.forEach(branch => {
-                if (processNode(branch)) childMatched = true;
-            });
-        }
+    const matches = window.FLATTENED_TAXONOMY.filter(item => 
+        item.label.toLowerCase().includes(term)
+    );
 
-        const selfMatch = label.includes(term);
-        const shouldShow = selfMatch || childMatched;
+    // 3. Render flat clickable list
+    list.innerHTML = matches.map(item => `
+        <div class="dropdown-item" onclick="selectCategory('${item.label}', '${item.label}')">
+            ${item.label}
+        </div>
+    `).join('');
 
-        container.style.display = shouldShow ? 'block' : 'none';
-        
-        // Expand if children matched so user sees them
-        if (childMatched && childrenContainer) {
-            childrenContainer.style.display = 'block';
-            const icon = container.querySelector('.toggle-icon');
-            if (icon) icon.innerText = '▼';
-        } else if (term === '' && childrenContainer) {
-            // Optional: Collapse everything on clear
-            childrenContainer.style.display = 'none';
-            const icon = container.querySelector('.toggle-icon');
-            if (icon) icon.innerText = '▶';
-        }
-
-        return shouldShow;
+    // Add 'All Resources' option at the top if term is empty
+    if (!term) {
+        list.insertAdjacentHTML('afterbegin', `
+            <div class="dropdown-item root-item" onclick="selectCategory(null, 'All Resources')">
+                All Resources
+            </div>
+        `);
     }
-
-    roots.forEach(processNode);
-};
+}
 
 /**
  * Returns a flattened list of all descendant labels for a given parent label.
