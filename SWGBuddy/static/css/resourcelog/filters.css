@@ -288,8 +288,7 @@
 .filter-col-add {
     flex: 0 0 120px; /* Fixed width, larger than before */
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-end;
     border-right: 1px solid var(--border-color);
     padding-right: 10px;
 }
@@ -326,7 +325,6 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-	padding-bottom: 15px;
     gap: 8px;
     border-right: 1px solid var(--border-color);
     padding-right: 10px;
