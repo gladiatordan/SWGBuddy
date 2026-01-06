@@ -183,10 +183,22 @@ function multiColumnComparator(a, b) {
 }
 
 function selectCategory(label, displayLabel = null) {
-	if (!label) label = "Resources";
-	document.querySelector('.dropdown-selected').textContent = displayLabel || label;
+    // Default fallback
+	if (!label) label = "All Resources";
+    
+    // FIX: Update the search input value, not the old div text
+    const input = document.getElementById('taxonomy-search-input');
+    if (input) {
+        // If resetting to root, show "All Resources", otherwise show specific label
+        input.value = (label === "Resources" || label === "All Resources") ? "All Resources" : label;
+    }
+
 	currentSelectedLabel = label;
-	document.getElementById('taxonomy-list').style.display = 'none';
+    
+    // Hide the list
+    const list = document.getElementById('taxonomy-list');
+	if (list) list.style.display = 'none';
+    
 	applyAllTableTransforms();
 	currentPage = 1;
 }
@@ -243,7 +255,7 @@ function updateSortVisuals() {
 }
 
 function clearSearch() {
-    const searchInput = document.querySelector('.search-input');
+    const searchInput = document.getElementById('search-input'); // Fixed selector to ID for consistency
     if (searchInput) {
         searchInput.value = '';
         applyAllTableTransforms();
@@ -256,13 +268,15 @@ applyAllTableTransforms = function() {
     originalApplyTransforms();
 
     // 2. Handle Reset Button Visibility
-    const searchInput = document.querySelector('.search-input');
+    const searchInput = document.getElementById('search-input');
     const searchReset = document.getElementById('reset-search');
+    
+    // Check global currentSelectedLabel for the category reset
     const catReset = document.getElementById('reset-category');
 
     // Show search reset if text exists
-    if (searchReset) {
-        searchReset.style.display = (searchInput && searchInput.value) ? 'block' : 'none';
+    if (searchReset && searchInput) {
+        searchReset.style.display = searchInput.value ? 'block' : 'none';
     }
 
     // Show category reset if something other than "All Resources" is selected
