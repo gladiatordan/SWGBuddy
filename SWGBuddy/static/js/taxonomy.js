@@ -2,100 +2,130 @@
  * Taxonomy Manager
  * Handles the resource tree structure, validity checks, and rendering.
  */
-let TAXONOMY_TREE = []; // Array of objects
-let RESOURCE_CONFIG = {}; // Map: Label -> {stats, planets}
-let VALID_TYPES = new Set(); // Set of Strings (Labels)
+let TAXONOMY_TREE = [];
+let RESOURCE_CONFIG = {}; 
+let FLAT_LIST = []; // New flat list for search
 
 async function loadTaxonomy() {
-	try {
-		// Fetch the single consolidated JSON
-		const response = await fetch('/api/taxonomy');
-		if (!response.ok) throw new Error("Failed to fetch taxonomy");
-		
-		TAXONOMY_TREE = await response.json();
-		
-		// Flatten for O(1) Lookup (Legacy compatibility)
-		RESOURCE_CONFIG = {};
-		flattenTree(TAXONOMY_TREE);
+    try {
+        const response = await fetch('/api/taxonomy');
+        if (!response.ok) throw new Error("Failed to fetch taxonomy");
+        
+        TAXONOMY_TREE = await response.json();
+        
+        // Reset and Flatten
+        RESOURCE_CONFIG = {};
+        FLAT_LIST = [];
+        flattenTree(TAXONOMY_TREE);
 
-		// Expose to Global Scope
-		window.TAXONOMY_TREE = TAXONOMY_TREE;
-		window.validResources = RESOURCE_CONFIG;
-		
-		console.log(`Taxonomy Loaded. Valid Types: ${Object.keys(RESOURCE_CONFIG).length}`);
-		
-		renderTaxonomyDropdown();
-		return TAXONOMY_TREE;
+        // Expose
+        window.TAXONOMY_TREE = TAXONOMY_TREE;
+        window.validResources = RESOURCE_CONFIG;
+        
+        // Initial Render
+        renderTaxonomyDropdown();
+        return TAXONOMY_TREE;
 
-	} catch (error) {
-		console.error("Failed to load taxonomy:", error);
-	}
+    } catch (error) {
+        console.error("Failed to load taxonomy:", error);
+    }
 }
 
+// Helper to populate RESOURCE_CONFIG and FLAT_LIST
 function flattenTree(nodes) {
-	nodes.forEach(node => {
-		if (node.is_valid) {
-			RESOURCE_CONFIG[node.label] = {
-				id: node.id,
-				stats: node.stats || {},
-				planets: node.planets || []
-			};
-		}
-		if (node.children && node.children.length > 0) {
-			flattenTree(node.children);
-		}
-	});
+    nodes.forEach(node => {
+        // Add to config for lookups
+        if (node.is_valid) {
+            RESOURCE_CONFIG[node.label] = {
+                id: node.id,
+                stats: node.stats || {},
+                planets: node.planets || []
+            };
+        }
+        
+        // Add to flat list for the dropdown search
+        // We include folders (e.g. "Mineral") so users can select broad categories
+        FLAT_LIST.push({ label: node.label, is_valid: node.is_valid });
+
+        if (node.children && node.children.length > 0) {
+            flattenTree(node.children);
+        }
+    });
 }
 
-/**
- * Renders the nested dropdown for filtering.
- */
 function renderTaxonomyDropdown() {
     const container = document.getElementById('taxonomy-dropdown');
     if (!container) return;
 
-    // 1. Replace static label with Search Input
+    // Replace the static div with the Input-based structure
     container.innerHTML = `
         <input type="text" 
                id="taxonomy-search-input"
                class="dropdown-search-input" 
-               placeholder="Search Category..." 
-               onfocus="this.value=''; showTaxonomyResults()"
-               oninput="filterTaxonomyResults(this.value)">
+               placeholder="Search Type..." 
+               autocomplete="off"
+               onfocus="showTaxonomyResults(this.value)"
+               oninput="showTaxonomyResults(this.value)">
         <div class="dropdown-list" id="taxonomy-list"></div>
     `;
-
-    // 2. Pre-generate flattened data for fast searching
-    window.FLATTENED_TAXONOMY = flattenTree(window.TAXONOMY_TREE);
 }
 
-function filterTaxonomyResults(term) {
+// Global function called by the input
+window.showTaxonomyResults = function(term) {
     const list = document.getElementById('taxonomy-list');
-    term = term.toLowerCase();
+    const termLower = (term || "").toLowerCase();
     
-    // Always show results when typing
     list.style.display = 'block';
+    list.innerHTML = '';
 
-    const matches = window.FLATTENED_TAXONOMY.filter(item => 
-        item.label.toLowerCase().includes(term)
+    // Filter the pre-calculated FLAT_LIST
+    const matches = FLAT_LIST.filter(item => 
+        item.label.toLowerCase().includes(termLower)
     );
 
-    // 3. Render flat clickable list
-    list.innerHTML = matches.map(item => `
-        <div class="dropdown-item" onclick="selectCategory('${item.label}', '${item.label}')">
-            ${item.label}
-        </div>
-    `).join('');
-
-    // Add 'All Resources' option at the top if term is empty
-    if (!term) {
-        list.insertAdjacentHTML('afterbegin', `
-            <div class="dropdown-item root-item" onclick="selectCategory(null, 'All Resources')">
-                All Resources
-            </div>
-        `);
+    // Always add "All Resources" at the top if clearing search
+    if (termLower === '') {
+        const rootItem = document.createElement('div');
+        rootItem.className = 'dropdown-item root-item';
+        rootItem.textContent = 'All Resources';
+        rootItem.onclick = () => {
+            document.getElementById('taxonomy-search-input').value = 'All Resources';
+            selectCategory(null, 'All Resources');
+            list.style.display = 'none';
+        };
+        list.appendChild(rootItem);
     }
-}
+
+    if (matches.length === 0 && termLower !== '') {
+        list.innerHTML = '<div class="dropdown-item" style="color:var(--text-dim)">No matches found</div>';
+        return;
+    }
+
+    // Render matches
+    matches.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'dropdown-item';
+        div.textContent = item.label;
+        div.onclick = () => {
+            // Update Input Text
+            document.getElementById('taxonomy-search-input').value = item.label;
+            // Trigger Filter
+            selectCategory(item.label, item.label);
+            // Hide List
+            list.style.display = 'none';
+        };
+        list.appendChild(div);
+    });
+};
+
+// Close dropdown if clicking outside
+document.addEventListener('click', function(event) {
+    const container = document.getElementById('taxonomy-dropdown');
+    const list = document.getElementById('taxonomy-list');
+    if (container && !container.contains(event.target) && list) {
+        list.style.display = 'none';
+    }
+});
 
 /**
  * Returns a flattened list of all descendant labels for a given parent label.

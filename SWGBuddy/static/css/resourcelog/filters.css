@@ -275,3 +275,178 @@
     border-radius: 4px;
     outline: none;
 }
+
+/* Main Layout Grid */
+.filters-layout-grid {
+    display: flex;
+    gap: 15px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    align-items: stretch; /* Make all columns same height */
+    height: 140px; /* Fixed height for consistency */
+}
+
+/* --- Column 1: Add Button --- */
+.filter-col-add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 80px;
+    border-right: 1px solid var(--border-color);
+    padding-right: 15px;
+}
+
+.add-resource-btn {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 212, 255, 0.05);
+    border: 1px dashed var(--accent-blue);
+    color: var(--accent-blue);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 12px;
+}
+.add-resource-btn:hover {
+    background: rgba(0, 212, 255, 0.15);
+    box-shadow: none;
+}
+
+/* --- Column 2: Search Inputs --- */
+.filter-col-search {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    width: 220px;
+    border-right: 1px solid var(--border-color);
+    padding-right: 15px;
+}
+
+.filter-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.search-input, .dropdown-search-input {
+    width: 100%;
+    background: #000;
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 8px 30px 8px 10px; /* Right padding for X button */
+    border-radius: 4px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Ensure the Reset Button sits on top of the input */
+.reset-filter-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: none; /* Toggled by JS */
+}
+.reset-filter-btn:hover { color: #fff; }
+
+/* --- Column 3: Stats Grid --- */
+.filter-col-stats {
+    flex: 1; /* Takes available space */
+    border-right: 1px solid var(--border-color);
+    padding-right: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.stats-grid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 Columns */
+    grid-template-rows: repeat(3, 1fr);    /* 3 Rows */
+    gap: 6px;
+}
+
+.stat-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.stat-filter-input {
+    width: 100%;
+    background: #000;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 4px 18px 4px 4px; /* Right padding for tiny X */
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    text-align: center;
+    border-radius: 3px;
+    appearance: textfield; /* Remove spinner */
+}
+.stat-filter-input::-webkit-outer-spin-button,
+.stat-filter-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.stat-clear {
+    position: absolute;
+    right: 4px;
+    font-size: 10px;
+    color: #555;
+    cursor: pointer;
+    display: none; /* Show when value exists */
+}
+.stat-filter-input:not(:placeholder-shown) + .stat-clear {
+    display: block;
+}
+.stat-clear:hover { color: #f00; }
+
+/* --- Column 4: Planet Grid --- */
+.filter-col-planets {
+    width: 200px;
+    border-right: 1px solid var(--border-color);
+    padding-right: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.planets-grid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 4px;
+}
+
+.planet-check {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2px;
+    font-size: 10px;
+    cursor: pointer;
+    color: var(--text-dim);
+    user-select: none;
+}
+.planet-check:hover { color: #fff; }
+.planet-check input { cursor: pointer; }
+
+/* --- Column 5: Pagination --- */
+.filter-col-page {
+    min-width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -271,3 +271,11 @@ applyAllTableTransforms = function() {
         catReset.style.display = isRoot ? 'none' : 'block';
     }
 };
+
+function clearStat(id) {
+    const input = document.getElementById(id);
+    if (input) {
+        input.value = '';
+        applyAllTableTransforms(); // Re-run filters
+    }
+}
