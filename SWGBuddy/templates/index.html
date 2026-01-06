@@ -91,11 +91,36 @@
 					</div>
 
 					<div class="filter-col-search">
+						<div class="filter-input-wrapper">
+							<input type="text" placeholder="Search Name..." class="search-input" id="search-input" oninput="applyAllTableTransforms()">
+							<button class="reset-filter-btn" id="reset-search" title="Clear" onclick="clearSearch()">
+								<i class="fa-solid fa-times"></i>
+							</button>
 						</div>
+						<div class="filter-input-wrapper">
+							<div class="custom-dropdown" id="taxonomy-dropdown">
+								</div>
+							<button class="reset-filter-btn" id="reset-category" title="Reset" onclick="selectCategory('', 'Resources', 'All Resources')">
+								<i class="fa-solid fa-times"></i>
+							</button>
+						</div>
+					</div>
 
 					<div class="filter-col-stats">
 						<div class="stats-grid-wrapper">
-							</div>
+							<div class="stat-input-wrapper"><input type="number" id="f-oq" placeholder="OQ" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-oq')">×</span></div>
+							<div class="stat-input-wrapper"><input type="number" id="f-cr" placeholder="CR" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-cr')">×</span></div>
+							<div class="stat-input-wrapper"><input type="number" id="f-cd" placeholder="CD" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-cd')">×</span></div>
+							<div class="stat-input-wrapper"><input type="number" id="f-dr" placeholder="DR" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-dr')">×</span></div>
+							
+							<div class="stat-input-wrapper"><input type="number" id="f-fl" placeholder="FL" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-fl')">×</span></div>
+							<div class="stat-input-wrapper"><input type="number" id="f-hr" placeholder="HR" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-hr')">×</span></div>
+							<div class="stat-input-wrapper"><input type="number" id="f-ma" placeholder="MA" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-ma')">×</span></div>
+							<div class="stat-input-wrapper"><input type="number" id="f-pe" placeholder="PE" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-pe')">×</span></div>
+							
+							<div class="stat-input-wrapper"><input type="number" id="f-sr" placeholder="SR" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-sr')">×</span></div>
+							<div class="stat-input-wrapper"><input type="number" id="f-ut" placeholder="UT" class="stat-filter-input" oninput="applyAllTableTransforms()"><span class="stat-clear" onclick="clearStat('f-ut')">×</span></div>
+						</div>
 					</div>
 
 					<div class="filter-col-planets">
