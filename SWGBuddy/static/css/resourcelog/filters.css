@@ -458,7 +458,7 @@
 
 /* --- Column 4: Planet Grid --- */
 .filter-col-planets {
-    flex: 3;
+    flex: 1;
     border-right: 1px solid var(--border-color);
     padding-right: 10px;
     display: flex;
