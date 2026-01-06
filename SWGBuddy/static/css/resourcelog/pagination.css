@@ -7,6 +7,7 @@
     justify-content: center;
     gap: 6px;
     width: 100%;
+	margin-top: 35px;
 }
 
 .pagination-controls {
@@ -32,7 +33,19 @@
 }
 
 .confirmation-toggle {
-    margin-top: 2px;
+    margin-top: 4px;
+	margin-bottom: 25px;
+}
+
+.confirmation-toggle label {
+    display: flex;             /* Enable flexbox for the label content */
+    align-items: center;       /* Vertically center text with the checkbox */
+    justify-content: center;    /* Horizontally center the group in the column */
+    gap: 6px;                  /* Add consistent spacing between box and text */
+    font-size: 10px;
+    color: var(--text-dim);
+    cursor: pointer;
+    white-space: nowrap;
 }
 
 .results-select {
