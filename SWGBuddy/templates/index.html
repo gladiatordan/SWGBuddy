@@ -158,20 +158,14 @@
 									<option value="100">100</option>
 								</select>
 							</div>
-							
-							<div id="page-nav-container" class="page-nav-container">
-								<button id="btn-prev" class="page-nav-btn" onclick="goToPage('prev')">‹</button>
-								<span id="page-display" style="font-size: 13px; color: var(--accent-blue); font-weight:bold; min-width: 40px; text-align:center;">1 / 1</span>
-								<button id="btn-next" class="page-nav-btn" onclick="goToPage('next')">›</button>
-							</div>
-
-							<div class="confirmation-toggle">
-								<label style="font-size: 10px; color: var(--text-dim); cursor: pointer;">
-									<input type="checkbox" id="skip-confirm-toggle" onchange="toggleConfirmPreference(this)">
-									Disable Confirmation Popups
-								</label>
-							</div>
 						</div>
+					</div>
+
+					<div class="confirmation-toggle">
+						<label style="font-size: 10px; color: var(--text-dim); cursor: pointer;">
+							<input type="checkbox" id="skip-confirm-toggle" onchange="toggleConfirmPreference(this)">
+							Disable Confirmation Popups
+						</label>
 					</div>
 					<div class="pagination-controls">
 						<select id="results-per-page" class="results-select" onchange="changeResultsPerPage()">
@@ -180,15 +174,13 @@
 							<option value="50" selected>50</option>
 							<option value="100">100</option>
 						</select>
-					</div>
-					<div id="page-nav-container" class="page-nav-container">
-						<button id="btn-prev" class="page-nav-btn" onclick="goToPage('prev')">‹</button>
-						<span id="page-display" style="font-size: 12px; color: var(--accent-blue);">1</span>
-						<button id="btn-next" class="page-nav-btn" onclick="goToPage('next')">›</button>
+						<div id="page-nav-container" class="page-nav-container">
+							<button id="btn-prev" class="page-nav-btn" onclick="goToPage('prev')">‹</button>
+							<span id="page-display" style="font-size: 12px; color: var(--accent-blue);">1</span>
+							<button id="btn-next" class="page-nav-btn" onclick="goToPage('next')">›</button>
+						</div>
 					</div>
 				</div>
-					<!-- </div>
-				</div> -->
                 
 				<div id="resource-modal" class="modal hidden">
 					<div class="modal-content">
