@@ -1,4 +1,12 @@
 /* static/css/resourcelog/table.css */
+.table-scroll-wrapper {
+    flex: 1;             /* Takes all remaining vertical space below filters */
+    overflow-y: scroll;  /* CRITICAL: Always show scrollbar track to prevent width jumps */
+    overflow-x: hidden;  /* Prevent horizontal scroll if not needed */
+    margin-top: 10px;    /* Spacing between filters and table */
+    position: relative;
+    border-bottom: 1px solid var(--border-color); /* Optional visual boundary */
+}
 
 .resource-table {
     width: 100%;
@@ -19,12 +27,20 @@
 }
 
 .resource-table th {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	padding: 0;
+	border-bottom: 1px solid var(--border-color);
+	height: 45px;
+    vertical-align: middle;
     background-color: #000;
     color: var(--accent-blue);
     font-size: 18px;
     font-weight: 600;
     text-transform: uppercase;
     user-select: none;
+	box-shadow: 0 1px 0 var(--border-color);
 }
 
 .resource-table th[onclick] {

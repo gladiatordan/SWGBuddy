@@ -264,30 +264,31 @@
 						</div>
 					</div>
 				</div>
-
-				<table class="resource-table">
-					<thead>
-						<tr>
-							<th class="col-name" data-sort="name" onclick="toggleSort('name')"><div class="sort-wrapper left"><span>NAME </span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-type" data-sort="type" onclick="toggleSort('type')"><div class="sort-wrapper left"><span>TYPE </span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" data-sort="res_weight_rating" onclick="toggleSort('res_weight_rating')"><div class="sort-wrapper center"><span>Rating</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" data-sort="res_oq" onclick="toggleSort('res_oq')"><div class="sort-wrapper center"><span>OQ</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" data-sort="res_cr" onclick="toggleSort('res_cr')"><div class="sort-wrapper center"><span>CR</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" data-sort="res_cd" onclick="toggleSort('res_cd')"><div class="sort-wrapper center"><span>CD</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" data-sort="res_dr" onclick="toggleSort('res_dr')"><div class="sort-wrapper center"><span>DR</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" data-sort="res_fl" onclick="toggleSort('res_fl')"><div class="sort-wrapper center"><span>FL</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" data-sort="res_hr" onclick="toggleSort('res_hr')"><div class="sort-wrapper center"><span>HR</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" data-sort="res_ma" onclick="toggleSort('res_ma')"><div class="sort-wrapper center"><span>MA</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" data-sort="res_pe" onclick="toggleSort('res_pe')"><div class="sort-wrapper center"><span>PE</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" data-sort="res_sr" onclick="toggleSort('res_sr')"><div class="sort-wrapper center"><span>SR</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" data-sort="res_ut" onclick="toggleSort('res_ut')"><div class="sort-wrapper center"><span>UT</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-loc">LOCATION</th>
-							<th class="col-date" data-sort="date_reported" onclick="toggleSort('date_reported')"><div class="sort-wrapper center"><span>DATE</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-status" data-sort="is_active" onclick="toggleSort('is_active')"><div class="sort-wrapper center"><span>STATUS</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-						</tr>
-					</thead>
-					<tbody id="resource-log-body"></tbody>
-				</table>
+				<div class="table-scroll-wrapper">
+					<table class="resource-table">
+						<thead>
+							<tr>
+								<th class="col-name" data-sort="name" onclick="toggleSort('name')"><div class="sort-wrapper left"><span>NAME </span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+								<th class="col-type" data-sort="type" onclick="toggleSort('type')"><div class="sort-wrapper left"><span>TYPE </span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+								<th class="col-stat" data-sort="res_weight_rating" onclick="toggleSort('res_weight_rating')"><div class="sort-wrapper center"><span>Rating</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+								<th class="col-stat" data-sort="res_oq" onclick="toggleSort('res_oq')"><div class="sort-wrapper center"><span>OQ</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+								<th class="col-stat" data-sort="res_cr" onclick="toggleSort('res_cr')"><div class="sort-wrapper center"><span>CR</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+								<th class="col-stat" data-sort="res_cd" onclick="toggleSort('res_cd')"><div class="sort-wrapper center"><span>CD</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+								<th class="col-stat" data-sort="res_dr" onclick="toggleSort('res_dr')"><div class="sort-wrapper center"><span>DR</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+								<th class="col-stat" data-sort="res_fl" onclick="toggleSort('res_fl')"><div class="sort-wrapper center"><span>FL</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+								<th class="col-stat" data-sort="res_hr" onclick="toggleSort('res_hr')"><div class="sort-wrapper center"><span>HR</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+								<th class="col-stat" data-sort="res_ma" onclick="toggleSort('res_ma')"><div class="sort-wrapper center"><span>MA</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+								<th class="col-stat" data-sort="res_pe" onclick="toggleSort('res_pe')"><div class="sort-wrapper center"><span>PE</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+								<th class="col-stat" data-sort="res_sr" onclick="toggleSort('res_sr')"><div class="sort-wrapper center"><span>SR</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+								<th class="col-stat" data-sort="res_ut" onclick="toggleSort('res_ut')"><div class="sort-wrapper center"><span>UT</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+								<th class="col-loc">LOCATION</th>
+								<th class="col-date" data-sort="date_reported" onclick="toggleSort('date_reported')"><div class="sort-wrapper center"><span>DATE</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+								<th class="col-status" data-sort="is_active" onclick="toggleSort('is_active')"><div class="sort-wrapper center"><span>STATUS</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							</tr>
+						</thead>
+						<tbody id="resource-log-body"></tbody>
+					</table>
+				</div>
 			</section>
 			
 
