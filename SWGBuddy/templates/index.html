@@ -91,23 +91,25 @@
 					</div>
 
 					<div class="filter-col-search">
-						<div class="filter-input-wrapper">
-							<input type="text" placeholder="Search Name..." class="search-input" id="search-input" oninput="applyAllTableTransforms()">
-							<button class="reset-filter-btn" id="reset-search" title="Clear" onclick="clearSearch()">
-								<i class="fa-solid fa-times"></i>
-							</button>
-						</div>
-						<div class="filter-input-wrapper">
-							<div class="custom-dropdown" id="taxonomy-dropdown">
-								</div>
-							<button class="reset-filter-btn" id="reset-category" title="Reset" onclick="selectCategory('', 'Resources', 'All Resources')">
-								<i class="fa-solid fa-times"></i>
-							</button>
-						</div>
-						<div style="margin-top: 6px; text-align: center;">
-							<label class="toggle-label" style="justify-content: right; font-size: 11px;">
-								<input type="checkbox" id="filter-active-only" onchange="applyAllTableTransforms()">Show Active Only
-							</label>
+						<div class="search-row">
+							<div class="filter-input-wrapper grow-input">
+								<input type="text" placeholder="Search Name..." class="search-input" id="search-input" oninput="applyAllTableTransforms()">
+								<button class="reset-filter-btn" id="reset-search" title="Clear" onclick="clearSearch()">
+									<i class="fa-solid fa-times"></i>
+								</button>
+							</div>
+							<div class="filter-input-wrapper grow-input">
+								<div class="custom-dropdown" id="taxonomy-dropdown">
+									</div>
+								<button class="reset-filter-btn" id="reset-category" title="Reset" onclick="selectCategory('', 'Resources', 'All Resources')">
+									<i class="fa-solid fa-times"></i>
+								</button>
+							</div>
+							<div class="active-toggle-inline">
+								<label class="toggle-label" title="Show Active Only">
+									<input type="checkbox" id="filter-active-only" onchange="applyAllTableTransforms()"> Active
+								</label>
+							</div>
 						</div>
 					</div>
 

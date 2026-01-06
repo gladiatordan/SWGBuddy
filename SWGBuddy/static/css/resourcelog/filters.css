@@ -116,7 +116,7 @@
     margin-left: 5px;
 }
 
-.toggle-label {
+/* .toggle-label {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -126,9 +126,20 @@
     font-size: 11px;
 	justify-content: right;
 	width: auto;
-}
+} */
 
 /* --- Base Filter Inputs (Legacy & Shared) --- */
+.filter-section-label {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--accent-blue);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 14px;    /* Matches approximate top alignment of Pagination Toggle */
+    margin-bottom: 8px;  /* Space before the grid starts */
+}
+
 .filter-input-wrapper {
     position: relative;
     display: flex;
@@ -286,9 +297,8 @@
 
 .add-resource-btn {
     width: 100%;
-    height: 100%;
+    height: 50%;
     background: rgba(0, 212, 255, 0.05);
-    border: 1px dashed var(--accent-blue);
     color: var(--accent-blue);
     display: flex;
     flex-direction: row; /* Icon and text side-by-side */
@@ -316,11 +326,37 @@
     flex: 2; 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
+	padding-bottom: 15px;
     gap: 8px;
     border-right: 1px solid var(--border-color);
     padding-right: 10px;
     min-width: 180px;
+}
+
+.search-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.grow-input {
+    flex: 1; /* Makes Name and Type equal width */
+}
+
+.active-toggle-inline {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.toggle-label {
+    font-size: 11px;
+    color: var(--stat-high);
+    font-weight: bold;
+    cursor: pointer;
 }
 
 /* --- Column 3: Stats Grid (~25%) --- */
@@ -330,7 +366,7 @@
     padding-right: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .filter-input-wrapper {
@@ -422,12 +458,12 @@
 
 /* --- Column 4: Planet Grid --- */
 .filter-col-planets {
-    flex: 1;
+    flex: 3;
     border-right: 1px solid var(--border-color);
     padding-right: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .planets-grid-wrapper {
