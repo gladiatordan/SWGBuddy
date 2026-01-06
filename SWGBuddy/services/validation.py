@@ -213,9 +213,65 @@ class ValidationService(Core):
 			name = data.get('name')
 			if self._resource_exists(name, server_id):
 				raise ValueError(f"Error: {name} already exists for {server_id}")
+			
+			# Check for Auto-Deactivate Flag
+			if data.get('mark_types_inactive'):
+				self._bulk_deactivate(data.get('type'), server_id, user_ctx)
+				
 			self._insert_resource(data, server_id, user_ctx)
 		else:
 			self._update_resource(data, user_ctx)
+	
+	def _bulk_deactivate(self, label, server_id, user_ctx):
+		"""
+		Marks all active resources of a specific type as inactive.
+		Logs each deactivation individually.
+		"""
+		if not label: return
+
+		rules = self.valid_resources.get(label, {})
+		res_class_id = rules.get('id')
+		if not res_class_id: return
+
+		# 1. Identify targets
+		sql_find = """
+			SELECT id, name FROM resource_spawns 
+			WHERE server_id = %s AND resource_class_id = %s AND is_active = TRUE
+		"""
+		
+		# 2. Update targets
+		sql_update = """
+			UPDATE resource_spawns 
+			SET is_active = FALSE, last_modified = NOW() 
+			WHERE id = %s
+		"""
+
+		try:
+			with DatabaseContext.cursor(commit=True) as cur:
+				cur.execute(sql_find, (server_id, res_class_id))
+				targets = cur.fetchall()
+				
+				if not targets:
+					self.info(f"Auto-Deactivate: No active '{label}' resources found to update.")
+					return
+
+				for row in targets:
+					# Update
+					cur.execute(sql_update, (row['id'],))
+					
+					# Log
+					log_details = {
+						"action": "auto_deactivate",
+						"reason": "New resource added with 'Mark Inactive' checked",
+						"target_resource_id": row['id'],
+						"target_resource_name": row['name']
+					}
+					self._log_command(server_id, user_ctx, "update_resource", log_details)
+					self.info(f"Auto-Deactivated resource '{row['name']}' (ID: {row['id']})")
+
+		except Exception as e:
+			self.error(f"Failed to bulk deactivate resources for {label}: {e}")
+			# We do NOT raise here, as we want the new insert to proceed even if cleanup fails partialy
 
 	def _resource_exists(self, name, server_id):
 		if not name: return False

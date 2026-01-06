@@ -94,7 +94,12 @@ const Modal = {
             
             // Status
             statusBar: document.getElementById('modal-status-bar'),
-            loader: document.getElementById('modal-loader')
+            loader: document.getElementById('modal-loader'),
+
+			// NEW Elements
+            importSection: document.getElementById('import-section'),
+            autoDeactivateContainer: document.getElementById('auto-deactivate-container'),
+            autoDeactivateCheck: document.getElementById('mark-types-inactive')
         };
     },
 
@@ -135,6 +140,20 @@ const Modal = {
 		const els = this.elements;
 		const res = this.currentResource || {};
 		
+		// NEW: Toggle Visibility of Import Button and Auto-Deactivate Checkbox
+        // Only visible in ADD mode
+        if (els.importSection) {
+            els.importSection.classList.toggle('hidden', this.mode !== 'ADD');
+        }
+        if (els.autoDeactivateContainer) {
+            els.autoDeactivateContainer.classList.toggle('hidden', this.mode !== 'ADD');
+            // Reset checkbox state when entering view
+            if (this.mode === 'ADD' && els.autoDeactivateCheck) {
+                els.autoDeactivateCheck.checked = false;
+                els.autoDeactivateCheck.disabled = true; // Default to disabled until type selected
+            }
+        }
+
 		// 1. Header & Visibility
         if (els.title) {
             if (this.mode === 'EDIT') els.title.textContent = `Edit Resource - ${res.name}`;
@@ -148,6 +167,8 @@ const Modal = {
 		if (this.mode === 'ADD') {
 			if (els.nameGroup) els.nameGroup.style.display = 'flex';
 			if (els.nameInput) els.nameInput.disabled = false;
+			const typeVal = document.getElementById('res-type');
+            if (typeVal && typeVal.value) this.updateStatFields(typeVal.value);
 		} else {
 			if (els.nameGroup) els.nameGroup.style.display = 'none';
 		}
@@ -328,7 +349,8 @@ const Modal = {
 			name: this.elements.nameInput ? this.elements.nameInput.value : "",
 			type: this.elements.typeInput ? this.elements.typeInput.value : "",
 			notes: this.elements.notesInput ? this.elements.notesInput.value : "",
-			server_id: API.getServerContext()
+			server_id: API.getServerContext(),
+			mark_types_inactive: this.elements.autoDeactivateCheck ? this.elements.autoDeactivateCheck.checked : false
 		};
 		
 		Object.keys(STAT_MAPPING).forEach(key => {
@@ -454,6 +476,19 @@ const Modal = {
 
 	updateStatFields(label) {
 		const config = window.validResources ? window.validResources[label] : null;
+
+		// Handle Auto-Deactivate Checkbox Logic
+		if (this.elements.autoDeactivateCheck) {
+            const allowedPlanets = config && config.planets ? config.planets : [];
+            // Only enable if exactly 1 potential planet
+            if (allowedPlanets.length === 1) {
+                this.elements.autoDeactivateCheck.disabled = false;
+            } else {
+                this.elements.autoDeactivateCheck.disabled = true;
+                this.elements.autoDeactivateCheck.checked = false;
+            }
+        }
+
 		Object.entries(STAT_MAPPING).forEach(([inputId, attrCode]) => {
 			const input = this.elements.inputs[inputId];
 			if (!input) return;
