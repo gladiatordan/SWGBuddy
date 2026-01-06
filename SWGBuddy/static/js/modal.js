@@ -9,78 +9,105 @@ const STAT_MAPPING = {
 	'res_ut': 'UT', 'res_cr': 'CR'
 };
 
+
 const Modal = {
-	mode: 'DETAILS', // ADD, DETAILS, EDIT
+	mode: 'DETAILS',
 	currentResource: null,
 	originalData: {},
 	isSubmitting: false,
 	
-	elements: {
-		overlay: document.getElementById('resource-modal'),
-		title: document.getElementById('modal-title'),
-		form: document.getElementById('resource-form'),
-		
-		// Inputs
-		nameGroup: document.querySelector('#res-name').closest('.form-group'), 
-		nameInput: document.getElementById('res-name'),
-		notesInput: document.getElementById('res-notes'),
-		typeInput: document.getElementById('res-type'),
-		inputs: {}, 
-		
-		// Containers
-		typeDropdown: document.getElementById('modal-type-dropdown'),
-		typeDisplay: document.getElementById('res-type-display'),
-		statsEdit: document.getElementById('stats-container-edit'),
-		statsView: document.getElementById('stats-container-view'),
-		metaContainer: document.getElementById('meta-container'),
-		
-		// Buttons
-		btnEdit: document.getElementById('btn-modal-edit'),
-		btnSave: document.getElementById('btn-modal-save'),
-		btnCancel: document.getElementById('btn-modal-cancel'),
-		
-		// Status
-		statusBar: document.getElementById('modal-status-bar'),
-		loader: document.getElementById('modal-loader')
-	},
+    // Initialize empty to prevent "element is null" errors during script parse
+	elements: {},
 
 	init() {
-		Object.keys(STAT_MAPPING).forEach(id => {
-			const el = document.getElementById(id);
-			if (el) {
-				this.elements.inputs[id] = el;
-				el.addEventListener('input', () => this.checkDirty());
-			}
-		});
+        // 1. Cache DOM Elements (Safe because DOM is now loaded)
+        this.cacheDOM();
 
-		this.elements.nameInput.addEventListener('input', () => this.checkDirty());
-		this.elements.notesInput.addEventListener('input', () => this.checkDirty());
+        // 2. Attach Listeners only if elements exist
+        if (this.elements.inputs) {
+            Object.keys(STAT_MAPPING).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    this.elements.inputs[id] = el;
+                    el.addEventListener('input', () => this.checkDirty());
+                }
+            });
+        }
 
-		this.elements.form.addEventListener('submit', (e) => {
-			e.preventDefault();
-			this.submit();
-		});
+        if (this.elements.nameInput) {
+		    this.elements.nameInput.addEventListener('input', () => this.checkDirty());
+        }
+        
+        if (this.elements.notesInput) {
+		    this.elements.notesInput.addEventListener('input', () => this.checkDirty());
+        }
+
+        if (this.elements.form) {
+            this.elements.form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.submit();
+            });
+        }
 		
 		document.addEventListener('click', (e) => {
+            if (!this.elements.typeDropdown) return;
+            
 			const list = document.getElementById('modal-type-list');
 			const searchInput = document.getElementById('modal-type-search');
+            // Safe check for containment
             const isClickInside = this.elements.typeDropdown.contains(e.target) || (searchInput && searchInput.contains(e.target));
+            
 			if (list && list.style.display === 'block' && !isClickInside) {
 				list.style.display = 'none';
 			}
 		});
 	},
 
+    // New Helper to safely fetch elements
+    cacheDOM() {
+        const nameInput = document.getElementById('res-name');
+        
+        this.elements = {
+            overlay: document.getElementById('resource-modal'),
+            title: document.getElementById('modal-title'),
+            form: document.getElementById('resource-form'),
+            
+            // Inputs
+            // Safe navigation: check if input exists before finding closest group
+            nameGroup: nameInput ? nameInput.closest('.form-group') : null, 
+            nameInput: nameInput,
+            notesInput: document.getElementById('res-notes'),
+            typeInput: document.getElementById('res-type'),
+            inputs: {}, // Populated in init loop
+            
+            // Containers
+            typeDropdown: document.getElementById('modal-type-dropdown'),
+            typeDisplay: document.getElementById('res-type-display'),
+            statsEdit: document.getElementById('stats-container-edit'),
+            statsView: document.getElementById('stats-container-view'),
+            metaContainer: document.getElementById('meta-container'),
+            
+            // Buttons
+            btnEdit: document.getElementById('btn-modal-edit'),
+            btnSave: document.getElementById('btn-modal-save'),
+            btnCancel: document.getElementById('btn-modal-cancel'),
+            
+            // Status
+            statusBar: document.getElementById('modal-status-bar'),
+            loader: document.getElementById('modal-loader')
+        };
+    },
+
 	// --- ENTRY POINTS ---
 
 	openAdd() {
 		this.resetState();
 		this.mode = 'ADD';
-		this.elements.title.textContent = "Report Resource";
+		if (this.elements.title) this.elements.title.textContent = "Report Resource";
 		
 		this.populateTypeTree();
 		this.renderState();
-		this.elements.overlay.classList.remove('hidden');
+		if (this.elements.overlay) this.elements.overlay.classList.remove('hidden');
 	},
 
 	openDetails(resource) {
@@ -92,7 +119,7 @@ const Modal = {
 		this.populateTypeTree();
 		this.populateFields(resource);
 		this.renderState();
-		this.elements.overlay.classList.remove('hidden');
+		if (this.elements.overlay) this.elements.overlay.classList.remove('hidden');
 	},
 
 	enterEditMode() {
@@ -109,63 +136,81 @@ const Modal = {
 		const res = this.currentResource || {};
 		
 		// 1. Header & Visibility
-		if (this.mode === 'EDIT') els.title.textContent = `Edit Resource - ${res.name}`;
-		else if (this.mode === 'DETAILS') els.title.textContent = `Details - ${res.name}`;
-		else els.title.textContent = "Report Resource";
+        if (els.title) {
+            if (this.mode === 'EDIT') els.title.textContent = `Edit Resource - ${res.name}`;
+            else if (this.mode === 'DETAILS') els.title.textContent = `Details - ${res.name}`;
+            else els.title.textContent = "Report Resource";
+        }
 
 		const isDetails = (this.mode === 'DETAILS');
 
 		// FIX: Hide Name field completely unless in Add Mode
 		if (this.mode === 'ADD') {
-			els.nameGroup.style.display = 'flex';
-			els.nameInput.disabled = false;
+			if (els.nameGroup) els.nameGroup.style.display = 'flex';
+			if (els.nameInput) els.nameInput.disabled = false;
 		} else {
-			els.nameGroup.style.display = 'none';
+			if (els.nameGroup) els.nameGroup.style.display = 'none';
 		}
 
 		// Type
-		els.typeDropdown.classList.toggle('hidden', isDetails);
-		els.typeDisplay.classList.toggle('hidden', !isDetails);
-		if (isDetails) els.typeDisplay.textContent = res.type;
+		if (els.typeDropdown) els.typeDropdown.classList.toggle('hidden', isDetails);
+		if (els.typeDisplay) {
+            els.typeDisplay.classList.toggle('hidden', !isDetails);
+            if (isDetails) els.typeDisplay.textContent = res.type;
+        }
 
 		// Stats
-		els.statsEdit.classList.toggle('hidden', isDetails);
-		els.statsView.classList.toggle('hidden', !isDetails);
-		document.getElementById('stats-label').textContent = isDetails ? "Stats" : "Enter Stats (Stats not applicable to this type are disabled)";
+		if (els.statsEdit) els.statsEdit.classList.toggle('hidden', isDetails);
+		if (els.statsView) els.statsView.classList.toggle('hidden', !isDetails);
+        
+        const statsLabel = document.getElementById('stats-label');
+		if (statsLabel) statsLabel.textContent = isDetails ? "Stats" : "Enter Stats (Stats not applicable to this type are disabled)";
 		
 		if (isDetails) this.renderStatsView(res);
-		else this.updateStatFields(document.getElementById('res-type').value);
+		else {
+            const typeVal = document.getElementById('res-type');
+            if (typeVal) this.updateStatFields(typeVal.value);
+        }
 
 		// Meta Data
-		els.metaContainer.classList.toggle('hidden', this.mode === 'ADD');
-		if (this.mode !== 'ADD') this.renderMetaData(res);
+		if (els.metaContainer) {
+            els.metaContainer.classList.toggle('hidden', this.mode === 'ADD');
+            if (this.mode !== 'ADD') this.renderMetaData(res);
+        }
 
 		// Inputs
-		els.notesInput.disabled = isDetails;
-		els.notesInput.classList.toggle('static-value', isDetails);
+        if (els.notesInput) {
+            els.notesInput.disabled = isDetails;
+            els.notesInput.classList.toggle('static-value', isDetails);
+        }
 
 		// Buttons
 		const canEditRole = window.Auth && Auth.hasPermission('EDITOR');
 		
 		if (this.mode === 'DETAILS') {
-			els.btnEdit.classList.remove('hidden');
-			els.btnEdit.disabled = !canEditRole;
-			els.btnSave.disabled = true;
-			els.btnCancel.disabled = true; 
+			if (els.btnEdit) {
+                els.btnEdit.classList.remove('hidden');
+                els.btnEdit.disabled = !canEditRole;
+            }
+			if (els.btnSave) els.btnSave.disabled = true;
+			if (els.btnCancel) els.btnCancel.disabled = true; 
 		} else if (this.mode === 'EDIT') {
-			els.btnEdit.classList.remove('hidden');
-			els.btnEdit.disabled = true;
+			if (els.btnEdit) {
+                els.btnEdit.classList.remove('hidden');
+                els.btnEdit.disabled = true;
+            }
 			// Save state handled by checkDirty
-			els.btnCancel.disabled = false;
+			if (els.btnCancel) els.btnCancel.disabled = false;
 		} else { // ADD
-			els.btnEdit.classList.add('hidden');
-			els.btnSave.disabled = false;
-			els.btnCancel.disabled = false;
+			if (els.btnEdit) els.btnEdit.classList.add('hidden');
+			if (els.btnSave) els.btnSave.disabled = false;
+			if (els.btnCancel) els.btnCancel.disabled = false;
 		}
 	},
 
 	renderStatsView(res) {
 		const container = this.elements.statsView;
+        if (!container) return;
 		container.innerHTML = '';
 		
 		Object.keys(STAT_MAPPING).forEach(key => {
@@ -185,28 +230,31 @@ const Modal = {
 	},
 
 	renderMetaData(res) {
-		// FIX: Display Timestamps correctly
 		const dateLabel = res.last_modified_ts ? "Last Modified" : "Date Reported";
 		const ts = res.last_modified_ts || res.date_reported_ts || 0;
 		
-		document.querySelector('#meta-container label').textContent = dateLabel;
-		document.getElementById('res-date').textContent = formatDate(ts);
-		document.getElementById('res-reporter').textContent = res.reporter_name || "Unknown";
+        const metaLabel = document.querySelector('#meta-container label');
+		if (metaLabel) metaLabel.textContent = dateLabel;
+        
+		const dateEl = document.getElementById('res-date');
+        if (dateEl) dateEl.textContent = formatDate(ts);
+        
+        const repEl = document.getElementById('res-reporter');
+        if (repEl) repEl.textContent = res.reporter_name || "Unknown";
 		
-		// FIX: Handle 'planet' (DB column) vs 'planets' (Alias)
 		const pList = res.planet || res.planets || [];
 		const pStr = Array.isArray(pList) ? pList.join(', ') : pList;
-		document.getElementById('res-planets').textContent = pStr || "None";
+        const planetEl = document.getElementById('res-planets');
+		if (planetEl) planetEl.textContent = pStr || "None";
 		
 		const statusDiv = document.getElementById('res-status');
-		statusDiv.innerHTML = `<span class="status-text ${res.is_active ? 'active' : 'inactive'}">${res.is_active ? 'Active' : 'Inactive'}</span>`;
+		if (statusDiv) statusDiv.innerHTML = `<span class="status-text ${res.is_active ? 'active' : 'inactive'}">${res.is_active ? 'Active' : 'Inactive'}</span>`;
 	},
 
 	populateFields(res) {
-		this.elements.nameInput.value = res.name;
-		this.elements.notesInput.value = res.notes || "";
-		this.elements.typeInput.value = res.type;
-		// document.getElementById('modal-type-selected').textContent = res.type;
+        if (this.elements.nameInput) this.elements.nameInput.value = res.name;
+		if (this.elements.notesInput) this.elements.notesInput.value = res.notes || "";
+		if (this.elements.typeInput) this.elements.typeInput.value = res.type;
 
 		const searchInput = document.getElementById('modal-type-search');
         if (searchInput) searchInput.value = res.type;
@@ -226,7 +274,70 @@ const Modal = {
 	},
 
 	close() {
-		this.elements.overlay.classList.add('hidden');
+		if (this.elements.overlay) this.elements.overlay.classList.add('hidden');
+	},
+
+	async submit() {
+		if (this.isSubmitting) return;
+		
+		for (const [id, input] of Object.entries(this.elements.inputs)) {
+			if (!input.disabled && input.value) {
+				const val = parseInt(input.value);
+				if (isNaN(val) || val < 1 || val > 1000) {
+					alert(`${STAT_MAPPING[id]} must be between 1 and 1000.`);
+					return;
+				}
+			}
+		}
+
+		try {
+			this.isSubmitting = true;
+            if (this.elements.loader) this.elements.loader.classList.remove('hidden');
+			
+			const formData = this.captureCurrentFormData();
+			
+			if (this.mode === 'EDIT') {
+				formData.id = this.currentResource.id;
+				await API.updateResource(formData);
+			} else {
+				await API.addResource(formData);
+			}
+
+			await loadResources(); 
+			
+			const freshRes = rawResourceData.find(r => r.name === formData.name);
+			if (freshRes) {
+				this.openDetails(freshRes);
+			} else {
+				this.close();
+			}
+
+		} catch (error) {
+            if (this.elements.statusBar) {
+			    this.elements.statusBar.textContent = "Error: " + error.message;
+			    this.elements.statusBar.className = "status-bar status-error";
+            }
+		} finally {
+			this.isSubmitting = false;
+			if (this.elements.loader) this.elements.loader.classList.add('hidden');
+		}
+	},
+
+	captureCurrentFormData() {
+		const data = {
+			name: this.elements.nameInput ? this.elements.nameInput.value : "",
+			type: this.elements.typeInput ? this.elements.typeInput.value : "",
+			notes: this.elements.notesInput ? this.elements.notesInput.value : "",
+			server_id: API.getServerContext()
+		};
+		
+		Object.keys(STAT_MAPPING).forEach(key => {
+			const input = this.elements.inputs[key];
+			if (input && !input.disabled && input.value) {
+				data[key] = parseInt(input.value);
+			}
+		});
+		return data;
 	},
 
 	async submit() {
@@ -273,23 +384,6 @@ const Modal = {
 		}
 	},
 
-	captureCurrentFormData() {
-		const data = {
-			name: this.elements.nameInput.value,
-			type: this.elements.typeInput.value,
-			notes: this.elements.notesInput.value,
-			server_id: API.getServerContext()
-		};
-		
-		Object.keys(STAT_MAPPING).forEach(key => {
-			const input = this.elements.inputs[key];
-			if (input && !input.disabled && input.value) {
-				data[key] = parseInt(input.value);
-			}
-		});
-		return data;
-	},
-
 	checkDirty() {
 		if (this.mode !== 'EDIT') return;
 		
@@ -306,14 +400,14 @@ const Modal = {
 			if (oldVal.toString() !== newVal.toString()) isDirty = true;
 		});
 
-		this.elements.btnSave.disabled = !isDirty;
+        if (this.elements.btnSave) this.elements.btnSave.disabled = !isDirty;
 	},
 
 	// ... Tree Helpers (populateTypeTree, selectType, updateStatFields, toggleDropdown, resetState) ...
 	populateTypeTree() {
 		const container = document.getElementById('modal-type-dropdown');
+        if (!container) return;
 		
-		// 1. Transform dropdown trigger into a Search Input
 		container.innerHTML = `
 			<input type="text" 
 				id="modal-type-search" 
@@ -327,9 +421,9 @@ const Modal = {
 
 	filterTypes(term) {
 		const list = document.getElementById('modal-type-list');
+        if (!list) return;
 		const termLower = term.toLowerCase();
 		
-		// Use window.validResources which only contains actual spawnable types
 		const matches = Object.keys(window.validResources).filter(type => 
 			type.toLowerCase().includes(termLower)
 		);
@@ -348,11 +442,12 @@ const Modal = {
 
 	selectType(label) {
 		if (this.mode === 'DETAILS') return; 
-		this.elements.typeInput.value = label;
+		if (this.elements.typeInput) this.elements.typeInput.value = label;
 		const searchInput = document.getElementById('modal-type-search');
         if (searchInput) searchInput.value = label;
 
-		document.getElementById('modal-type-list').style.display = 'none';
+		const list = document.getElementById('modal-type-list');
+        if (list) list.style.display = 'none';
 		this.updateStatFields(label);
 		this.checkDirty();
 	},
@@ -378,14 +473,16 @@ const Modal = {
 	
 	toggleDropdown() {
 		const list = document.getElementById('modal-type-list');
-		list.style.display = list.style.display === 'block' ? 'none' : 'block';
+		if (list) list.style.display = list.style.display === 'block' ? 'none' : 'block';
 	},
 	
 	resetState() {
-		this.elements.form.reset();
-		this.elements.statusBar.textContent = "";
-		this.elements.statusBar.className = "status-bar";
-		this.elements.loader.classList.add('hidden');
+		if (this.elements.form) this.elements.form.reset();
+		if (this.elements.statusBar) {
+            this.elements.statusBar.textContent = "";
+		    this.elements.statusBar.className = "status-bar";
+        }
+		if (this.elements.loader) this.elements.loader.classList.add('hidden');
 		this.isSubmitting = false;
 		const searchInput = document.getElementById('modal-type-search');
         if (searchInput) searchInput.value = "";
@@ -393,15 +490,13 @@ const Modal = {
 
 	importClipboard: async function() {
 		const errorDiv = document.getElementById('paste-error');
-		errorDiv.style.display = 'none';
+		if (errorDiv) errorDiv.style.display = 'none';
 
 		try {
-			// 1. Read Clipboard
 			const items = await navigator.clipboard.read();
 			let imageBlob = null;
 
 			for (const item of items) {
-				// Look for image types
 				const type = item.types.find(t => t.startsWith('image/'));
 				if (type) {
 					imageBlob = await item.getType(type);
@@ -413,17 +508,13 @@ const Modal = {
 				throw new Error("No image found in clipboard.");
 			}
 
-			// 2. Prepare Upload
-			this.elements.loader.classList.remove('hidden');
-			document.querySelector('.loader-text').textContent = "ANALYZING IMAGE...";
+			if (this.elements.loader) this.elements.loader.classList.remove('hidden');
+			const loaderText = document.querySelector('.loader-text');
+            if (loaderText) loaderText.textContent = "ANALYZING IMAGE...";
 
 			const formData = new FormData();
 			formData.append('image', imageBlob);
 
-			// 3. Send to Backend
-			// We use fetch directly here to handle FormData easily, 
-			// but manually adding the CSRF header is good practice if your API._fetch does it.
-			// Since API._fetch is JSON oriented, we'll do a raw fetch or adapt API.
 			const response = await fetch('/api/scan-image', {
 				method: 'POST',
 				headers: {
@@ -438,37 +529,36 @@ const Modal = {
 				throw new Error(result.error || "Scan failed");
 			}
 
-			// 4. Populate Fields
 			const data = result.data;
 			
-			// Name (Only if currently empty to avoid overwriting user edits)
-			if (data.name && !this.elements.nameInput.value) {
+			if (data.name && this.elements.nameInput && !this.elements.nameInput.value) {
 				this.elements.nameInput.value = data.name;
 			}
 
-			// Stats
 			if (data.stats) {
 				Object.entries(data.stats).forEach(([key, val]) => {
 					const input = this.elements.inputs[key];
-					// Only populate if input exists (is compatible with current Type)
-					// and is currently empty (don't overwrite manual entry)
 					if (input && !input.disabled && !input.value) {
 						input.value = val;
 					}
 				});
 			}
 			
-			// 5. Success Feedback
-			this.elements.statusBar.textContent = "Image imported successfully. Please review fields.";
-			this.elements.statusBar.className = "status-bar status-success"; // You might need CSS for this class
+			if (this.elements.statusBar) {
+                this.elements.statusBar.textContent = "Image imported successfully. Please review fields.";
+			    this.elements.statusBar.className = "status-bar status-success";
+            }
 
 		} catch (error) {
 			console.error("Paste Error:", error);
-			errorDiv.textContent = error.message;
-			errorDiv.style.display = 'block';
+            if (errorDiv) {
+			    errorDiv.textContent = error.message;
+			    errorDiv.style.display = 'block';
+            }
 		} finally {
-			this.elements.loader.classList.add('hidden');
-			document.querySelector('.loader-text').textContent = "PROCESSING..."; // Reset text
+			if (this.elements.loader) this.elements.loader.classList.add('hidden');
+			const loaderText = document.querySelector('.loader-text');
+            if (loaderText) loaderText.textContent = "PROCESSING..."; 
 		}
 	}
 };
@@ -542,4 +632,5 @@ window.openAddResourceModal = () => Modal.openAdd();
 window.closeResourceModal = () => Modal.close();
 window.Modal = Modal; 
 
+// Initializer handles the calls after DOM is ready
 document.addEventListener('DOMContentLoaded', () => Modal.init());
