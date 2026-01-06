@@ -159,26 +159,29 @@ function renderPaginatedTable() {
 }
 
 function renderPageNumbers() {
-	const pageSelect = document.getElementById('page-select');
+    // Calculate total pages
 	const totalPages = Math.ceil(filteredData.length / resultsPerPage) || 1;
 	
-	pageSelect.innerHTML = '';
-	for (let i = 1; i <= totalPages; i++) {
-		const option = document.createElement('option');
-		option.value = i;
-		option.textContent = `Page ${i}`;
-		if (i === currentPage) option.selected = true;
-		pageSelect.appendChild(option);
-	}
+    // 1. Update the Display Text (e.g. "1 / 15")
+	const pageDisplay = document.getElementById('page-display');
+    if (pageDisplay) {
+        pageDisplay.textContent = `${currentPage} / ${totalPages}`;
+    }
 
-	document.getElementById('btn-first').disabled = (currentPage === 1);
-	document.getElementById('btn-prev').disabled = (currentPage === 1);
-	document.getElementById('btn-next').disabled = (currentPage === totalPages);
-	document.getElementById('btn-last').disabled = (currentPage === totalPages);
+    // 2. Update Button States (Safely check if they exist first)
+	const btnFirst = document.getElementById('btn-first');
+	const btnPrev = document.getElementById('btn-prev');
+	const btnNext = document.getElementById('btn-next');
+	const btnLast = document.getElementById('btn-last');
+
+    if (btnFirst) btnFirst.disabled = (currentPage === 1);
+	if (btnPrev) btnPrev.disabled = (currentPage === 1);
+	if (btnNext) btnNext.disabled = (currentPage === totalPages);
+	if (btnLast) btnLast.disabled = (currentPage === totalPages);
 }
 
 function goToPage(destination) {
-	const totalPages = Math.ceil(filteredData.length / resultsPerPage);
+	const totalPages = Math.ceil(filteredData.length / resultsPerPage) || 1; // Ensure at least 1 page
 
 	if (destination === 'first') currentPage = 1;
 	else if (destination === 'last') currentPage = totalPages;
