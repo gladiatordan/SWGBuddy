@@ -376,7 +376,7 @@
 375	312	"wheat_wild"	"Wild Wheat"	361	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
 376	313	"wheat_wild_corellia"	"Corellian Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
 377	314	"wheat_wild_dantooine"	"Dantooine Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
-378	315	"wheat_wild_dathomir"	"Dathomir Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+378	315	"wheat_wild_dathomir"	"Dathomirian Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
 379	316	"wheat_wild_endor"	"Endorian Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
 380	317	"wheat_wild_lok"	"Lokian Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
 381	318	"wheat_wild_naboo"	"Nabooian Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
