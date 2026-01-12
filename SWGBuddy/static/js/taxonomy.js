@@ -83,19 +83,6 @@ window.showTaxonomyResults = function(term) {
         item.label.toLowerCase().includes(termLower)
     );
 
-    // Always add "All Resources" at the top if clearing search
-    if (termLower === '') {
-        const rootItem = document.createElement('div');
-        rootItem.className = 'dropdown-item root-item';
-        rootItem.textContent = 'All Resources';
-        rootItem.onclick = () => {
-            document.getElementById('taxonomy-search-input').value = 'All Resources';
-            selectCategory(null, 'All Resources');
-            list.style.display = 'none';
-        };
-        list.appendChild(rootItem);
-    }
-
     if (matches.length === 0 && termLower !== '') {
         list.innerHTML = '<div class="dropdown-item" style="color:var(--text-dim)">No matches found</div>';
         return;

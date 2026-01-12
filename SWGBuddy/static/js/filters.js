@@ -184,16 +184,17 @@ function multiColumnComparator(a, b) {
 
 function selectCategory(label, displayLabel = null) {
     // Default fallback
-	if (!label) label = "All Resources";
+	// if (!label) label = "All Resources";
     
     // FIX: Update the search input value, not the old div text
     const input = document.getElementById('taxonomy-search-input');
     if (input) {
         // If resetting to root, show "All Resources", otherwise show specific label
-        input.value = (label === "Resources" || label === "All Resources") ? "All Resources" : label;
+        input.value = (label && label !== "Resources" && label !== "All Resources") ? label : "";
     }
 
-	currentSelectedLabel = label;
+	// Set internal state to null for "All Resources" logic
+    currentSelectedLabel = (label === "Resources" || label === "All Resources") ? null : label;
     
     // Hide the list
     const list = document.getElementById('taxonomy-list');
