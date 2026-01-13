@@ -2,6 +2,7 @@ import time
 import signal
 import sys
 import multiprocessing
+from dotenv import load_dotenv
 from services.logger import LogService
 from services.validation import ValidationService
 from services.web import WebService
@@ -67,6 +68,7 @@ class ServiceManager:
         sys.exit(0)
 
 if __name__ == "__main__":
+    load_dotenv() # Load environment into os.environ (local dev mode)
     manager = ServiceManager()
     signal.signal(signal.SIGINT, manager.stop)
     manager.start()

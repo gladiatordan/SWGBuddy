@@ -11,7 +11,6 @@ import urllib.parse
 from queue import Queue, Empty
 from flask import Flask, jsonify, request, render_template, redirect, url_for, session, current_app, abort
 from flask_cors import CORS
-from dotenv import load_dotenv
 from core.database import DatabaseContext
 
 from PIL import Image
@@ -30,7 +29,8 @@ app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev_secret_key_change_me")
 app.config.update(
 	SESSION_COOKIE_HTTPONLY=True,
 	SESSION_COOKIE_SAMESITE='Lax',
-	SESSION_COOKIE_SECURE=True, # Require HTTPS (Browsers may block cookies on HTTP if this is True)
+	# Require HTTPS (Browsers may block cookies on HTTP if this is True)
+	SESSION_COOKIE_SECURE=os.getenv("APP_ENV") != "development",
 	PERMANENT_SESSION_LIFETIME=86400 * 7 # 7 Days
 )
 
@@ -525,5 +525,4 @@ def scan_image():
 
 
 if __name__ == '__main__':
-	load_dotenv() # Load environment into os.environ (local dev mode)
 	app.run(debug=True, port=5000)
