@@ -11,6 +11,7 @@ import urllib.parse
 from queue import Queue, Empty
 from flask import Flask, jsonify, request, render_template, redirect, url_for, session, current_app, abort
 from flask_cors import CORS
+from dotenv import load_dotenv
 from core.database import DatabaseContext
 
 from PIL import Image
@@ -524,4 +525,5 @@ def scan_image():
 
 
 if __name__ == '__main__':
+	load_dotenv() # Load environment into os.environ (local dev mode)
 	app.run(debug=True, port=5000)
