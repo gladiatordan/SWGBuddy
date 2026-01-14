@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 
-const AuthWidget = () => {
+const AuthWidget = ({ onOpenMgmt }) => {
     const { user, loading, hasPermission } = useAuth();
     // Replaces the "openServerManagement" onclick handler
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -47,7 +47,13 @@ const AuthWidget = () => {
                 {dropdownOpen && (
                     <div className="user-dropdown-menu">
                         {hasPermission('EDITOR') && (
-                            <div className="dropdown-item" onClick={() => alert("Server Management Coming Soon")}>
+                            <div 
+                                className="dropdown-item" 
+                                onClick={() => {
+                                    setDropdownOpen(false);
+                                    onOpenMgmt(); // Triggers the modal state in Header.jsx
+                                }}
+                            >
                                 <i className="fa-solid fa-server"></i> Server Management
                             </div>
                         )}

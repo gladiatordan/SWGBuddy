@@ -26,6 +26,23 @@ export const formatDate = (epoch) => {
     return `${day}/${month}/${year}`;
 };
 
+export const formatResourceDate = (rawDate) => {
+    if (!rawDate) return '-';
+    
+    // Original Logic: Check if seconds or milliseconds
+    const dObj = (!isNaN(rawDate) && rawDate < 1e12) 
+                 ? new Date(rawDate * 1000) 
+                 : new Date(rawDate);
+
+    if (isNaN(dObj.getTime())) return 'Invalid Date';
+
+    const day = String(dObj.getUTCDate()).padStart(2, '0');
+    const month = String(dObj.getUTCMonth() + 1).padStart(2, '0');
+    const year = dObj.getUTCFullYear();
+    
+    return `${day}/${month}/${year}`; // Matches original format
+};
+
 // --- FILTERING & SORTING LOGIC ---
 export const getDescendantLabels = (taxonomyTree, parentLabel) => {
     if (!parentLabel || !taxonomyTree) return [];
@@ -160,4 +177,17 @@ export const sortResources = (data, sortStack) => {
         }
         return 0;
     });
+};
+
+export const findTaxonomyNode = (nodes, label) => {
+    if (!nodes || !Array.isArray(nodes)) return null;
+
+    for (const node of nodes) {
+        if (node.label === label) return node;
+        if (node.children) {
+            const found = findTaxonomyNode(node.children, label);
+            if (found) return found;
+        }
+    }
+    return null;
 };

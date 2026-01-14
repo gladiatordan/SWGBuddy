@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import AuthWidget from '../Auth/AuthWidget';
+import { useServer } from '../../contexts/ServerContext';
+import ManagementModal from '../Modals/ManagementModal';
 
-const Header = () => {
-    // State to track active tab (Resources vs Schematics)
-    const [activeTab, setActiveTab] = useState('resources');
-    // State for server selection
-    const [selectedServer, setSelectedServer] = useState('cuemu');
-
+// Now accepts props for state control
+const Header = ({ activeTab, setActiveTab, selectedServer, setSelectedServer }) => {
+    const [isMgmtOpen, setIsMgmtOpen] = useState(false);
     return (
         <header className="main-header">
             <div className="logo"><span>SWG</span>BUDDY</div>
@@ -33,16 +32,21 @@ const Header = () => {
                         id="server-select-wrapper" 
                         value={selectedServer}
                         onChange={(e) => setSelectedServer(e.target.value)}
+                        className="themed-select"
                     >
                         <option value="cuemu">CUEmu</option>
+                        {/* Future servers can be mapped here */}
                     </select>
                 </div>
 
-                <AuthWidget />
+                <AuthWidget onOpenMgmt={() => setIsMgmtOpen(true)} />
             </div>
             
-            {/* Management Modal Placeholder - We will build this in Phase 4 */}
-            <div id="management-modal" className="modal hidden"></div>
+            <ManagementModal 
+                isOpen={isMgmtOpen} 
+                onClose={() => setIsMgmtOpen(false)} 
+                serverId={selectedServer} 
+            />
         </header>
     );
 };

@@ -4,12 +4,30 @@ import { useAuth } from '../../contexts/AuthContext';
 import { filterResources, sortResources } from '../../utils/resourceUtils';
 import ResourceRow from './ResourceRow';
 import TaxonomyFilter from './TaxonomyFilter';
+import ResourceModal from '../Modals/ResourceModal';
 import Loader from '../Common/Loader';
 
-const ResourceList = () => {
-    const { resources, taxonomy, loading, actions } = useResources();
+const ResourceList = ({ serverId }) => {
+    const { resources, taxonomy, loading, actions } = useResources(serverId);
     const { hasPermission } = useAuth();
     const isEditor = hasPermission('EDITOR');
+
+	const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedResource, setSelectedResource] = useState(null);
+
+    const handleAddClick = () => {
+        setSelectedResource(null); // Null means Add Mode
+        setIsModalOpen(true);
+    };
+
+	const handleRowClick = (resource) => {
+        setSelectedResource(resource);
+        setIsModalOpen(true);
+    };
+
+    const handleModalSave = () => {
+        actions.refresh(); // Refresh the table after save
+    };
 
     // --- View State ---
     const [filters, setFilters] = useState({
@@ -118,7 +136,7 @@ const ResourceList = () => {
                 {/* 1. Add Button */}
                 <div className="filter-col-add">
                     {isEditor && (
-                        <button className="add-resource-btn" onClick={() => alert("Open Add Modal")}>
+                        <button className="add-resource-btn" onClick={handleAddClick}>
                             <i className="fa-solid fa-plus"></i> Add Resource
                         </button>
                     )}
@@ -286,14 +304,21 @@ const ResourceList = () => {
                                 key={res.id} 
                                 resource={res} 
                                 isEditor={isEditor}
+								taxonomy={taxonomy}
                                 onToggleStatus={actions.toggleStatus}
                                 onTogglePlanet={actions.togglePlanet}
-                                onClick={(r) => console.log("Open Modal", r)}
+                                onClick={handleRowClick}
                             />
                         ))}
                     </tbody>
                 </table>
             </div>
+			<ResourceModal 
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                resource={selectedResource}
+                onSave={handleModalSave}
+            />
         </section>
     );
 };

@@ -293,6 +293,16 @@
     margin-bottom: 15px;
 }
 
+.stat-group.disabled-stat {
+    opacity: 0.4;
+    pointer-events: none; /* Prevents clicking */
+}
+
+.stat-group.disabled-stat input {
+    background: rgba(0,0,0,0.2);
+    border-color: transparent;
+}
+
 .loader-text {
     font-family: 'Orbitron', sans-serif;
     color: var(--accent-blue);
@@ -308,3 +318,43 @@
 @keyframes spin { 100% { transform: rotate(360deg); } }
 @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
 .hidden { display: none !important; }
+
+
+/* Remove default number spinners */
+.stat-input-no-spinner::-webkit-inner-spin-button,
+.stat-input-no-spinner::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.stat-input-no-spinner {
+    -moz-appearance: textfield; /* Firefox */
+}
+
+/* Positioning for the Clear button */
+.stat-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.stat-input-wrapper input {
+    padding-right: 25px; /* Make room for the X */
+    width: 100%;
+}
+
+.clear-stat-btn {
+    position: absolute;
+    right: 8px;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.clear-stat-btn:hover {
+    color: var(--danger-color);
+}

@@ -1,9 +1,11 @@
 import React from 'react';
-import { getStatColorClass, formatDate } from '../../utils/resourceUtils';
+import { getStatColorClass, formatDate, findTaxonomyNode } from '../../utils/resourceUtils';
+import { useResources } from '../../hooks/useResources';
+import { useServer } from '../../contexts/ServerContext';
 
 const ALL_PLANETS = ["Corellia", "Dantooine", "Dathomir", "Endor", "Lok", "Naboo", "Rori", "Talus", "Tatooine", "Yavin", "Mustafar", "Kashyyyk"];
 
-const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onClick }) => {
+const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onClick, taxonomy }) => {
     // Stat Keys to iterate
     const statKeys = ['res_oq', 'res_cr', 'res_cd', 'res_dr', 'res_fl', 'res_hr', 'res_ma', 'res_pe', 'res_sr', 'res_ut'];
 
@@ -11,8 +13,16 @@ const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onCli
     const currentPlanets = Array.isArray(resource.planet) ? resource.planet : (resource.planet ? [resource.planet] : []);
     const sortedPlanets = [...currentPlanets].sort();
 
-    // Planet Dropdown Options (for Editor)
-    const availablePlanets = ALL_PLANETS.filter(p => !currentPlanets.includes(p));
+    const resourceConfig = findTaxonomyNode(taxonomy, resource.type);
+
+    // 3. Logic ported from table.js
+    const allowedPlanets = resourceConfig?.planets || ALL_PLANETS;
+    const reportedPlanetsLower = (resource.planet || []).map(p => p.toLowerCase());
+    
+    // Filter available options
+    const availablePlanets = allowedPlanets.filter(
+        p => !reportedPlanetsLower.includes(p.toLowerCase())
+    );
 
     return (
         <tr onClick={() => onClick(resource)}>
@@ -41,7 +51,7 @@ const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onCli
             })}
 
             {/* Location / Planets */}
-            <td className="col-loc">
+            <td className="col-loc" onClick={(e) => e.stopPropagation()}>
                 <div className="planets-container">
                     {sortedPlanets.map(p => (
                         <span 
@@ -65,8 +75,7 @@ const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onCli
                     <div className="planet-controls">
                         <select 
                             className="planet-select" 
-                            onChange={(e) => onTogglePlanet(resource, e.target.value)}
-                            onClick={(e) => e.stopPropagation()}
+                            onChange={(e) => onTogglePlanet(e.target.value, resource.name)}
                             value=""
                         >
                             <option value="" disabled>+</option>
@@ -82,7 +91,7 @@ const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onCli
             <td className="col-date">{formatDate(resource.date_reported)}</td>
 
             {/* Status */}
-            <td className="col-status">
+            <td className="col-status" onClick={(e) => e.stopPropagation()}>
                 <div className="status-container">
                     <span className={`status-text ${resource.is_active ? 'active' : 'inactive'}`}>
                         {resource.is_active ? 'Active' : 'Inactive'}
