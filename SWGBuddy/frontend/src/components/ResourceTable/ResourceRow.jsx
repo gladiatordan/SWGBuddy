@@ -75,7 +75,7 @@ const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onCli
                     <div className="planet-controls">
                         <select 
                             className="planet-select" 
-                            onChange={(e) => onTogglePlanet(e.target.value, resource.name)}
+                            onChange={(e) => onTogglePlanet(resource, e.target.value)}
                             value=""
                         >
                             <option value="" disabled>+</option>

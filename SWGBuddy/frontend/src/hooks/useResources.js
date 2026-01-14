@@ -80,7 +80,7 @@ export const useResources = (serverId = 'cuemu') => {
     };
 
     const togglePlanet = async (resource, planetName) => {
-		console.log("Toggle Planet Resource:", resource);
+		// console.log("Toggle Planet Resource:", resource);
         let currentPlanets = resource.planet || resource.planets || [];
         // Ensure array
         if (!Array.isArray(currentPlanets)) currentPlanets = [currentPlanets];
