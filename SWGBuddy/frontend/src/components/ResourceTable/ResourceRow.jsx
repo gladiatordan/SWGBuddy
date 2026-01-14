@@ -25,7 +25,7 @@ const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onCli
     );
 
     return (
-        <tr onClick={() => onClick(resource)}>
+        <tr>
             <td className="res-name">
                 <a className="res-link" onClick={(e) => { e.preventDefault(); onClick(resource); }}>
                     {resource.name}
