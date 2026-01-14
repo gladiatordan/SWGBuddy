@@ -111,6 +111,16 @@ const API = {
             body: formData
         });
         return await response.json();
+    },
+
+	async fetchSchematicIndex(serverId) {
+        const response = await this._fetch(`/api/schematics/index?server=${serverId}`);
+        return await response.json();
+    },
+
+	async fetchSchematicDetails(schematicId, serverId) {
+        const response = await this._fetch(`/api/schematics/${schematicId}?server=${serverId}`);
+        return await response.json();
     }
 };
 

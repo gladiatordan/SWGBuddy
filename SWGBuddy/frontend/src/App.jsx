@@ -5,6 +5,7 @@ import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
 import Loader from './components/Common/Loader';
 import ResourceList from './components/ResourceTable/ResourceList';
+import SchematicContainer from './components/Schematics/SchematicContainer';
 
 
 function App() {
@@ -63,11 +64,7 @@ function App() {
 							<>
 								{activeTab === 'resources' && <ResourceList serverId={selectedServer} />}
 								
-								{activeTab === 'schematics' && (
-									<section id="schematics-container" className="page-container active">
-										<div className="placeholder-msg">Schematics functionality coming soon...</div>
-									</section>
-								)}
+								{activeTab === 'schematics' && <SchematicContainer serverId={selectedServer} />}
 							</>
 						)}
 					</main>

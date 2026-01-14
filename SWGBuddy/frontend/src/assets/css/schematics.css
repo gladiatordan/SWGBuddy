@@ -1,0 +1,343 @@
+/* frontend/src/assets/css/schematics.css */
+
+/* The main container acts as the Flex Row */
+.schematics-layout {
+    display: flex;
+    flex-direction: row; /* Ensures side-by-side layout */
+    align-items: stretch; /* Both columns stretch to full height */
+    gap: 15px;
+    height: calc(100vh - 140px); /* Adjusts for Header/Footer */
+    padding: 10px 0;
+    overflow: hidden; 
+}
+
+/* --- LEFT COLUMN: SIDEBAR --- */
+.schematics-sidebar {
+    flex: 0 0 25%; /* Fixed 25% width */
+    min-width: 250px;
+    max-width: 350px;
+    background: rgba(10, 15, 20, 0.7);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(5px);
+}
+
+.sidebar-header {
+    padding: 15px 10px;
+    background: rgba(0, 200, 255, 0.05);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filter-row {
+    display: flex;
+    gap: 8px;
+}
+
+.sidebar-select {
+    flex: 1; /* Both take equal width */
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-dim);
+    color: var(--text-main);
+    padding: 6px;
+    border-radius: 3px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    outline: none;
+}
+
+.sidebar-select:focus {
+    border-color: var(--accent-blue);
+}
+
+/* Adjust Search Input to match */
+.sidebar-search {
+    width: 95%;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-dim);
+    color: var(--text-main);
+    padding: 8px;
+    border-radius: 3px;
+    font-family: 'Orbitron', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.sidebar-search:focus {
+    border-color: var(--accent-blue);
+}
+
+.sidebar-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 5px;
+}
+
+/* Scrollbar styling for sidebar */
+.sidebar-list::-webkit-scrollbar {
+    width: 6px;
+}
+.sidebar-list::-webkit-scrollbar-thumb {
+    background: var(--border-dim);
+    border-radius: 3px;
+}
+
+.schematics-main-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Contains the scrollbar inside the content area */
+}
+
+/* --- TABS BAR --- */
+.schematics-tabs-bar {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    padding: 0 10px;
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(0, 0, 0, 0.2);
+    height: 40px; /* Fixed height for tab strip */
+    flex-shrink: 0;
+}
+
+.schematic-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-dim);
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    max-width: 200px;
+    position: relative;
+}
+
+.schematic-tab:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.schematic-tab.active {
+    background: rgba(10, 15, 20, 0.8); /* Matches content background */
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    border-bottom: 1px solid rgba(10, 15, 20, 0.8); /* Hides the line between tab and content */
+    margin-bottom: -1px; /* Overlap the border */
+    z-index: 10;
+}
+
+.tab-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.close-tab-btn {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0 2px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+}
+
+.close-tab-btn:hover {
+    color: var(--danger-color);
+    background: rgba(255,0,0,0.1);
+    opacity: 1;
+}
+
+.add-tab-btn {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: color 0.2s;
+}
+
+.add-tab-btn:hover {
+    color: var(--accent-blue);
+}
+
+/* --- CONTENT AREA --- */
+.schematics-content-area {
+    flex: 1;
+    background: rgba(10, 15, 20, 0.5);
+    border: 1px solid var(--border-color);
+    border-top: none; /* Tabs handle the top border */
+    border-radius: 0 0 4px 4px;
+    position: relative;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.schematic-item {
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.schematic-item:hover {
+    background: rgba(0, 200, 255, 0.1);
+}
+
+.schematic-item.active {
+    background: rgba(0, 200, 255, 0.15);
+    border-left: 3px solid var(--accent-blue);
+    padding-left: 7px; /* Compensate for border */
+}
+
+.schematic-name {
+    color: var(--text-highlight);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.schematic-meta {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* --- RIGHT COLUMN: DATA CONTAINER --- */
+.schematics-data-container {
+    flex: 1; /* Takes remaining 75% width */
+    background: rgba(10, 15, 20, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    position: relative;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.empty-state {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dim);
+    text-align: center;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    opacity: 0.3;
+}
+
+.schematic-header {
+    border-bottom: 1px solid var(--accent-blue);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.schematic-title {
+    color: var(--text-highlight);
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.specs-container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.specs-left-column {
+    flex: 0 0 50%; /* Occupies exactly half the main container */
+    display: flex;
+    gap: 10px; /* Gap between Meta and Ingredients tables */
+}
+
+/* Generic Table Wrapper for both small tables */
+.info-table-wrapper {
+    flex: 1; /* Each table takes 50% of the specs-left-column */
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-dim);
+    border-radius: 4px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.table-header {
+    color: var(--accent-blue);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 4px;
+}
+
+/* Compact Table Styling */
+.schematic-info-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem; /* Smaller font for compact view */
+}
+
+.schematic-info-table td {
+    padding: 4px 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.schematic-info-table tr:last-child td {
+    border-bottom: none;
+}
+
+.info-label {
+    color: var(--text-dim);
+    width: 40%;
+}
+
+.info-value {
+    color: var(--text-main);
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+}
+
+/* Specific styling for Ingredients table to distinguish it */
+.ingredient-slot {
+    color: var(--text-highlight);
+}
+
+.ingredient-type {
+    color: var(--text-dim);
+    font-style: italic;
+    text-align: right;
+}
+
+/* Quality colors */
+.quality-high { color: var(--accent-blue); }
+.quality-low { color: var(--text-dim); opacity: 0.7; }
