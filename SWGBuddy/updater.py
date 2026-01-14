@@ -58,9 +58,9 @@ def perform_update():
 	"""Stops services, pulls code, restarts backend, waits, restarts frontend."""
 	logger.info("Initiating Update Protocol...")
 	
-	FRONTEND_DIR = os.path.join(REPO_DIR, "frontend")
-	BACKEND_STATIC = os.path.join(REPO_DIR, "backend", "static")
-	BACKEND_TEMPLATES = os.path.join(REPO_DIR, "backend", "templates")
+	FRONTEND_DIR = os.path.join(REPO_DIR, "SWGBuddy", "frontend")
+	BACKEND_STATIC = os.path.join(REPO_DIR, "SWGBuddy", "static")
+	BACKEND_TEMPLATES = os.path.join(REPO_DIR, "SWGBuddy", "templates")
 	DIST_DIR = os.path.join(FRONTEND_DIR, "dist")
 	
 	try:
