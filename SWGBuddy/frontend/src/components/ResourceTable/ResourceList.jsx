@@ -97,10 +97,10 @@ const ResourceList = ({ serverId }) => {
 
     // --- Data Pipeline ---
     const processedData = useMemo(() => {
-        let data = filterResources(resources, filters); 
+        let data = filterResources(resources, filters, taxonomy); 
         data = sortResources(data, sortStack);
         return data;
-    }, [resources, filters, sortStack]);
+    }, [resources, filters, sortStack, taxonomy]);
 
     // Pagination
     const totalPages = Math.ceil(processedData.length / resultsPerPage) || 1;
