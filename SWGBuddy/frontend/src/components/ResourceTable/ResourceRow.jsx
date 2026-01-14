@@ -25,7 +25,7 @@ const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onCli
     );
 
     return (
-        <tr onClick={() => onClick(resource)}>
+        <tr>
             <td className="res-name">
                 <a className="res-link" onClick={(e) => { e.preventDefault(); onClick(resource); }}>
                     {resource.name}
@@ -75,7 +75,7 @@ const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onCli
                     <div className="planet-controls">
                         <select 
                             className="planet-select" 
-                            onChange={(e) => onTogglePlanet(e.target.value, resource.name)}
+                            onChange={(e) => onTogglePlanet(resource, e.target.value)}
                             value=""
                         >
                             <option value="" disabled>+</option>
