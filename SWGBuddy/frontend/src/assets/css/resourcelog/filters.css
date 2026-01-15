@@ -144,6 +144,7 @@
     position: relative;
     display: flex;
     align-items: center;
+	width: 100%;
 }
 
 .reset-filter-btn {
@@ -162,17 +163,6 @@
 
 .reset-filter-btn:hover {
     color: var(--accent-blue);
-}
-
-.search-input {
-    background-color: #000;
-    color: var(--text-main);
-    border: 1px solid var(--border-color);
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-family: 'Rajdhani', sans-serif;
-    width: 250px;
-    padding-right: 30px; 
 }
 
 .search-input:focus {
@@ -260,7 +250,7 @@
     border-color: var(--accent-blue);
 }
 
-.dropdown-search-input, .modal-search-input {
+.modal-search-input {
     width: 100%;
     background: #000;
     border: 1px solid var(--border-color);
@@ -339,8 +329,16 @@
     width: 100%;
 }
 
-.grow-input {
-    flex: 1; /* Makes Name and Type equal width */
+.search-inputs-container {
+	display: flex;
+	flex-grow: 1;
+	gap: 4px;
+}
+
+.search-inputs-container .filter-input-wrapper,
+.search-inputs-container .custom-dropdown {
+    flex: 1; 
+    min-width: 0; /* Prevents overflow in narrow flex containers */
 }
 
 .active-toggle-inline {
@@ -367,13 +365,8 @@
 	text-align: center;
 }
 
-.filter-input-wrapper {
-    position: relative;
-    width: 100%;
-}
-
 .search-input, .dropdown-search-input {
-    width: 120%;
+    width: 100%;
     background: #000;
     color: var(--text-main);
     border: 1px solid var(--border-color);

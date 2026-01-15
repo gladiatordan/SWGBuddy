@@ -3,7 +3,7 @@ import API from '../../services/api';
 import { useServer } from '../../contexts/ServerContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { useResources } from '../../hooks/useResources';
-import TaxonomySelector from './ResourceModal/TaxonomySelector';
+import TaxonomySearch from '../Common/TaxonomySearch';
 import { getStatColorClass, formatResourceDate, STAT_MAPPING, findTaxonomyNode } from '../../utils/resourceUtils';
 
 const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
@@ -306,10 +306,11 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                         {/* Type Field - Visible in ALL modes (First field in Edit/View) */}
                         <div className="form-group">
                             <label>Type</label>
-                            <TaxonomySelector 
+                            <TaxonomySearch 
                                 taxonomy={taxonomy} 
                                 value={formData.type} 
                                 onChange={val => setFormData({...formData, type: val})}
+								onlyValid={true}
                                 disabled={!isEditable}
                             />
                         </div>

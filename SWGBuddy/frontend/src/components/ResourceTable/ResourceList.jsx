@@ -3,7 +3,7 @@ import { useResources } from '../../hooks/useResources';
 import { useAuth } from '../../contexts/AuthContext';
 import { filterResources, sortResources } from '../../utils/resourceUtils';
 import ResourceRow from './ResourceRow';
-import TaxonomyFilter from './TaxonomyFilter';
+import TaxonomySearch from '../Common/TaxonomySearch';
 import ResourceModal from '../Modals/ResourceModal';
 import Loader from '../Common/Loader';
 
@@ -145,41 +145,45 @@ const ResourceList = ({ serverId }) => {
                 {/* 2. Search Row */}
                 <div className="filter-col-search">
                     <div className="search-row">
-                        <div className="filter-input-wrapper grow-input">
-                            <input 
-                                type="text" 
-                                placeholder="Search Name..." 
-                                className="search-input"
-                                value={filters.search}
-                                onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
-                            />
-                             {filters.search && (
-                                <button 
-                                    className="reset-filter-btn" 
-                                    onClick={() => setFilters(prev => ({ ...prev, search: '' }))}
-                                    style={{ display: 'block' }}
-                                >
-                                    <i className="fa-solid fa-times"></i>
-                                </button>
-                            )}
-                        </div>
+						<div className="search-inputs-container">
+							<div className="filter-input-wrapper">
+								<input 
+									type="text" 
+									placeholder="Search Name..." 
+									className="search-input"
+									value={filters.search}
+									onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
+								/>
+								{filters.search && (
+									<button 
+										className="reset-filter-btn" 
+										onClick={() => setFilters(prev => ({ ...prev, search: '' }))}
+										style={{ display: 'block' }}
+									>
+										<i className="fa-solid fa-times"></i>
+									</button>
+								)}
+							</div>
 
-                        <TaxonomyFilter 
-                            taxonomyTree={taxonomy} 
-                            selectedCategory={filters.category}
-                            onSelect={(cat) => setFilters(prev => ({ ...prev, category: cat }))}
-                        />
+							<TaxonomySearch 
+								taxonomy={taxonomy} 
+								value={filters.category}
+								onChange={(cat) => setFilters(prev => ({ ...prev, category: cat }))}
+								onlyValid={false}
+								placeholder="Search Type..."
+							/>
 
-                        <div className="active-toggle-inline">
-                            <label className="toggle-label" title="Show Active Only">
-                                <input 
-                                    type="checkbox" 
-                                    checked={filters.activeOnly}
-                                    onChange={(e) => setFilters(prev => ({ ...prev, activeOnly: e.target.checked }))} 
-                                />
-                                Show Active Only
-                            </label>
-                        </div>
+							<div className="active-toggle-inline">
+								<label className="toggle-label" title="Show Active Only">
+									<input 
+										type="checkbox" 
+										checked={filters.activeOnly}
+										onChange={(e) => setFilters(prev => ({ ...prev, activeOnly: e.target.checked }))} 
+									/>
+									Show Active Only
+								</label>
+							</div>
+						</div>
                     </div>
                 </div>
 
