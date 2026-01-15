@@ -3,7 +3,7 @@
 /* The main container acts as the Flex Row */
 .schematics-layout {
     display: flex;
-    flex-direction: row; /* Ensures side-by-side layout */
+    flex-direction: row !important; /* Ensures side-by-side layout */
     align-items: stretch; /* Both columns stretch to full height */
     gap: 15px;
     height: calc(100vh - 140px); /* Adjusts for Header/Footer */
