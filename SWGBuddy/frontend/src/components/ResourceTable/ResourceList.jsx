@@ -230,6 +230,9 @@ const ResourceList = ({ serverId }) => {
                 {/* 5. Pagination */}
                 <div className="filter-col-page">
                     <div className="pagination-stack">
+						<span style={{paddingBottom: '25px', fontSize: '14px', fontWeight: 700, textTransform: 'uppercase', fontFamily: "'Orbitron', sans-serif", color: 'var(--accent-blue)'}}>
+                        Page Control
+                    	</span>
                         <div className="pagination-controls">
                             <label htmlFor="results-per-page" style={{whiteSpace: 'nowrap'}}>Show Results:</label>
                             <select 

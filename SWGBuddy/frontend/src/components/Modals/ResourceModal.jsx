@@ -333,7 +333,7 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
 									const tooltip = rating !== null ? `Rating: ${(rating * 100).toFixed(1)}%` : '';
 									
 									return (
-										<div key={valKey} className="stat-box" title={tooltip}>
+										<div key={valKey} className="stat-box" data-tooltip={tooltip}>
 											<label>{label}</label>
 											<span className={`stat-value ${getStatColorClass(rating)}`}>{value}</span>
 										</div>

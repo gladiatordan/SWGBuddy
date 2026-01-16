@@ -44,7 +44,7 @@ const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onCli
                 const rating = resource[`${key}_rating`];
                 const color = getStatColorClass(rating);
                 return (
-                    <td key={key} className={`col-stat ${color}`} title={rating ? `${(rating*100).toFixed(1)}%` : ''}>
+                    <td key={key} className={`col-stat ${color}`} data-tooltip={rating ? `${(rating*100).toFixed(1)}%` : ''}>
                         {val || '-'}
                     </td>
                 );
