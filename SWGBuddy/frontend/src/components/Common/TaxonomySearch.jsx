@@ -10,7 +10,9 @@ const TaxonomySearch = ({
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [search, setSearch] = useState('');
+    const [activeIndex, setActiveIndex] = useState(-1); // Keyboard Nav State
     const wrapperRef = useRef(null);
+    const listRef = useRef(null);
 
     // Flatten taxonomy once based on the onlyValid requirement
     const flatList = useMemo(() => {
@@ -32,15 +34,20 @@ const TaxonomySearch = ({
     }, [taxonomy, onlyValid]);
 
     const filtered = useMemo(() => {
-        if (onlyValid && !isOpen && !search) return []; // Don't filter if closed in selector mode
+        // If searching, filter. If just open, show all.
+        if (!search && !isOpen) return []; 
+        if (!search) return flatList;
         return flatList.filter(item => 
             item.label.toLowerCase().includes(search.toLowerCase())
         );
-    }, [flatList, search, onlyValid, isOpen]);
+    }, [flatList, search, isOpen]);
 
     useEffect(() => {
         const handleClick = (e) => {
-            if (wrapperRef.current && !wrapperRef.current.contains(e.target)) setIsOpen(false);
+            if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+                setIsOpen(false);
+                setActiveIndex(-1);
+            }
         };
         document.addEventListener('mousedown', handleClick);
         return () => document.removeEventListener('mousedown', handleClick);
@@ -50,7 +57,55 @@ const TaxonomySearch = ({
         onChange(label);
         setIsOpen(false);
         setSearch(''); // Clear search on selection
+        setActiveIndex(-1);
     };
+
+    // Keyboard Navigation Handler
+    const handleKeyDown = (e) => {
+        if (!isOpen) {
+            if (e.key === 'ArrowDown' || e.key === 'Enter') {
+                setIsOpen(true);
+                setSearch(''); 
+            }
+            return;
+        }
+
+        switch (e.key) {
+            case 'ArrowDown':
+                e.preventDefault();
+                setActiveIndex(prev => (prev < filtered.length - 1 ? prev + 1 : 0));
+                break;
+            case 'ArrowUp':
+                e.preventDefault();
+                setActiveIndex(prev => (prev > 0 ? prev - 1 : filtered.length - 1));
+                break;
+            case 'Enter':
+                e.preventDefault();
+                if (activeIndex >= 0 && activeIndex < filtered.length) {
+                    handleSelect(filtered[activeIndex].label);
+                } else if (filtered.length > 0 && search) {
+                    // If user typed something and hits enter, select first match if no active index
+                    handleSelect(filtered[0].label);
+                }
+                break;
+            case 'Escape':
+                setIsOpen(false);
+                setActiveIndex(-1);
+                break;
+            default:
+                break;
+        }
+    };
+
+    // Scroll active item into view
+    useEffect(() => {
+        if (activeIndex >= 0 && listRef.current) {
+            const activeItem = listRef.current.children[activeIndex];
+            if (activeItem) {
+                activeItem.scrollIntoView({ block: 'nearest' });
+            }
+        }
+    }, [activeIndex]);
 
     if (disabled) {
         return <div className="static-value">{value || "Unknown Type"}</div>;
@@ -67,20 +122,23 @@ const TaxonomySearch = ({
                 onChange={(e) => {
                     setSearch(e.target.value);
                     setIsOpen(true);
+                    setActiveIndex(0); // Reset to top on search
                 }}
                 onFocus={() => {
-                    setSearch(''); // Clear search text to show all options on focus
+                    setSearch(''); 
                     setIsOpen(true);
                 }}
+                onKeyDown={handleKeyDown}
             />
             
             {isOpen && (
-                <div className="dropdown-list" style={{ display: 'block' }}>
+                <div className="dropdown-list" style={{ display: 'block' }} ref={listRef}>
                     {filtered.map((item, idx) => (
                         <div 
                             key={`${item.label}-${idx}`} 
-                            className="dropdown-item"
+                            className={`dropdown-item ${idx === activeIndex ? 'active' : ''}`}
                             onClick={() => handleSelect(item.label)}
+                            style={idx === activeIndex ? { background: '#1a1f26', color: 'var(--accent-blue)' } : {}}
                         >
                             {item.label}
                         </div>
@@ -91,7 +149,7 @@ const TaxonomySearch = ({
                 </div>
             )}
 
-            {/* Clear Button (Optional: for filter mode) */}
+            {/* Clear Button */}
             {!onlyValid && value && (
                 <button 
                     className="reset-filter-btn" 
@@ -99,6 +157,7 @@ const TaxonomySearch = ({
                         e.stopPropagation();
                         handleSelect(null);
                     }}
+                    tabIndex="-1"
                 >
                     &times;
                 </button>

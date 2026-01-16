@@ -157,7 +157,7 @@
     font-size: 14px;
     padding: 0;
     z-index: 1001;
-    display: none;
+    /* display: none; */
     transition: color 0.2s;
 }
 
@@ -440,7 +440,7 @@
     font-weight: bold;
     color: #666;
     cursor: pointer;
-    display: none;
+    /* display: none; */
     line-height: 1;
     padding: 0 2px;
 }

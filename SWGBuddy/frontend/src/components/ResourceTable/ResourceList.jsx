@@ -25,8 +25,9 @@ const ResourceList = ({ serverId }) => {
         setIsModalOpen(true);
     };
 
-    const handleModalSave = () => {
-        actions.refresh(); // Refresh the table after save
+    // --- Critical Update: Async Wait for Sync ---
+    const handleModalSave = async () => {
+        await actions.refresh(); // Refresh the table after save
     };
 
     // --- View State ---
@@ -158,7 +159,6 @@ const ResourceList = ({ serverId }) => {
 									<button 
 										className="reset-filter-btn" 
 										onClick={() => setFilters(prev => ({ ...prev, search: '' }))}
-										style={{ display: 'block' }}
 									>
 										<i className="fa-solid fa-times"></i>
 									</button>
@@ -193,16 +193,29 @@ const ResourceList = ({ serverId }) => {
                         Filter By Stats
                     </span>
                     <div className="stats-grid-wrapper">
-                        {['oq','cr','cd','dr','fl','hr','ma','pe','sr','ut'].map(stat => (
-                            <div className="stat-input-wrapper" key={stat}>
-                                <input 
-                                    type="number" 
-                                    placeholder={stat.toUpperCase()} 
-                                    className="stat-filter-input"
-                                    onChange={(e) => handleStatChange(`res_${stat}`, e.target.value)}
-                                />
-                            </div>
-                        ))}
+                        {['oq','cr','cd','dr','fl','hr','ma','pe','sr','ut'].map(stat => {
+                            const val = filters.stats[`res_${stat}`] || '';
+                            return (
+                                <div className="stat-input-wrapper" key={stat}>
+                                    <input 
+                                        type="number" 
+                                        placeholder={stat.toUpperCase()} 
+                                        className="stat-filter-input"
+                                        value={val}
+                                        onChange={(e) => handleStatChange(`res_${stat}`, e.target.value)}
+                                    />
+                                    {/* Added Clear Button */}
+                                    {val && (
+                                        <span 
+                                            className="stat-clear" 
+                                            onClick={() => handleStatChange(`res_${stat}`, '')}
+                                        >
+                                            &times;
+                                        </span>
+                                    )}
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
 

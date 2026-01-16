@@ -7,6 +7,7 @@ export const useResources = (serverId = 'cuemu') => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const lastSyncRef = useRef(0);
+    const intervalRef = useRef(null);
 
     // Initial Load & Taxonomy
     useEffect(() => {
@@ -22,15 +23,23 @@ export const useResources = (serverId = 'cuemu') => {
             }
         };
         init();
+        
+        // Start Polling on mount
+        startPolling();
+
+        return () => stopPolling();
     }, [serverId]);
 
-    // Polling
-    useEffect(() => {
-        const interval = setInterval(() => {
+    const startPolling = useCallback(() => {
+        stopPolling();
+        intervalRef.current = setInterval(() => {
             fetchResources(true); // Delta Sync
         }, 15000);
-        return () => clearInterval(interval);
     }, [serverId]);
+
+    const stopPolling = () => {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+    };
 
     const fetchResources = async (isDelta = false) => {
         try {
@@ -55,6 +64,12 @@ export const useResources = (serverId = 'cuemu') => {
         }
     };
 
+    // Manual Refresh triggers fetch AND resets timer
+    const refresh = async () => {
+        startPolling(); // Resets timer
+        await fetchResources(true);
+    };
+
     // Optimistic Update Helper
     const updateLocalResource = (updatedRes) => {
         setRawResources(prev => prev.map(r => r.id === updatedRes.id ? updatedRes : r));
@@ -68,10 +83,9 @@ export const useResources = (serverId = 'cuemu') => {
         updateLocalResource(updated);
         
         try {
-            // Remove calculated fields for payload
             const { planet, planets, ...payload } = updated;
             await API.updateResource(payload, serverId);
-            fetchResources(true); // Re-sync to confirm
+            refresh(); // Use new refresh that resets timer
         } catch (err) {
             console.error("Update failed", err);
             updateLocalResource(resource); // Revert
@@ -80,48 +94,36 @@ export const useResources = (serverId = 'cuemu') => {
     };
 
     const togglePlanet = async (resource, planetName) => {
-		// console.log("Toggle Planet Resource:", resource);
         let currentPlanets = resource.planet || resource.planets || [];
-        // Ensure array
         if (!Array.isArray(currentPlanets)) currentPlanets = [currentPlanets];
 
         const exists = currentPlanets.includes(planetName);
         let newPlanets;
         
         if (exists) {
-            // Remove
             newPlanets = currentPlanets.filter(p => p !== planetName);
         } else {
-            // Add
             newPlanets = [...currentPlanets, planetName];
         }
 
-        // Optimistic
         const updated = { ...resource, planet: newPlanets };
         updateLocalResource(updated);
 
         try {
-            // API expects "planet" to be the *single change* or the list? 
-            // Looking at original code: it sends `planet: newPlanet` for ADD logic.
-            // But `handleBadgeClick` sends `planet: planetValue` for REMOVE logic?
-            // Wait, the backend likely handles the toggle based on context or the original code was tricky.
-            // Let's mimic original api.js: updateResource takes the payload.
-            // Original code sent `{ ...resource, planet: newPlanet }`.
-            // We will send the payload expected by your backend.
             await API.updateResource({ ...resource, planet: planetName }, serverId); 
-            fetchResources(true);
+            refresh(); // Use new refresh
         } catch (err) {
             console.error("Planet toggle failed", err);
-            updateLocalResource(resource); // Revert
+            updateLocalResource(resource); 
         }
     };
 
     return {
-        resources: rawResourceDataToRender(rawResources), // Just pass raw for now
+        resources: rawResources, 
         taxonomy,
         loading,
         error,
-        actions: { toggleStatus, togglePlanet, refresh: () => fetchResources(true) }
+        actions: { toggleStatus, togglePlanet, refresh }
     };
 };
 

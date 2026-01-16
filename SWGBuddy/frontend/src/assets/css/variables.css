@@ -43,15 +43,18 @@
 /* Global Tooltip Logic */
 [data-tooltip] {
     position: relative;
-    cursor: help;
+    /* cursor: help; */
+	z-index: auto;
 }
 
 [data-tooltip]::after {
     content: attr(data-tooltip);
-    position: absolute;
-    bottom: 110%;
-    left: 50%;
-    transform: translateX(-50%);
+    position: fixed;
+	/* top: var(--mouse-y); */
+	top: var(--mouse-y);
+	left: var(--mouse-x);
+    transform: translate(10px, 10px);
+
     background-color: #000;
     color: var(--accent-blue);
     padding: 4px 8px;

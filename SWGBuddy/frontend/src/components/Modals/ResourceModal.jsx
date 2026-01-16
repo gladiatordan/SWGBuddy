@@ -145,7 +145,7 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
         }
     };
 
-    // --- NEW: Global Paste Listener (The Fix) ---
+    // --- Global Paste Listener ---
     useEffect(() => {
         const handleGlobalPaste = (e) => {
             // Only listen if modal is open and we are editing/adding
@@ -169,7 +169,7 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
         return () => document.removeEventListener('paste', handleGlobalPaste);
     }, [isOpen, mode, processImageBlob]); // Re-bind only if mode changes
 
-    // --- UPDATED: Button Click Handler ---
+    // --- Button Click Handler ---
     const handlePaste = async () => {
         // setLoading(true);
         setStatusMsg({ type: 'info', text: 'Requesting clipboard...' });
@@ -221,7 +221,6 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
         setLoading(true);
         setStatusMsg(null);
 
-        // Validation
         if (!formData.name || !formData.type) {
             setStatusMsg({ type: 'error', text: "Name and Type are required." });
             setLoading(false);
@@ -240,14 +239,18 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
         try {
             if (mode === 'add') {
                 await API.addResource(payload, selectedServer);
-                onSave(); // Refresh parent
+                setStatusMsg({ type: 'info', text: 'Syncing...' });
+                await onSave(); // Wait for delta sync
+                
                 setMode('view'); 
         		setStatusMsg({ type: 'success', text: 'Resource added successfully!' });
             } else {
                 payload.id = resource.id;
                 await API.updateResource(payload, selectedServer);
-                onSave(); // Refresh parent
-                setMode('view'); // Go back to View Mode on success
+                setStatusMsg({ type: 'info', text: 'Syncing...' });
+                await onSave(); // Wait for delta sync
+                
+                setMode('view'); 
                 setStatusMsg({ type: 'success', text: 'Resource updated successfully' });
             }
         } catch (err) {
