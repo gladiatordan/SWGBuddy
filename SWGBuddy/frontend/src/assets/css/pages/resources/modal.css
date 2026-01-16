@@ -24,6 +24,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+	max-height: 90vh;
 }
 
 .modal-header {
@@ -33,6 +34,7 @@
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 10px;
     margin-bottom: 15px;
+	flex-shrink: 0;
 }
 
 .modal-header h2 {
@@ -41,6 +43,20 @@
     font-family: 'Orbitron', sans-serif;
     font-size: 1.2rem;
     letter-spacing: 1px;
+}
+
+.modal-body {
+    flex: 1; /* Take up remaining space */
+    overflow-y: auto; /* Enable vertical scrolling */
+    
+    /* Invisible Scrollbar Magic */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+/* Chrome/Safari/Webkit Invisible Scrollbar */
+.modal-body::-webkit-scrollbar {
+    display: none;
 }
 
 /* Modal Internal Dropdowns */
@@ -356,4 +372,56 @@
 
 .clear-stat-btn:hover {
     color: var(--danger-color);
+}
+
+/* Planet Checkbox Grid */
+.planet-checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.planet-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 6px 8px;
+    border-radius: 3px;
+    transition: all 0.2s;
+}
+
+.planet-checkbox-label:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+}
+
+.planet-checkbox-label.checked {
+    border: 1px solid var(--accent-blue);
+    color: var(--accent-blue);
+    background: rgba(0, 212, 255, 0.05);
+}
+
+.planet-checkbox-label.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.planet-checkbox-label input[type="checkbox"] {
+    accent-color: var(--accent-blue);
+    cursor: pointer;
+}
+
+.planet-checkbox-label.disabled input {
+    cursor: not-allowed;
 }

@@ -461,10 +461,10 @@ class ValidationService(Core):
 
 	def _update_resource(self, data, user_ctx):
 		res_id = data.get('id')
-		reporter_id = user_ctx.get('id') if user_ctx else None
+		updater_id = user_ctx.get('id') if user_ctx else None
 		
-		set_clauses = ["last_modified = NOW()", "res_weight_rating = %s", "reporter_id = %s"]
-		vals = [data.get('res_weight_rating', 0.0), reporter_id]
+		set_clauses = ["last_modified = NOW()", "res_weight_rating = %s", "last_updated_by = %s"]
+		vals = [data.get('res_weight_rating', 0.0), updater_id]
 		
 		for stat in self.STAT_COLS:
 			if stat in data:

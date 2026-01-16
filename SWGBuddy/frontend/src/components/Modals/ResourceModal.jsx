@@ -50,6 +50,53 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
 		});
 	}, [formData.type, validStatsForType.length]);
 
+	useEffect(() => {
+		if (mode === 'view' || !formData.type) return;
+
+		setFormData(prev => {
+            // 1. Stat Sanitization
+			const newStats = { ...prev.stats };
+			let hasChanged = false;
+			Object.keys(STAT_MAPPING).forEach(statKey => {
+				if (!validStatsForType.includes(statKey)) {
+					if (newStats[statKey] !== null && newStats[statKey] !== undefined) {
+						newStats[statKey] = null;
+						hasChanged = true;
+					}
+				}
+			});
+
+            // 2. Planet Sanitization
+            const validPlanets = selectedTypeConfig?.planets || [];
+            let newPlanets = [...(prev.planet || [])]; // Copy existing selection
+            
+            // Filter: Remove planets that are no longer valid for this type
+            const filteredPlanets = newPlanets.filter(p => validPlanets.includes(p));
+            
+            // Constraint: If only 1 valid planet exists, enforce it (checked & locked)
+            if (validPlanets.length === 1) {
+                // If it's not already in the list, add it (effectively checking it)
+                if (filteredPlanets.length !== 1 || filteredPlanets[0] !== validPlanets[0]) {
+                    filteredPlanets.length = 0;
+                    filteredPlanets.push(validPlanets[0]);
+                }
+            }
+
+            // Detect if planets actually changed to avoid infinite loops
+            const planetsChanged = JSON.stringify(prev.planet?.sort()) !== JSON.stringify(filteredPlanets.sort());
+
+			if (hasChanged || planetsChanged) {
+                return { 
+                    ...prev, 
+                    stats: hasChanged ? newStats : prev.stats,
+                    planet: filteredPlanets
+                };
+            }
+
+			return prev;
+		});
+	}, [formData.type, validStatsForType.length, selectedTypeConfig]);
+
     // Helper: Extract stats from resource object
     const extractStats = (res) => {
 		const stats = {};
@@ -67,11 +114,17 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
             setStatusMsg(null);
             if (resource) {
                 setMode('view');
+                // Normalize resource.planet to always be an array
+                const planetArr = Array.isArray(resource.planet) 
+                    ? resource.planet 
+                    : (resource.planet ? [resource.planet] : []);
+
                 setFormData({
                     name: resource.name,
                     type: resource.type,
                     stats: extractStats(resource),
                     notes: resource.notes || '',
+                    planet: planetArr,
                     markInactive: false
                 });
             } else {
@@ -81,6 +134,7 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                     type: '',
                     stats: {},
                     notes: '',
+                    planet: [],
                     markInactive: false
                 });
             }
@@ -112,6 +166,17 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
 			}
 		}));
 	};
+
+	const handlePlanetToggle = (planetName) => {
+        setFormData(prev => {
+            const current = prev.planet || [];
+            if (current.includes(planetName)) {
+                return { ...prev, planet: current.filter(p => p !== planetName) };
+            } else {
+                return { ...prev, planet: [...current, planetName] };
+            }
+        });
+    };
 
 	const handleNameChange = (e) => {
         const input = e.target.value;
@@ -240,7 +305,6 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
             setLoading(false);
             return;
         }
-
 		if (!formData.type) {
             setStatusMsg({ type: 'error', text:"Type is required." });
             setLoading(false);
@@ -252,6 +316,7 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
             name: formData.name,
             type: formData.type,
             notes: formData.notes,
+            planet: formData.planet, // Pass array directly
             server_id: selectedServer,
             auto_deactivate: mode === 'add' ? formData.markInactive : undefined
         };
@@ -260,16 +325,14 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
             if (mode === 'add') {
                 await API.addResource(payload, selectedServer);
                 setStatusMsg({ type: 'info', text: 'Syncing...' });
-                await onSave(); // Wait for delta sync
-                
+                await onSave();
                 setMode('view'); 
         		setStatusMsg({ type: 'success', text: 'Resource added successfully!' });
             } else {
                 payload.id = resource.id;
                 await API.updateResource(payload, selectedServer);
                 setStatusMsg({ type: 'info', text: 'Syncing...' });
-                await onSave(); // Wait for delta sync
-                
+                await onSave();
                 setMode('view'); 
                 setStatusMsg({ type: 'success', text: 'Resource updated successfully' });
             }
@@ -287,11 +350,8 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
     const isEditable = mode !== 'view';
     const canEdit = hasPermission('EDITOR'); 
 
-    // Dynamic Title Logic
-    let modalTitle = "Resource Details";
-    if (mode === 'add') modalTitle = "Add Resource";
-    else if (mode === 'view') modalTitle = `Resource Details - ${formData.name}`;
-    else if (mode === 'edit') modalTitle = `Edit Details - ${formData.name}`;
+    // Change Title based on mode
+    let modalTitle = mode === 'add' ? "Add Resource" : (mode === 'edit' ? `Edit Details - ${formData.name}` : `Resource Details - ${formData.name}`);
 
     return (
         <div className="modal">
@@ -395,23 +455,53 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                             })}
                         </div>
 
-                        {/* Meta Info (View Only) */}
-                        {mode !== 'add' && resource && (
+						{/* PLANETS SECTION - Positioned here per request */}
+                        {isEditable ? (
+                             <div className="form-group full-width" style={{ marginTop: '15px' }}>
+                                <label>Planets</label>
+                                <div className="planet-checkbox-grid">
+                                    {(selectedTypeConfig?.planets || []).map(p => {
+                                        const isChecked = formData.planet.includes(p);
+                                        const isSingle = selectedTypeConfig.planets.length === 1;
+                                        return (
+                                            <label 
+                                                key={p} 
+                                                className={`planet-checkbox-label ${isChecked ? 'checked' : ''} ${isSingle ? 'disabled' : ''}`}
+                                            >
+                                                <input 
+                                                    type="checkbox"
+                                                    checked={isChecked}
+                                                    disabled={isSingle} 
+                                                    onChange={() => handlePlanetToggle(p)}
+                                                />
+                                                {p}
+                                            </label>
+                                        );
+                                    })}
+                                    {(!selectedTypeConfig?.planets || selectedTypeConfig.planets.length === 0) && (
+                                        <div style={{color: '#666', gridColumn: '1 / -1', textAlign: 'center', padding: '10px'}}>
+                                            Select a Type to view available planets.
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        ) : (
+                            /* View Mode Meta Grid (Includes Planets) */
                             <div className="meta-grid">
                                 <div className="form-group">
 									<label>Last Updated</label>
 									<div className="static-value">
-										{formatResourceDate(resource.last_updated || resource.date_reported)}
+										{formatResourceDate(resource?.last_updated || resource?.date_reported)}
 									</div>
 								</div>
                                 <div className="form-group">
                                     <label>Reporter</label>
-                                    <div className="static-value">{resource.reporter_name || '-'}</div>
+                                    <div className="static-value">{resource?.reporter_name || '-'}</div>
                                 </div>
                                 <div className="form-group">
                                     <label>Planets</label>
                                     <div className="static-value">
-                                        {Array.isArray(resource.planet) ? resource.planet.join(', ') : resource.planet}
+                                        {formData.planet && formData.planet.length > 0 ? formData.planet.join(', ') : '-'}
                                     </div>
                                 </div>
                             </div>
