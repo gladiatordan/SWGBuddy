@@ -82,9 +82,17 @@ const ResourceList = ({ serverId }) => {
     };
 
     const handleStatChange = (key, value) => {
+       // Clamp Logic: 0 to 1000
+        let val = value === '' ? null : parseInt(value, 10);
+        
+        if (val !== null) {
+            if (isNaN(val)) val = null;
+            else val = Math.max(0, Math.min(1000, val));
+        }
+
         setFilters(prev => ({
             ...prev,
-            stats: { ...prev.stats, [key]: value ? parseInt(value) : null }
+            stats: { ...prev.stats, [key]: val }
         }));
     };
 

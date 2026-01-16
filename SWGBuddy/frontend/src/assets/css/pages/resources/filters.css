@@ -45,27 +45,10 @@
     gap: 8px;
 }
 
-.stat-filter-input {
-    background-color: #000;
-    color: var(--text-main);
-    border: 1px solid var(--border-color);
-    padding: 6px 4px;
-    border-radius: 4px;
-    font-family: 'Rajdhani', sans-serif;
-    width: 100%;
-    text-align: center;
-    font-size: 0.9rem;
-    transition: border-color 0.2s;
-}
-
-.stat-filter-input:focus {
-    border-color: var(--accent-blue);
-    outline: none;
-}
-
 .stat-filter-input::placeholder {
     color: var(--text-dim);
     opacity: 0.5;
+	text-align: center;
 }
 
 /* Row 4: Planets & Toggles */
@@ -167,7 +150,9 @@
     color: var(--accent-blue);
 }
 
-.search-input:focus {
+.search-input:focus, 
+.dropdown-search-input:focus,
+.stat-filter-input:focus {
     border-color: var(--accent-blue);
     outline: none;
 }
@@ -183,6 +168,14 @@
     border-radius: 4px;
     cursor: pointer;
     z-index: 1000;
+}
+
+.filter-input-wrapper,
+.custom-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 .dropdown-selected {
@@ -246,10 +239,6 @@
     border-radius: 3px;
     font-family: 'Rajdhani', sans-serif;
     outline: none;
-}
-
-.dropdown-search:focus {
-    border-color: var(--accent-blue);
 }
 
 .modal-search-input {
@@ -377,6 +366,7 @@
     font-family: 'Rajdhani', sans-serif;
     font-size: 14px;
     box-sizing: border-box;
+	transition: border-color 0.2s;
 }
 
 /* Ensure the Reset Button sits on top of the input */
@@ -385,13 +375,20 @@
     right: 8px;
     top: 50%;
     transform: translateY(-50%);
-    color: #555;
     background: none;
     border: none;
+    color: var(--text-dim);
     cursor: pointer;
-    display: none; /* Toggled by JS */
+    font-size: 18px; /* Slightly larger touch target */
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    z-index: 10; /* Above Input */
+    padding: 0;
+    transition: color 0.2s;
 }
-.reset-filter-btn:hover { color: #fff; }
+.reset-filter-btn:hover { color: var(--accent-blue); }
 
 /* --- Column 3: Stats Grid --- */
 .filter-col-stats {
@@ -414,6 +411,7 @@
     position: relative;
     display: flex;
     align-items: center;
+	width: 100%;
 }
 
 .stat-filter-input {
@@ -421,13 +419,17 @@
     background: #000;
     border: 1px solid var(--border-color);
     color: var(--stat-high);
-    padding: 6px 16px 6px 4px; /* Room for X */
+    
+    /* Centering Logic */
+    text-align: center;
+    padding: 6px 18px; /* Equal padding left/right keeps it centered */
+    
     font-family: 'Rajdhani', sans-serif;
     font-size: 13px;
     font-weight: bold;
-    text-align: center;
     border-radius: 3px;
     appearance: textfield;
+	transition: border-color 0.2s;
 }
 .stat-filter-input::-webkit-outer-spin-button,
 .stat-filter-input::-webkit-inner-spin-button {
@@ -437,14 +439,18 @@
 
 .stat-clear {
     position: absolute;
-    right: 3px;
-    font-size: 14px; /* Larger */
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
     font-weight: bold;
     color: #666;
     cursor: pointer;
-    /* display: none; */
     line-height: 1;
+    z-index: 5;
+    background: rgba(0,0,0,0.5); /* Slight backing to ensure legibility if over text */
     padding: 0 2px;
+    border-radius: 2px;
 }
 .stat-clear:hover { color: #f44; }
 .stat-filter-input:not(:placeholder-shown) + .stat-clear { display: block; }

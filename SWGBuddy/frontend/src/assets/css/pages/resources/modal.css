@@ -338,7 +338,6 @@
 }
 
 .stat-input-wrapper input {
-    padding-right: 25px; /* Make room for the X */
     width: 100%;
 }
 

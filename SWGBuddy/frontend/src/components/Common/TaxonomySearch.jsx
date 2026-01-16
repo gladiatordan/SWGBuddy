@@ -20,6 +20,10 @@ const TaxonomySearch = ({
         const traverse = (nodes) => {
             if (!nodes) return;
             nodes.forEach(node => {
+				// Omit anything space-related as these are just asteroids and always statically-assigned.
+				if (node.label === "Space Resource") {
+                    return; 
+                }
                 // If onlyValid is true, only add leaf nodes (is_valid: true)
                 // If onlyValid is false, add everything (for filtering)
                 if (!onlyValid || node.is_valid) {

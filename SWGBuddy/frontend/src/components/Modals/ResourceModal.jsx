@@ -90,7 +90,6 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
     // --- Actions ---
 
     const handleStatChange = (key, value) => {
-		// 1. If empty, set to null
 		if (value === '') {
 			setFormData(prev => ({
 				...prev,
@@ -99,12 +98,11 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
 			return;
 		}
 
-		// 2. Enforce Integer only
 		const numValue = parseInt(value, 10);
 		if (isNaN(numValue)) return;
 
-		// 3. Enforce 1-1000 range
-		const clampedValue = Math.max(1, Math.min(1000, numValue));
+		// 3. Enforce 0-1000 range (Updated from 1-1000)
+		const clampedValue = Math.max(0, Math.min(1000, numValue));
 
 		setFormData(prev => ({
 			...prev,
@@ -114,6 +112,22 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
 			}
 		}));
 	};
+
+	const handleNameChange = (e) => {
+        const input = e.target.value;
+        
+        // 1. Regex to reject anything other than a-z/A-Z
+        // We replace any non-letter character with an empty string
+        const sanitized = input.replace(/[^a-zA-Z]/g, '');
+
+        // 2. Formatting: lowercase everything, then capitalize the first letter
+        let formatted = sanitized.toLowerCase();
+        if (formatted.length > 0) {
+            formatted = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+        }
+
+        setFormData(prev => ({ ...prev, name: formatted }));
+    };
 
     const processImageBlob = async (blob) => {
         setLoading(true);
@@ -221,8 +235,14 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
         setLoading(true);
         setStatusMsg(null);
 
-        if (!formData.name || !formData.type) {
-            setStatusMsg({ type: 'error', text: "Name and Type are required." });
+		if (!formData.name || formData.name.length < 2) {
+            setStatusMsg({ type: 'error', text: "Please enter a valid resource name (letters only)." });
+            setLoading(false);
+            return;
+        }
+
+		if (!formData.type) {
+            setStatusMsg({ type: 'error', text:"Type is required." });
             setLoading(false);
             return;
         }
@@ -298,9 +318,9 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                                 <input 
                                     type="text" 
                                     value={formData.name}
-                                    onChange={e => setFormData({...formData, name: e.target.value})}
+                                    onChange={handleNameChange}
                                     required 
-                                    placeholder="e.g. Polonium" 
+                                    placeholder="Enter Resource Name..." 
                                     autoComplete="off"
                                 />
                             </div>
