@@ -125,7 +125,7 @@ const TaxonomySearch = ({
                     setActiveIndex(0); // Reset to top on search
                 }}
                 onFocus={() => {
-                    setSearch(''); 
+                    setSearch(value || ''); 
                     setIsOpen(true);
                 }}
                 onKeyDown={handleKeyDown}
@@ -149,8 +149,8 @@ const TaxonomySearch = ({
                 </div>
             )}
 
-            {/* Clear Button */}
-            {!onlyValid && value && (
+            {/* Clear Button: Render whenever there is a value, regardless of usage context */}
+            {value && (
                 <button 
                     className="reset-filter-btn" 
                     onClick={(e) => {
@@ -158,6 +158,7 @@ const TaxonomySearch = ({
                         handleSelect(null);
                     }}
                     tabIndex="-1"
+                    type="button" // Prevent form submission in modals
                 >
                     &times;
                 </button>

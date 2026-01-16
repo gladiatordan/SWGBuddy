@@ -149,15 +149,17 @@
 
 .reset-filter-btn {
     position: absolute;
-    right: 10px;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
     background: none;
     border: none;
     color: var(--text-dim);
     cursor: pointer;
-    font-size: 14px;
-    padding: 0;
-    z-index: 1001;
-    /* display: none; */
+    font-size: 16px;
+    padding: 0 4px;
+    z-index: 1001; /* Above input */
+    line-height: 1;
     transition: color 0.2s;
 }
 
