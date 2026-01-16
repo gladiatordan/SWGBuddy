@@ -396,6 +396,29 @@ class ValidationService(Core):
 			mx = stats_def[stat]['max']
 			if not (mn <= val <= mx):
 				raise ValueError(f"{stat} value {val} is out of range ({mn}-{mx}).")
+		
+		waypoints_str = data.get('waypoints')
+		if waypoints_str:
+			# Split by semicolon
+			parts = [p for p in waypoints_str.split(';') if p.strip()]
+			if len(parts) > 10:
+				raise ValueError("Maximum 10 waypoints allowed.")
+
+			for part in parts:
+				# Format Check: /waypoint <x> <y> <name>
+				# Regex checks for integer range implicitly by structure, but logic checks bounds explicitly
+				match = re.match(r'^/waypoint\s+(-?\d+)\s+(-?\d+)\s+(.+)$', part.strip())
+				if not match:
+					raise ValueError(f"Invalid waypoint format: {part}")
+				
+				x, y, name = int(match.group(1)), int(match.group(2)), match.group(3)
+				
+				if not (-15000 <= x <= 15000):
+					raise ValueError(f"Waypoint X must be between -15000 and 15000: {x}")
+				if not (-15000 <= y <= 15000):
+					raise ValueError(f"Waypoint Y must be between -15000 and 15000: {y}")
+				if len(name) > 30:
+					raise ValueError(f"Waypoint name too long (max 30 chars): {name}")
 
 	def _calculate_ratings(self, data):
 		rules = self._get_rules(data)
@@ -439,10 +462,11 @@ class ValidationService(Core):
 			# Push whatever planets were assigned from the frontend
 			planet_arr = [planet_val] if planet_val else None
 
-		cols = ["server_id", "resource_class_id", "name", "planet", "res_weight_rating", "notes", "reporter_id"]
+		cols = ["server_id", "resource_class_id", "name", "planet", "res_weight_rating", "notes", "reporter_id", "waypoints"]
 		vals = [
 			server_id, res_class_id, data['name'], planet_arr, 
-			data.get('res_weight_rating', 0.0), data.get('notes', ''), reporter_id
+			data.get('res_weight_rating', 0.0), data.get('notes', ''), reporter_id,
+			data.get('waypoint', None)
 		]
 
 		for stat in self.STAT_COLS:
@@ -493,6 +517,10 @@ class ValidationService(Core):
 				# This handles 'togglePlanet' sending a single name
 				set_clauses.append("planet = CASE WHEN %s = ANY(COALESCE(planet, ARRAY[]::text[])) THEN array_remove(planet, %s) ELSE array_append(COALESCE(planet, ARRAY[]::text[]), %s) END")
 				vals.extend([planet_val, planet_val, planet_val])
+		
+		if 'waypoints' in data:
+			set_clauses.append("waypoints = %s")
+			vals.append(data['waypoints'])
 
 		vals.append(res_id)
 		sql = f"UPDATE resource_spawns SET {', '.join(set_clauses)} WHERE id = %s"

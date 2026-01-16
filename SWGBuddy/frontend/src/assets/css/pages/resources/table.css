@@ -6,6 +6,12 @@
     margin-top: 10px;    /* Spacing between filters and table */
     position: relative;
     border-bottom: 1px solid var(--border-color); /* Optional visual boundary */
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar {
+    display: none;
 }
 
 .resource-table {

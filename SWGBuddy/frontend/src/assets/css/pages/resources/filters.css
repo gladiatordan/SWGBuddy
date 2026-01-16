@@ -194,7 +194,12 @@
     background: #000;
     border: 1px solid var(--border-color);
     display: none;
-	/* z-index: 9999; */
+
+	scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+.custom-dropdown .dropdown-list::-webkit-scrollbar {
+	display: none;
 }
 
 .dropdown-item {

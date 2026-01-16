@@ -22,7 +22,8 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
         type: '',
         stats: {},
         notes: '',
-        markInactive: false
+        markInactive: false,
+		waypoints: []
     });
 
 	const selectedTypeConfig = findTaxonomyNode(taxonomy, formData.type);
@@ -97,6 +98,38 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
 		});
 	}, [formData.type, validStatsForType.length, selectedTypeConfig]);
 
+	const parseWaypoints = (wpString) => {
+        if (!wpString) return [];
+        // Expected format: "/waypoint <x> <y> <name>;"
+        const rawParts = wpString.split(';').filter(s => s.trim().length > 0);
+        const result = [];
+        
+        rawParts.forEach(part => {
+            const match = part.trim().match(/^\/waypoint\s+(-?\d+)\s+(-?\d+)\s+(.+)$/);
+            if (match) {
+                result.push({
+                    x: parseInt(match[1], 10),
+                    y: parseInt(match[2], 10),
+                    name: match[3].trim()
+                });
+            }
+        });
+        return result;
+    };
+
+	const serializeWaypoints = (wpArray) => {
+        if (!wpArray || wpArray.length === 0) return null;
+        return wpArray.map(wp => {
+            const cleanName = wp.name.trim();
+            // Smart Semicolon Check:
+            // If the user already typed a semicolon at the end, use it. 
+            // If not, automatically add one to denote the end of the entry.
+            const finalName = cleanName.endsWith(';') ? cleanName : `${cleanName};`;
+            
+            return `/waypoint ${wp.x} ${wp.y} ${finalName}`;
+        }).join('');
+    };
+
     // Helper: Extract stats from resource object
     const extractStats = (res) => {
 		const stats = {};
@@ -125,7 +158,8 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                     stats: extractStats(resource),
                     notes: resource.notes || '',
                     planet: planetArr,
-                    markInactive: false
+                    markInactive: false,
+					waypoints: parseWaypoints(resource.waypoints)
                 });
             } else {
                 setMode('add');
@@ -135,13 +169,59 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                     stats: {},
                     notes: '',
                     planet: [],
-                    markInactive: false
+                    markInactive: false,
+					waypoints: parseWaypoints(resource.waypoints)
                 });
             }
         }
     }, [isOpen, resource]);
 
     // --- Actions ---
+
+	// --- Waypoint Handlers ---
+    const handleWaypointChange = (index, field, value) => {
+        const newWaypoints = [...formData.waypoints];
+        
+        if (field === 'x' || field === 'y') {
+            // Fix: Allow empty string or single minus sign to support typing/clearing
+            if (value === '' || value === '-') {
+                newWaypoints[index][field] = value;
+            } else {
+                let intVal = parseInt(value, 10);
+                if (!isNaN(intVal)) {
+                    // Clamp value
+                    intVal = Math.max(-15000, Math.min(15000, intVal));
+                    newWaypoints[index][field] = intVal;
+                }
+            }
+        } else if (field === 'name') {
+            newWaypoints[index][field] = value.slice(0, 30);
+        }
+        
+        setFormData(prev => ({ ...prev, waypoints: newWaypoints }));
+    };
+
+    const addWaypoint = () => {
+        if (formData.waypoints.length >= 10) return;
+        setFormData(prev => ({
+            ...prev,
+            waypoints: [...prev.waypoints, { x: null, y: null, name: '' }]
+        }));
+    };
+
+    const removeWaypoint = (index) => {
+        setFormData(prev => ({
+            ...prev,
+            waypoints: prev.waypoints.filter((_, i) => i !== index)
+        }));
+    };
+
+    const copyToClipboard = (text) => {
+        navigator.clipboard.writeText(text).then(() => {
+            setStatusMsg({ type: 'success', text: 'Copied to clipboard!' });
+            setTimeout(() => setStatusMsg(null), 2000);
+        }).catch(err => console.error('Copy failed', err));
+    };
 
     const handleStatChange = (key, value) => {
 		if (value === '') {
@@ -293,7 +373,8 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                 stats: extractStats(resource),
                 notes: resource.notes || '',
                 planet: planetArr, // <--- This was missing
-                markInactive: false
+                markInactive: false,
+				waypoints: parseWaypoints(resource.waypoints)
             });
             setStatusMsg(null);
         } else {
@@ -318,12 +399,15 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
             return;
         }
 
+		const serializedWaypoints = serializeWaypoints(formData.waypoints);
+
         const payload = {
             ...formData.stats,
             name: formData.name,
             type: formData.type,
             notes: formData.notes,
             planet: formData.planet, // Pass array directly
+			waypoints: serializedWaypoints,
             server_id: selectedServer,
             auto_deactivate: mode === 'add' ? formData.markInactive : undefined
         };
@@ -367,6 +451,9 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
             : (resource.planet ? [resource.planet] : []);
         
         if (JSON.stringify(currentPlanets) !== JSON.stringify(originalPlanets)) return true;
+
+		const oldWps = parseWaypoints(resource.waypoints);
+        if (JSON.stringify(formData.waypoints) !== JSON.stringify(oldWps)) return true;
 
         // 3. Check Stats
         // We only care about the numeric values (res_oq, etc), not the ratings or derived fields
@@ -561,6 +648,92 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
 								</div>
 							</div>
 						)}
+
+						{/* WAYPOINTS SECTION */}
+                        <div className="form-group full-width" style={{ marginTop: '15px' }}>
+                            <label>Waypoints</label>
+                            
+                            {/* View Mode Waypoints */}
+                            {!isEditable && (
+                                <div className="waypoints-view-container">
+                                    {formData.waypoints.length === 0 ? (
+                                        <div className="static-value" style={{color: '#666', fontStyle: 'italic'}}>No waypoints recorded.</div>
+                                    ) : (
+                                        formData.waypoints.map((wp, idx) => {
+                                            const wpStr = `/waypoint ${wp.x} ${wp.y} ${wp.name};`;
+                                            return (
+                                                <div key={idx} className="waypoint-row-view">
+                                                    <span className="waypoint-text">{wpStr}</span>
+                                                    <button 
+                                                        type="button" 
+                                                        className="waypoint-copy-btn"
+                                                        onClick={() => copyToClipboard(wpStr)}
+                                                        title="Copy to Clipboard"
+                                                    >
+                                                        <i className="fa-solid fa-copy"></i> Copy
+                                                    </button>
+                                                </div>
+                                            );
+                                        })
+                                    )}
+                                </div>
+                            )}
+
+                            {/* Edit Mode Waypoints */}
+                            {isEditable && (
+                                <div className="waypoints-edit-container">
+                                    {formData.waypoints.map((wp, idx) => (
+                                        <div key={idx} className="waypoint-row-edit">
+                                            <div className="wp-input-group small">
+                                                <span className="wp-prefix">X</span>
+                                                <input 
+                                                    type="text" 
+                                                    value={wp.x}
+                                                    onChange={e => handleWaypointChange(idx, 'x', e.target.value)}
+                                                    min="-15000" max="15000"
+                                                />
+                                            </div>
+                                            <div className="wp-input-group small">
+                                                <span className="wp-prefix">Y</span>
+                                                <input 
+                                                    type="text" 
+                                                    value={wp.y}
+                                                    onChange={e => handleWaypointChange(idx, 'y', e.target.value)}
+                                                    min="-15000" max="15000"
+                                                />
+                                            </div>
+                                            <div className="wp-input-group large">
+                                                <input 
+                                                    type="text" 
+                                                    value={wp.name}
+                                                    onChange={e => handleWaypointChange(idx, 'name', e.target.value)}
+                                                    placeholder="Waypoint Name"
+                                                    maxLength="30"
+                                                />
+                                            </div>
+                                            <button 
+                                                type="button" 
+                                                className="waypoint-delete-btn"
+                                                onClick={() => removeWaypoint(idx)}
+                                                title="Remove Waypoint"
+                                            >
+                                                <i className="fa-solid fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    ))}
+
+                                    {formData.waypoints.length < 10 && (
+                                        <button 
+                                            type="button" 
+                                            className="add-waypoint-btn"
+                                            onClick={addWaypoint}
+                                        >
+                                            <i className="fa-solid fa-plus"></i> Add Waypoint
+                                        </button>
+                                    )}
+                                </div>
+                            )}
+                        </div>
 
                         {/* Notes */}
                         <div className="form-group full-width" style={{marginTop: '15px'}}>
