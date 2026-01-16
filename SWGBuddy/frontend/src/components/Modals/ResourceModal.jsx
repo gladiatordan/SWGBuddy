@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import API from '../../services/api';
 import { useServer } from '../../contexts/ServerContext';
 import { useAuth } from '../../contexts/AuthContext';
@@ -281,11 +281,18 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
         if (mode === 'edit') {
             // Revert changes and go back to view
             setMode('view');
+            
+            // Normalize planet array again (same logic as the opening useEffect)
+            const planetArr = Array.isArray(resource.planet) 
+                ? resource.planet 
+                : (resource.planet ? [resource.planet] : []);
+
             setFormData({
                 name: resource.name,
                 type: resource.type,
                 stats: extractStats(resource),
                 notes: resource.notes || '',
+                planet: planetArr, // <--- This was missing
                 markInactive: false
             });
             setStatusMsg(null);
@@ -342,6 +349,44 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
             setLoading(false);
         }
     };
+
+	const isDirty = useMemo(() => {
+        // Always dirty in Add mode (unless empty, but validation handles that)
+        if (mode === 'add') return true; 
+        if (!resource) return false;
+
+        // 1. Check Top-Level Fields
+        if (formData.name !== resource.name) return true;
+        if (formData.type !== resource.type) return true;
+        if ((formData.notes || '') !== (resource.notes || '')) return true;
+
+        // 2. Check Planets (Normalize arrays and sort)
+        const currentPlanets = [...(formData.planet || [])].sort();
+        const originalPlanets = Array.isArray(resource.planet) 
+            ? [...resource.planet].sort() 
+            : (resource.planet ? [resource.planet] : []);
+        
+        if (JSON.stringify(currentPlanets) !== JSON.stringify(originalPlanets)) return true;
+
+        // 3. Check Stats
+        // We only care about the numeric values (res_oq, etc), not the ratings or derived fields
+        const relevantStats = ['oq','cr','cd','dr','fl','hr','ma','pe','sr','ut'];
+        for (const stat of relevantStats) {
+            const key = `res_${stat}`;
+            
+            // Normalize: Form uses null for empty, DB might have null or 0 or undefined
+            // We treat null, undefined, and '' as equivalent for comparison
+            let formVal = formData.stats[key];
+            let origVal = resource[key];
+
+            if (formVal === '' || formVal === undefined) formVal = null;
+            if (origVal === '' || origVal === undefined || origVal === 0) origVal = null;
+
+            if (formVal !== origVal) return true;
+        }
+
+        return false;
+    }, [formData, resource, mode]);
 
     // --- Render Helpers ---
 
@@ -416,7 +461,7 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
 									const tooltip = rating !== null ? `Rating: ${(rating * 100).toFixed(1)}%` : '';
 									
 									return (
-										<div key={valKey} className="stat-box" data-tooltip={tooltip}>
+										<div key={valKey} className="stat-box" title={tooltip}>
 											<label>{label}</label>
 											<span className={`stat-value ${getStatColorClass(rating)}`}>{value}</span>
 										</div>
@@ -455,7 +500,30 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                             })}
                         </div>
 
-						{/* PLANETS SECTION - Positioned here per request */}
+						{/* Meta Info (View Only) */}
+                        {mode !== 'add' && resource && (
+                            <div className="meta-grid">
+                                <div className="form-group">
+									<label>Date Reported</label>
+									<div className="static-value">
+                                        {/* Format: {date} by {username} */}
+										{formatResourceDate(resource.date_reported)} by {resource.reporter_name || 'Unknown'}
+									</div>
+								</div>
+
+                                {/* Only show Last Updated if it exists */}
+                                {resource.last_modified && (
+                                    <div className="form-group">
+                                        <label>Last Updated</label>
+                                        <div className="static-value">
+                                            {formatResourceDate(resource.last_modified)} by {resource.updater_name || resource.reporter_name || 'Unknown'}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+						{/* PLANETS SECTION */}
                         {isEditable ? (
                              <div className="form-group full-width" style={{ marginTop: '15px' }}>
                                 <label>Planets</label>
@@ -486,26 +554,13 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                                 </div>
                             </div>
                         ) : (
-                            /* View Mode Meta Grid (Includes Planets) */
-                            <div className="meta-grid">
-                                <div className="form-group">
-									<label>Last Updated</label>
-									<div className="static-value">
-										{formatResourceDate(resource?.last_updated || resource?.date_reported)}
-									</div>
+							<div className="form-group">
+								<label>Planets</label>
+								<div className="static-value">
+									{Array.isArray(resource.planet) ? resource.planet.join(', ') : resource.planet}
 								</div>
-                                <div className="form-group">
-                                    <label>Reporter</label>
-                                    <div className="static-value">{resource?.reporter_name || '-'}</div>
-                                </div>
-                                <div className="form-group">
-                                    <label>Planets</label>
-                                    <div className="static-value">
-                                        {formData.planet && formData.planet.length > 0 ? formData.planet.join(', ') : '-'}
-                                    </div>
-                                </div>
-                            </div>
-                        )}
+							</div>
+						)}
 
                         {/* Notes */}
                         <div className="form-group full-width" style={{marginTop: '15px'}}>
@@ -573,7 +628,14 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                                 ) : <div></div>
                             ) : (
                                 <div className="footer-actions">
-                                    <button type="submit" className="btn-primary" disabled={loading}>Save</button>
+                                    {/* UPDATED: Added disable logic based on isDirty */}
+                                    <button 
+                                        type="submit" 
+                                        className="btn-primary" 
+                                        disabled={loading || (mode === 'edit' && !isDirty)}
+                                    >
+                                        Save
+                                    </button>
                                     <button type="button" className="btn-danger" onClick={handleCancel}>Cancel</button>
                                 </div>
                             )}
