@@ -15,6 +15,12 @@
 .stat-yellow { color: var(--stat-mid) !important; font-weight: 600; }
 .stat-green { color: var(--stat-high) !important; }
 
+/* Role Colors */
+.role-superadmin { background: #ff4444; color: white; }
+.role-admin { background: #ffbb33; color: black; }
+.role-editor { background: #00C851; color: white; }
+.role-user { background: #33b5e5; color: white; }
+
 /* Shared Tooltip Logic (Consolidated from Planets and Stats) */
 [data-tooltip] {
     position: relative;

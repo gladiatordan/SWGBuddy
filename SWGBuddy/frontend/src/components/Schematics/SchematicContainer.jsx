@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import API from '../../services/api';
 import { useServer } from '../../contexts/ServerContext';
 import SchematicSidebar from './SchematicSidebar';
-import '../../assets/css/schematics.css'; 
+
 
 const SchematicContainer = () => {
     const { selectedServer } = useServer();

@@ -6,15 +6,20 @@ import App from './App.jsx'
 // Import your existing CSS structure
 import './assets/css/variables.css'
 import './assets/css/base.css'
+import './assets/css/header.css'
 import './assets/css/footer.css'
-// We will import specific component CSS (like tables/modals) in their specific components later, 
-// or import them all here for now to ensure 1:1 parity immediately.
-import './assets/css/resourcelog/table.css'
-import './assets/css/resourcelog/filters.css'
-import './assets/css/resourcelog/modal.css'
-import './assets/css/resourcelog/planets.css'
-import './assets/css/resourcelog/status.css'
-import './assets/css/resourcelog/pagination.css'
+import './assets/css/management.css'
+
+// Resources Container
+import './assets/css/pages/resources/table.css'
+import './assets/css/pages/resources/filters.css'
+import './assets/css/pages/resources/modal.css'
+import './assets/css/pages/resources/planets.css'
+import './assets/css/pages/resources/status.css'
+import './assets/css/pages/resources/pagination.css'
+
+// Schematics Container
+import './assets/css/pages/schematics/schematics.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
