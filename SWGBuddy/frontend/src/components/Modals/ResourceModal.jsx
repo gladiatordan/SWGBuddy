@@ -170,7 +170,7 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                     notes: '',
                     planet: [],
                     markInactive: false,
-					waypoints: parseWaypoints(resource.waypoints)
+					waypoints: []
                 });
             }
         }
@@ -644,7 +644,8 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
 							<div className="form-group">
 								<label>Planets</label>
 								<div className="static-value">
-									{Array.isArray(resource.planet) ? resource.planet.join(', ') : resource.planet}
+                                    {/* Add resource check to prevent crash on Add Mode init */}
+									{resource && (Array.isArray(resource.planet) ? resource.planet.join(', ') : resource.planet)}
 								</div>
 							</div>
 						)}
@@ -726,7 +727,12 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                                         <button 
                                             type="button" 
                                             className="add-waypoint-btn"
-                                            onClick={addWaypoint}
+                                            onClick={() => {
+                                                setFormData(prev => ({
+                                                    ...prev,
+                                                    waypoints: [...prev.waypoints, { x: 0, y: 0, name: 'New Waypoint' }]
+                                                }));
+                                            }}
                                         >
                                             <i className="fa-solid fa-plus"></i> Add Waypoint
                                         </button>
@@ -801,14 +807,8 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                                 ) : <div></div>
                             ) : (
                                 <div className="footer-actions">
-                                    {/* UPDATED: Added disable logic based on isDirty */}
-                                    <button 
-                                        type="submit" 
-                                        className="btn-primary" 
-                                        disabled={loading || (mode === 'edit' && !isDirty)}
-                                    >
-                                        Save
-                                    </button>
+                                    <button type="submit" className="btn-primary" disabled={loading || (mode === 'edit' && !isDirty)}>Save</button>
+                                    {/* Use handleCancel function instead of inline duplicate */}
                                     <button type="button" className="btn-danger" onClick={handleCancel}>Cancel</button>
                                 </div>
                             )}
