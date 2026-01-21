@@ -174,7 +174,7 @@ const ResourceList = ({ serverId }) => {
 							</div>
 
 							<TaxonomySearch 
-								taxonomy={taxonomy} 
+								options={cache.filter_flatlist} 
 								value={filters.category}
 								onChange={(cat) => setFilters(prev => ({ ...prev, category: cat }))}
 								onlyValid={false}

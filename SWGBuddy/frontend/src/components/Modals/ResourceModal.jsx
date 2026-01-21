@@ -522,7 +522,7 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                         <div className="form-group">
                             <label>Type</label>
                             <TaxonomySearch 
-                                taxonomy={taxonomy} 
+                                options={cache.valid_resources} 
                                 value={formData.type} 
                                 onChange={val => setFormData({...formData, type: val})}
 								onlyValid={true}
