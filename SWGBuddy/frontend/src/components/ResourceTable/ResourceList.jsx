@@ -8,7 +8,7 @@ import ResourceModal from '../Modals/ResourceModal';
 import Loader from '../Common/Loader';
 
 const ResourceList = ({ serverId }) => {
-    const { resources, taxonomy, loading, actions } = useResources(serverId);
+    const { resources, cache, loading, actions } = useResources(serverId);
     const { hasPermission } = useAuth();
     const isEditor = hasPermission('EDITOR');
 

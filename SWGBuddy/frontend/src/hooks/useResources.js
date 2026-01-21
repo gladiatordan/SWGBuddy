@@ -3,7 +3,11 @@ import API from '../services/api';
 
 export const useResources = (serverId = 'cuemu') => {
     const [rawResources, setRawResources] = useState([]);
-    const [taxonomy, setTaxonomy] = useState([]);
+	const [cache, setCache] = useState({
+        taxonomy: {},
+        valid_resources: {},
+        filter_list: {}
+    });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const lastSyncRef = useRef(0);
@@ -13,9 +17,10 @@ export const useResources = (serverId = 'cuemu') => {
     useEffect(() => {
         const init = async () => {
             try {
-                const taxData = await API.fetchTaxonomy();
-                setTaxonomy(taxData);
-                await fetchResources(false); // Full Sync
+                // Fetch the structured cache data from the new API endpoint
+                const cacheData = await API.fetchTaxonomy(serverId); 
+                setCache(cacheData); 
+                await fetchResources(false);
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -23,10 +28,7 @@ export const useResources = (serverId = 'cuemu') => {
             }
         };
         init();
-        
-        // Start Polling on mount
         startPolling();
-
         return () => stopPolling();
     }, [serverId]);
 
@@ -120,7 +122,7 @@ export const useResources = (serverId = 'cuemu') => {
 
     return {
         resources: rawResources, 
-        taxonomy,
+        cache,
         loading,
         error,
         actions: { toggleStatus, togglePlanet, refresh }
