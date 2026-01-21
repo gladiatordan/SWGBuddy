@@ -71,6 +71,18 @@ class ServiceManager:
 
 if __name__ == "__main__":
     load_dotenv() # Load environment into os.environ (local dev mode)
+    multiprocessing.freeze_support()
     manager = ServiceManager()
     signal.signal(signal.SIGINT, manager.stop)
+    
+	# 1. Initialize Cache FIRST (This blocks until the DB is read)
+    print("[Main] Pre-loading Cache Manager...")
+    try:
+        manager.cache.initialize()
+        print("[Main] Cache ready.")
+    except Exception as e:
+        print(f"[Main] FATAL: Cache failed to initialize: {e}")
+        sys.exit(1)
+    
+	# 2. Start Manager AFTER CacheManager is fully loaded
     manager.start()
