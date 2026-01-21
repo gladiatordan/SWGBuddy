@@ -4,8 +4,7 @@ const TaxonomySearch = ({
     options, 
     value, 
     onChange, 
-    placeholder = "Search Type...", 
-    onlyValid = false, // Set to true for ResourceModal, false for Filters
+    placeholder = "Search Type...",
     disabled = false 
 }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -52,7 +51,8 @@ const TaxonomySearch = ({
     }, []);
 
     const handleSelect = (item) => {
-        onChange(item ? item.value : null); // Return the Key (class_tree)
+        // item is { value: "1.2.3", label: "Iron" }
+        onChange(item ? item.value : null); 
         setIsOpen(false);
         setSearch('');
         setActiveIndex(-1);
@@ -79,11 +79,11 @@ const TaxonomySearch = ({
                 break;
             case 'Enter':
                 e.preventDefault();
+                // FIX: Pass the entire 'item' object, not just the label string
                 if (activeIndex >= 0 && activeIndex < filtered.length) {
-                    handleSelect(filtered[activeIndex].label);
+                    handleSelect(filtered[activeIndex]); 
                 } else if (filtered.length > 0 && search) {
-                    // If user typed something and hits enter, select first match if no active index
-                    handleSelect(filtered[0].label);
+                    handleSelect(filtered[0]);
                 }
                 break;
             case 'Escape':
@@ -129,17 +129,20 @@ const TaxonomySearch = ({
             />
             
             {isOpen && (
-                <div className="dropdown-list" ref={listRef}>
+                <div className="dropdown-list" style={{ display: 'block' }} ref={listRef}>
                     {filtered.map((item, idx) => (
                         <div 
-                            key={item.value} 
+                            key={`${item.label}-${idx}`} 
                             className={`dropdown-item ${idx === activeIndex ? 'active' : ''}`}
-                            onClick={() => handleSelect(item)}
+                            onClick={() => handleSelect(item.label)}
+                            style={idx === activeIndex ? { background: '#1a1f26', color: 'var(--accent-blue)' } : {}}
                         >
                             {item.label}
                         </div>
                     ))}
-                    {filtered.length === 0 && <div className="dropdown-item">No matches</div>}
+                    {filtered.length === 0 && (
+                        <div className="dropdown-item" style={{color: '#666'}}>No matches</div>
+                    )}
                 </div>
             )}
 
@@ -147,8 +150,12 @@ const TaxonomySearch = ({
             {value && (
                 <button 
                     className="reset-filter-btn" 
-                    onClick={(e) => { e.stopPropagation(); handleSelect(null); }}
-                    type="button"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleSelect(null);
+                    }}
+                    tabIndex="-1"
+                    type="button" // Prevent form submission in modals
                 >
                     &times;
                 </button>
