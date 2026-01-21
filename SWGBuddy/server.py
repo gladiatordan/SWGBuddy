@@ -114,7 +114,73 @@ def send_command(action, payload, server_id='cuemu', timeout=10):
 
 @app.route('/')
 def index():
-	return render_template("index.html")
+	# 1. Parse Query Params
+	page = request.args.get('page', 'resources')
+	server_id = request.args.get('server', 'cuemu') # Default to cuemu if not specified
+
+	# 2. Define Default Metadata
+	og_title = "SWGBuddy Resource Tracker"
+	og_desc = "Track, share, and find Star Wars Galaxies resources."
+
+	# 2. Router Logic for Metadata
+	if page == 'resources':
+		resource_name = request.args.get('resource')
+		if resource_name:
+			try:
+				with DatabaseContext.cursor() as cur:
+					# Query resource details for the embed
+					sql = """
+						SELECT rl.name, rl.res_weight_rating, rc.label as type_label, gs.name as server_name
+						FROM resource_log rl
+						JOIN resource_class rc ON rl.class_tree = rc.class_tree
+						JOIN game_servers gs ON rl.server_id = gs.id
+						WHERE rl.server_id = %s AND LOWER(rl.name) = LOWER(%s)
+						LIMIT 1
+					"""
+					cur.execute(sql, (server_id, resource_name))
+					row = cur.fetchone()
+					
+					if row:
+						# Format: "Calypsa (Corn) - 98.5%"
+						pct = int(row['res_weight_rating'] * 1000) / 10
+						og_title = f"{row['name']} ({row['type_label']}) - {pct}%"
+						og_desc = f"Server: {row['server_name']} | Type: {row['type_label']}"
+			except Exception as e:
+				print(f"Metadata injection error: {e}")
+			
+	elif page == 'schematics':
+		schematic_id = request.args.get('schematic_id') # Example param
+		if schematic_id:
+			# Placeholder for Schematic Logic
+			# row = query_schematic(schematic_id)
+			# og_title = f"Schematic: {row['name']}"
+			og_title = "SWG Schematic"
+			og_desc = "Schematic details coming soon."
+	
+
+	# 4. Inject into HTML
+	# We manually read and replace to avoid React/Jinja conflicts
+	try:
+		# Determine path to templates/index.html
+		template_folder = app.template_folder or 'templates'
+		template_path = os.path.join(template_folder, 'index.html')
+
+		# If running in dev without build, this might fail, fallback to render_template
+		if not os.path.exists(template_path):
+				return render_template("index.html")
+
+		with open(template_path, 'r', encoding='utf-8') as f:
+			html_content = f.read()
+
+		# Replace Placeholders
+		html_content = html_content.replace('__OG_TITLE__', str(og_title))
+		html_content = html_content.replace('__OG_DESCRIPTION__', str(og_desc))
+
+		return html_content
+
+	except Exception as e:
+		print(f"Error serving index with injection: {e}")
+		return render_template("index.html")
 
 # --- AUTHENTICATION ---
 
@@ -489,62 +555,62 @@ def set_role():
 # IMAGE SCANNING
 @app.route('/api/scan-image', methods=['POST'])
 def scan_image():
-    if 'discord_id' not in session: 
-        return jsonify({"error": "Unauthorized"}), 401
-    
-    if 'image' not in request.files:
-        return jsonify({"error": "No image provided"}), 400
+	if 'discord_id' not in session: 
+		return jsonify({"error": "Unauthorized"}), 401
+	
+	if 'image' not in request.files:
+		return jsonify({"error": "No image provided"}), 400
 
-    if not Image:
-        return jsonify({"error": "OCR libraries not installed"}), 500
+	if not Image:
+		return jsonify({"error": "OCR libraries not installed"}), 500
 
-    file = request.files['image']
-    
-    try:
-        img = Image.open(file.stream).convert('RGB')
-        raw_text = pytesseract.image_to_string(img, config='--psm 6')
-        
-        extracted = {
-            "name": "",
-            "class_tree": "", # OCR likely can't derive this, user must select
-            "stats": {}
-        }
-        
-        lines = [l.strip() for l in raw_text.split('\n') if l.strip()]
-        
-        # Name Extraction Heuristic
-        if len(lines) > 0: 
-            for i in range(len(lines)):
-                if "Resource Type:" in lines[i]:
-                    extracted['name'] = lines[i].split(": ")[1]
+	file = request.files['image']
+	
+	try:
+		img = Image.open(file.stream).convert('RGB')
+		raw_text = pytesseract.image_to_string(img, config='--psm 6')
+		
+		extracted = {
+			"name": "",
+			"class_tree": "", # OCR likely can't derive this, user must select
+			"stats": {}
+		}
+		
+		lines = [l.strip() for l in raw_text.split('\n') if l.strip()]
+		
+		# Name Extraction Heuristic
+		if len(lines) > 0: 
+			for i in range(len(lines)):
+				if "Resource Type:" in lines[i]:
+					extracted['name'] = lines[i].split(": ")[1]
 
-        # UPDATED STAT MAPPING: Legacy Text -> New Column Names
-        stat_patterns = {
-            'res_cold_resist': r'(Cold Resistance).*?(\d{1,4})',
-            'res_conductivity': r'(Conductivity).*?(\d{1,4})',
-            'res_decay_resist': r'(Decay Resistance).*?(\d{1,4})',
-            'res_flavor': r'(Flavor).*?(\d{1,4})',
-            'res_heat_resist': r'(Heat Resistance).*?(\d{1,4})',
-            'res_malleability': r'(Malleability).*?(\d{1,4})',
-            'res_potential_energy': r'(Potential Energy).*?(\d{1,4})',
-            'res_quality': r'(Overall Quality).*?(\d{1,4})',
-            'res_shock_resistance': r'(Shock Resistance).*?(\d{1,4})',
-            'res_toughness': r'(Unit Toughness).*?(\d{1,4})',
-            'entangle_resistance': r'(Entangle Resistance).*?(\d{1,4})'
-        }
-        
-        for key, pattern in stat_patterns.items():
-            match = re.search(pattern, raw_text, re.IGNORECASE)
-            if match:
-                val = int(match.group(2))
-                if 1 <= val <= 1000:
-                    extracted['stats'][key] = val
-        
-        return jsonify({"success": True, "data": extracted})
+		# UPDATED STAT MAPPING: Legacy Text -> New Column Names
+		stat_patterns = {
+			'res_cold_resist': r'(Cold Resistance).*?(\d{1,4})',
+			'res_conductivity': r'(Conductivity).*?(\d{1,4})',
+			'res_decay_resist': r'(Decay Resistance).*?(\d{1,4})',
+			'res_flavor': r'(Flavor).*?(\d{1,4})',
+			'res_heat_resist': r'(Heat Resistance).*?(\d{1,4})',
+			'res_malleability': r'(Malleability).*?(\d{1,4})',
+			'res_potential_energy': r'(Potential Energy).*?(\d{1,4})',
+			'res_quality': r'(Overall Quality).*?(\d{1,4})',
+			'res_shock_resistance': r'(Shock Resistance).*?(\d{1,4})',
+			'res_toughness': r'(Unit Toughness).*?(\d{1,4})',
+			'entangle_resistance': r'(Entangle Resistance).*?(\d{1,4})'
+		}
+		
+		for key, pattern in stat_patterns.items():
+			match = re.search(pattern, raw_text, re.IGNORECASE)
+			if match:
+				val = int(match.group(2))
+				if 1 <= val <= 1000:
+					extracted['stats'][key] = val
+		
+		return jsonify({"success": True, "data": extracted})
 
-    except Exception as e:
-        print(f"OCR Error: {e}")
-        return jsonify({"error": "Failed to process image."}), 500
+	except Exception as e:
+		print(f"OCR Error: {e}")
+		return jsonify({"error": "Failed to process image."}), 500
 
 
 if __name__ == '__main__':

@@ -10,7 +10,15 @@ import SchematicContainer from './components/Schematics/SchematicContainer';
 
 function App() {
     // 1. Centralized Application State
-    const [activeTab, setActiveTab] = useState('resources');
+    const [activeTab, setActiveTab] = useState(() => {
+        const params = new URLSearchParams(window.location.search);
+        const page = params.get('page');
+        
+        // precise mapping of allowed pages
+        if (page === 'schematics') return 'schematics';
+        if (page === 'management') return 'management';
+        return 'resources'; // Default
+    });
     const [selectedServer, setSelectedServer] = useState('cuemu');
     
     // 2. Loading State
@@ -38,7 +46,16 @@ function App() {
         setTimeout(() => {
             setIsTransitioning(false);
             setTimeout(() => setShouldRenderLoader(false), 500);
-        }, 400); 
+        }, 400);
+
+		const params = new URLSearchParams(window.location.search);
+        params.set('page', tabName);
+        
+        // Clear item-specific params when switching contexts
+        if (tabName !== 'resources') params.delete('resource');
+        
+        const newUrl = `${window.location.pathname}?${params.toString()}`;
+        window.history.pushState({}, '', newUrl);
     };
 
     return (

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useResources } from '../../hooks/useResources';
 import { useAuth } from '../../contexts/AuthContext';
 import { filterResources, sortResources } from '../../utils/resourceUtils';
@@ -103,6 +103,26 @@ const ResourceList = ({ serverId }) => {
             return { ...prev, planets: [...current, planet] };
         });
     };
+
+	// --- DEEP LINKING LOGIC ---
+    useEffect(() => {
+        // Only run if resources are loaded
+        if (loading || !resources.length) return;
+
+        const params = new URLSearchParams(window.location.search);
+        const linkedName = params.get('resource');
+
+        if (linkedName) {
+            const found = resources.find(r => r.name.toLowerCase() === linkedName.toLowerCase());
+            if (found) {
+                handleRowClick(found);
+                
+                // Optional: Clean up URL after opening (removes ?resource=... but keeps ?server=...)
+                params.delete('resource');
+                window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
+            }
+        }
+    }, [resources, loading]); // Dependency on resources ensures this runs once data arrives
 
     // --- Data Pipeline ---
     const processedData = useMemo(() => {
