@@ -1,6 +1,6 @@
 import logging
 from multiprocessing import Manager
-from SWGBuddy.core.database import get_db_connection
+from SWGBuddy.core.database import DatabaseContext
 
 logger = logging.getLogger(__name__)
 
@@ -22,30 +22,30 @@ class CacheManager:
         Call this ONCE from main.py before starting child processes.
         """
         try:
-            conn = get_db_connection()
-            cur = conn.cursor()
+            # Ensure pool is created (though cursor() will also do it)
+            DatabaseContext.initialize()
 
-            # 1. Map Registered Servers -> Base Type (live vs core3)
-            cur.execute("SELECT id, base_server FROM game_servers")
-            server_map = {row[0]: row[1] for row in cur.fetchall()}
+            with DatabaseContext.cursor() as cur:
+                # 1. Map Registered Servers -> Base Type (live vs core3)
+                cur.execute("SELECT id, base_server FROM game_servers")
+                # RealDictCursor returns dict-like rows; access by column name
+                server_map = {row['id']: row['base_server'] for row in cur.fetchall()}
 
-            # 2. Load Raw Weights: { "live": { "1.2.3": {attr1: 'res_quality'...} } }
-            cur.execute("SELECT * FROM resource_weights")
-            colnames = [desc[0] for desc in cur.description]
-            raw_weights = {}
-            
-            for row in cur.fetchall():
-                data = dict(zip(colnames, row))
-                srv = data['server']
-                ctree = data['class_tree'] # e.g. "1.2.3"
-                if srv not in raw_weights: 
-                    raw_weights[srv] = {}
-                raw_weights[srv][ctree] = data
+                # 2. Load Raw Weights: { "live": { "1.2.3": {attr1: 'res_quality'...} } }
+                cur.execute("SELECT * FROM resource_weights")
+                raw_weights = {}
+                
+                for row in cur.fetchall():
+                    data = dict(row) # Convert RealDictRow to standard dict
+                    srv = data['server']
+                    ctree = data['class_tree'] # e.g. "1.2.3"
+                    if srv not in raw_weights: 
+                        raw_weights[srv] = {}
+                    raw_weights[srv][ctree] = data
 
-            # 3. Load Taxonomy Definitions
-            cur.execute("SELECT class_tree, enum, label, is_valid, available_planets FROM resource_class ORDER BY class_tree ASC")
-            cols = [desc[0] for desc in cur.description]
-            taxonomy_defs = [dict(zip(cols, row)) for row in cur.fetchall()]
+                # 3. Load Taxonomy Definitions
+                cur.execute("SELECT class_tree, enum, label, is_valid, available_planets FROM resource_class ORDER BY class_tree ASC")
+                taxonomy_defs = [dict(row) for row in cur.fetchall()]
 
             # 4. Build Optimized Caches Per Server
             for server_id, base_server in server_map.items():
@@ -108,8 +108,6 @@ class CacheManager:
                     "filter_flatlist": filter_list
                 }
 
-            cur.close()
-            conn.close()
             logger.info(f"Shared CacheManager initialized for {len(server_map)} servers.")
 
         except Exception as e:

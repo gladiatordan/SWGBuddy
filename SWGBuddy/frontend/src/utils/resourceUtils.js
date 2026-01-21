@@ -1,9 +1,17 @@
 // Data & Formatting Utilities
 
 export const STAT_MAPPING = {
-    'res_oq': 'OQ', 'res_cr': 'CR', 'res_cd': 'CD', 'res_dr': 'DR', 
-    'res_fl': 'FL', 'res_hr': 'HR', 'res_ma': 'MA', 'res_pe': 'PE', 
-    'res_sr': 'SR', 'res_ut': 'UT'
+    'res_quality': 'OQ',
+    'res_cold_resist': 'CR',
+    'res_conductivity': 'CD',
+    'res_decay_resist': 'DR',
+    'res_flavor': 'FL',
+    'res_heat_resist': 'HR',
+    'res_malleability': 'MA',
+    'res_potential_energy': 'PE',
+    'res_shock_resistance': 'SR',
+    'res_toughness': 'UT',
+    'entangle_resistance': 'ER' // Added new stat
 };
 
 export const getStatColorClass = (rating) => {
