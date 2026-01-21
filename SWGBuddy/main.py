@@ -20,15 +20,16 @@ class ServiceManager:
         self.validation_queue = multiprocessing.Queue()
         # FIX 1: Add the missing reply queue
         self.reply_queue = multiprocessing.Queue()
+        self.cache = CacheManager()
+        self.cache.initialize() # Loads DB once into shared memory
 
     def start(self):
         print("[Manager] Spawning Services...")
 
         services = [
             ("Logger", LogService, (self.log_queue,)),
-            ("Cache", CacheManager, (self.log_queue,)),
-            ("Validation", ValidationService, (self.validation_queue, self.log_queue, self.reply_queue)),
-            ("Web", WebService, (self.validation_queue, self.log_queue, self.reply_queue))
+            ("Validation", ValidationService, (self.validation_queue, self.log_queue, self.reply_queue, self.cache)),
+            ("Web", WebService, (self.validation_queue, self.log_queue, self.reply_queue, self.cache))
         ]
 
         for name, cls, args in services:

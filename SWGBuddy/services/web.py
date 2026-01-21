@@ -12,10 +12,11 @@ from SWGBuddy.server import app, start_response_router, current_app
 
 
 class WebService(Core):
-    def __init__(self, validation_queue, log_queue, reply_queue):
+    def __init__(self, validation_queue, log_queue, reply_queue, cache):
         super().__init__(log_queue)
         self.validation_queue = validation_queue
         self.reply_queue = reply_queue
+        self.cache = cache
 
     def run(self):
         self.info("Initializing Web Service (Waitress)...")

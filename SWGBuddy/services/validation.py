@@ -27,10 +27,11 @@ class ValidationService(Core):
 		"res_ma", "res_pe", "res_sr", "res_ut", "res_cr"
 	]
 
-	def __init__(self, input_queue, log_queue, reply_queue=None):
+	def __init__(self, input_queue, log_queue, reply_queue, cache):
 		super().__init__(log_queue)
 		self.input_queue = input_queue
 		self.reply_queue = reply_queue
+		self.cache = cache
 		self.running = True
 		
 		# Caches

@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 
 const TaxonomySearch = ({ 
-    taxonomy, 
+    options, 
     value, 
     onChange, 
     placeholder = "Search Type...", 
