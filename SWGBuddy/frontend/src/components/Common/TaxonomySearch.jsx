@@ -10,32 +10,26 @@ const TaxonomySearch = ({
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [search, setSearch] = useState('');
-    const [activeIndex, setActiveIndex] = useState(-1); // Keyboard Nav State
+    const [activeIndex, setActiveIndex] = useState(-1);
     const wrapperRef = useRef(null);
     const listRef = useRef(null);
 
-    // Flatten taxonomy once based on the onlyValid requirement
+    // Convert the dictionary prop into a sortable array
     const flatList = useMemo(() => {
-        const list = [];
-        const traverse = (nodes) => {
-            if (!nodes) return;
-            nodes.forEach(node => {
-				// Omit anything space-related as these are just asteroids and always statically-assigned.
-				if (node.label === "Space Resource") {
-                    return; 
-                }
-                // If onlyValid is true, only add leaf nodes (is_valid: true)
-                // If onlyValid is false, add everything (for filtering)
-                if (!onlyValid || node.is_valid) {
-                    list.push({ label: node.label, is_valid: node.is_valid });
-                }
-                if (node.children) traverse(node.children);
-            });
-        };
-        traverse(taxonomy);
-        // Sort alphabetically for easier browsing
-        return list.sort((a, b) => a.label.localeCompare(b.label));
-    }, [taxonomy, onlyValid]);
+        if (!options) return [];
+        return Object.entries(options).map(([key, val]) => {
+            // Handle both simple label map and detailed object map
+            const label = typeof val === 'object' ? val.label : val;
+            return { value: key, label: label };
+        }).sort((a, b) => a.label.localeCompare(b.label));
+    }, [options]);
+
+	// Derived label for the input field
+    const selectedLabel = useMemo(() => {
+        if (!value || !options) return '';
+        const entry = options[value];
+        return typeof entry === 'object' ? entry.label : entry;
+    }, [value, options]);
 
     const filtered = useMemo(() => {
         // If searching, filter. If just open, show all.
@@ -57,10 +51,10 @@ const TaxonomySearch = ({
         return () => document.removeEventListener('mousedown', handleClick);
     }, []);
 
-    const handleSelect = (label) => {
-        onChange(label);
+    const handleSelect = (item) => {
+        onChange(item ? item.value : null); // Return the Key (class_tree)
         setIsOpen(false);
-        setSearch(''); // Clear search on selection
+        setSearch('');
         setActiveIndex(-1);
     };
 
@@ -117,39 +111,35 @@ const TaxonomySearch = ({
 
     return (
         <div className="custom-dropdown" ref={wrapperRef}>
-            {/* Input field acts as both display and search */}
             <input 
                 type="text" 
                 className="dropdown-search-input" 
-                placeholder={value || placeholder}
-                value={isOpen ? search : (value || '')}
+                placeholder={placeholder}
+                value={isOpen ? search : (selectedLabel || '')}
                 onChange={(e) => {
                     setSearch(e.target.value);
                     setIsOpen(true);
-                    setActiveIndex(0); // Reset to top on search
+                    setActiveIndex(0);
                 }}
                 onFocus={() => {
-                    setSearch(value || ''); 
+                    setSearch(''); 
                     setIsOpen(true);
                 }}
                 onKeyDown={handleKeyDown}
             />
             
             {isOpen && (
-                <div className="dropdown-list" style={{ display: 'block' }} ref={listRef}>
+                <div className="dropdown-list" ref={listRef}>
                     {filtered.map((item, idx) => (
                         <div 
-                            key={`${item.label}-${idx}`} 
+                            key={item.value} 
                             className={`dropdown-item ${idx === activeIndex ? 'active' : ''}`}
-                            onClick={() => handleSelect(item.label)}
-                            style={idx === activeIndex ? { background: '#1a1f26', color: 'var(--accent-blue)' } : {}}
+                            onClick={() => handleSelect(item)}
                         >
                             {item.label}
                         </div>
                     ))}
-                    {filtered.length === 0 && (
-                        <div className="dropdown-item" style={{color: '#666'}}>No matches</div>
-                    )}
+                    {filtered.length === 0 && <div className="dropdown-item">No matches</div>}
                 </div>
             )}
 
@@ -157,12 +147,8 @@ const TaxonomySearch = ({
             {value && (
                 <button 
                     className="reset-filter-btn" 
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        handleSelect(null);
-                    }}
-                    tabIndex="-1"
-                    type="button" // Prevent form submission in modals
+                    onClick={(e) => { e.stopPropagation(); handleSelect(null); }}
+                    type="button"
                 >
                     &times;
                 </button>

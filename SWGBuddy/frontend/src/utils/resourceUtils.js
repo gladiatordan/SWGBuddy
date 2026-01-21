@@ -94,31 +94,30 @@ const COLUMN_CONFIG = {
     is_active: 'status',
 };
 
-export const filterResources = (data, filters, taxonomyTree) => {
+export const filterResources = (data, filters) => {
     if (!data) return [];
     
-    // Pre-calculate valid labels if a category is selected
-    let validLabels = [];
-    if (filters.category && filters.category !== "Resources" && filters.category !== "All Resources") {
-        validLabels = [
-            filters.category.toLowerCase(), 
-            ...getDescendantLabels(taxonomyTree, filters.category)
-        ];
-    }
-
     return data.filter(res => {
-        // 1. Search (Name/Type)
+        // 1. Search (Name match)
         if (filters.search) {
             const term = filters.search.toLowerCase();
             const name = (res.name || "").toLowerCase();
-            const type = (res.type || "").toLowerCase();
-            if (!name.includes(term) && !type.includes(term)) return false;
+            // Note: If you want to search by Type label text here, you'd need a lookup map.
+            // For now, checking name is standard.
+            if (!name.includes(term)) return false;
         }
 
-        // 2. Taxonomy (Category) - NOW USES HIERARCHY
-        if (validLabels.length > 0) {
-            const type = (res.type || "").toLowerCase();
-            if (!validLabels.includes(type)) return false;
+        // 2. Taxonomy (Hierarchical ID Check)
+        // filters.category is now the class_tree string (e.g., "1.2.3")
+        if (filters.category) {
+            if (!res.class_tree) return false;
+            // "1.2.3" should match "1.2.3" AND "1.2.3.4"
+            // We append a dot to ensure "1.2" doesn't match "1.20"
+            const prefix = filters.category + '.';
+            const exact = filters.category === res.class_tree;
+            const descendant = res.class_tree.startsWith(prefix);
+            
+            if (!exact && !descendant) return false;
         }
 
         // 3. Stats

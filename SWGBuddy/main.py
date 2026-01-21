@@ -4,6 +4,7 @@ import sys
 import multiprocessing
 from dotenv import load_dotenv
 from services.logger import LogService
+from services.cache import CacheManager
 from services.validation import ValidationService
 from services.web import WebService
 
@@ -25,7 +26,7 @@ class ServiceManager:
 
         services = [
             ("Logger", LogService, (self.log_queue,)),
-            # FIX 2: Pass reply_queue to Validation & Web
+            ("Cache", CacheManager, (self.log_queue,)),
             ("Validation", ValidationService, (self.validation_queue, self.log_queue, self.reply_queue)),
             ("Web", WebService, (self.validation_queue, self.log_queue, self.reply_queue))
         ]
