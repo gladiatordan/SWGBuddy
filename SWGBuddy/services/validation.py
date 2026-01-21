@@ -53,22 +53,8 @@ class ValidationService(Core):
 	def run(self):
 		DatabaseContext.initialize()
 		self.info("Initializing Validation Service...")
-		
-		# 1. Load Single Taxonomy File
-		try:
-			json_path = os.path.join(os.getcwd(), "assets", "resource_taxonomy.json")
-			with open(json_path, 'r') as f:
-				tree_data = json.load(f)
-			
-			# Flatten tree into self.valid_resources map
-			self._flatten_taxonomy(tree_data)
-			self.info(f"Loaded taxonomy. Valid types: {len(self.valid_resources)}")
-			
-		except Exception as e:
-			self.critical(f"FATAL: Failed to load resource_taxonomy.json: {e}")
-			return
 
-		# 2. Hydrate DB Caches
+		# 1. Hydrate DB Caches
 		try:
 			self._hydrate_permissions()
 		except Exception as e:
@@ -207,8 +193,8 @@ class ValidationService(Core):
 	def _handle_write(self, data, server_id, is_new, user_ctx=None):
 		"""Unified Add/Edit logic with calculation and uniqueness check."""
 		
-		self._validate_resource(data)
-		self._calculate_ratings(data)
+		self._validate_resource(data, server_id)
+		self._calculate_ratings(data, server_id)
 
 		if is_new:
 			name = data.get('name')
@@ -334,18 +320,25 @@ class ValidationService(Core):
 	# ----------------------------------------------------------------------
 	# STAT CALCULATIONS & VALIDATION
 	# ----------------------------------------------------------------------
-	def _get_rules(self, data):
-		label = data.get('type') 
-		if not label:
-			raise ValueError(f"Missing Resource Type/Label")
+	def _get_rules(self, data, server_id):
+		"""
+		Retrieves validation rules from the shared CacheManager for the specific server.
+		"""
+		# Data must contain 'class_tree' (the ID, e.g., '1.2.3')
+		class_tree = data.get('class_tree') or data.get('type')
+		if not class_tree:
+			raise ValueError(f"Missing Resource Class Tree ID")
 		
-		rules = self.valid_resources.get(label)
+		# Look up in the cache for this server
+		valid_resources = self.cache.get_valid_resources(server_id)
+		rules = valid_resources.get(class_tree)
+		
 		if not rules:
-			raise ValueError(f"Resource type '{label}' is not valid for spawning.")
+			raise ValueError(f"Resource class '{class_tree}' is not valid for spawning on server {server_id}.")
 		return rules
 
-	def _validate_resource(self, data):
-		rules = self._get_rules(data)
+	def _validate_resource(self, data, server_id):
+		rules = self._get_rules(data, server_id)
 		stats_def = rules.get('stats', {})
 		allowed_planets = rules.get('planets', [])
 
@@ -421,8 +414,8 @@ class ValidationService(Core):
 				if len(name) > 30:
 					raise ValueError(f"Waypoint name too long (max 30 chars): {name}")
 
-	def _calculate_ratings(self, data):
-		rules = self._get_rules(data)
+	def _calculate_ratings(self, data, server_id):
+		rules = self._get_rules(data, server_id)
 		stats_def = rules.get('stats', {})
 		valid_ratings = []
 

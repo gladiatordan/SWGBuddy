@@ -26,6 +26,9 @@ class WebService(Core):
         # we can pass these objects directly.
         app.config['VAL_QUEUE'] = self.validation_queue
         
+		# add cache
+        app.config['CACHE'] = self.cache
+        
         # 2. Start the Response Router (Background Thread)
         start_response_router(self.reply_queue)
         

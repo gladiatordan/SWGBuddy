@@ -384,20 +384,20 @@ def queryResourceLog():
 		since = 0
 	
 	sql = """
-		SELECT rs.*, 
-			   rt.class_label as type, 
+		SELECT rl.*, 
+			   rc.label as type, -- Get human readable label
 			   u.username as reporter_name,
 			   u2.username as updater_name,
-			   EXTRACT(EPOCH FROM rs.date_reported) as date_reported_ts,
-			   EXTRACT(EPOCH FROM rs.last_modified) as last_modified_ts
-		FROM resource_spawns rs
-		JOIN resource_taxonomy rt ON rs.resource_class_id = rt.id
-		LEFT JOIN users u ON rs.reporter_id = u.discord_id
-		LEFT JOIN users u2 ON rs.last_updated_by = u2.discord_id
-		WHERE rs.server_id = %s 
-		AND (EXTRACT(EPOCH FROM rs.date_reported) > %s 
-			 OR (rs.last_modified IS NOT NULL AND EXTRACT(EPOCH FROM rs.last_modified) > %s))
-		ORDER BY rs.date_reported DESC
+			   EXTRACT(EPOCH FROM rl.date_reported) as date_reported_ts,
+			   EXTRACT(EPOCH FROM rl.last_modified) as last_modified_ts
+		FROM resource_log rl
+		JOIN resource_class rc ON rl.class_tree = rc.class_tree
+		LEFT JOIN users u ON rl.reporter_id = u.discord_id
+		LEFT JOIN users u2 ON rl.last_updated_by = u2.discord_id
+		WHERE rl.server_id = %s 
+		AND (EXTRACT(EPOCH FROM rl.date_reported) > %s 
+			 OR (rl.last_modified IS NOT NULL AND EXTRACT(EPOCH FROM rl.last_modified) > %s))
+		ORDER BY rl.date_reported DESC
 	"""
 	
 	try:
@@ -408,18 +408,30 @@ def queryResourceLog():
 	except Exception as e:
 		return jsonify({"error": str(e)}), 500
 
-@app.route('/api/taxonomy', methods=['GET'])
-def get_taxonomy():
+@app.route('/api/<server_id>/taxonomy', methods=['GET'])
+def get_server_taxonomy(server_id):
+	"""
+	Fetches pre-computed taxonomy and validation rules from the Shared Cache.
+	Replaces the old static file load.
+	"""
 	try:
-		base_dir = os.path.dirname(os.path.abspath(__file__))
-		path = os.path.join(base_dir, "assets", "resource_taxonomy.json")
-		with open(path, 'r') as f:
-			data = json.load(f)
-		resp = jsonify(data)
-		resp.headers['Cache-Control'] = 'public, max-age=86400'
-		return resp
+		cache = current_app.config.get('CACHE')
+		if not cache:
+			return jsonify({"error": "Cache service unavailable"}), 503
+
+		# CacheManager returns a dict with keys: 'taxonomy', 'valid_resources', 'filter_flatlist'
+		data = cache.get_server_data(server_id)
+		
+		if not data:
+			return jsonify({"error": f"No data found for server {server_id}"}), 404
+
+		return jsonify({
+			"taxonomy": data.get("taxonomy", {}),
+			"valid_resources": data.get("valid_resources", {}),
+			"filter_list": data.get("filter_flatlist", {})
+		})
 	except Exception as e:
-		return jsonify({"error": f"Taxonomy unavailable: {e}"}), 500
+		return jsonify({"error": f"Taxonomy error: {e}"}), 500
 
 # --- WRITE OPERATIONS ---
 
@@ -427,6 +439,12 @@ def get_taxonomy():
 def add_resource():
 	if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
 	data = request.json
+	
+	# Ensure frontend sends 'class_tree' now, not just 'type'
+	if 'class_tree' not in data and 'type' in data:
+		# Fallback if frontend sends 'type' as the tree ID
+		data['class_tree'] = data['type']
+
 	resp = send_command("add_resource", data, server_id=data.get('server_id', 'cuemu'))
 	if resp['status'] == 'success': return jsonify({"success": True})
 	return jsonify({"error": resp.get('error')}), 500
@@ -435,6 +453,12 @@ def add_resource():
 def update_resource():
 	if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
 	data = request.json
+
+	# Ensure frontend sends 'class_tree' now, not just 'type'
+	if 'class_tree' not in data and 'type' in data:
+		# Fallback if frontend sends 'type' as the tree ID
+		data['class_tree'] = data['type']
+
 	resp = send_command("update_resource", data, server_id=data.get('server_id', 'cuemu'))
 	if resp['status'] == 'success': return jsonify({"success": True})
 	return jsonify({"error": resp.get('error')}), 500
@@ -443,6 +467,13 @@ def update_resource():
 def retire_resource():
 	if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
 	data = request.json
+
+	# Ensure frontend sends 'class_tree' now, not just 'type'
+	if 'class_tree' not in data and 'type' in data:
+		# Fallback if frontend sends 'type' as the tree ID
+		data['class_tree'] = data['type']
+
+
 	resp = send_command("retire_resource", data, server_id=data.get('server_id', 'cuemu'))
 	if resp['status'] == 'success': return jsonify({"success": True})
 	return jsonify({"error": resp.get('error')}), 500
@@ -455,75 +486,65 @@ def set_role():
 	if resp['status'] == 'success': return jsonify({"success": True})
 	return jsonify({"error": resp.get('error')}), 500
 
-
 # IMAGE SCANNING
 @app.route('/api/scan-image', methods=['POST'])
 def scan_image():
-	if 'discord_id' not in session: 
-		return jsonify({"error": "Unauthorized"}), 401
-	
-	if 'image' not in request.files:
-		return jsonify({"error": "No image provided"}), 400
+    if 'discord_id' not in session: 
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    if 'image' not in request.files:
+        return jsonify({"error": "No image provided"}), 400
 
-	file = request.files['image']
-	
-	try:
-		# 1. Open and Sanitize Image (Strip metadata/exif)
-		img = Image.open(file.stream)
-		# Convert to RGB to handle alpha channels or palettes which might confuse simple OCR
-		img = img.convert('RGB')
-		
-		# 2. Perform OCR
-		# Custom config: assume single block of text (6), preserve structure
-		raw_text = pytesseract.image_to_string(img, config='--psm 6')
-		
-		# 3. Parse Data (SWG Resource Window format)
-		extracted = {
-			"name": "",
-			"type": "",
-			"stats": {}
-		}
-		
-		lines = [l.strip() for l in raw_text.split('\n') if l.strip()]
-		
-		# Heuristic: Line 1 is usually Name, Line 2 is usually Type
-		if len(lines) > 0: 
-			for i in range(len(lines)):
-				if "Resource Type:" in lines[i]:
-					extracted['name'] = lines[i].split(": ")[1]
+    if not Image:
+        return jsonify({"error": "OCR libraries not installed"}), 500
 
-		# We don't set Type automatically from OCR as it often misreads complex names.
-		# Instead, we rely on the user or fuzzy matching if you wanted to go deeper.
-		
-		# Regex for Stats (e.g., "OQ: 954" or "Overall Quality 954")
-		# Matches standard abbreviations or full names roughly
-		stat_patterns = {
-			'res_cr': r'(Cold Resistance).*?(\d{1,4})',
-			'res_cd': r'(Conductivity).*?(\d{1,4})',
-			'res_dr': r'(Decay Resistance).*?(\d{1,4})',
-			'res_fl': r'(Flavor).*?(\d{1,4})',
-			'res_hr': r'(Heat Resistance).*?(\d{1,4})',
-			'res_ma': r'(Malleability).*?(\d{1,4})',
-			'res_pe': r'(Potential Energy).*?(\d{1,4})',
-			'res_oq': r'(Overall Quality).*?(\d{1,4})',
-			'res_sr': r'(Shock Resistance).*?(\d{1,4})',
-			'res_ut': r'(Unit Toughness).*?(\d{1,4})'
-		}
-		
-		for key, pattern in stat_patterns.items():
-			match = re.search(pattern, raw_text, re.IGNORECASE)
-			if match:
-				# Group 2 is the number
-				val = int(match.group(2))
-				# Sanity check SWG stats range
-				if 1 <= val <= 1000:
-					extracted['stats'][key] = val
-		print(f"Extracted -> {extracted}")
-		return jsonify({"success": True, "data": extracted})
+    file = request.files['image']
+    
+    try:
+        img = Image.open(file.stream).convert('RGB')
+        raw_text = pytesseract.image_to_string(img, config='--psm 6')
+        
+        extracted = {
+            "name": "",
+            "class_tree": "", # OCR likely can't derive this, user must select
+            "stats": {}
+        }
+        
+        lines = [l.strip() for l in raw_text.split('\n') if l.strip()]
+        
+        # Name Extraction Heuristic
+        if len(lines) > 0: 
+            for i in range(len(lines)):
+                if "Resource Type:" in lines[i]:
+                    extracted['name'] = lines[i].split(": ")[1]
 
-	except Exception as e:
-		print(f"OCR Error: {e}")
-		return jsonify({"error": "Failed to process image. Ensure Tesseract is installed on server."}), 500
+        # UPDATED STAT MAPPING: Legacy Text -> New Column Names
+        stat_patterns = {
+            'res_cold_resist': r'(Cold Resistance).*?(\d{1,4})',
+            'res_conductivity': r'(Conductivity).*?(\d{1,4})',
+            'res_decay_resist': r'(Decay Resistance).*?(\d{1,4})',
+            'res_flavor': r'(Flavor).*?(\d{1,4})',
+            'res_heat_resist': r'(Heat Resistance).*?(\d{1,4})',
+            'res_malleability': r'(Malleability).*?(\d{1,4})',
+            'res_potential_energy': r'(Potential Energy).*?(\d{1,4})',
+            'res_quality': r'(Overall Quality).*?(\d{1,4})',
+            'res_shock_resistance': r'(Shock Resistance).*?(\d{1,4})',
+            'res_toughness': r'(Unit Toughness).*?(\d{1,4})',
+            'entangle_resistance': r'(Entangle Resistance).*?(\d{1,4})'
+        }
+        
+        for key, pattern in stat_patterns.items():
+            match = re.search(pattern, raw_text, re.IGNORECASE)
+            if match:
+                val = int(match.group(2))
+                if 1 <= val <= 1000:
+                    extracted['stats'][key] = val
+        
+        return jsonify({"success": True, "data": extracted})
+
+    except Exception as e:
+        print(f"OCR Error: {e}")
+        return jsonify({"error": "Failed to process image."}), 500
 
 
 if __name__ == '__main__':
