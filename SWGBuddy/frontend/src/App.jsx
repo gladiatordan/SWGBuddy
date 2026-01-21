@@ -6,6 +6,7 @@ import Footer from './components/Layout/Footer';
 import Loader from './components/Common/Loader';
 import ResourceList from './components/ResourceTable/ResourceList';
 import SchematicContainer from './components/Schematics/SchematicContainer';
+import { ResourceProvider } from './contexts/ResourceContext';
 
 
 function App() {
@@ -43,31 +44,24 @@ function App() {
         setIsTransitioning(true);
         setActiveTab(tab);
 
+		const params = new URLSearchParams(window.location.search);
+        params.set('page', tab);
+        
+        // Clear item-specific params when switching contexts
+        if (tab !== 'resources') params.delete('resource');
+        
+        const newUrl = `${window.location.pathname}?${params.toString()}`;
+        window.history.pushState({}, '', newUrl);
+
         setTimeout(() => {
             setIsTransitioning(false);
             setTimeout(() => setShouldRenderLoader(false), 500);
         }, 400);
-
-		const params = new URLSearchParams(window.location.search);
-        params.set('page', tabName);
-        
-        // Clear item-specific params when switching contexts
-        if (tabName !== 'resources') params.delete('resource');
-        
-        const newUrl = `${window.location.pathname}?${params.toString()}`;
-        window.history.pushState({}, '', newUrl);
     };
 
     return (
         <AuthProvider>
 			<ServerProvider>
-				{/* Global Loader Overlay */}
-				{shouldRenderLoader && (
-					<Loader 
-						message={isAppLoading ? "INITIALIZING DATAPAD..." : "ACCESSING DATAPAD..."} 
-						fadeOut={!isAppLoading && !isTransitioning} 
-					/>
-				)}
 				{/* Header controls App State */}
 				<Header 
 					activeTab={activeTab} 
@@ -75,17 +69,25 @@ function App() {
 					selectedServer={selectedServer}
 					setSelectedServer={setSelectedServer}
 				/>
-				<div className="app-container">
-					<main id="main-content">
-						{!isTransitioning && (
-							<>
-								{activeTab === 'resources' && <ResourceList serverId={selectedServer} />}
-								
-								{activeTab === 'schematics' && <SchematicContainer serverId={selectedServer} />}
-							</>
-						)}
-					</main>
-				</div>
+				<ResourceProvider serverId={selectedServer}>
+					<div className="app-container">
+						<main id="main-content">
+							{shouldRenderLoader && (
+									<Loader 
+										message={isAppLoading ? "INITIALIZING DATAPAD..." : "ACCESSING DATAPAD..."} 
+										fadeOut={!isAppLoading && !isTransitioning} 
+									/>
+							)}
+							{!isTransitioning && (
+								<>
+									{activeTab === 'resources' && <ResourceList />}
+									
+									{activeTab === 'schematics' && <SchematicContainer />}
+								</>
+							)}
+						</main>
+					</div>
+				</ResourceProvider>
 				<Footer />
 			</ServerProvider>
         </AuthProvider>

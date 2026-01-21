@@ -7,8 +7,8 @@ import TaxonomySearch from '../Common/TaxonomySearch';
 import ResourceModal from '../Modals/ResourceModal';
 import Loader from '../Common/Loader';
 
-const ResourceList = ({ serverId }) => {
-    const { resources, cache, loading, actions } = useResources(serverId);
+const ResourceList = () => {
+    const { resources, cache, loading, actions } = useResources();
     const { hasPermission } = useAuth();
     const isEditor = hasPermission('EDITOR');
 

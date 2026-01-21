@@ -30,6 +30,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+	position: relative;
 }
 
 .page-container {
@@ -103,7 +104,7 @@ input:disabled {
 
 /* Page Loader Overlay */
 .page-loader {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
