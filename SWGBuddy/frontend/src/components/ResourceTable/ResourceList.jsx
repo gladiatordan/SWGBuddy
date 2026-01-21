@@ -175,7 +175,7 @@ const ResourceList = ({ serverId }) => {
 							</div>
 
 							<TaxonomySearch 
-								options={cache?.filter_flatlist || {}} 
+								options={cache?.filter_list || {}} 
 								value={filters.category}
 								onChange={(cat) => setFilters(prev => ({ ...prev, category: cat }))}
 								onlyValid={false}
@@ -333,7 +333,7 @@ const ResourceList = ({ serverId }) => {
                                 key={res.id} 
                                 resource={res} 
                                 isEditor={isEditor}
-								taxonomy={cache?.valid_resources || {}}
+								taxonomy={cache?.taxonomy || {}}
                                 onToggleStatus={actions.toggleStatus}
                                 onTogglePlanet={actions.togglePlanet}
                                 onClick={handleRowClick}

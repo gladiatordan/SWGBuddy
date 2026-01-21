@@ -1,5 +1,5 @@
 import React from 'react';
-import { getStatColorClass, formatDate, findTaxonomyNode } from '../../utils/resourceUtils';
+import { getStatColorClass, formatDate, STAT_MAPPING } from '../../utils/resourceUtils';
 import { useResources } from '../../hooks/useResources';
 import { useServer } from '../../contexts/ServerContext';
 
@@ -7,24 +7,13 @@ const ALL_PLANETS = ["Corellia", "Dantooine", "Dathomir", "Endor", "Lok", "Naboo
 
 const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onClick, taxonomy }) => {
     // Stat Keys to iterate
-    const statKeys = [
-		'res_quality', 
-		'res_cold_resist', 
-		'res_conductivity', 
-		'res_decay_resist', 
-		'res_flavor', 
-		'res_heat_resist', 
-		'res_malleability', 
-		'res_potential_energy', 
-		'res_shock_resistance', 
-		'res_toughness'
-	];
+    const statKeys = Object.keys(STAT_MAPPING);
 
     // Planet Logic
     const currentPlanets = Array.isArray(resource.planet) ? resource.planet : (resource.planet ? [resource.planet] : []);
     const sortedPlanets = [...currentPlanets].sort();
 
-    const resourceConfig = taxonomy ? taxonomy[resource.type] : null;
+    const resourceConfig = taxonomy ? taxonomy[resource.class_tree] : null;
 
     // 3. Logic ported from table.js
     const allowedPlanets = resourceConfig?.planets || ALL_PLANETS;

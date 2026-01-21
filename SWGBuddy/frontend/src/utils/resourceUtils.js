@@ -10,8 +10,8 @@ export const STAT_MAPPING = {
     'res_malleability': 'MA',
     'res_potential_energy': 'PE',
     'res_shock_resistance': 'SR',
-    'res_toughness': 'UT',
-    'entangle_resistance': 'ER'
+    'res_toughness': 'UT'
+    // 'entangle_resistance': 'ER'
 };
 
 export const getStatColorClass = (rating) => {
