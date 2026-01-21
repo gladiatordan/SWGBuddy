@@ -4,12 +4,14 @@ import { useServer } from '../../contexts/ServerContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { useResources } from '../../hooks/useResources';
 import TaxonomySearch from '../Common/TaxonomySearch';
-import { getStatColorClass, formatResourceDate, STAT_MAPPING, findTaxonomyNode } from '../../utils/resourceUtils';
+import { getStatColorClass, formatResourceDate, STAT_MAPPING } from '../../utils/resourceUtils';
 
 const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
     const { selectedServer } = useServer();
     const { hasPermission } = useAuth();
     const { taxonomy } = useResources(selectedServer);
+
+	const { cache } = useResources(selectedServer);
 
     // Modes: 'view', 'edit', 'add'
     const [mode, setMode] = useState('view');
@@ -26,8 +28,14 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
 		waypoints: []
     });
 
-	const selectedTypeConfig = findTaxonomyNode(taxonomy, formData.type);
-	const validStatsForType = selectedTypeConfig?.stats ? Object.keys(selectedTypeConfig.stats) : [];
+	const selectedTypeConfig = useMemo(() => {
+        if (!formData.type || !cache?.valid_resources) return null;
+        return cache.valid_resources[formData.type] || null;
+    }, [formData.type, cache]);
+
+	const validStatsForType = useMemo(() => {
+        return selectedTypeConfig?.stats ? Object.keys(selectedTypeConfig.stats) : [];
+    }, [selectedTypeConfig]);
     
 	useEffect(() => {
 		if (mode === 'view' || !formData.type) return;
@@ -522,7 +530,7 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                         <div className="form-group">
                             <label>Type</label>
                             <TaxonomySearch 
-                                options={cache.valid_resources} 
+                                options={cache?.valid_resources || {}} 
                                 value={formData.type} 
                                 onChange={val => setFormData({...formData, type: val})}
 								onlyValid={true}

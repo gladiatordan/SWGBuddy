@@ -106,10 +106,11 @@ const ResourceList = ({ serverId }) => {
 
     // --- Data Pipeline ---
     const processedData = useMemo(() => {
-        let data = filterResources(resources, filters, taxonomy); 
+        // filterResources no longer needs the 3rd arg (taxonomy)
+        let data = filterResources(resources, filters); 
         data = sortResources(data, sortStack);
         return data;
-    }, [resources, filters, sortStack, taxonomy]);
+    }, [resources, filters, sortStack]);
 
     // Pagination
     const totalPages = Math.ceil(processedData.length / resultsPerPage) || 1;
@@ -174,7 +175,7 @@ const ResourceList = ({ serverId }) => {
 							</div>
 
 							<TaxonomySearch 
-								options={cache.filter_flatlist} 
+								options={cache?.filter_flatlist || {}} 
 								value={filters.category}
 								onChange={(cat) => setFilters(prev => ({ ...prev, category: cat }))}
 								onlyValid={false}
@@ -332,7 +333,7 @@ const ResourceList = ({ serverId }) => {
                                 key={res.id} 
                                 resource={res} 
                                 isEditor={isEditor}
-								taxonomy={taxonomy}
+								taxonomy={cache?.valid_resources || {}}
                                 onToggleStatus={actions.toggleStatus}
                                 onTogglePlanet={actions.togglePlanet}
                                 onClick={handleRowClick}

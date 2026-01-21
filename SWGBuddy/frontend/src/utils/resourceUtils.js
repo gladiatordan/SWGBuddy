@@ -11,7 +11,7 @@ export const STAT_MAPPING = {
     'res_potential_energy': 'PE',
     'res_shock_resistance': 'SR',
     'res_toughness': 'UT',
-    'entangle_resistance': 'ER' // Added new stat
+    'entangle_resistance': 'ER'
 };
 
 export const getStatColorClass = (rating) => {
@@ -52,35 +52,6 @@ export const formatResourceDate = (rawDate) => {
 };
 
 // --- FILTERING & SORTING LOGIC ---
-export const getDescendantLabels = (taxonomyTree, parentLabel) => {
-    if (!parentLabel || !taxonomyTree) return [];
-    let descendants = [];
-
-    const findNode = (nodes, target) => {
-        for (const node of nodes) {
-            if (node.label === target) return node;
-            if (node.children) {
-                const found = findNode(node.children, target);
-                if (found) return found;
-            }
-        }
-        return null;
-    };
-
-    const collect = (node) => {
-        if (node.children) {
-            node.children.forEach(child => {
-                descendants.push(child.label.toLowerCase());
-                collect(child);
-            });
-        }
-    };
-
-    const parentNode = findNode(taxonomyTree, parentLabel);
-    if (parentNode) collect(parentNode);
-    return descendants;
-};
-
 const SORT_BEHAVIOR = {
     // Name/Type: Up = A-Z (Ascending)
     alpha: 'asc', 

@@ -7,13 +7,24 @@ const ALL_PLANETS = ["Corellia", "Dantooine", "Dathomir", "Endor", "Lok", "Naboo
 
 const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onClick, taxonomy }) => {
     // Stat Keys to iterate
-    const statKeys = ['res_oq', 'res_cr', 'res_cd', 'res_dr', 'res_fl', 'res_hr', 'res_ma', 'res_pe', 'res_sr', 'res_ut'];
+    const statKeys = [
+		'res_quality', 
+		'res_cold_resist', 
+		'res_conductivity', 
+		'res_decay_resist', 
+		'res_flavor', 
+		'res_heat_resist', 
+		'res_malleability', 
+		'res_potential_energy', 
+		'res_shock_resistance', 
+		'res_toughness'
+	];
 
     // Planet Logic
     const currentPlanets = Array.isArray(resource.planet) ? resource.planet : (resource.planet ? [resource.planet] : []);
     const sortedPlanets = [...currentPlanets].sort();
 
-    const resourceConfig = findTaxonomyNode(taxonomy, resource.type);
+    const resourceConfig = taxonomy ? taxonomy[resource.type] : null;
 
     // 3. Logic ported from table.js
     const allowedPlanets = resourceConfig?.planets || ALL_PLANETS;

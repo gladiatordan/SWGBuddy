@@ -37,8 +37,8 @@ const API = {
         return await response.json();
     },
 
-    async fetchTaxonomy() {
-        const response = await this._fetch('/api/taxonomy');
+    async fetchTaxonomy(serverId) {
+        const response = await this._fetch(`/api/${serverId}/taxonomy`);
         return await response.json();
     },
 

@@ -17,10 +17,15 @@ export const useResources = (serverId = 'cuemu') => {
     useEffect(() => {
         const init = async () => {
             try {
-                // Fetch the structured cache data from the new API endpoint
-                const cacheData = await API.fetchTaxonomy(serverId); 
-                setCache(cacheData); 
-                await fetchResources(false);
+                // fetch taxonomy for current active server
+                const taxData = await API.fetchTaxonomy(serverId);
+                
+                // Note: Ensure you are setting 'cache' here if you updated the variable name
+                // based on our previous step (setCache vs setTaxonomy). 
+                // If you kept it as setTaxonomy for now:
+                setCache(taxData); 
+                
+                await fetchResources(false); // Full Sync
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -28,7 +33,10 @@ export const useResources = (serverId = 'cuemu') => {
             }
         };
         init();
+        
+        // Start Polling on mount
         startPolling();
+
         return () => stopPolling();
     }, [serverId]);
 
