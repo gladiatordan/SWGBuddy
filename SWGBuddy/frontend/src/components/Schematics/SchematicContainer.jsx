@@ -96,7 +96,7 @@ const SchematicContainer = () => {
                         details: { 
                             certification: "Novice Armorsmith",
                             experience: 250,
-                            complexity: 15,
+                            complexity: 50,
                             slots: { "core": "Iron", "segment": "Steel" },
                             
                             // Mock Experimental Categories
@@ -117,7 +117,7 @@ const SchematicContainer = () => {
                                     id: "exp_res", 
                                     label: "Experimental Resistance", 
                                     weights: { "res_quality": 50, "res_heat_resist": 50 }, 
-                                    selected: false 
+                                    selected: true 
                                 }
                             ],
 
@@ -291,8 +291,8 @@ const SchematicContainer = () => {
                                                         ></i>
                                                     </td>
                                                 </tr>
-												{(() => {
-                                                    const isHigh = Object.keys(activeTab.details.experiment_weights || {}).length > 0;
+                                                {(() => {
+                                                    const isHigh = activeTab.details.experimental_categories && activeTab.details.experimental_categories.length > 0;
                                                     return (
                                                         <tr>
                                                             <td className="info-label">Quality</td>
