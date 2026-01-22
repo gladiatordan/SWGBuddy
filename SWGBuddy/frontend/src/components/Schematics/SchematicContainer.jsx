@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import API from '../../services/api';
 import { useServer } from '../../contexts/ServerContext';
 import SchematicSidebar from './SchematicSidebar';
-
+import { STAT_MAPPING } from '../../utils/resourceUtils'; // Import Stat Mapping
 
 const SchematicContainer = () => {
     const { selectedServer } = useServer();
@@ -12,13 +12,11 @@ const SchematicContainer = () => {
     const [isIndexLoading, setIsIndexLoading] = useState(true);
 
     // --- TAB STATE ---
-    // Start with one empty tab
     const [tabs, setTabs] = useState([
         { id: 1, schematic: null, details: null, loading: false }
     ]);
     const [activeTabId, setActiveTabId] = useState(1);
 
-    // Derived: The currently active tab object
     const activeTab = tabs.find(t => t.id === activeTabId) || tabs[0];
 
     // 1. Initial Load: Fetch the Index
@@ -26,7 +24,7 @@ const SchematicContainer = () => {
         const loadIndex = async () => {
             setIsIndexLoading(true);
             try {
-                // Mock Data (Replace with API call later)
+                // Mock Data
                 const mockData = [
                     { id: 'armor_ubese_shirt', name: 'Ubese Armor Shirt', profession: 'Armorsmith', category: 'Armor' },
                     { id: 'weapon_dh17', name: 'DH17 Carbine', profession: 'Weaponsmith', category: 'Rifle' },
@@ -44,63 +42,71 @@ const SchematicContainer = () => {
     }, [selectedServer]);
 
     // --- TAB MANAGEMENT ---
-
     const handleAddTab = () => {
-        if (tabs.length >= 10) return; // Limit to 10
+        if (tabs.length >= 10) return;
         const newId = Date.now();
         setTabs(prev => [...prev, { id: newId, schematic: null, details: null, loading: false }]);
-        setActiveTabId(newId); // Switch to new tab
+        setActiveTabId(newId);
     };
 
     const handleCloseTab = (e, tabId) => {
-        e.stopPropagation(); // Prevent clicking the tab itself
-        
-        // Don't close the last tab (optional UX choice: reset it instead?)
-        // Let's allow closing, but if 0 tabs, create a new empty one immediately.
-        
+        e.stopPropagation();
         const newTabs = tabs.filter(t => t.id !== tabId);
         
         if (newTabs.length === 0) {
-            // Reset to one empty tab
             const resetId = Date.now();
             setTabs([{ id: resetId, schematic: null, details: null, loading: false }]);
             setActiveTabId(resetId);
         } else {
             setTabs(newTabs);
-            // If we closed the active tab, switch to the one to the left (or right if first)
             if (activeTabId === tabId) {
                 const index = tabs.findIndex(t => t.id === tabId);
-                // Try previous index, otherwise next (which shifts down to current index)
                 const nextTab = newTabs[index - 1] || newTabs[index] || newTabs[0];
                 setActiveTabId(nextTab.id);
             }
         }
     };
 
-    // --- SELECTION LOGIC ---
+    // --- DATA LOGIC ---
     
-    // Helper to fetch details for a specific tab
     const fetchDetailsForTab = async (schematic, tabId) => {
         setTabs(prev => prev.map(t => 
             t.id === tabId ? { ...t, schematic, loading: true } : t
         ));
 
         try {
-            // Mock Fetch with expanded data fields
             setTimeout(() => {
                 setTabs(prev => prev.map(t => 
                     t.id === tabId ? { 
                         ...t, 
                         loading: false,
                         details: { 
-                            // New Mock Data Fields
                             certification: "Novice Armorsmith",
                             experience: 250,
                             complexity: 15,
-                            // If empty {}, Quality is "Low". If populated, "High".
-                            experiment_weights: { "res_oq": 0.5, "res_sr": 0.5 }, 
+                            slots: { "core": "Iron", "segment": "Steel" },
                             
-                            slots: { "core": "Iron", "segment": "Steel" } 
+                            // Mock Experimental Categories
+                            experimental_categories: [
+                                { 
+                                    id: "exp_eff", 
+                                    label: "Experimental Efficiency", 
+                                    weights: { "res_oq": 33, "res_conductivity": 66 }, 
+                                    selected: true 
+                                },
+                                { 
+                                    id: "exp_dur", 
+                                    label: "Experimental Durability", 
+                                    weights: { "res_oq": 50, "res_toughness": 50 }, 
+                                    selected: true 
+                                },
+                                { 
+                                    id: "exp_res", 
+                                    label: "Experimental Resistance", 
+                                    weights: { "res_oq": 50, "res_heat_resist": 50 }, 
+                                    selected: false 
+                                }
+                            ]
                         } 
                     } : t
                 ));
@@ -110,33 +116,51 @@ const SchematicContainer = () => {
             setTabs(prev => prev.map(t => t.id === tabId ? { ...t, loading: false } : t));
         }
     };
+
     const handleSelect = (schematic) => {
-        // 1. Check if schematic is already open in ANY tab
         const existingTab = tabs.find(t => t.schematic?.id === schematic.id);
-        
         if (existingTab) {
-            // Switch focus to that tab
             setActiveTabId(existingTab.id);
         } else {
-            // 2. Load into CURRENT active tab
             fetchDetailsForTab(schematic, activeTabId);
         }
+    };
+
+    // Toggle Handler
+    const handleToggleCategory = (tabId, catId) => {
+        setTabs(prev => prev.map(tab => {
+            if (tab.id !== tabId) return tab;
+            if (!tab.details || !tab.details.experimental_categories) return tab;
+
+            const updatedCats = tab.details.experimental_categories.map(cat => 
+                cat.id === catId ? { ...cat, selected: !cat.selected } : cat
+            );
+
+            return { 
+                ...tab, 
+                details: { ...tab.details, experimental_categories: updatedCats } 
+            };
+        }));
+    };
+
+    // Helper for formatting weights (e.g. "33% OQ, 66% CD")
+    const formatWeights = (weights) => {
+        return Object.entries(weights)
+            .map(([stat, val]) => `${val}% ${STAT_MAPPING[stat] || stat}`)
+            .join(', ');
     };
 
     return (
         <section id="schematics-container" className="schematics-layout page-container active">
             
-            {/* SIDEBAR */}
             <SchematicSidebar 
                 indexData={indexData} 
                 selectedId={activeTab?.schematic?.id}
                 onSelect={handleSelect}
             />
 
-            {/* MAIN AREA */}
             <div className="schematics-main-area">
                 
-                {/* 1. TABS BAR */}
                 <div className="schematics-tabs-bar custom-scrollbar-x">
                     {tabs.map(tab => (
                         <div 
@@ -145,9 +169,7 @@ const SchematicContainer = () => {
                             onClick={() => setActiveTabId(tab.id)}
                             title={tab.schematic?.name || "New Tab"}
                         >
-                            <span className="tab-title">
-                                {tab.schematic ? tab.schematic.name : "New Tab"}
-                            </span>
+                            <span className="tab-title">{tab.schematic ? tab.schematic.name : "New Tab"}</span>
                             <button 
                                 className="close-tab-btn"
                                 onClick={(e) => handleCloseTab(e, tab.id)}
@@ -156,7 +178,6 @@ const SchematicContainer = () => {
                             </button>
                         </div>
                     ))}
-                    
                     {tabs.length < 10 && (
                         <button className="add-tab-btn" onClick={handleAddTab} title="New Tab">
                             <i className="fa-solid fa-plus"></i>
@@ -164,10 +185,7 @@ const SchematicContainer = () => {
                     )}
                 </div>
 
-                {/* 2. CONTENT AREA */}
                 <div className="schematics-content-area">
-                    
-                    {/* Loader (Scoped to Content Area) */}
                     {activeTab.loading && (
                         <div className="modal-loader" style={{position: 'absolute', inset: 0, borderRadius: '4px', zIndex: 20}}>
                             <div className="spinner"></div>
@@ -175,7 +193,6 @@ const SchematicContainer = () => {
                         </div>
                     )}
 
-                    {/* Empty State */}
                     {!activeTab.schematic && !activeTab.loading && (
                         <div className="empty-state">
                             <i className="fa-solid fa-microchip"></i>
@@ -184,25 +201,26 @@ const SchematicContainer = () => {
                         </div>
                     )}
 
-                    {/* Schematic Data Render */}
-					{!activeTab.loading && activeTab.schematic && activeTab.details && (
-						<div className="schematic-content">
-							
-							{/* 1. Header */}
-							<div className="schematic-header">
-								<h2 className="schematic-title">{activeTab.schematic.name}</h2>
-							</div>
+                    {!activeTab.loading && activeTab.schematic && activeTab.details && (
+                        <div className="schematic-content">
+                            
+                            <div className="schematic-header">
+                                <h2 className="schematic-title">{activeTab.schematic.name}</h2>
+                            </div>
 
-							{/* 2. Specs Container (Flex Row) */}
-							<div className="specs-container">
-								
-								{/* LEFT COLUMN (50% Width) - Holds Meta + Ingredients */}
-								<div className="specs-left-column">
-									
-									{/* A. Meta Data Table */}
-									<div className="info-table-wrapper">
-										<div className="table-header">Specifications</div>
-										<table className="schematic-info-table">
+                            <div className="specs-container">
+                                
+                                {/* LAYOUT CHANGE: 
+                                    Using CSS Grid instead of Flex Column.
+                                    - gridTemplateColumns: '1fr 1fr' -> Two equal columns (25% screen width each)
+                                    - Order: Spec (Top-Left), Ingredients (Top-Right), Experimental (Bottom-Left)
+                                */}
+                                <div className="specs-left-column" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+                                    
+                                    {/* 1. Specifications Table (Top Left) */}
+                                    <div className="info-table-wrapper">
+                                        <div className="table-header">Specifications</div>
+                                        <table className="schematic-info-table">
 											<tbody>
 												<tr>
 													<td className="info-label">Profession</td>
@@ -240,45 +258,76 @@ const SchematicContainer = () => {
 												</tr>
 											</tbody>
 										</table>
-									</div>
+                                    </div>
 
-									{/* B. Ingredients Table */}
-									<div className="info-table-wrapper">
-										<div className="table-header">Ingredients</div>
-										<table className="schematic-info-table">
-											<tbody>
-												{activeTab.details.slots && Object.entries(activeTab.details.slots).length > 0 ? (
-													Object.entries(activeTab.details.slots).map(([key, type]) => (
-														<tr key={key}>
-															{/* Using key as slot name for now (e.g. "core") */}
-															{/* In real app, we'd map "core" -> "Armor Core" */}
-															<td className="ingredient-slot" style={{textTransform: 'capitalize'}}>
-																{key.replace(/_/g, ' ')}
-															</td>
-															<td className="ingredient-type">{type}</td>
-														</tr>
-													))
-												) : (
-													<tr>
-														<td colSpan="2" style={{textAlign: 'center', color: 'var(--text-dim)'}}>
-															No ingredients listed
-														</td>
-													</tr>
-												)}
-											</tbody>
-										</table>
-									</div>
+                                    {/* 2. Ingredients Table (Top Right) */}
+                                    {/* Moved here to occupy the 2nd column in the top row */}
+                                    <div className="info-table-wrapper">
+                                        <div className="table-header">Ingredients</div>
+                                        <table className="schematic-info-table">
+                                            <tbody>
+                                                {activeTab.details.slots && Object.entries(activeTab.details.slots).length > 0 ? (
+                                                    Object.entries(activeTab.details.slots).map(([key, type]) => (
+                                                        <tr key={key}>
+                                                            <td className="ingredient-slot" style={{textTransform: 'capitalize'}}>
+                                                                {key.replace(/_/g, ' ')}
+                                                            </td>
+                                                            <td className="ingredient-type">{type}</td>
+                                                        </tr>
+                                                    ))
+                                                ) : (
+                                                    <tr>
+                                                        <td colSpan="2" style={{textAlign: 'center', color: 'var(--text-dim)'}}>
+                                                            No ingredients listed
+                                                        </td>
+                                                    </tr>
+                                                )}
+                                            </tbody>
+                                        </table>
+                                    </div>
 
-								</div>
+                                    {/* 3. Experimental Categories Table (Bottom Left - New Row) */}
+                                    <div className="info-table-wrapper">
+                                        <div className="table-header">Experimental Categories</div>
+                                        <table className="schematic-info-table">
+                                            <tbody>
+                                                {activeTab.details.experimental_categories && activeTab.details.experimental_categories.length > 0 ? (
+                                                    activeTab.details.experimental_categories.map((cat) => (
+                                                        <tr key={cat.id} className={cat.selected ? '' : 'row-dimmed'}>
+                                                            <td className="info-label" style={{width: '60%'}}>
+                                                                <label 
+                                                                    className="checkbox-label" 
+                                                                    style={{display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: cat.selected ? 'var(--text-highlight)' : 'var(--text-dim)'}}
+                                                                >
+                                                                    <input 
+                                                                        type="checkbox" 
+                                                                        checked={cat.selected} 
+                                                                        onChange={() => handleToggleCategory(activeTab.id, cat.id)}
+                                                                    />
+                                                                    {cat.label}
+                                                                </label>
+                                                            </td>
+                                                            <td className="info-value" style={{fontSize: '0.75rem', opacity: cat.selected ? 1 : 0.5}}>
+                                                                {formatWeights(cat.weights)}
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                ) : (
+                                                    <tr><td colSpan="2">No experiments available</td></tr>
+                                                )}
+                                            </tbody>
+                                        </table>
+                                    </div>
 
-								{/* RIGHT COLUMN (50% Width) - Empty for now */}
-								<div style={{flex: '0 0 50%'}}>
-									{/* Placeholder for future Schematic Image or Graph */}
-								</div>
+                                </div>
 
-							</div>
-						</div>
-					)}
+                                {/* RIGHT COLUMN (Empty for now - 50% width) */}
+                                <div style={{flex: '0 0 50%'}}>
+                                </div>
+
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </section>
