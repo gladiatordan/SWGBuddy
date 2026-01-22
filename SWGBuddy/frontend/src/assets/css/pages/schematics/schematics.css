@@ -258,3 +258,72 @@
 .ingredient-type { color: var(--text-dim); font-style: italic; text-align: right; }
 .quality-high { color: var(--accent-blue); }
 .quality-low { color: var(--text-dim); opacity: 0.7; }
+
+
+.resource-tabs-bar {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 0; /* Connects directly to the table below */
+    padding: 0 10px;
+    background: rgba(0, 0, 0, 0.2); /* Same distinct BG as main tab bar */
+    height: 36px; /* Slightly smaller than main tabs (40px) */
+    border-radius: 4px 4px 0 0;
+}
+
+.resource-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-dim);
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    font-family: var(--font-display);
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 140px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    position: relative;
+}
+
+.resource-tab:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-highlight);
+}
+
+.resource-tab.active {
+    background: rgba(10, 15, 20, 0.5); /* Matches the table/container background */
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    border-bottom: 1px solid rgba(10, 15, 20, 0.5); /* "Opens" the tab into the content */
+    margin-bottom: -1px;
+    z-index: 2;
+}
+
+/* Helper to make the table look like it belongs to the tab */
+.resource-tab-content {
+    border-top: none !important;
+    border-radius: 0 0 4px 4px !important;
+}
+
+.info-tooltip-icon {
+    margin-left: 8px;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    cursor: help;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+    vertical-align: middle;
+}
+
+.info-tooltip-icon:hover {
+    color: var(--accent-blue);
+    opacity: 1;
+}
