@@ -71,7 +71,7 @@ const SchematicSidebar = ({ indexData, selectedId, onSelect }) => {
                         disabled={filterOptions.length === 0}
                         title={`Select ${filterType === 'profession' ? 'Profession' : 'Type'}`}
                     >
-                        <option value="">All</option>
+                        <option value="">Category</option>
                         {filterOptions.length > 0 ? (
                             filterOptions.map(opt => (
                                 <option key={opt} value={opt}>{opt}</option>
