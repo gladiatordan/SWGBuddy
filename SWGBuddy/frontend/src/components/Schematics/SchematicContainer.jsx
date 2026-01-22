@@ -168,8 +168,8 @@ const SchematicContainer = () => {
     // Helper for formatting weights (e.g. "33% OQ, 66% CD")
     const formatWeights = (weights) => {
         return Object.entries(weights)
-            .map(([stat, val]) => `${val}% ${STAT_MAPPING[stat] || stat}`)
-            .join(', ');
+            .map(([stat, val]) => `${STAT_MAPPING[stat] || stat} ${val}%`)
+            .join('   '); // Added extra spacing for readability
     };
 
 	const handleSubTabChange = (tabId, subTab) => {
@@ -337,38 +337,33 @@ const SchematicContainer = () => {
                                     </div>
 
                                     {/* 3. Experimental Categories Table (Bottom Left - New Row) */}
-                                    <div className="info-table-wrapper">
+                                    <div className="info-table-wrapper" style={{gridColumn: '1 / -1', width: '46.5%'}}>
                                         <div className="table-header">Experimental Categories</div>
-                                        <table className="schematic-info-table">
-                                            <tbody>
-                                                {activeTab.details.experimental_categories && activeTab.details.experimental_categories.length > 0 ? (
-                                                    activeTab.details.experimental_categories.map((cat) => (
-                                                        <tr key={cat.id} className={cat.selected ? '' : 'row-dimmed'}>
-                                                            <td className="info-label" style={{width: '60%'}}>
-                                                                <label 
-                                                                    className="checkbox-label" 
-                                                                    style={{display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: cat.selected ? 'var(--text-highlight)' : 'var(--text-dim)'}}
-                                                                >
-                                                                    <input 
-                                                                        type="checkbox" 
-                                                                        checked={cat.selected} 
-                                                                        onChange={() => handleToggleCategory(activeTab.id, cat.id)}
-                                                                    />
-                                                                    {cat.label}
-                                                                </label>
-                                                            </td>
-                                                            <td className="info-value" style={{fontSize: '0.75rem', opacity: cat.selected ? 1 : 0.5}}>
-                                                                {formatWeights(cat.weights)}
-                                                            </td>
-                                                        </tr>
-                                                    ))
-                                                ) : (
-                                                    <tr><td colSpan="2">No experiments available</td></tr>
-                                                )}
-                                            </tbody>
-                                        </table>
+                                        <div className="exp-cat-list">
+                                            {activeTab.details.experimental_categories && activeTab.details.experimental_categories.length > 0 ? (
+                                                activeTab.details.experimental_categories.map((cat) => (
+                                                    <div key={cat.id} className={`exp-cat-item ${cat.selected ? 'selected' : 'dimmed'}`}>
+                                                        <div className="exp-cat-header">
+                                                            <span className="exp-cat-label">{cat.label}</span>
+                                                            <label className="toggle-switch">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    checked={cat.selected} 
+                                                                    onChange={() => handleToggleCategory(activeTab.id, cat.id)}
+                                                                />
+                                                                <span className="slider round"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div className="exp-cat-weights">
+                                                            {formatWeights(cat.weights)}
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            ) : (
+                                                <div className="empty-exp">No experiments available</div>
+                                            )}
+                                        </div>
                                     </div>
-
                                 </div>
 
                                 {/* RIGHT COLUMN (Empty for now - 50% width) */}
