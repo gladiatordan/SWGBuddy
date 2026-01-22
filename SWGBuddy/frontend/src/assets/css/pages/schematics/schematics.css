@@ -52,7 +52,7 @@
 .sidebar-select:focus { border-color: var(--accent-blue); }
 
 .sidebar-search {
-    width: 100%; /* Changed from 95% to 100% due to border-box */
+    width: 94.5%; /* Changed from 95% to 100% due to border-box */
     background: rgba(0, 0, 0, 0.5);
     border: 1px solid var(--border-dim);
     color: var(--text-main);
