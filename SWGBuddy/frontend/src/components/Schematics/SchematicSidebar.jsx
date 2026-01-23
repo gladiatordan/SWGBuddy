@@ -1,24 +1,34 @@
 import React, { useState, useMemo } from 'react';
+import TaxonomySearch from '../Common/TaxonomySearch'; // Import the shared component
 
 const SchematicSidebar = ({ indexData, selectedId, onSelect }) => {
     const [search, setSearch] = useState('');
     
     // Filter States
-    const [filterType, setFilterType] = useState('profession'); // 'profession' or 'category' (Type)
-    const [selectedCategory, setSelectedCategory] = useState(''); // The specific value selected
+    const [filterType, setFilterType] = useState('profession'); 
+    const [selectedCategory, setSelectedCategory] = useState(''); 
 
-    // 1. Generate Dynamic Options based on Index Data
-    // This creates a unique list of Professions or Categories from the loaded data
-    const filterOptions = useMemo(() => {
-        if (!indexData) return [];
-        const key = filterType; // 'profession' or 'category'
+    // Define Mode Options for TaxonomySearch
+    const MODE_OPTIONS = useMemo(() => ({
+        'profession': 'Profession',
+        'category': 'Type'
+    }), []);
+
+    // 1. Generate Dynamic Options
+    // Transform array ['Armorsmith', 'Chef'] -> Object {'Armorsmith': 'Armorsmith', 'Chef': 'Chef'}
+    const categoryOptions = useMemo(() => {
+        if (!indexData) return {};
         
-        // Extract unique values, filter out nulls, and sort alphabetically
+        const key = filterType; // 'profession' or 'category'
         const uniqueValues = [...new Set(indexData.map(item => item[key]))]
-            .filter(val => val) 
+            .filter(val => val)
             .sort();
-            
-        return uniqueValues;
+
+        // Reduce to dictionary format required by TaxonomySearch
+        return uniqueValues.reduce((acc, val) => {
+            acc[val] = val;
+            return acc;
+        }, {});
     }, [indexData, filterType]);
 
     // 2. Main Filter Logic
@@ -35,7 +45,6 @@ const SchematicSidebar = ({ indexData, selectedId, onSelect }) => {
             // B. Dropdown Filter Check
             let matchesCategory = true;
             if (selectedCategory) {
-                // Check if the item's field (e.g. profession) matches the selected value
                 matchesCategory = item[filterType] === selectedCategory;
             }
 
@@ -43,46 +52,39 @@ const SchematicSidebar = ({ indexData, selectedId, onSelect }) => {
         });
     }, [indexData, search, filterType, selectedCategory]);
 
-    // Handle changing the "Filter By" dropdown
-    const handleTypeChange = (newType) => {
-        setFilterType(newType);
-        setSelectedCategory(''); // Reset specific selection when switching types
+    // Handlers
+    const handleTypeChange = (val) => {
+        // Prevent clearing the mode (default to profession if null)
+        setFilterType(val || 'profession');
+        setSelectedCategory(''); 
     };
 
     return (
         <aside className="schematics-sidebar">
             <div className="sidebar-header">
                 {/* 1. Filter Dropdowns Row */}
-                <div className="filter-row">
-                    <select 
-                        className="sidebar-select"
-                        value={filterType}
-                        onChange={(e) => handleTypeChange(e.target.value)}
-                        title="Filter Mode"
-                    >
-                        <option value="profession">Profession</option>
-                        <option value="category">Type</option>
-                    </select>
+                <div className="filter-row" style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
+                    
+                    {/* Mode Selector (Reusing TaxonomySearch) */}
+                    <div style={{ flex: 1 }}>
+                        <TaxonomySearch 
+                            options={MODE_OPTIONS}
+                            value={filterType}
+                            onChange={handleTypeChange}
+                            placeholder="Filter Mode"
+                        />
+                    </div>
 
-                    <select 
-                        className="sidebar-select"
-                        value={selectedCategory}
-                        onChange={(e) => setSelectedCategory(e.target.value)}
-                        disabled={filterOptions.length === 0}
-                        title={`Select ${filterType === 'profession' ? 'Profession' : 'Type'}`}
-                    >
-                        <option value="">Category</option>
-                        {filterOptions.length > 0 ? (
-                            filterOptions.map(opt => (
-                                <option key={opt} value={opt}>{opt}</option>
-                            ))
-                        ) : (
-                            // Fallback/Placeholders until DB is ready
-                            <>
-                                <option value="placeholder" disabled>Loading...</option>
-                            </>
-                        )}
-                    </select>
+                    {/* Dynamic Category Selector (Reusing TaxonomySearch) */}
+                    <div style={{ flex: 1 }}>
+                        <TaxonomySearch 
+                            options={categoryOptions}
+                            value={selectedCategory}
+                            onChange={setSelectedCategory} // Handles null automatically
+                            disabled={Object.keys(categoryOptions).length === 0}
+                            placeholder={Object.keys(categoryOptions).length === 0 ? "Loading..." : "Select Category"}
+                        />
+                    </div>
                 </div>
 
                 {/* 2. Search Input */}
@@ -92,6 +94,7 @@ const SchematicSidebar = ({ indexData, selectedId, onSelect }) => {
                     placeholder="Search Schematics..." 
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
+                    style={{ width: '100%', boxSizing: 'border-box' }}
                 />
             </div>
             
