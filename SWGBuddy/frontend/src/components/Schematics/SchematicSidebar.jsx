@@ -1,93 +1,72 @@
 import React, { useState, useMemo } from 'react';
-import TaxonomySearch from '../Common/TaxonomySearch'; // Import the shared component
+import TaxonomySearch from '../Common/TaxonomySearch';
 
 const SchematicSidebar = ({ indexData, selectedId, onSelect }) => {
     const [search, setSearch] = useState('');
     
-    // Filter States
-    const [filterType, setFilterType] = useState('profession'); 
-    const [selectedCategory, setSelectedCategory] = useState(''); 
+    // Unified Filter State
+    // Format: "type:value" (e.g. "profession:Armorsmith" or "category:Weapon")
+    const [activeFilter, setActiveFilter] = useState(null); 
 
-    // Define Mode Options for TaxonomySearch
-    const MODE_OPTIONS = useMemo(() => ({
-        'profession': 'Profession',
-        'category': 'Type'
-    }), []);
+    // 1. Generate Unified Options List
+    const filterOptions = useMemo(() => {
+        if (!indexData) return [];
 
-    // 1. Generate Dynamic Options
-    // Transform array ['Armorsmith', 'Chef'] -> Object {'Armorsmith': 'Armorsmith', 'Chef': 'Chef'}
-    const categoryOptions = useMemo(() => {
-        if (!indexData) return {};
-        
-        const key = filterType; // 'profession' or 'category'
-        const uniqueValues = [...new Set(indexData.map(item => item[key]))]
-            .filter(val => val)
-            .sort();
+        const professions = [...new Set(indexData.map(item => item.profession).filter(Boolean))].sort();
+        const categories = [...new Set(indexData.map(item => item.category).filter(Boolean))].sort();
 
-        // Reduce to dictionary format required by TaxonomySearch
-        return uniqueValues.reduce((acc, val) => {
-            acc[val] = val;
-            return acc;
-        }, {});
-    }, [indexData, filterType]);
+        return [
+            // Section 1: Professions
+            { label: 'Professions', value: 'header_prof', isHeader: true },
+            ...professions.map(p => ({ label: p, value: `profession:${p}` })),
+            
+            // Section 2: Categories
+            { label: 'Categories', value: 'header_cat', isHeader: true },
+            ...categories.map(c => ({ label: c, value: `category:${c}` }))
+        ];
+    }, [indexData]);
 
     // 2. Main Filter Logic
     const filteredList = useMemo(() => {
         if (!indexData) return [];
         
         return indexData.filter(item => {
-            // A. Search Term Check
+            // A. Search Term
             const term = search.toLowerCase();
             const matchesSearch = !term || 
                 item.name.toLowerCase().includes(term) || 
                 (item.profession && item.profession.toLowerCase().includes(term));
 
-            // B. Dropdown Filter Check
-            let matchesCategory = true;
-            if (selectedCategory) {
-                matchesCategory = item[filterType] === selectedCategory;
+            // B. Dropdown Filter
+            let matchesFilter = true;
+            if (activeFilter) {
+                const [type, val] = activeFilter.split(':');
+                if (type === 'profession') {
+                    matchesFilter = item.profession === val;
+                } else if (type === 'category') {
+                    matchesFilter = item.category === val;
+                }
             }
 
-            return matchesSearch && matchesCategory;
+            return matchesSearch && matchesFilter;
         });
-    }, [indexData, search, filterType, selectedCategory]);
-
-    // Handlers
-    const handleTypeChange = (val) => {
-        // Prevent clearing the mode (default to profession if null)
-        setFilterType(val || 'profession');
-        setSelectedCategory(''); 
-    };
+    }, [indexData, search, activeFilter]);
 
     return (
         <aside className="schematics-sidebar">
             <div className="sidebar-header">
-                {/* 1. Filter Dropdowns Row */}
-                <div className="filter-row" style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
-                    
-                    {/* Mode Selector (Reusing TaxonomySearch) */}
-                    <div style={{ flex: 1 }}>
-                        <TaxonomySearch 
-                            options={MODE_OPTIONS}
-                            value={filterType}
-                            onChange={handleTypeChange}
-                            placeholder="Filter Mode"
-                        />
-                    </div>
-
-                    {/* Dynamic Category Selector (Reusing TaxonomySearch) */}
-                    <div style={{ flex: 1 }}>
-                        <TaxonomySearch 
-                            options={categoryOptions}
-                            value={selectedCategory}
-                            onChange={setSelectedCategory} // Handles null automatically
-                            disabled={Object.keys(categoryOptions).length === 0}
-                            placeholder={Object.keys(categoryOptions).length === 0 ? "Loading..." : "Select Category"}
-                        />
-                    </div>
+                {/* Unified Filter */}
+                <div className="filter-row" style={{ marginBottom: '10px' }}>
+                    <TaxonomySearch 
+                        options={filterOptions}
+                        value={activeFilter}
+                        onChange={setActiveFilter}
+                        placeholder="Filter by..."
+                        disabled={filterOptions.length === 0}
+                    />
                 </div>
 
-                {/* 2. Search Input */}
+                {/* Search Input */}
                 <input 
                     type="text" 
                     className="sidebar-search" 
@@ -98,7 +77,7 @@ const SchematicSidebar = ({ indexData, selectedId, onSelect }) => {
                 />
             </div>
             
-            {/* 3. Filtered List */}
+            {/* Filtered List */}
             <div className="sidebar-list custom-scrollbar">
                 {filteredList.length > 0 ? (
                     filteredList.map(item => (

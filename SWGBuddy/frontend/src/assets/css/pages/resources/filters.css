@@ -500,3 +500,27 @@
     justify-content: center;
     padding-left: 5px;
 }
+
+.dropdown-header {
+    background-color: #111; /* Darker than items */
+    color: var(--accent-blue);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 8px 10px 4px 10px;
+    cursor: default;
+    pointer-events: none; /* Prevent clicks */
+    border-bottom: 1px solid var(--border-dim);
+    margin-top: 4px;
+}
+
+/* Ensure first header doesn't have top margin */
+.dropdown-header:first-child {
+    margin-top: 0;
+}
+
+/* Hover state override for header (just in case) */
+.dropdown-item.dropdown-header:hover {
+    background-color: #111;
+}
