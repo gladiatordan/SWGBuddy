@@ -22,7 +22,7 @@ CORS(app)
 # SECURITY CONFIGURATION
 # --------------------------------------------------------------------------
 # 1. Secret Key: Must be random in production.
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev_secret_key_change_me")
+app.secret_key = os.getenv("FLASK_SECRET_KEY")
 
 # 2. Cookie Security:
 # 'Lax' prevents CSRF for most top-level navigations while preserving login.

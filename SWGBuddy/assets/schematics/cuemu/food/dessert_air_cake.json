@@ -1,0 +1,53 @@
+{
+    "custom_object_name": "Air Cake",
+    "base_profession": "Chef",
+    "category": "food",
+    "certification": "Novice Chef",
+    "complexity": 3,
+    "experience_type": "Food Crafting",
+    "experience": 80,
+    "assembly_skill": "Food Assembly",
+    "experimentation_skill": "Food Experimentation",
+    "customization_skill": "",
+    "slots": {
+        "Carbosyrup": {
+            "slot_type": 1,
+            "ingredient": "shared_ingredient_carbosyrup",
+            "quantity": 1
+        },
+        "Dough": {
+            "slot_type": 1,
+            "ingredient": "shared_ingredient_ball_of_dough",
+            "quantity": 1
+        },
+        "Fruit Core": {
+            "slot_type": 0,
+            "ingredient": "fruit",
+            "quantity": 20
+        },
+        "Additive": {
+            "slot_type": 3,
+            "ingredient": "shared_additive_light",
+            "quantity": 1
+        }
+    },
+    "attributes": {},
+    "experiment_weights": {
+        "Experimental Nutritional Value": {
+            "res_quality": 0.33,
+            "res_potential_energy": 0.66
+        },
+        "Experimental Flavor": {
+            "res_flavor": 0.66,
+            "res_quality": 0.33
+        },
+        "Experimental Quantity": {
+            "res_decay_resist": 0.25,
+            "res_potential_energy": 0.75
+        },
+        "Experimental Filling": {
+            "res_decay_resist": 0.75,
+            "res_quality": 0.25
+        }
+    }
+}
