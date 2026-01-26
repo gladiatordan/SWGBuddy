@@ -10,48 +10,6 @@ import { useSchematicRanker } from '../../hooks/useSchematicRanker';
 import ResourceRow from '../ResourceTable/ResourceRow';
 import ResourceModal from '../Modals/ResourceModal';
 
-const MOCK_AIR_CAKE_DATA = {
-    "custom_object_name": "Air Cake",
-    "base_profession": "Chef",
-    "category": "food",
-    "certification": "Novice Chef",
-    "complexity": 3,
-    "experience": 80,
-    "slots": {
-        "Carbosyrup": { "slot_type": 1, "ingredient": "Carbosyrup", "quantity": 1 },
-        "Dough": { "slot_type": 1, "ingredient": "Dough", "quantity": 1 },
-        "Fruit Core": { "slot_type": 0, "ingredient": "1.2.276.277.388.443", "quantity": 20 },
-        "Additive": { "slot_type": 3, "ingredient": "additive_light", "quantity": 1 }
-    },
-    "experiment_weights": {
-        "Experimental Nutritional Value": { "res_quality": 0.33, "res_potential_energy": 0.66 },
-        "Experimental Flavor": { "res_flavor": 0.66, "res_quality": 0.33 },
-        "Experimental Quantity": { "res_decay_resist": 0.25, "res_potential_energy": 0.75 },
-        "Experimental Filling": { "res_decay_resist": 0.75, "res_quality": 0.25 }
-    },
-    // PASTE THE FULL RANKINGS OBJECT FROM YOUR JSON FILE HERE
-    "rankings": {
-        "1.2.276.277.388.443": {
-            "default": { "best": [], "current": [] },
-            "exp_experimental_flavor": {
-                "best": [
-                    { "id": "724", "rating": "78.7%", "raw_score": 0.787, "stats": { "res_flavor": 0.874, "res_quality": 0.614 } },
-                    { "id": "651", "rating": "69.5%", "raw_score": 0.695, "stats": { "res_flavor": 0.567, "res_quality": 0.952 } },
-                    // ... include a few more for testing
-                ],
-                "current": []
-            },
-            // ... ensure at least one combo matches the default 'selected' state below
-            "exp_experimental_filling|exp_experimental_flavor|exp_experimental_nutritional_value|exp_experimental_quantity": {
-                "best": [
-                     { "id": "787", "rating": "69.0%", "raw_score": 0.69, "stats": { "res_decay_resist": 0.489, "res_quality": 0.982, "res_flavor": 0.003, "res_potential_energy": 0.966 } },
-                     { "id": "170", "rating": "64.8%", "raw_score": 0.648, "stats": { "res_decay_resist": 0.696, "res_quality": 0.712, "res_flavor": 0.565, "res_potential_energy": 0.612 } }
-                ],
-                "current": []
-            }
-        }
-    }
-};
 
 const SchematicContainer = () => {
     const { selectedServer } = useServer();
@@ -69,10 +27,7 @@ const SchematicContainer = () => {
         { id: 1, schematic: null, details: null, loading: false, activeSubTab: 'best' }
     ]);
     const [activeTabId, setActiveTabId] = useState(1);
-
     const activeTab = tabs.find(t => t.id === activeTabId) || tabs[0];
-
-    // Use Ranker Hook (Updated)
     const hydratedRankings = useSchematicRanker(allResources, activeTab?.details);
 
     // Helpers
@@ -88,25 +43,6 @@ const SchematicContainer = () => {
             ? "This schematic requires high quality resources for experimentation" 
             : "Resource Quality does not matter for this schematic";
     };
-
-    // Load Index
-    useEffect(() => {
-        const loadIndex = async () => {
-            setIsIndexLoading(true);
-            try {
-                // In production, fetch this from API.fetchSchematicIndex()
-                const mockData = [
-                    { id: 'dessert_air_cake', name: 'Air Cake', profession: 'Chef', category: 'food' }
-                ];
-                setTimeout(() => setIndexData(mockData), 500); 
-            } catch (err) {
-                console.error("Failed to load schematic index", err);
-            } finally {
-                setIsIndexLoading(false);
-            }
-        };
-        loadIndex();
-    }, [selectedServer]);
 
     // Tab Handlers
     const handleAddTab = () => {
@@ -134,31 +70,32 @@ const SchematicContainer = () => {
     };
 
     const fetchDetailsForTab = async (schematic, tabId) => {
+        // Set loading state
         setTabs(prev => prev.map(t => t.id === tabId ? { ...t, schematic, loading: true } : t));
 
         try {
-            setTimeout(() => {
-                // USE THE FULL MOCK DATA HERE
-                const rawData = MOCK_AIR_CAKE_DATA;
+            if (!selectedServer) throw new Error("No server selected");
 
-                const transformedCats = Object.entries(rawData.experiment_weights).map(([label, weights]) => ({
-                    id: `exp_${label.toLowerCase().replace(/ /g, '_')}`,
-                    label: label,
-                    weights: weights,
-                    selected: true 
-                }));
+            // REAL API CALL
+            const rawData = await API.fetchSchematicDetails(schematic.id, selectedServer.id);
 
-                setTabs(prev => prev.map(t => 
-                    t.id === tabId ? { 
-                        ...t, 
-                        loading: false,
-                        details: { 
-                            ...rawData,
-                            experimental_categories: transformedCats,
-                        } 
-                    } : t
-                ));
-            }, 600);
+            const transformedCats = Object.entries(rawData.experiment_weights || {}).map(([label, weights]) => ({
+                id: `exp_${label.toLowerCase().replace(/ /g, '_')}`,
+                label: label,
+                weights: weights,
+                selected: true 
+            }));
+
+            setTabs(prev => prev.map(t => 
+                t.id === tabId ? { 
+                    ...t, 
+                    loading: false,
+                    details: { 
+                        ...rawData,
+                        experimental_categories: transformedCats,
+                    } 
+                } : t
+            ));
         } catch (err) {
             console.error("Detail load failed", err);
             setTabs(prev => prev.map(t => t.id === tabId ? { ...t, loading: false } : t));
@@ -310,7 +247,6 @@ const SchematicContainer = () => {
         <section id="schematics-container" className="schematics-layout page-container active">
             
             <SchematicSidebar 
-                indexData={indexData} 
                 selectedId={activeTab?.schematic?.id}
                 onSelect={handleSelect}
             />

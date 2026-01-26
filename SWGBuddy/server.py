@@ -613,5 +613,47 @@ def scan_image():
 		return jsonify({"error": "Failed to process image."}), 500
 
 
+# --- SCHEMATICS ENDPOINTS ---
+@app.route('/api/schematics/index', methods=['GET'])
+def get_schematic_index():
+    server_id = request.args.get('server', 'cuemu')
+    
+    try:
+        cache = current_app.config.get('CACHE')
+        if not cache:
+            return jsonify({"error": "Cache service unavailable"}), 503
+
+        data = cache.get_server_data(server_id)
+        if not data:
+            return jsonify({"error": f"No data found for server {server_id}"}), 404
+            
+        # Return just the lightweight index
+        return jsonify(data.get("schematic_index", []))
+        
+    except Exception as e:
+        return jsonify({"error": f"Schematic index error: {e}"}), 500
+
+@app.route('/api/schematics/<schematic_id>', methods=['GET'])
+def get_schematic_details(schematic_id):
+    server_id = request.args.get('server', 'cuemu')
+    
+    try:
+        cache = current_app.config.get('CACHE')
+        if not cache:
+            return jsonify({"error": "Cache service unavailable"}), 503
+
+        data = cache.get_server_data(server_id)
+        schematic_map = data.get("schematic_map", {})
+        
+        schematic = schematic_map.get(schematic_id)
+        
+        if not schematic:
+            return jsonify({"error": "Schematic not found"}), 404
+            
+        return jsonify(schematic)
+        
+    except Exception as e:
+        return jsonify({"error": f"Schematic details error: {e}"}), 500
+
 if __name__ == '__main__':
 	app.run(debug=True, port=5000)
