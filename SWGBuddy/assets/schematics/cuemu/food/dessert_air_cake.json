@@ -12,26 +12,25 @@
     "slots": {
         "Carbosyrup": {
             "slot_type": 1,
-            "ingredient": "shared_ingredient_carbosyrup",
+            "ingredient": "Carbosyrup",
             "quantity": 1
         },
         "Dough": {
             "slot_type": 1,
-            "ingredient": "shared_ingredient_ball_of_dough",
+            "ingredient": "Dough",
             "quantity": 1
         },
         "Fruit Core": {
             "slot_type": 0,
-            "ingredient": "fruit",
+            "ingredient": "1.2.276.277.388.443",
             "quantity": 20
         },
         "Additive": {
             "slot_type": 3,
-            "ingredient": "shared_additive_light",
+            "ingredient": "additive_light",
             "quantity": 1
         }
     },
-    "attributes": {},
     "experiment_weights": {
         "Experimental Nutritional Value": {
             "res_quality": 0.33,
