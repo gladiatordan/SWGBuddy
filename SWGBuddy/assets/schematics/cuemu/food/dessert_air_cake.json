@@ -27,7 +27,7 @@
         },
         "Additive": {
             "slot_type": 3,
-            "ingredient": "additive_light",
+            "ingredient": "Light Additive",
             "quantity": 1
         }
     },

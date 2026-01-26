@@ -214,7 +214,7 @@ const SchematicContainer = () => {
         return (
             <div key={ingredientName} className="slot-group-container" style={{ marginBottom: '30px' }}>
                 <h4 className="slot-header" style={{ 
-                    fontSize: '16px', 
+                    fontSize: '24px', 
                     color: 'var(--accent-blue)', 
                     marginBottom: '10px', 
                     textTransform: 'uppercase',
