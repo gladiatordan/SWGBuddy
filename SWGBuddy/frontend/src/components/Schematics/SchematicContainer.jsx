@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import API from '../../services/api';
 import { useServer } from '../../contexts/ServerContext';
 import SchematicSidebar from './SchematicSidebar';
 import { STAT_MAPPING } from '../../utils/resourceUtils';
 import { useResources } from '../../hooks/useResources';
 import { useSchematicRanker } from '../../hooks/useSchematicRanker';
+
+// New Imports for Resource Table Logic
 import ResourceRow from '../ResourceTable/ResourceRow';
 import ResourceModal from '../Modals/ResourceModal';
 
-
 const SchematicContainer = () => {
     const { selectedServer } = useServer();
-    // Grab cache to get taxonomy for the ResourceRow
     const { resources: allResources, cache, actions } = useResources();
     
     // Modal State
@@ -22,10 +22,12 @@ const SchematicContainer = () => {
     const [isIndexLoading, setIsIndexLoading] = useState(true);
 
     const [tabs, setTabs] = useState([
-        { id: 1, schematic: null, details: null, loading: false, activeSubTab: 'best' }
+        { id: 1, schematic: null, details: null, loading: false, activeSubTab: 'best', lastUpdated: 0 }
     ]);
     const [activeTabId, setActiveTabId] = useState(1);
+
     const activeTab = tabs.find(t => t.id === activeTabId) || tabs[0];
+
     const hydratedRankings = useSchematicRanker(allResources, activeTab?.details);
 
     // Helpers
@@ -36,24 +38,93 @@ const SchematicContainer = () => {
         return "Requires: Specialized Crafting Tool + Private Crafting Station";
     };
 
-	const getIngredientLabel = (key) => {
-        if (!cache?.taxonomy) return key;
-        const entry = cache.taxonomy[key];
-        return entry ? entry.label : key; 
-    };
-
     const getQualityTooltip = (isHigh) => {
         return isHigh 
             ? "This schematic requires high quality resources for experimentation" 
             : "Resource Quality does not matter for this schematic";
     };
 
-    // Tab Handlers
+    const getIngredientLabel = (key) => {
+        if (!cache?.taxonomy) return key;
+        const entry = cache.taxonomy[key];
+        return entry ? entry.label : key; 
+    };
+
+    // Load Index (Required for Sidebar AND Ingredient Linking)
+    useEffect(() => {
+        const loadIndex = async () => {
+            if (!selectedServer) return;
+            setIsIndexLoading(true);
+            try {
+                const data = await API.fetchSchematicIndex(selectedServer);
+                setIndexData(data || []);
+            } catch (err) {
+                console.error("Failed to load schematic index", err);
+                setIndexData([]);
+            } finally {
+                setIsIndexLoading(false);
+            }
+        };
+        loadIndex();
+    }, [selectedServer]);
+
+    // --- REALTIME POLLING LOGIC ---
+    // Use a ref to access current tabs state inside the interval without re-binding
+    const tabsRef = useRef(tabs);
+    useEffect(() => { tabsRef.current = tabs; }, [tabs]);
+
+    useEffect(() => {
+        if (!selectedServer) return;
+
+        const pollForUpdates = async () => {
+            const currentTabs = tabsRef.current;
+            // Filter only tabs that have a loaded schematic
+            const activeSchematicIds = currentTabs
+                .filter(t => t.schematic && t.schematic.id)
+                .map(t => t.schematic.id);
+
+            if (activeSchematicIds.length === 0) return;
+
+            try {
+                // TODO: Backend Implementation Required
+                // const updates = await API.checkSchematicUpdates(selectedServer, activeSchematicIds);
+                // Expected response: { "schematic_id_1": 1769882233, "schematic_id_2": 1769882240 }
+                
+                /* // MOCK LOGIC FOR IMPLEMENTATION:
+                const updates = {}; 
+                
+                Object.entries(updates).forEach(([schemaId, timestamp]) => {
+                    const tabToUpdate = currentTabs.find(t => t.schematic?.id === schemaId);
+                    
+                    // If server has newer timestamp than our local tab
+                    if (tabToUpdate && timestamp > (tabToUpdate.lastUpdated || 0)) {
+                        console.log(`[Auto-Refresh] Updating tab for ${schemaId}`);
+                        
+                        // Trigger a silent fetch (pass silent=true to avoid full spinners if desired)
+                        // Note: We need to find the specific tab ID to update just that one
+                        fetchDetailsForTab(tabToUpdate.schematic, tabToUpdate.id);
+                    }
+                });
+                */
+            } catch (err) {
+                console.warn("Polling failed", err);
+            }
+        };
+
+        // Poll every 30 seconds
+        const intervalId = setInterval(pollForUpdates, 30000);
+        return () => clearInterval(intervalId);
+    }, [selectedServer]);
+
+
+    // --- TAB MANAGEMENT ---
+
     const handleAddTab = () => {
         if (tabs.length >= 10) return;
         const newId = Date.now();
         setTabs(prev => [...prev, { id: newId, schematic: null, details: null, loading: false, activeSubTab: 'best' }]);
         setActiveTabId(newId);
+        return newId; // Return ID so we can use it
     };
 
     const handleCloseTab = (e, tabId) => {
@@ -92,6 +163,8 @@ const SchematicContainer = () => {
                 t.id === tabId ? { 
                     ...t, 
                     loading: false,
+                    // Store the last_updated from the backend (or current time if missing)
+                    lastUpdated: rawData.last_updated || Date.now(),
                     details: { 
                         ...rawData,
                         experimental_categories: transformedCats,
@@ -104,11 +177,46 @@ const SchematicContainer = () => {
         }
     };
 
+    // Standard Select (Sidebar): Replaces current tab
     const handleSelect = (schematic) => {
-        const existingTab = tabs.find(t => t.schematic?.id === schematic.id);
-        if (existingTab) setActiveTabId(existingTab.id);
-        else fetchDetailsForTab(schematic, activeTabId);
+        // If this schematic is already open in another tab, switch to it?
+        // Or just overwrite current? Standard sidebar behavior usually implies "Navigation"
+        // Let's stick to your existing logic: Overwrite active tab
+        fetchDetailsForTab(schematic, activeTabId);
     };
+
+    // New: Background Open (Ingredient Link)
+    const handleBackgroundOpen = (schematic) => {
+        // 1. Check if already open
+        const existingTab = tabs.find(t => t.schematic?.id === schematic.id);
+        if (existingTab) {
+            // Already open. Do we switch? You said "leave current active". 
+            // So we do nothing visually, maybe a toast "Schematic already open in Tab X"?
+            // For now, let's just ensure it's loaded.
+            return; 
+        }
+
+        // 2. Open new tab
+        if (tabs.length >= 10) {
+            alert("Maximum tabs reached. Please close one to open this link.");
+            return;
+        }
+
+        const newId = Date.now();
+        // Add the tab, but do NOT set ActiveTabId
+        setTabs(prev => [...prev, { 
+            id: newId, 
+            schematic: schematic, // Pre-fill basic info
+            details: null, 
+            loading: true, // Start loading immediately
+            activeSubTab: 'best' 
+        }]);
+
+        // Trigger fetch for the new tab ID
+        fetchDetailsForTab(schematic, newId);
+    };
+
+    // --- RENDERERS ---
 
     const handleToggleCategory = (tabId, catId) => {
         setTabs(prev => prev.map(tab => {
@@ -130,7 +238,6 @@ const SchematicContainer = () => {
         setTabs(prev => prev.map(t => t.id === tabId ? { ...t, activeSubTab: subTab } : t));
     };
 
-    // --- RESOURCE INTERACTION ---
     const handleResourceClick = (resource) => {
         setSelectedResource(resource);
         setIsModalOpen(true);
@@ -140,51 +247,92 @@ const SchematicContainer = () => {
         await actions.refresh();
     };
 
-    // --- RENDERERS ---
-
     const renderIngredients = (slots) => {
         if (!slots) return <tr><td colSpan="2">No ingredients</td></tr>;
         const sortedSlots = Object.entries(slots).sort(([, a], [, b]) => a.slot_type - b.slot_type);
 
         return sortedSlots.map(([slotName, data]) => {
-            let displayString = "";
+            let displayString = null; // Use null to allow JSX
             let tooltip = null;
+            const ingredientName = getIngredientLabel(data.ingredient);
 
-			const ingredientName = getIngredientLabel(data.ingredient);
+            // --- LINKING LOGIC ---
+            // Check if this is a sub-component (Slot Type != 0) AND exists in our index
+            let linkedSchematic = null;
+            if (data.slot_type !== 0) {
+                // Find matching schematic by name (case insensitive matching is safer)
+                linkedSchematic = indexData.find(item => 
+                    item.name.toLowerCase() === data.ingredient.toLowerCase()
+                );
+            }
+
+            // Helper to wrap text in a link if applicable
+            const wrapLink = (text) => {
+                if (linkedSchematic) {
+                    return (
+                        <span 
+                            className="schematic-ingredient-link" 
+                            title={`Open ${linkedSchematic.name} in new tab`}
+                            onClick={(e) => {
+                                e.stopPropagation(); // Prevent row clicks if any
+                                handleBackgroundOpen(linkedSchematic);
+                            }}
+                            style={{ 
+                                color: 'var(--accent-blue)', 
+                                cursor: 'pointer', 
+                                textDecoration: 'underline',
+                                fontWeight: '500'
+                            }}
+                        >
+                            {text} <i className="fa-solid fa-arrow-up-right-from-square" style={{fontSize: '0.7em'}}></i>
+                        </span>
+                    );
+                }
+                return text;
+            };
 
             switch (data.slot_type) {
                 case 0:
-                    displayString = `${data.quantity} units of ${ingredientName}`;
+                    displayString = <span>{data.quantity} units of {ingredientName}</span>;
                     break;
                 case 1:
-                    // Only show Identical if quantity > 1
-                    displayString = `${data.quantity} ${data.quantity > 1 ? 'identical ' : ''}${ingredientName}`;
-                    if (data.quantity > 1) {
-                        tooltip = "Identical means all components in this slot must share the same serial number.";
-                    }
+                    displayString = (
+                        <span>
+                            {data.quantity} {data.quantity > 1 ? 'identical ' : ''}
+                            {wrapLink(ingredientName)}
+                        </span>
+                    );
+                    if (data.quantity > 1) tooltip = "Identical: Must share serial number.";
                     break;
                 case 2:
-                    displayString = `${data.quantity} ${data.quantity > 1 ? 'similar ' : ''}${ingredientName}`;
-                    if (data.quantity > 1) {
-                        tooltip = "Similar means all components in this slot must share the same creator.";
-                    }
+                    displayString = (
+                        <span>
+                            {data.quantity} {data.quantity > 1 ? 'similar ' : ''}
+                            {wrapLink(ingredientName)}
+                        </span>
+                    );
+                    if (data.quantity > 1) tooltip = "Similar: Must share creator.";
                     break;
                 case 3:
-                    // Optional Identical
-                    displayString = `(Optional) ${data.quantity} ${data.quantity > 1 ? 'identical ' : ''}${ingredientName}`;
-                    if (data.quantity > 1) {
-                        tooltip = "Identical means all components in this slot must share the same serial number.";
-                    }
+                    displayString = (
+                        <span>
+                            (Optional) {data.quantity} {data.quantity > 1 ? 'identical ' : ''}
+                            {wrapLink(ingredientName)}
+                        </span>
+                    );
+                    if (data.quantity > 1) tooltip = "Identical: Must share serial number.";
                     break;
                 case 4:
-                    // Optional Similar
-                    displayString = `(Optional) ${data.quantity} ${data.quantity > 1 ? 'similar ' : ''}${ingredientName}`;
-                    if (data.quantity > 1) {
-                        tooltip = "Similar means all components in this slot must share the same creator.";
-                    }
+                    displayString = (
+                        <span>
+                            (Optional) {data.quantity} {data.quantity > 1 ? 'similar ' : ''}
+                            {wrapLink(ingredientName)}
+                        </span>
+                    );
+                    if (data.quantity > 1) tooltip = "Similar: Must share creator.";
                     break;
                 default:
-                    displayString = `${data.quantity} ${ingredientName}`;
+                    displayString = <span>{data.quantity} {wrapLink(ingredientName)}</span>;
             }
 
             return (
@@ -214,7 +362,7 @@ const SchematicContainer = () => {
         return (
             <div key={ingredientName} className="slot-group-container" style={{ marginBottom: '30px' }}>
                 <h4 className="slot-header" style={{ 
-                    fontSize: '24px', 
+                    fontSize: '16px', 
                     color: 'var(--accent-blue)', 
                     marginBottom: '10px', 
                     textTransform: 'uppercase',
@@ -235,7 +383,6 @@ const SchematicContainer = () => {
                                     <th key={s} className="col-stat">{s}</th>
                                 ))}
                                 <th className="col-loc">LOCATION</th>
-                                {/* Changed DATE to AGE */}
                                 <th className="col-date">AGE</th>
                                 <th className="col-status">STATUS</th>
                             </tr>
@@ -250,7 +397,7 @@ const SchematicContainer = () => {
                                     onClick={handleResourceClick}
                                     onToggleStatus={() => {}} 
                                     onTogglePlanet={() => {}}
-                                    showAge={true} // Enable Age Formatting
+                                    showAge={true}
                                 />
                             ))}
                         </tbody>
@@ -314,7 +461,7 @@ const SchematicContainer = () => {
                             <div className="specs-container">
                                 <div className="specs-left-column" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
                                     
-                                    {/* Specifications - UPDATED ORDER */}
+                                    {/* Specifications */}
                                     <div className="info-table-wrapper">
                                         <div className="table-header">Specifications</div>
                                         <table className="schematic-info-table">
@@ -376,7 +523,7 @@ const SchematicContainer = () => {
                                         </table>
                                     </div>
 
-                                    {/* Experimental Categories (No Changes) */}
+                                    {/* Experimental Categories */}
                                     <div className="info-table-wrapper" style={{gridColumn: '1 / -1', width: '46.5%'}}>
                                         <div className="table-header">Experimental Categories</div>
                                         <div className="exp-cat-list">
