@@ -655,5 +655,31 @@ def get_schematic_details(schematic_id):
     except Exception as e:
         return jsonify({"error": f"Schematic details error: {e}"}), 500
 
+@app.route('/api/schematics/updates', methods=['POST'])
+def check_schematic_updates():
+    server_id = request.json.get('server', 'cuemu')
+    ids = request.json.get('ids', [])
+    
+    try:
+        cache = current_app.config.get('CACHE')
+        if not cache:
+            return jsonify({"error": "Cache service unavailable"}), 503
+
+        data = cache.get_server_data(server_id)
+        schematic_map = data.get("schematic_map", {})
+        
+        updates = {}
+        for sch_id in ids:
+            schematic = schematic_map.get(sch_id)
+            if schematic:
+                # Return timestamps to the frontend to compare against their local version
+                # Defaults to 0 if the schematic hasn't been ranked/updated yet
+                updates[sch_id] = schematic.get('last_updated', 0)
+                
+        return jsonify(updates)
+        
+    except Exception as e:
+        return jsonify({"error": f"Update check error: {e}"}), 500
+
 if __name__ == '__main__':
 	app.run(debug=True, port=5000)

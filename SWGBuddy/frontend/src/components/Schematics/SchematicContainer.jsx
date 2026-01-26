@@ -50,7 +50,7 @@ const SchematicContainer = () => {
         return entry ? entry.label : key; 
     };
 
-    // Load Index (Required for Sidebar AND Ingredient Linking)
+    // Load Index
     useEffect(() => {
         const loadIndex = async () => {
             if (!selectedServer) return;
@@ -86,26 +86,22 @@ const SchematicContainer = () => {
             if (activeSchematicIds.length === 0) return;
 
             try {
-                // TODO: Backend Implementation Required
-                // const updates = await API.checkSchematicUpdates(selectedServer, activeSchematicIds);
-                // Expected response: { "schematic_id_1": 1769882233, "schematic_id_2": 1769882240 }
-                
-                /* // MOCK LOGIC FOR IMPLEMENTATION:
-                const updates = {}; 
+                const updates = await API.checkSchematicUpdates(selectedServer, activeSchematicIds);
+                // Response: { "schematic_id_1": 1769882233, ... }
                 
                 Object.entries(updates).forEach(([schemaId, timestamp]) => {
                     const tabToUpdate = currentTabs.find(t => t.schematic?.id === schemaId);
                     
                     // If server has newer timestamp than our local tab
+                    // (Ensure both exist and server stamp is actually greater)
                     if (tabToUpdate && timestamp > (tabToUpdate.lastUpdated || 0)) {
                         console.log(`[Auto-Refresh] Updating tab for ${schemaId}`);
                         
-                        // Trigger a silent fetch (pass silent=true to avoid full spinners if desired)
-                        // Note: We need to find the specific tab ID to update just that one
+                        // Trigger a fetch for the specific tab
+                        // We use the schematic object and the specific tab ID
                         fetchDetailsForTab(tabToUpdate.schematic, tabToUpdate.id);
                     }
                 });
-                */
             } catch (err) {
                 console.warn("Polling failed", err);
             }
@@ -124,7 +120,6 @@ const SchematicContainer = () => {
         const newId = Date.now();
         setTabs(prev => [...prev, { id: newId, schematic: null, details: null, loading: false, activeSubTab: 'best' }]);
         setActiveTabId(newId);
-        return newId; // Return ID so we can use it
     };
 
     const handleCloseTab = (e, tabId) => {
@@ -145,6 +140,7 @@ const SchematicContainer = () => {
     };
 
     const fetchDetailsForTab = async (schematic, tabId) => {
+        // Set loading state for this specific tab
         setTabs(prev => prev.map(t => t.id === tabId ? { ...t, schematic, loading: true } : t));
 
         try {
@@ -177,11 +173,8 @@ const SchematicContainer = () => {
         }
     };
 
-    // Standard Select (Sidebar): Replaces current tab
     const handleSelect = (schematic) => {
-        // If this schematic is already open in another tab, switch to it?
-        // Or just overwrite current? Standard sidebar behavior usually implies "Navigation"
-        // Let's stick to your existing logic: Overwrite active tab
+        // Standard Select (Sidebar): Replaces current tab
         fetchDetailsForTab(schematic, activeTabId);
     };
 
@@ -190,10 +183,7 @@ const SchematicContainer = () => {
         // 1. Check if already open
         const existingTab = tabs.find(t => t.schematic?.id === schematic.id);
         if (existingTab) {
-            // Already open. Do we switch? You said "leave current active". 
-            // So we do nothing visually, maybe a toast "Schematic already open in Tab X"?
-            // For now, let's just ensure it's loaded.
-            return; 
+            return; // Already open, do nothing (keep current active)
         }
 
         // 2. Open new tab
@@ -206,9 +196,9 @@ const SchematicContainer = () => {
         // Add the tab, but do NOT set ActiveTabId
         setTabs(prev => [...prev, { 
             id: newId, 
-            schematic: schematic, // Pre-fill basic info
+            schematic: schematic, 
             details: null, 
-            loading: true, // Start loading immediately
+            loading: true, 
             activeSubTab: 'best' 
         }]);
 
@@ -252,7 +242,7 @@ const SchematicContainer = () => {
         const sortedSlots = Object.entries(slots).sort(([, a], [, b]) => a.slot_type - b.slot_type);
 
         return sortedSlots.map(([slotName, data]) => {
-            let displayString = null; // Use null to allow JSX
+            let displayString = null;
             let tooltip = null;
             const ingredientName = getIngredientLabel(data.ingredient);
 
@@ -274,7 +264,7 @@ const SchematicContainer = () => {
                             className="schematic-ingredient-link" 
                             title={`Open ${linkedSchematic.name} in new tab`}
                             onClick={(e) => {
-                                e.stopPropagation(); // Prevent row clicks if any
+                                e.stopPropagation(); 
                                 handleBackgroundOpen(linkedSchematic);
                             }}
                             style={{ 
@@ -284,7 +274,7 @@ const SchematicContainer = () => {
                                 fontWeight: '500'
                             }}
                         >
-                            {text} <i className="fa-solid fa-arrow-up-right-from-square" style={{fontSize: '0.7em'}}></i>
+                            {text} <i className="fa-solid fa-arrow-up-right-from-square" style={{fontSize: '0.7em', marginLeft: '4px'}}></i>
                         </span>
                     );
                 }
@@ -302,7 +292,7 @@ const SchematicContainer = () => {
                             {wrapLink(ingredientName)}
                         </span>
                     );
-                    if (data.quantity > 1) tooltip = "Identical: Must share serial number.";
+                    if (data.quantity > 1) tooltip = "Identical means all components in this slot must share the same serial number.";
                     break;
                 case 2:
                     displayString = (
@@ -311,7 +301,7 @@ const SchematicContainer = () => {
                             {wrapLink(ingredientName)}
                         </span>
                     );
-                    if (data.quantity > 1) tooltip = "Similar: Must share creator.";
+                    if (data.quantity > 1) tooltip = "Similar means all components in this slot must share the same creator.";
                     break;
                 case 3:
                     displayString = (
@@ -320,7 +310,7 @@ const SchematicContainer = () => {
                             {wrapLink(ingredientName)}
                         </span>
                     );
-                    if (data.quantity > 1) tooltip = "Identical: Must share serial number.";
+                    if (data.quantity > 1) tooltip = "Identical means all components in this slot must share the same serial number.";
                     break;
                 case 4:
                     displayString = (
@@ -329,7 +319,7 @@ const SchematicContainer = () => {
                             {wrapLink(ingredientName)}
                         </span>
                     );
-                    if (data.quantity > 1) tooltip = "Similar: Must share creator.";
+                    if (data.quantity > 1) tooltip = "Similar means all components in this slot must share the same creator.";
                     break;
                 default:
                     displayString = <span>{data.quantity} {wrapLink(ingredientName)}</span>;

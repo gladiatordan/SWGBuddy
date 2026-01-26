@@ -121,6 +121,15 @@ const API = {
 	async fetchSchematicDetails(schematicId, serverId) {
         const response = await this._fetch(`/api/schematics/${schematicId}?server=${serverId}`);
         return await response.json();
+    },
+
+    async checkSchematicUpdates(serverId, schematicIds) {
+        const response = await this._fetch('/api/schematics/updates', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ server: serverId, ids: schematicIds })
+        });
+        return await response.json();
     }
 };
 
