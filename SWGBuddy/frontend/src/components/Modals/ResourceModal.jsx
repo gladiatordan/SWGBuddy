@@ -160,6 +160,9 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                     ? resource.planet 
                     : (resource.planet ? [resource.planet] : []);
 
+				// Fallback to class_tree if type is missing
+				const typeVal = resource.type || resource.class_tree;
+
                 setFormData({
                     name: resource.name,
                     type: typeVal,

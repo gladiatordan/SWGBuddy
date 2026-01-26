@@ -175,6 +175,8 @@ export const formatAge = (dateString) => {
     
     const now = new Date();
     const date = new Date(dateString);
+    if (isNaN(date)) return '-';
+
     const diffMs = now - date;
     const diffSec = Math.floor(diffMs / 1000);
     const diffMin = Math.floor(diffSec / 60);
@@ -195,6 +197,7 @@ export const formatAge = (dateString) => {
     
     // Days
     if (diffDay >= 1) {
+        // e.g. 5 days 4 hours
         const remainingHours = diffHour % 24;
         return `${diffDay} day${diffDay > 1 ? 's' : ''} ${remainingHours} hour${remainingHours !== 1 ? 's' : ''}`;
     }
