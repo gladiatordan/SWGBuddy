@@ -1,70 +1,66 @@
 import { useMemo } from 'react';
 
 /**
- * Hydrates the lightweight "Ranked IDs" list from the schematic cache
- * with the heavy "Full Resource Data" from the ResourceContext.
- * * @param {Array} resources - The full list of resources from ResourceContext (history).
- * @param {Object} schematicDetails - The active schematic details object containing 'rankings' and 'experimental_categories'.
- * @returns {Object} { current_resources, best_resources } - Hydrated arrays ready for the UI.
+ * Hydrates the "Ranked IDs" list from the schematic JSON
+ * with the full "Resource Data" from the ResourceContext.
+ * * Returns an object keyed by ingredient name:
+ * {
+ * "Fruit": { best: [...], current: [...] },
+ * "Corn": { best: [...], current: [...] }
+ * }
  */
 export const useSchematicRanker = (resources, schematicDetails) => {
     return useMemo(() => {
-        // Safe defaults if data isn't loaded yet
+        // Safe defaults
         if (!resources || !schematicDetails || !schematicDetails.rankings) {
-            return { current_resources: [], best_resources: [] };
+            return {};
         }
 
-        // 1. Calculate the Cache Key based on Active Toggles
-        // We filter for selected categories, extract their IDs, sort them alphabetically, and join with pipes.
-        // This matches the key generation logic in RankingService.py.
+        // 1. Calculate the Cache Key (Experiment Combo)
         const activeCategoryIds = (schematicDetails.experimental_categories || [])
             .filter(cat => cat.selected)
             .map(cat => cat.id)
             .sort();
 
-        // If no categories exist or are selected, fallback to 'default' (or empty)
         const cacheKey = activeCategoryIds.length > 0 ? activeCategoryIds.join('|') : 'default';
 
-        // 2. Retrieve the Ranked Data (Lean List)
-        // Expected Structure: { current: [{id: 1, rating: "98.5%", slot: "Core"}], best: [...] }
-        const rankingGroup = schematicDetails.rankings[cacheKey];
+        // 2. Build the Hydrated Map
+        const hydratedResult = {};
 
-        if (!rankingGroup) {
-            // If this specific combination hasn't been pre-calculated or doesn't exist
-            return { current_resources: [], best_resources: [] };
-        }
+        // Iterate over each Ingredient Group in the rankings (e.g., "fruit", "corn")
+        Object.entries(schematicDetails.rankings).forEach(([ingredientName, comboMap]) => {
+            
+            // Get the specific ranking list for this Experiment Combo
+            // Fallback to empty if this specific combo hasn't been pre-calculated
+            const rankingGroup = comboMap[cacheKey] || { best: [], current: [] };
 
-        // 3. Hydration Helper
-        // Merges the "Schematic Specifics" (Rating, Slot) with "Resource Specifics" (Name, Stats, Type)
-        const hydrateList = (rankedItems) => {
-            if (!rankedItems || !Array.isArray(rankedItems)) return [];
+            // Hydration Helper
+            const hydrateList = (rankedItems) => {
+                if (!rankedItems || !Array.isArray(rankedItems)) return [];
 
-            return rankedItems.map(item => {
-                // Handle case where cache might be just IDs (older version) or Objects (newer version)
-                const resourceId = typeof item === 'object' ? item.id : item;
-                const specificData = typeof item === 'object' ? item : {};
+                return rankedItems.map(item => {
+                    const fullResource = resources.find(r => r.id === item.id);
+                    if (!fullResource) return null;
 
-                // Find the full resource record in memory
-                const fullResource = resources.find(r => r.id === resourceId);
+                    // CLONE and OVERRIDE
+                    // We inject the schematic-specific score into 'res_weight_rating'
+                    // so ResourceRow displays the relevant percentage.
+                    return {
+                        ...fullResource,
+                        res_weight_rating: item.raw_score, 
+                        // We also attach the breakdown stats if needed for tooltips later
+                        _ranking_stats: item.stats 
+                    };
+                }).filter(Boolean);
+            };
 
-                if (!fullResource) {
-                    // Resource might be too old or not synced yet. 
-                    // We can return a placeholder or null to filter it out.
-                    return null;
-                }
+            hydratedResult[ingredientName] = {
+                best: hydrateList(rankingGroup.best),
+                current: hydrateList(rankingGroup.current)
+            };
+        });
 
-                return {
-                    ...fullResource,           // Name, Type, Stats, Date
-                    rating: specificData.rating || '-', // Schematic-specific Rating
-                    displaySlot: specificData.slot || fullResource.type // Contextual Slot Name
-                };
-            }).filter(Boolean); // Remove nulls (missing resources)
-        };
-
-        return {
-            current_resources: hydrateList(rankingGroup.current),
-            best_resources: hydrateList(rankingGroup.best)
-        };
+        return hydratedResult;
 
     }, [resources, schematicDetails]);
 };
