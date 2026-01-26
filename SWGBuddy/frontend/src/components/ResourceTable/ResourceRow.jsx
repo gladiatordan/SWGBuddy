@@ -1,11 +1,11 @@
 import React from 'react';
-import { getStatColorClass, formatDate, STAT_MAPPING } from '../../utils/resourceUtils';
+import { getStatColorClass, formatDate, formatAge, STAT_MAPPING } from '../../utils/resourceUtils';
 import { useResources } from '../../hooks/useResources';
 import { useServer } from '../../contexts/ServerContext';
 
 const ALL_PLANETS = ["Corellia", "Dantooine", "Dathomir", "Endor", "Lok", "Naboo", "Rori", "Talus", "Tatooine", "Yavin", "Mustafar", "Kashyyyk"];
 
-const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onClick, taxonomy }) => {
+const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onClick, taxonomy, showAge = false }) => {
     // Stat Keys to iterate
     const statKeys = Object.keys(STAT_MAPPING);
 
@@ -87,8 +87,10 @@ const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onCli
                 )}
             </td>
 
-            {/* Date */}
-            <td className="col-date">{formatDate(resource.date_reported)}</td>
+            {/* Date or Age */}
+            <td className="col-date">
+                {showAge ? formatAge(resource.date_reported) : formatDate(resource.date_reported)}
+            </td>
 
             {/* Status */}
             <td className="col-status" onClick={(e) => e.stopPropagation()}>

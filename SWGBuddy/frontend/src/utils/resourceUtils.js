@@ -169,3 +169,36 @@ export const findTaxonomyNode = (nodes, label) => {
     }
     return null;
 };
+
+export const formatAge = (dateString) => {
+    if (!dateString) return '-';
+    
+    const now = new Date();
+    const date = new Date(dateString);
+    const diffMs = now - date;
+    const diffSec = Math.floor(diffMs / 1000);
+    const diffMin = Math.floor(diffSec / 60);
+    const diffHour = Math.floor(diffMin / 60);
+    const diffDay = Math.floor(diffHour / 24);
+    
+    // Years (approx 365 days)
+    if (diffDay >= 365) {
+        const years = Math.floor(diffDay / 365);
+        return `${years} year${years > 1 ? 's' : ''}`;
+    }
+    
+    // Months (approx 30 days)
+    if (diffDay >= 30) {
+        const months = Math.floor(diffDay / 30);
+        return `${months} month${months > 1 ? 's' : ''}`;
+    }
+    
+    // Days
+    if (diffDay >= 1) {
+        const remainingHours = diffHour % 24;
+        return `${diffDay} day${diffDay > 1 ? 's' : ''} ${remainingHours} hour${remainingHours !== 1 ? 's' : ''}`;
+    }
+    
+    // Hours
+    return `${diffHour} hour${diffHour !== 1 ? 's' : ''}`;
+};

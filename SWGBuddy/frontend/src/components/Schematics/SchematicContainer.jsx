@@ -5,8 +5,6 @@ import SchematicSidebar from './SchematicSidebar';
 import { STAT_MAPPING } from '../../utils/resourceUtils';
 import { useResources } from '../../hooks/useResources';
 import { useSchematicRanker } from '../../hooks/useSchematicRanker';
-
-// New Imports for Resource Table Logic
 import ResourceRow from '../ResourceTable/ResourceRow';
 import ResourceModal from '../Modals/ResourceModal';
 
@@ -36,6 +34,12 @@ const SchematicContainer = () => {
         if (val <= 20) return "Requires: Specialized Crafting Tool";
         if (val <= 25) return "Requires: Specialized Crafting Tool + Public Crafting Station";
         return "Requires: Specialized Crafting Tool + Private Crafting Station";
+    };
+
+	const getIngredientLabel = (key) => {
+        if (!cache?.taxonomy) return key;
+        const entry = cache.taxonomy[key];
+        return entry ? entry.label : key; 
     };
 
     const getQualityTooltip = (isHigh) => {
@@ -75,7 +79,6 @@ const SchematicContainer = () => {
         try {
             if (!selectedServer) throw new Error("No server selected");
 
-            // FIX: selectedServer is a string, pass it directly
             const rawData = await API.fetchSchematicDetails(schematic.id, selectedServer);
 
             const transformedCats = Object.entries(rawData.experiment_weights || {}).map(([label, weights]) => ({
@@ -147,28 +150,41 @@ const SchematicContainer = () => {
             let displayString = "";
             let tooltip = null;
 
+			const ingredientName = getIngredientLabel(data.ingredient);
+
             switch (data.slot_type) {
                 case 0:
-                    displayString = `${data.quantity} units of ${data.ingredient}`;
+                    displayString = `${data.quantity} units of ${ingredientName}`;
                     break;
                 case 1:
-                    displayString = `${data.quantity} identical ${data.ingredient}`;
-                    tooltip = "Identical means all components in this slot must share the same serial number.";
+                    // Only show Identical if quantity > 1
+                    displayString = `${data.quantity} ${data.quantity > 1 ? 'identical ' : ''}${ingredientName}`;
+                    if (data.quantity > 1) {
+                        tooltip = "Identical means all components in this slot must share the same serial number.";
+                    }
                     break;
                 case 2:
-                    displayString = `${data.quantity} similar ${data.ingredient.replace(/shared_ingredient_|shared_/g, '').replace(/_/g, ' ')}`;
-                    tooltip = "Similar means all components in this slot must share the same creator.";
+                    displayString = `${data.quantity} ${data.quantity > 1 ? 'similar ' : ''}${ingredientName}`;
+                    if (data.quantity > 1) {
+                        tooltip = "Similar means all components in this slot must share the same creator.";
+                    }
                     break;
                 case 3:
-                    displayString = `(Optional) ${data.quantity} identical ${data.ingredient.replace(/shared_ingredient_|shared_/g, '').replace(/_/g, ' ')}`;
-                    tooltip = "Identical means all components in this slot must share the same serial number.";
+                    // Optional Identical
+                    displayString = `(Optional) ${data.quantity} ${data.quantity > 1 ? 'identical ' : ''}${ingredientName}`;
+                    if (data.quantity > 1) {
+                        tooltip = "Identical means all components in this slot must share the same serial number.";
+                    }
                     break;
                 case 4:
-                    displayString = `(Optional) ${data.quantity} similar ${data.ingredient.replace(/shared_ingredient_|shared_/g, '').replace(/_/g, ' ')}`;
-                    tooltip = "Similar means all components in this slot must share the same creator.";
+                    // Optional Similar
+                    displayString = `(Optional) ${data.quantity} ${data.quantity > 1 ? 'similar ' : ''}${ingredientName}`;
+                    if (data.quantity > 1) {
+                        tooltip = "Similar means all components in this slot must share the same creator.";
+                    }
                     break;
                 default:
-                    displayString = `${data.quantity} ${data.ingredient}`;
+                    displayString = `${data.quantity} ${ingredientName}`;
             }
 
             return (
@@ -183,13 +199,13 @@ const SchematicContainer = () => {
         });
     };
 
-    // New Logic: Render a table for a specific Ranking Ingredient
     const renderRankingTable = (ingredientName, resources) => {
-        
+        const decodedTitle = getIngredientLabel(ingredientName);
+
         if (!resources || resources.length === 0) {
             return (
                 <div key={ingredientName} className="slot-group-empty">
-                     <h4 className="slot-header">{ingredientName}</h4>
+                     <h4 className="slot-header">{decodedTitle}</h4>
                      <div className="empty-message">No matching resources found for this configuration.</div>
                 </div>
             );
@@ -205,7 +221,7 @@ const SchematicContainer = () => {
                     borderBottom: '1px solid var(--border-dim)',
                     paddingBottom: '5px'
                 }}>
-                    {ingredientName}
+                    {decodedTitle}
                 </h4>
                 
                 <div className="table-scroll-wrapper">
@@ -219,8 +235,9 @@ const SchematicContainer = () => {
                                     <th key={s} className="col-stat">{s}</th>
                                 ))}
                                 <th className="col-loc">LOCATION</th>
-                                <th className="col-date">DATE</th>
-								<th className="col-status">STATUS</th>
+                                {/* Changed DATE to AGE */}
+                                <th className="col-date">AGE</th>
+                                <th className="col-status">STATUS</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -228,11 +245,12 @@ const SchematicContainer = () => {
                                 <ResourceRow 
                                     key={res.id} 
                                     resource={res}
-                                    isEditor={false} // READ ONLY
+                                    isEditor={false}
                                     taxonomy={cache?.taxonomy || {}}
                                     onClick={handleResourceClick}
                                     onToggleStatus={() => {}} 
                                     onTogglePlanet={() => {}}
+                                    showAge={true} // Enable Age Formatting
                                 />
                             ))}
                         </tbody>
@@ -296,22 +314,30 @@ const SchematicContainer = () => {
                             <div className="specs-container">
                                 <div className="specs-left-column" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
                                     
-                                    {/* Specifications */}
+                                    {/* Specifications - UPDATED ORDER */}
                                     <div className="info-table-wrapper">
                                         <div className="table-header">Specifications</div>
                                         <table className="schematic-info-table">
                                             <tbody>
                                                 <tr>
-                                                    <td className="info-label">Profession</td>
-                                                    <td className="info-value">{activeTab.schematic.profession}</td>
-                                                </tr>
-                                                <tr>
                                                     <td className="info-label">Certification Required</td>
-                                                    <td className="info-value" title={activeTab.details.certification}>{activeTab.details.certification}</td>
+                                                    <td className="info-value">{activeTab.details.certification}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td className="info-label">Category</td>
-                                                    <td className="info-value">{activeTab.schematic.category}</td>
+                                                    <td className="info-label">Assembly Skill</td>
+                                                    <td className="info-value">{activeTab.details.assembly_skill}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="info-label">Experimentation Skill</td>
+                                                    <td className="info-value">{activeTab.details.experimentation_skill}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="info-label">Customization Skill</td>
+                                                    <td className="info-value">{activeTab.details.customization_skill || '-'}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="info-label">Experience Type</td>
+                                                    <td className="info-value">{activeTab.details.experience_type}</td>
                                                 </tr>
                                                 <tr>
                                                     <td className="info-label">Base Experience</td>
@@ -350,7 +376,7 @@ const SchematicContainer = () => {
                                         </table>
                                     </div>
 
-                                    {/* Experimental Categories */}
+                                    {/* Experimental Categories (No Changes) */}
                                     <div className="info-table-wrapper" style={{gridColumn: '1 / -1', width: '46.5%'}}>
                                         <div className="table-header">Experimental Categories</div>
                                         <div className="exp-cat-list">
@@ -396,9 +422,8 @@ const SchematicContainer = () => {
                                 </div>
                                 
                                 <div className="resource-tab-content" style={{ padding: '15px' }}>
-                                    {/* Loop through each hydrated ranking group (e.g. "Fruit", "Corn") */}
                                     {Object.entries(hydratedRankings)
-                                        .sort((a, b) => a[0].localeCompare(b[0])) // Sort by Ingredient Name
+                                        .sort((a, b) => a[0].localeCompare(b[0]))
                                         .map(([ingredientName, data]) => {
                                             const resourcesToUse = activeTab.activeSubTab === 'best' 
                                                 ? data.best 
@@ -414,7 +439,6 @@ const SchematicContainer = () => {
                 </div>
             </div>
 
-            {/* Modal for viewing resource details */}
             <ResourceModal 
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}

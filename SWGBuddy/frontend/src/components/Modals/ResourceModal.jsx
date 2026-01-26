@@ -162,7 +162,7 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
 
                 setFormData({
                     name: resource.name,
-                    type: resource.type,
+                    type: typeVal,
                     stats: extractStats(resource),
                     notes: resource.notes || '',
                     planet: planetArr,
