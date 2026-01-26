@@ -16,7 +16,8 @@ const SchematicSidebar = ({ selectedId, onSelect }) => {
             if (!selectedServer) return;
             setIsLoading(true);
             try {
-                const data = await API.fetchSchematicIndex(selectedServer.id);
+                // FIX: selectedServer is a string, pass it directly
+                const data = await API.fetchSchematicIndex(selectedServer);
                 setIndexData(data || []);
             } catch (err) {
                 console.error("Failed to load schematic index", err);

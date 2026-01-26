@@ -70,14 +70,13 @@ const SchematicContainer = () => {
     };
 
     const fetchDetailsForTab = async (schematic, tabId) => {
-        // Set loading state
         setTabs(prev => prev.map(t => t.id === tabId ? { ...t, schematic, loading: true } : t));
 
         try {
             if (!selectedServer) throw new Error("No server selected");
 
-            // REAL API CALL
-            const rawData = await API.fetchSchematicDetails(schematic.id, selectedServer.id);
+            // FIX: selectedServer is a string, pass it directly
+            const rawData = await API.fetchSchematicDetails(schematic.id, selectedServer);
 
             const transformedCats = Object.entries(rawData.experiment_weights || {}).map(([label, weights]) => ({
                 id: `exp_${label.toLowerCase().replace(/ /g, '_')}`,
