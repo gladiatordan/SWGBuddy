@@ -139,15 +139,21 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
     };
 
     // Helper: Extract stats from resource object
-    const extractStats = (res) => {
-		const stats = {};
-		['oq','cr','cd','dr','fl','hr','ma','pe','sr','ut'].forEach(key => {
-			// Store both the raw value and the rating for view-mode coloring
-			stats[`res_${key}`] = res[`res_${key}`];
-			stats[`res_${key}_rating`] = res[`res_${key}_rating`];
-		});
-		return stats;
-	};
+   const extractStats = (res) => {
+        const stats = {};
+        
+        // Use the exact keys defined in STAT_MAPPING (res_quality, res_cold_resist, etc.)
+        Object.keys(STAT_MAPPING).forEach(key => {
+            const ratingKey = `${key}_rating`;
+            
+            // Extract values directly from the resource object using the keys from STAT_MAPPING
+            // If the value is null in the DB, it stays null in the form (hiding it in view mode)
+            stats[key] = res[key];
+            stats[ratingKey] = res[ratingKey];
+        });
+        // console.log("[ResourceModal] Extracted Stats:", stats);
+        return stats;
+    };
 
     // Reset state when opening or switching resources
     useEffect(() => {
@@ -160,8 +166,7 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                     ? resource.planet 
                     : (resource.planet ? [resource.planet] : []);
 
-				// Fallback to class_tree if type is missing
-				const typeVal = resource.type || resource.class_tree;
+                const typeVal = resource.type || resource.class_tree;
 
                 setFormData({
                     name: resource.name,
