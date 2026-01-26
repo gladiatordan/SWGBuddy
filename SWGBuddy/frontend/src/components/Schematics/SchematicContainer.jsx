@@ -78,7 +78,6 @@ const SchematicContainer = () => {
 
         const pollForUpdates = async () => {
             const currentTabs = tabsRef.current;
-            // Filter only tabs that have a loaded schematic
             const activeSchematicIds = currentTabs
                 .filter(t => t.schematic && t.schematic.id)
                 .map(t => t.schematic.id);
@@ -87,19 +86,14 @@ const SchematicContainer = () => {
 
             try {
                 const updates = await API.checkSchematicUpdates(selectedServer, activeSchematicIds);
-                // Response: { "schematic_id_1": 1769882233, ... }
                 
                 Object.entries(updates).forEach(([schemaId, timestamp]) => {
                     const tabToUpdate = currentTabs.find(t => t.schematic?.id === schemaId);
                     
-                    // If server has newer timestamp than our local tab
-                    // (Ensure both exist and server stamp is actually greater)
                     if (tabToUpdate && timestamp > (tabToUpdate.lastUpdated || 0)) {
                         console.log(`[Auto-Refresh] Updating tab for ${schemaId}`);
-                        
-                        // Trigger a fetch for the specific tab
-                        // We use the schematic object and the specific tab ID
-                        fetchDetailsForTab(tabToUpdate.schematic, tabToUpdate.id);
+                        // PASS TRUE FOR SILENT UPDATE
+                        fetchDetailsForTab(tabToUpdate.schematic, tabToUpdate.id, true);
                     }
                 });
             } catch (err) {
@@ -139,9 +133,11 @@ const SchematicContainer = () => {
         }
     };
 
-    const fetchDetailsForTab = async (schematic, tabId) => {
-        // Set loading state for this specific tab
-        setTabs(prev => prev.map(t => t.id === tabId ? { ...t, schematic, loading: true } : t));
+    const fetchDetailsForTab = async (schematic, tabId, isSilent = false) => {
+        // Only show full loader if NOT silent
+        if (!isSilent) {
+            setTabs(prev => prev.map(t => t.id === tabId ? { ...t, schematic, loading: true } : t));
+        }
 
         try {
             if (!selectedServer) throw new Error("No server selected");
@@ -152,23 +148,41 @@ const SchematicContainer = () => {
                 id: `exp_${label.toLowerCase().replace(/ /g, '_')}`,
                 label: label,
                 weights: weights,
+                // Preserve selection state if updating existing tab
                 selected: true 
             }));
 
-            setTabs(prev => prev.map(t => 
-                t.id === tabId ? { 
+            setTabs(prev => prev.map(t => {
+                if (t.id !== tabId) return t;
+
+                // If silent update, we want to preserve the user's current category selection
+                // instead of resetting everything to 'selected: true'
+                let finalCats = transformedCats;
+                if (isSilent && t.details && t.details.experimental_categories) {
+                    const oldSel = t.details.experimental_categories.reduce((acc, c) => {
+                        acc[c.id] = c.selected;
+                        return acc;
+                    }, {});
+                    
+                    finalCats = transformedCats.map(c => ({
+                        ...c,
+                        selected: oldSel[c.id] !== undefined ? oldSel[c.id] : true
+                    }));
+                }
+
+                return { 
                     ...t, 
                     loading: false,
-                    // Store the last_updated from the backend (or current time if missing)
                     lastUpdated: rawData.last_updated || Date.now(),
                     details: { 
                         ...rawData,
-                        experimental_categories: transformedCats,
+                        experimental_categories: finalCats,
                     } 
-                } : t
-            ));
+                };
+            }));
         } catch (err) {
             console.error("Detail load failed", err);
+            // Ensure loading is false on error so it doesn't get stuck
             setTabs(prev => prev.map(t => t.id === tabId ? { ...t, loading: false } : t));
         }
     };
