@@ -166,11 +166,9 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                     ? resource.planet 
                     : (resource.planet ? [resource.planet] : []);
 
-                const typeVal = resource.type || resource.class_tree;
-
                 setFormData({
                     name: resource.name,
-                    type: typeVal,
+                    type: resource.class_tree,
                     stats: extractStats(resource),
                     notes: resource.notes || '',
                     planet: planetArr,
@@ -385,7 +383,7 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
 
             setFormData({
                 name: resource.name,
-                type: resource.type,
+                type: resource.class_tree,
                 stats: extractStats(resource),
                 notes: resource.notes || '',
                 planet: planetArr, // <--- This was missing
@@ -457,7 +455,7 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
 
         // 1. Check Top-Level Fields
         if (formData.name !== resource.name) return true;
-        if (formData.type !== resource.type) return true;
+        if (formData.type !== resource.class_tree) return true;
         if ((formData.notes || '') !== (resource.notes || '')) return true;
 
         // 2. Check Planets (Normalize arrays and sort)
@@ -551,15 +549,21 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                         <div className={isEditable ? "stats-grid" : "stats-grid-view"}>
                             {Object.entries(STAT_MAPPING).map(([valKey, label]) => {
 								const ratKey = `${valKey}_rating`;
-								const value = formData.stats[valKey] || '';
+								const value = formData.stats[valKey]
 								const rating = formData.stats[ratKey];
-
+								// console.log("[ResourceModal] Value:", value);
+								// console.log("[ResourceModal] Rating:", rating);
 								// Check if this specific stat is allowed for the chosen resource type
+								// console.log("[ResourceModal] Valid Stats for Type:", validStatsForType);
 								const isDisabled = !validStatsForType.includes(valKey);
+
 
 								if (!isEditable) {
 									// View Mode: Hide stats that are empty or N/A for this type
-									if (!value || value === '-' || isDisabled) return null;
+									if (!value || value === '-' || isDisabled) {
+										// console.log("[ResourceModal] Skipping stat in view mode:", valKey);
+										return null;
+									}
 									
 									const tooltip = rating !== null ? `Rating: ${(rating * 100).toFixed(1)}%` : '';
 									
