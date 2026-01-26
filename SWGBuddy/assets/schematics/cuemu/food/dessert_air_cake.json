@@ -48,5 +48,8 @@
             "res_decay_resist": 0.75,
             "res_quality": 0.25
         }
+    },
+    "rankings": {
+        "1.2.276.277.388.443": {}
     }
 }

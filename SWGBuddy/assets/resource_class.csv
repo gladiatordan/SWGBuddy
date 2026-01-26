@@ -1,0 +1,846 @@
+﻿class_tree,enum,label,is_valid,available_planets
+1,resource,Resources,FALSE,{}
+1.2,organic,Organic,FALSE,{}
+1.2.276,flora_resources,Flora Resources,FALSE,{}
+1.2.276.277,flora_food,Flora Food,FALSE,{}
+1.2.276.277.278,cereal,Cereal,FALSE,{}
+1.2.276.277.278.279,processed_cereal,Processed Cereal,FALSE,{}
+1.2.276.277.278.280,corn,Corn,FALSE,{}
+1.2.276.277.278.280.281,corn_domesticated,Domesticated Corn,FALSE,{}
+1.2.276.277.278.280.281.282,corn_domesticated_corellia,Corellian Domesticated Corn,TRUE,{corellia}
+1.2.276.277.278.280.281.283,corn_domesticated_dantooine,Dantooine Domesticated Corn,TRUE,{dantooine}
+1.2.276.277.278.280.281.284,corn_domesticated_dathomir,Dathomirian Domesticated Corn,TRUE,{dathomir}
+1.2.276.277.278.280.281.285,corn_domesticated_endor,Endorian Domesticated Corn,TRUE,{endor}
+1.2.276.277.278.280.281.286,corn_domesticated_lok,Lokian Domesticated Corn,TRUE,{lok}
+1.2.276.277.278.280.281.287,corn_domesticated_naboo,Nabooian Domesticated Corn,TRUE,{naboo}
+1.2.276.277.278.280.281.288,corn_domesticated_rori,Rori Domesticated Corn,TRUE,{rori}
+1.2.276.277.278.280.281.289,corn_domesticated_talus,Talusian Domesticated Corn,TRUE,{talus}
+1.2.276.277.278.280.281.290,corn_domesticated_tatooine,Tatooinian Domesticated Corn,TRUE,{tatooine}
+1.2.276.277.278.280.281.291,corn_domesticated_yavin4,Yavinian Domesticated Corn,TRUE,{yavin}
+1.2.276.277.278.280.281.292,corn_domesticated_kashyyyk,Kashyyykian Domesticated Corn,TRUE,{kashyyyk}
+1.2.276.277.278.280.281.293,corn_domesticated_mustafar,Mustafarian Domesticated Corn,TRUE,{mustafar}
+1.2.276.277.278.280.294,corn_wild,Wild Corn,FALSE,{}
+1.2.276.277.278.280.294.295,corn_wild_corellia,Corellian Wild Corn,TRUE,{corellia}
+1.2.276.277.278.280.294.296,corn_wild_dantooine,Dantooine Wild Corn,TRUE,{dantooine}
+1.2.276.277.278.280.294.297,corn_wild_dathomir,Dathomirian Wild Corn,TRUE,{dathomir}
+1.2.276.277.278.280.294.298,corn_wild_endor,Endorian Wild Corn,TRUE,{endor}
+1.2.276.277.278.280.294.299,corn_wild_lok,Lokian Wild Corn,TRUE,{lok}
+1.2.276.277.278.280.294.300,corn_wild_naboo,Nabooian Wild Corn,TRUE,{naboo}
+1.2.276.277.278.280.294.301,corn_wild_rori,Rori Wild Corn,TRUE,{rori}
+1.2.276.277.278.280.294.302,corn_wild_talus,Talusian Wild Corn,TRUE,{talus}
+1.2.276.277.278.280.294.303,corn_wild_tatooine,Tatooinian Wild Corn,TRUE,{tatooine}
+1.2.276.277.278.280.294.304,corn_wild_yavin4,Yavinian Wild Corn,TRUE,{yavin}
+1.2.276.277.278.280.294.305,corn_wild_kashyyyk,Kashyyykian Wild Corn,TRUE,{kashyyyk}
+1.2.276.277.278.280.294.306,corn_wild_mustafar,Mustafarian Wild Corn,TRUE,{mustafar}
+1.2.276.277.278.307,rice,Rice,FALSE,{}
+1.2.276.277.278.307.308,rice_domesticated,Domesticated Rice,FALSE,{}
+1.2.276.277.278.307.308.309,rice_domesticated_corellia,Corellian Domesticated Rice,TRUE,{corellia}
+1.2.276.277.278.307.308.310,rice_domesticated_dantooine,Dantooine Domesticated Rice,TRUE,{dantooine}
+1.2.276.277.278.307.308.311,rice_domesticated_dathomir,Dathomirian Domesticated Rice,TRUE,{dathomir}
+1.2.276.277.278.307.308.312,rice_domesticated_endor,Endorian Domesticated Rice,TRUE,{endor}
+1.2.276.277.278.307.308.313,rice_domesticated_lok,Lokian Domesticated Rice,TRUE,{lok}
+1.2.276.277.278.307.308.314,rice_domesticated_naboo,Nabooian Domesticated Rice,TRUE,{naboo}
+1.2.276.277.278.307.308.315,rice_domesticated_rori,Rori Domesticated Rice,TRUE,{rori}
+1.2.276.277.278.307.308.316,rice_domesticated_talus,Talusian Domesticated Rice,TRUE,{talus}
+1.2.276.277.278.307.308.317,rice_domesticated_tatooine,Tatooinian Domesticated Rice,TRUE,{tatooine}
+1.2.276.277.278.307.308.318,rice_domesticated_yavin4,Yavinian Domesticated Rice,TRUE,{yavin}
+1.2.276.277.278.307.308.319,rice_domesticated_kashyyyk,Kashyyykian Domesticated Rice,TRUE,{kashyyyk}
+1.2.276.277.278.307.308.320,rice_domesticated_mustafar,Mustafarian Domesticated Rice,TRUE,{mustafar}
+1.2.276.277.278.307.321,rice_wild,Wild Rice,FALSE,{}
+1.2.276.277.278.307.321.322,rice_wild_corellia,Corellian Wild Rice,TRUE,{corellia}
+1.2.276.277.278.307.321.323,rice_wild_dantooine,Dantooine Wild Rice,TRUE,{dantooine}
+1.2.276.277.278.307.321.324,rice_wild_dathomir,Dathomirian Wild Rice,TRUE,{dathomir}
+1.2.276.277.278.307.321.325,rice_wild_endor,Endorian Wild Rice,TRUE,{endor}
+1.2.276.277.278.307.321.326,rice_wild_lok,Lokian Wild Rice,TRUE,{lok}
+1.2.276.277.278.307.321.327,rice_wild_naboo,Nabooian Wild Rice,TRUE,{naboo}
+1.2.276.277.278.307.321.328,rice_wild_rori,Rori Wild Rice,TRUE,{rori}
+1.2.276.277.278.307.321.329,rice_wild_talus,Talusian Wild Rice,TRUE,{talus}
+1.2.276.277.278.307.321.330,rice_wild_tatooine,Tatooinian Wild Rice,TRUE,{tatooine}
+1.2.276.277.278.307.321.331,rice_wild_yavin4,Yavinian Wild Rice,TRUE,{yavin}
+1.2.276.277.278.307.321.332,rice_wild_kashyyyk,Kashyyykian Wild Rice,TRUE,{kashyyyk}
+1.2.276.277.278.307.321.333,rice_wild_mustafar,Mustafarian Wild Rice,TRUE,{mustafar}
+1.2.276.277.278.334,oats,Oats,FALSE,{}
+1.2.276.277.278.334.335,oats_domesticated,Domesticated Oats,FALSE,{}
+1.2.276.277.278.334.335.336,oats_domesticated_corellia,Corellian Domesticated Oats,TRUE,{corellia}
+1.2.276.277.278.334.335.337,oats_domesticated_dantooine,Dantooine Domesticated Oats,TRUE,{dantooine}
+1.2.276.277.278.334.335.338,oats_domesticated_dathomir,Dathomirian Domesticated Oats,TRUE,{dathomir}
+1.2.276.277.278.334.335.339,oats_domesticated_endor,Endorian Domesticated Oats,TRUE,{endor}
+1.2.276.277.278.334.335.340,oats_domesticated_lok,Lokian Domesticated Oats,TRUE,{lok}
+1.2.276.277.278.334.335.341,oats_domesticated_naboo,Nabooian Domesticated Oats,TRUE,{naboo}
+1.2.276.277.278.334.335.342,oats_domesticated_rori,Rori Domesticated Oats,TRUE,{rori}
+1.2.276.277.278.334.335.343,oats_domesticated_talus,Talusian Domesticated Oats,TRUE,{talus}
+1.2.276.277.278.334.335.344,oats_domesticated_tatooine,Tatooinian Domesticated Oats,TRUE,{tatooine}
+1.2.276.277.278.334.335.345,oats_domesticated_yavin4,Yavinian Domesticated Oats,TRUE,{yavin}
+1.2.276.277.278.334.335.346,oats_domesticated_kashyyyk,Kashyyykian Domesticated Oats,TRUE,{kashyyyk}
+1.2.276.277.278.334.335.347,oats_domesticated_mustafar,Mustafarian Domesticated Oats,TRUE,{mustafar}
+1.2.276.277.278.334.348,oats_wild,Wild Oats,FALSE,{}
+1.2.276.277.278.334.348.349,oats_wild_corellia,Corellian Wild Oats,TRUE,{corellia}
+1.2.276.277.278.334.348.350,oats_wild_dantooine,Dantooine Wild Oats,TRUE,{dantooine}
+1.2.276.277.278.334.348.351,oats_wild_dathomir,Dathomirian Wild Oats,TRUE,{dathomir}
+1.2.276.277.278.334.348.352,oats_wild_endor,Endorian Wild Oats,TRUE,{endor}
+1.2.276.277.278.334.348.353,oats_wild_lok,Lokian Wild Oats,TRUE,{lok}
+1.2.276.277.278.334.348.354,oats_wild_naboo,Nabooian Wild Oats,TRUE,{naboo}
+1.2.276.277.278.334.348.355,oats_wild_rori,Rori Wild Oats,TRUE,{rori}
+1.2.276.277.278.334.348.356,oats_wild_talus,Talusian Wild Oats,TRUE,{talus}
+1.2.276.277.278.334.348.357,oats_wild_tatooine,Tatooinian Wild Oats,TRUE,{tatooine}
+1.2.276.277.278.334.348.358,oats_wild_yavin4,Yavinian Wild Oats,TRUE,{yavin}
+1.2.276.277.278.334.348.359,oats_wild_kashyyyk,Kashyyykian Wild Oats,TRUE,{kashyyyk}
+1.2.276.277.278.334.348.360,oats_wild_mustafar,Mustafarian Wild Oats,TRUE,{mustafar}
+1.2.276.277.278.361,wheat,Wheat,FALSE,{}
+1.2.276.277.278.361.362,wheat_domesticated,Domesticated Wheat,FALSE,{}
+1.2.276.277.278.361.362.363,wheat_domesticated_corellia,Corellian Domesticated Wheat,TRUE,{corellia}
+1.2.276.277.278.361.362.364,wheat_domesticated_dantooine,Dantooine Domesticated Wheat,TRUE,{dantooine}
+1.2.276.277.278.361.362.365,wheat_domesticated_dathomir,Dathomirian Domesticated Wheat,TRUE,{dathomir}
+1.2.276.277.278.361.362.366,wheat_domesticated_endor,Endorian Domesticated Wheat,TRUE,{endor}
+1.2.276.277.278.361.362.367,wheat_domesticated_lok,Lokian Domesticated Wheat,TRUE,{lok}
+1.2.276.277.278.361.362.368,wheat_domesticated_naboo,Nabooian Domesticated Wheat,TRUE,{naboo}
+1.2.276.277.278.361.362.369,wheat_domesticated_rori,Rori Domesticated Wheat,TRUE,{rori}
+1.2.276.277.278.361.362.370,wheat_domesticated_talus,Talusian Domesticated Wheat,TRUE,{talus}
+1.2.276.277.278.361.362.371,wheat_domesticated_tatooine,Tatooinian Domesticated Wheat,TRUE,{tatooine}
+1.2.276.277.278.361.362.372,wheat_domesticated_yavin4,Yavinian Domesticated Wheat,TRUE,{yavin}
+1.2.276.277.278.361.362.373,wheat_domesticated_kashyyyk,Kashyyykian Domesticated Wheat,TRUE,{kashyyyk}
+1.2.276.277.278.361.362.374,wheat_domesticated_mustafar,Mustafarian Domesticated Wheat,TRUE,{mustafar}
+1.2.276.277.278.361.375,wheat_wild,Wild Wheat,FALSE,{}
+1.2.276.277.278.361.375.376,wheat_wild_corellia,Corellian Wild Wheat,TRUE,{corellia}
+1.2.276.277.278.361.375.377,wheat_wild_dantooine,Dantooine Wild Wheat,TRUE,{dantooine}
+1.2.276.277.278.361.375.378,wheat_wild_dathomir,Dathomir Wild Wheat,TRUE,{dathomir}
+1.2.276.277.278.361.375.379,wheat_wild_endor,Endorian Wild Wheat,TRUE,{endor}
+1.2.276.277.278.361.375.380,wheat_wild_lok,Lokian Wild Wheat,TRUE,{lok}
+1.2.276.277.278.361.375.381,wheat_wild_naboo,Nabooian Wild Wheat,TRUE,{naboo}
+1.2.276.277.278.361.375.382,wheat_wild_rori,Rori Wild Wheat,TRUE,{rori}
+1.2.276.277.278.361.375.383,wheat_wild_talus,Talusian Wild Wheat,TRUE,{talus}
+1.2.276.277.278.361.375.384,wheat_wild_tatooine,Tatooinian Wild Wheat,TRUE,{tatooine}
+1.2.276.277.278.361.375.385,wheat_wild_yavin4,Yavinian Wild Wheat,TRUE,{yavin}
+1.2.276.277.278.361.375.386,wheat_wild_kashyyyk,Kashyyykian Wild Wheat,TRUE,{kashyyyk}
+1.2.276.277.278.361.375.387,wheat_wild_mustafar,Mustafarian Wild Wheat,TRUE,{mustafar}
+1.2.276.277.388,seeds,Seeds,FALSE,{}
+1.2.276.277.388.389,vegetable,Vegetables,FALSE,{}
+1.2.276.277.388.389.390,mixed_vegetables,Mixed Vegetables,FALSE,{}
+1.2.276.277.388.389.391,vegetable_greens,Greens,FALSE,{}
+1.2.276.277.388.389.391.392,vegetable_greens_corellia,Corellian Vegetable Greens,TRUE,{corellia}
+1.2.276.277.388.389.391.393,vegetable_greens_dantooine,Dantooine Vegetable Greens,TRUE,{dantooine}
+1.2.276.277.388.389.391.394,vegetable_greens_dathomir,Dathomirian Vegetable Greens,TRUE,{dathomir}
+1.2.276.277.388.389.391.395,vegetable_greens_endor,Endorian Vegetable Greens,TRUE,{endor}
+1.2.276.277.388.389.391.396,vegetable_greens_lok,Lokian Vegetable Greens,TRUE,{lok}
+1.2.276.277.388.389.391.397,vegetable_greens_naboo,Nabooian Vegetable Greens,TRUE,{naboo}
+1.2.276.277.388.389.391.398,vegetable_greens_rori,Rori Vegetable Greens,TRUE,{rori}
+1.2.276.277.388.389.391.399,vegetable_greens_talus,Talusian Vegetable Greens,TRUE,{talus}
+1.2.276.277.388.389.391.400,vegetable_greens_tatooine,Tatooinian Vegetable Greens,TRUE,{tatooine}
+1.2.276.277.388.389.391.401,vegetable_greens_yavin4,Yavinian Vegetable Greens,TRUE,{yavin}
+1.2.276.277.388.389.391.402,vegetable_greens_kashyyyk,Kashyyykian Vegetable Greens,TRUE,{kashyyyk}
+1.2.276.277.388.389.391.403,vegetable_greens_mustafar,Mustafarian Vegetable Greens,TRUE,{mustafar}
+1.2.276.277.388.389.404,vegetable_beans,Beans,FALSE,{}
+1.2.276.277.388.389.404.405,vegetable_beans_corellia,Corellian Vegetable Beans,TRUE,{corellia}
+1.2.276.277.388.389.404.406,vegetable_beans_dantooine,Dantooine Vegetable Beans,TRUE,{dantooine}
+1.2.276.277.388.389.404.407,vegetable_beans_dathomir,Dathomirian Vegetable Beans,TRUE,{dathomir}
+1.2.276.277.388.389.404.408,vegetable_beans_endor,Endorian Vegetable Beans,TRUE,{endor}
+1.2.276.277.388.389.404.409,vegetable_beans_lok,Lokian Vegetable Beans,TRUE,{lok}
+1.2.276.277.388.389.404.410,vegetable_beans_naboo,Nabooian Vegetable Beans,TRUE,{naboo}
+1.2.276.277.388.389.404.411,vegetable_beans_rori,Rori Vegetable Beans,TRUE,{rori}
+1.2.276.277.388.389.404.412,vegetable_beans_talus,Talusian Vegetable Beans,TRUE,{talus}
+1.2.276.277.388.389.404.413,vegetable_beans_tatooine,Tatooinian Vegetable Beans,TRUE,{tatooine}
+1.2.276.277.388.389.404.414,vegetable_beans_yavin4,Yavinian Vegetable Beans,TRUE,{yavin}
+1.2.276.277.388.389.404.415,vegetable_beans_kashyyyk,Kashyyykian Vegetable Beans,TRUE,{kashyyyk}
+1.2.276.277.388.389.404.416,vegetable_beans_mustafar,Mustafarian Vegetable Beans,TRUE,{mustafar}
+1.2.276.277.388.389.417,vegetable_tubers,Tubers,FALSE,{}
+1.2.276.277.388.389.417.418,vegetable_tubers_corellia,Corellian Vegetable Tubers,TRUE,{corellia}
+1.2.276.277.388.389.417.419,vegetable_tubers_dantooine,Dantooine Vegetable Tubers,TRUE,{dantooine}
+1.2.276.277.388.389.417.420,vegetable_tubers_dathomir,Dathomirian Vegetable Tubers,TRUE,{dathomir}
+1.2.276.277.388.389.417.421,vegetable_tubers_endor,Endorian Vegetable Tubers,TRUE,{endor}
+1.2.276.277.388.389.417.422,vegetable_tubers_lok,Lokian Vegetable Tubers,TRUE,{lok}
+1.2.276.277.388.389.417.423,vegetable_tubers_naboo,Nabooian Vegetable Tubers,TRUE,{naboo}
+1.2.276.277.388.389.417.424,vegetable_tubers_rori,Rori Vegetable Tubers,TRUE,{rori}
+1.2.276.277.388.389.417.425,vegetable_tubers_talus,Talusian Vegetable Tubers,TRUE,{talus}
+1.2.276.277.388.389.417.426,vegetable_tubers_tatooine,Tatooinian Vegetable Tubers,TRUE,{tatooine}
+1.2.276.277.388.389.417.427,vegetable_tubers_yavin4,Yavinian Vegetable Tubers,TRUE,{yavin}
+1.2.276.277.388.389.417.428,vegetable_tubers_kashyyyk,Kashyyykian Vegetable Tubers,TRUE,{kashyyyk}
+1.2.276.277.388.389.417.429,vegetable_tubers_mustafar,Mustafarian Vegetable Tubers,TRUE,{mustafar}
+1.2.276.277.388.389.430,vegetable_fungi,Fungi,FALSE,{}
+1.2.276.277.388.389.430.431,vegetable_fungi_corellia,Corellian Vegetable Fungus,TRUE,{corellia}
+1.2.276.277.388.389.430.432,vegetable_fungi_dantooine,Dantooine Vegetable Fungus,TRUE,{dantooine}
+1.2.276.277.388.389.430.433,vegetable_fungi_dathomir,Dathomirian Vegetable Fungus,TRUE,{dathomir}
+1.2.276.277.388.389.430.434,vegetable_fungi_endor,Endorian Vegetable Fungus,TRUE,{endor}
+1.2.276.277.388.389.430.435,vegetable_fungi_lok,Lokian Vegetable Fungus,TRUE,{lok}
+1.2.276.277.388.389.430.436,vegetable_fungi_naboo,Nabooian Vegetable Fungus,TRUE,{naboo}
+1.2.276.277.388.389.430.437,vegetable_fungi_rori,Rori Vegetable Fungus,TRUE,{rori}
+1.2.276.277.388.389.430.438,vegetable_fungi_talus,Talusian Vegetable Fungus,TRUE,{talus}
+1.2.276.277.388.389.430.439,vegetable_fungi_tatooine,Tatooinian Vegetable Fungus,TRUE,{tatooine}
+1.2.276.277.388.389.430.440,vegetable_fungi_yavin4,Yavinian Vegetable Fungus,TRUE,{yavin}
+1.2.276.277.388.389.430.441,vegetable_fungi_kashyyyk,Kashyyykian Vegetable Fungus,TRUE,{kashyyyk}
+1.2.276.277.388.389.430.442,vegetable_fungi_mustafar,Mustafarian Vegetable Fungus,TRUE,{mustafar}
+1.2.276.277.388.443,fruit,Fruit,FALSE,{}
+1.2.276.277.388.443.444,mixed_fruits,Mixed Fruits,FALSE,{}
+1.2.276.277.388.443.445,fruit_fruits,Fruits,FALSE,{}
+1.2.276.277.388.443.445.446,fruit_fruits_corellia,Corellian Fruit,TRUE,{corellia}
+1.2.276.277.388.443.445.447,fruit_fruits_dantooine,Dantooine Fruit,TRUE,{dantooine}
+1.2.276.277.388.443.445.448,fruit_fruits_dathomir,Dathomirian Fruit,TRUE,{dathomir}
+1.2.276.277.388.443.445.449,fruit_fruits_endor,Endorian Fruit,TRUE,{endor}
+1.2.276.277.388.443.445.450,fruit_fruits_lok,Lokian Fruit,TRUE,{lok}
+1.2.276.277.388.443.445.451,fruit_fruits_naboo,Nabooian Fruit,TRUE,{naboo}
+1.2.276.277.388.443.445.452,fruit_fruits_rori,Rori Fruit,TRUE,{rori}
+1.2.276.277.388.443.445.453,fruit_fruits_talus,Talusian Fruit,TRUE,{talus}
+1.2.276.277.388.443.445.454,fruit_fruits_tatooine,Tatooinian Fruit,TRUE,{tatooine}
+1.2.276.277.388.443.445.455,fruit_fruits_yavin4,Yavinian Fruit,TRUE,{yavin}
+1.2.276.277.388.443.445.456,fruit_fruits_kashyyyk,Kashyyykian Fruit,TRUE,{kashyyyk}
+1.2.276.277.388.443.445.457,fruit_fruits_mustafar,Mustafarian Fruit,TRUE,{mustafar}
+1.2.276.277.388.443.458,fruit_berries,Berries,FALSE,{}
+1.2.276.277.388.443.458.459,fruit_berries_corellia,Corellia Berry Fruit,TRUE,{corellia}
+1.2.276.277.388.443.458.460,fruit_berries_dantooine,Dantooine Berry Fruit,TRUE,{dantooine}
+1.2.276.277.388.443.458.461,fruit_berries_dathomir,Dathomirian Berry Fruit,TRUE,{dathomir}
+1.2.276.277.388.443.458.462,fruit_berries_endor,Endorian Berry Fruit,TRUE,{endor}
+1.2.276.277.388.443.458.463,fruit_berries_lok,Lokian Berry Fruit,TRUE,{lok}
+1.2.276.277.388.443.458.464,fruit_berries_naboo,Nabooian Berry Fruit,TRUE,{naboo}
+1.2.276.277.388.443.458.465,fruit_berries_rori,Rori Berry Fruit,TRUE,{rori}
+1.2.276.277.388.443.458.466,fruit_berries_talus,Talusian Berry Fruit,TRUE,{talus}
+1.2.276.277.388.443.458.467,fruit_berries_tatooine,Tatooinian Berry Fruit,TRUE,{tatooine}
+1.2.276.277.388.443.458.468,fruit_berries_yavin4,Yavinian Berry Fruit,TRUE,{yavin}
+1.2.276.277.388.443.458.469,fruit_berries_kashyyyk,Kashyyykian Berry Fruit,TRUE,{kashyyyk}
+1.2.276.277.388.443.458.470,fruit_berries_mustafar,Mustafarian Berry Fruit,TRUE,{mustafar}
+1.2.276.277.388.443.471,fruit_flowers,Flowers,FALSE,{}
+1.2.276.277.388.443.471.472,fruit_flowers_corellia,Corellia Flower Fruit,TRUE,{corellia}
+1.2.276.277.388.443.471.473,fruit_flowers_dantooine,Dantooine Flower Fruit,TRUE,{dantooine}
+1.2.276.277.388.443.471.474,fruit_flowers_dathomir,Dathomirian Flower Fruit,TRUE,{dathomir}
+1.2.276.277.388.443.471.475,fruit_flowers_endor,Endorian Flower Fruit,TRUE,{endor}
+1.2.276.277.388.443.471.476,fruit_flowers_lok,Lokian Flower Fruit,TRUE,{lok}
+1.2.276.277.388.443.471.477,fruit_flowers_naboo,Nabooian Flower Fruit,TRUE,{naboo}
+1.2.276.277.388.443.471.478,fruit_flowers_rori,Rori Flower Fruit,TRUE,{rori}
+1.2.276.277.388.443.471.479,fruit_flowers_talus,Talusian Flower Fruit,TRUE,{talus}
+1.2.276.277.388.443.471.480,fruit_flowers_tatooine,Tatooinian Flower Fruit,TRUE,{tatooine}
+1.2.276.277.388.443.471.481,fruit_flowers_yavin4,Yavinian Flower Fruit,TRUE,{yavin}
+1.2.276.277.388.443.471.482,fruit_flowers_kashyyyk,Kashyyykian Flower Fruit,TRUE,{kashyyyk}
+1.2.276.277.388.443.471.483,fruit_flowers_mustafar,Mustafarian Flower Fruit,TRUE,{mustafar}
+1.2.276.484,flora_structural,Flora Structural,FALSE,{}
+1.2.276.484.485,wood,Wood,FALSE,{}
+1.2.276.484.485.486,processed_wood,Blended Wood,FALSE,{}
+1.2.276.484.485.487,wood_deciduous,Hard Wood,FALSE,{}
+1.2.276.484.485.487.488,wood_deciduous_corellia,Corellian Deciduous Wood,TRUE,{corellia}
+1.2.276.484.485.487.489,wood_deciduous_dantooine,Dantooine Deciduous Wood,TRUE,{dantooine}
+1.2.276.484.485.487.490,wood_deciduous_dathomir,Dathomirian Deciduous Wood,TRUE,{dathomir}
+1.2.276.484.485.487.491,wood_deciduous_endor,Endorian Deciduous Wood,TRUE,{endor}
+1.2.276.484.485.487.492,wood_deciduous_lok,Lokian Deciduous Wood,TRUE,{lok}
+1.2.276.484.485.487.493,wood_deciduous_naboo,Nabooian Deciduous Wood,TRUE,{naboo}
+1.2.276.484.485.487.494,wood_deciduous_rori,Rori Deciduous Wood,TRUE,{rori}
+1.2.276.484.485.487.495,wood_deciduous_talus,Talusian Deciduous Wood,TRUE,{talus}
+1.2.276.484.485.487.496,wood_deciduous_tatooine,Tatooinian Deciduous Wood,TRUE,{tatooine}
+1.2.276.484.485.487.497,wood_deciduous_yavin4,Yavinian Deciduous Wood,TRUE,{yavin}
+1.2.276.484.485.487.498,wood_deciduous_kashyyyk,Kashyyykian Deciduous Wood,TRUE,{kashyyyk}
+1.2.276.484.485.487.499,wood_deciduous_mustafar,Mustafarian Deciduous Wood,TRUE,{mustafar}
+1.2.276.484.485.500,softwood,Soft Wood,FALSE,{}
+1.2.276.484.485.500.501,softwood_conifer_corellia,Corellian Conifer Wood,TRUE,{corellia}
+1.2.276.484.485.500.502,softwood_conifer_dantooine,Dantooine Conifer Wood,TRUE,{dantooine}
+1.2.276.484.485.500.503,softwood_conifer_dathomir,Dathomirian Conifer Wood,TRUE,{dathomir}
+1.2.276.484.485.500.504,softwood_conifer_endor,Endorian Conifer Wood,TRUE,{endor}
+1.2.276.484.485.500.505,softwood_conifer_lok,Lokian Conifer Wood,TRUE,{lok}
+1.2.276.484.485.500.506,softwood_conifer_naboo,Nabooian Conifer Wood,TRUE,{naboo}
+1.2.276.484.485.500.507,softwood_conifer_rori,Rori Conifer Wood,TRUE,{rori}
+1.2.276.484.485.500.508,softwood_conifer_talus,Talusian Conifer Wood,TRUE,{talus}
+1.2.276.484.485.500.509,softwood_conifer_tatooine,Tatooinian Conifer Wood,TRUE,{tatooine}
+1.2.276.484.485.500.510,softwood_conifer_yavin4,Yavinian Conifer Wood,TRUE,{yavin}
+1.2.276.484.485.500.511,softwood_conifer_kashyyyk,Kashyyykian Conifer Wood,TRUE,{kashyyyk}
+1.2.276.484.485.500.512,softwood_conifer_mustafar,Mustafarian Conifer Wood,TRUE,{mustafar}
+1.2.276.484.485.500.513,softwood_evergreen,Evergreen Soft Wood,FALSE,{}
+1.2.276.484.485.500.513.514,softwood_evergreen_corellia,Corellia Evergreen Wood,TRUE,{corellia}
+1.2.276.484.485.500.513.515,softwood_evergreen_dantooine,Dantooine Evergreen Wood,TRUE,{dantooine}
+1.2.276.484.485.500.513.516,softwood_evergreen_dathomir,Dathomirian Evergreen Wood,TRUE,{dathomir}
+1.2.276.484.485.500.513.517,softwood_evergreen_endor,Endorian Evergreen Wood,TRUE,{endor}
+1.2.276.484.485.500.513.518,softwood_evergreen_lok,Lokian Evergreen Wood,TRUE,{lok}
+1.2.276.484.485.500.513.519,softwood_evergreen_naboo,Nabooian Evergreen Wood,TRUE,{naboo}
+1.2.276.484.485.500.513.520,softwood_evergreen_rori,Rori Evergreen Wood,TRUE,{rori}
+1.2.276.484.485.500.513.521,softwood_evergreen_talus,Talusian Evergreen Wood,TRUE,{talus}
+1.2.276.484.485.500.513.522,softwood_evergreen_tatooine,Tatooinian Evergreen Wood,TRUE,{tatooine}
+1.2.276.484.485.500.513.523,softwood_evergreen_yavin4,Yavinian Evergreen Wood,TRUE,{yavin}
+1.2.276.484.485.500.513.524,softwood_evergreen_kashyyyk,Kashyyykian Evergreen Wood,TRUE,{kashyyyk}
+1.2.276.484.485.500.513.525,softwood_evergreen_mustafar,Mustafarian Evergreen Wood,TRUE,{mustafar}
+1.2.3,creature_resources,Creature Resources,FALSE,{}
+1.2.3.180,creature_structural,Creature Structural,FALSE,{}
+1.2.3.180.181,bone,Bone,FALSE,{}
+1.2.3.180.181.182,ground_bones,Ground Bones,FALSE,{}
+1.2.3.180.181.183,bone_mammal_corellia,Corellian Animal Bones,TRUE,{corellia}
+1.2.3.180.181.184,bone_mammal_dantooine,Dantooine Animal Bones,TRUE,{dantooine}
+1.2.3.180.181.185,bone_mammal_dathomir,Dathomirian Animal Bones,TRUE,{dathomir}
+1.2.3.180.181.186,bone_mammal_endor,Endorian Animal Bones,TRUE,{endor}
+1.2.3.180.181.187,bone_mammal_lok,Lokian  Animal Bones,TRUE,{lok}
+1.2.3.180.181.188,bone_mammal_naboo,Nabooian  Animal Bones,TRUE,{naboo}
+1.2.3.180.181.189,bone_mammal_rori,Rori  Animal Bones,TRUE,{rori}
+1.2.3.180.181.190,bone_mammal_talus,Talusian  Animal Bones,TRUE,{talus}
+1.2.3.180.181.191,bone_mammal_tatooine,Tatooinian  Animal Bones,TRUE,{tatooine}
+1.2.3.180.181.192,bone_mammal_yavin4,Yavinian  Animal Bones,TRUE,{yavin}
+1.2.3.180.181.193,bone_mammal_kashyyyk,Kashyyykian Animal Bones,TRUE,{kashyyyk}
+1.2.3.180.181.194,bone_mammal_mustafar,Mustafarian Animal Bones,TRUE,{mustafar}
+1.2.3.180.181.195,bone_avian,Avian bone,FALSE,{}
+1.2.3.180.181.195.196,bone_avian_corellia,Corellian Avian Bones,TRUE,{corellia}
+1.2.3.180.181.195.197,bone_avian_dantooine,Dantooine Avian Bones,TRUE,{dantooine}
+1.2.3.180.181.195.198,bone_avian_dathomir,Dathomirian Avian Bones,TRUE,{dathomir}
+1.2.3.180.181.195.199,bone_avian_endor,Endorian Avian Bones,TRUE,{endor}
+1.2.3.180.181.195.200,bone_avian_lok,Lokian Avian Bones,TRUE,{lok}
+1.2.3.180.181.195.201,bone_avian_naboo,Nabooian Avian Bones,TRUE,{naboo}
+1.2.3.180.181.195.202,bone_avian_rori,Rori Avian Bones,TRUE,{rori}
+1.2.3.180.181.195.203,bone_avian_talus,Talusian Avian Bones,TRUE,{talus}
+1.2.3.180.181.195.204,bone_avian_tatooine,Tatooinian Avian Bones,TRUE,{tatooine}
+1.2.3.180.181.195.205,bone_avian_yavin4,Yavinian Avian Bones,TRUE,{yavin}
+1.2.3.180.181.195.206,bone_avian_kashyyyk,Kashyyykian Avian Bones,TRUE,{kashyyyk}
+1.2.3.180.181.195.207,bone_avian_mustafar,Mustafarian Avian Bones,TRUE,{mustafar}
+1.2.3.180.208,bone_horn,Horn,FALSE,{}
+1.2.3.180.208.209,bone_horn_ground,Ground Horn,FALSE,{}
+1.2.3.180.208.210,bone_horn_corellia,Corellian Horn,TRUE,{corellia}
+1.2.3.180.208.211,bone_horn_dantooine,Dantooine Horn,TRUE,{dantooine}
+1.2.3.180.208.212,bone_horn_dathomir,Dothomirian Horn,TRUE,{dathomir}
+1.2.3.180.208.213,bone_horn_endor,Endorian Horn,TRUE,{endor}
+1.2.3.180.208.214,bone_horn_lok,Lokian Horn,TRUE,{lok}
+1.2.3.180.208.215,bone_horn_naboo,Nabooian Horn,TRUE,{naboo}
+1.2.3.180.208.216,bone_horn_rori,Rori Horn,TRUE,{rori}
+1.2.3.180.208.217,bone_horn_talus,Talusian Horn,TRUE,{talus}
+1.2.3.180.208.218,bone_horn_tatooine,Tatooinian Horn,TRUE,{tatooine}
+1.2.3.180.208.219,bone_horn_yavin4,Yavinian Horn,TRUE,{yavin}
+1.2.3.180.208.220,bone_horn_kashyyyk,Kashyyykian Horn,TRUE,{kashyyyk}
+1.2.3.180.208.221,bone_horn_mustafar,Mustafarian Horn,TRUE,{mustafar}
+1.2.3.180.222,hide,Hide,FALSE,{}
+1.2.3.180.222.223,synthesized_hides,Synthesized Hides,FALSE,{}
+1.2.3.180.222.224,hide_wooly,Wooly Hide,FALSE,{}
+1.2.3.180.222.224.225,hide_wooly_corellia,Corellian Wooly Hide,TRUE,{corellia}
+1.2.3.180.222.224.226,hide_wooly_dantooine,Dantooine Wooly Hide,TRUE,{dantooine}
+1.2.3.180.222.224.227,hide_wooly_dathomir,Dathomirian Wooly Hide,TRUE,{dathomir}
+1.2.3.180.222.224.228,hide_wooly_endor,Endorian Wooly Hide,TRUE,{endor}
+1.2.3.180.222.224.229,hide_wooly_lok,Lokian Wooly Hide,TRUE,{lok}
+1.2.3.180.222.224.230,hide_wooly_naboo,Nabooian Wooly Hide,TRUE,{naboo}
+1.2.3.180.222.224.231,hide_wooly_rori,Rori Wooly Hide,TRUE,{rori}
+1.2.3.180.222.224.232,hide_wooly_talus,Talusian Wooly Hide,TRUE,{talus}
+1.2.3.180.222.224.233,hide_wooly_tatooine,Tatooinian Wooly Hide,TRUE,{tatooine}
+1.2.3.180.222.224.234,hide_wooly_yavin4,Yavinian Wooly Hide,TRUE,{yavin}
+1.2.3.180.222.224.235,hide_wooly_kashyyyk,Kashyyykian Wooly Hide,TRUE,{kashyyyk}
+1.2.3.180.222.224.236,hide_wooly_mustafar,Mustafarian Wooly Hide,TRUE,{mustafar}
+1.2.3.180.222.237,hide_bristley,Bristley Hide,FALSE,{}
+1.2.3.180.222.237.238,hide_bristley_corellia,Corellian Bristley Hide,TRUE,{corellia}
+1.2.3.180.222.237.239,hide_bristley_dantooine,Dantooine Bristley Hide,TRUE,{dantooine}
+1.2.3.180.222.237.240,hide_bristley_dathomir,Dathomirian Bristley Hide,TRUE,{dathomir}
+1.2.3.180.222.237.241,hide_bristley_endor,Endorian Bristley Hide,TRUE,{endor}
+1.2.3.180.222.237.242,hide_bristley_lok,Lokian Bristley Hide,TRUE,{lok}
+1.2.3.180.222.237.243,hide_bristley_naboo,Nabooian Bristley Hide,TRUE,{naboo}
+1.2.3.180.222.237.244,hide_bristley_rori,Rori Bristley Hide,TRUE,{rori}
+1.2.3.180.222.237.245,hide_bristley_talus,Talusian Bristley Hide,TRUE,{talus}
+1.2.3.180.222.237.246,hide_bristley_tatooine,Tatooinian Bristley Hide,TRUE,{tatooine}
+1.2.3.180.222.237.247,hide_bristley_yavin4,Yavinian Bristley Hide,TRUE,{yavin}
+1.2.3.180.222.237.248,hide_bristley_kashyyyk,Kashyyykian Bristley Hide,TRUE,{kashyyyk}
+1.2.3.180.222.237.249,hide_bristley_mustafar,Mustafarian Bristley Hide,TRUE,{mustafar}
+1.2.3.180.222.250,hide_leathery,Leathery Hide,FALSE,{}
+1.2.3.180.222.250.251,hide_leathery_corellia,Corellian Leathery Hide,TRUE,{corellia}
+1.2.3.180.222.250.252,hide_leathery_dantooine,Dantooine Leathery Hide,TRUE,{dantooine}
+1.2.3.180.222.250.253,hide_leathery_dathomir,Dathomirian Leathery Hide,TRUE,{dathomir}
+1.2.3.180.222.250.254,hide_leathery_endor,Endorian Leathery Hide,TRUE,{endor}
+1.2.3.180.222.250.255,hide_leathery_lok,Lokian Leathery Hide,TRUE,{lok}
+1.2.3.180.222.250.256,hide_leathery_naboo,Nabooian Leathery Hide,TRUE,{naboo}
+1.2.3.180.222.250.257,hide_leathery_rori,Rori Leathery Hide,TRUE,{rori}
+1.2.3.180.222.250.258,hide_leathery_talus,Talusian Leathery Hide,TRUE,{talus}
+1.2.3.180.222.250.259,hide_leathery_tatooine,Tatooinian Leathery Hide,TRUE,{tatooine}
+1.2.3.180.222.250.260,hide_leathery_yavin4,Yavinian Leathery Hide,TRUE,{yavin}
+1.2.3.180.222.250.261,hide_leathery_kashyyyk,Kashyyykian Leathery Hide,TRUE,{kashyyyk}
+1.2.3.180.222.250.262,hide_leathery_mustafar,Mustafarian Leathery Hide,TRUE,{mustafar}
+1.2.3.180.222.263,hide_scaley,Scaley Hide,FALSE,{}
+1.2.3.180.222.263.264,hide_scaley_corellia,Corellian Scaley Hide,TRUE,{corellia}
+1.2.3.180.222.263.265,hide_scaley_dantooine,Dantooine Scaley Hide,TRUE,{dantooine}
+1.2.3.180.222.263.266,hide_scaley_dathomir,Dathomirian Scaley Hide,TRUE,{dathomir}
+1.2.3.180.222.263.267,hide_scaley_endor,Endorian Scaley Hide,TRUE,{endor}
+1.2.3.180.222.263.268,hide_scaley_lok,Lokian Scaley Hide,TRUE,{lok}
+1.2.3.180.222.263.269,hide_scaley_naboo,Nabooian Scaley Hide,TRUE,{naboo}
+1.2.3.180.222.263.270,hide_scaley_rori,Rori Scaley Hide,TRUE,{rori}
+1.2.3.180.222.263.271,hide_scaley_talus,Talusian Scaley Hide,TRUE,{talus}
+1.2.3.180.222.263.272,hide_scaley_tatooine,Tatooinian Scaley Hide,TRUE,{tatooine}
+1.2.3.180.222.263.273,hide_scaley_yavin4,Yavinian Scaley Hide,TRUE,{yavin}
+1.2.3.180.222.263.274,hide_scaley_kashyyyk,Kashyyykian Scaley Hide,TRUE,{kashyyyk}
+1.2.3.180.222.263.275,hide_scaley_mustafar,Mustafarian Scaley Hide,TRUE,{mustafar}
+1.2.3.4,creature_food,Creature Food,FALSE,{}
+1.2.3.4.33,meat,Meat,FALSE,{}
+1.2.3.4.33.100,meat_avian,Avian Meat,FALSE,{}
+1.2.3.4.33.100.101,meat_avian_corellia,Corellian Avian Meat,TRUE,{corellia}
+1.2.3.4.33.100.102,meat_avian_dantooine,Dantooine Avian Meat,TRUE,{dantooine}
+1.2.3.4.33.100.103,meat_avian_dathomir,Dathomirian Avian Meat,TRUE,{dathomir}
+1.2.3.4.33.100.104,meat_avian_endor,Endorian Avian Meat,TRUE,{endor}
+1.2.3.4.33.100.105,meat_avian_lok,Lokian Avian Meat,TRUE,{lok}
+1.2.3.4.33.100.106,meat_avian_naboo,Nabooian Avian Meat,TRUE,{naboo}
+1.2.3.4.33.100.107,meat_avian_rori,Rori Avian Meat,TRUE,{rori}
+1.2.3.4.33.100.108,meat_avian_talus,Talusian Avian Meat,TRUE,{talus}
+1.2.3.4.33.100.109,meat_avian_tatooine,Tatooinian Avian Meat,TRUE,{tatooine}
+1.2.3.4.33.100.110,meat_avian_yavin4,Yavinian Avian Meat,TRUE,{yavin}
+1.2.3.4.33.100.111,meat_avian_kashyyyk,Kashyyykian Avian Meat,TRUE,{kashyyyk}
+1.2.3.4.33.100.112,meat_avian_mustafar,Mustafarian Avian Meat,TRUE,{mustafar}
+1.2.3.4.33.113,meat_egg,Egg,FALSE,{}
+1.2.3.4.33.113.114,meat_egg_corellia,Corellian Egg,TRUE,{corellia}
+1.2.3.4.33.113.115,meat_egg_dantooine,Dantooine Egg,TRUE,{dantooine}
+1.2.3.4.33.113.116,meat_egg_dathomir,Dathomirian Egg,TRUE,{dathomir}
+1.2.3.4.33.113.117,meat_egg_endor,Endorian Egg,TRUE,{endor}
+1.2.3.4.33.113.118,meat_egg_lok,Lokian Egg,TRUE,{lok}
+1.2.3.4.33.113.119,meat_egg_naboo,Nabooian Egg,TRUE,{naboo}
+1.2.3.4.33.113.120,meat_egg_rori,Rori Egg,TRUE,{rori}
+1.2.3.4.33.113.121,meat_egg_talus,Talusian Egg,TRUE,{talus}
+1.2.3.4.33.113.122,meat_egg_tatooine,Tatooinian Egg,TRUE,{tatooine}
+1.2.3.4.33.113.123,meat_egg_yavin4,Yavinian Egg,TRUE,{yavin}
+1.2.3.4.33.113.124,meat_egg_kashyyyk,Kashyyykian Egg,TRUE,{kashyyyk}
+1.2.3.4.33.113.125,meat_egg_mustafar,Mustafarian Egg,TRUE,{mustafar}
+1.2.3.4.33.126,meat_insect,Insect Meat,FALSE,{}
+1.2.3.4.33.126.127,meat_insect_corellia,Corellian Insect Meat,TRUE,{corellia}
+1.2.3.4.33.126.128,meat_insect_dantooine,Dantooine Insect Meat,TRUE,{dantooine}
+1.2.3.4.33.126.129,meat_insect_dathomir,Dathomirian Insect Meat,TRUE,{dathomir}
+1.2.3.4.33.126.130,meat_insect_endor,Endorian Insect Meat,TRUE,{endor}
+1.2.3.4.33.126.131,meat_insect_lok,Lokian Insect Meat,TRUE,{lok}
+1.2.3.4.33.126.132,meat_insect_naboo,Nabooian Insect Meat,TRUE,{naboo}
+1.2.3.4.33.126.133,meat_insect_rori,Rori Insect Meat,TRUE,{rori}
+1.2.3.4.33.126.134,meat_insect_talus,Talusian Insect Meat,TRUE,{talus}
+1.2.3.4.33.126.135,meat_insect_tatooine,Tatooinian Insect Meat,TRUE,{tatooine}
+1.2.3.4.33.126.136,meat_insect_yavin4,Yavinian Insect Meat,TRUE,{yavin}
+1.2.3.4.33.126.137,meat_insect_kashyyyk,Kashyyykian Insect Meat,TRUE,{kashyyyk}
+1.2.3.4.33.126.138,meat_insect_mustafar,Mustafarian Insect Meat,TRUE,{mustafar}
+1.2.3.4.33.139,seafood,Seafood,FALSE,{}
+1.2.3.4.33.139.140,processed_seafood,Processed Seafood,FALSE,{}
+1.2.3.4.33.139.141,seafood_fish,Fish,FALSE,{}
+1.2.3.4.33.139.141.142,seafood_fish_corellia,Corellian Fish Meat,TRUE,{corellia}
+1.2.3.4.33.139.141.143,seafood_fish_dantooine,Dantooine Fish Meat,TRUE,{dantooine}
+1.2.3.4.33.139.141.144,seafood_fish_dathomir,Dathomirian Fish Meat,TRUE,{dathomir}
+1.2.3.4.33.139.141.145,seafood_fish_endor,Endorian Fish Meat,TRUE,{endor}
+1.2.3.4.33.139.141.146,seafood_fish_lok,Lokian Fish Meat,TRUE,{lok}
+1.2.3.4.33.139.141.147,seafood_fish_naboo,Nabooian Fish Meat,TRUE,{naboo}
+1.2.3.4.33.139.141.148,seafood_fish_rori,Rori Fish Meat,TRUE,{rori}
+1.2.3.4.33.139.141.149,seafood_fish_talus,Talusian Fish Meat,TRUE,{talus}
+1.2.3.4.33.139.141.150,seafood_fish_tatooine,Tatooinian Fish Meat,TRUE,{tatooine}
+1.2.3.4.33.139.141.151,seafood_fish_yavin4,Yavinian Fish Meat,TRUE,{yavin}
+1.2.3.4.33.139.141.152,seafood_fish_kashyyyk,Kashyyykian Fish Meat,TRUE,{kashyyyk}
+1.2.3.4.33.139.141.153,seafood_fish_mustafar,Mustafarian Fish Meat,TRUE,{mustafar}
+1.2.3.4.33.139.154,seafood_crustacean,Crustacean,FALSE,{}
+1.2.3.4.33.139.154.155,seafood_crustacean_corellia,Corellia Crustacean Meat,TRUE,{corellia}
+1.2.3.4.33.139.154.156,seafood_crustacean_dantooine,Dantooine Crustacean Meat,TRUE,{dantooine}
+1.2.3.4.33.139.154.157,seafood_crustacean_dathomir,Dathomirian Crustacean Meat,TRUE,{dathomir}
+1.2.3.4.33.139.154.158,seafood_crustacean_endor,Endorian Crustacean Meat,TRUE,{endor}
+1.2.3.4.33.139.154.159,seafood_crustacean_lok,Lokian Crustacean Meat,TRUE,{lok}
+1.2.3.4.33.139.154.160,seafood_crustacean_naboo,Nabooian Crustacean Meat,TRUE,{naboo}
+1.2.3.4.33.139.154.161,seafood_crustacean_rori,Rori Crustacean Meat,TRUE,{rori}
+1.2.3.4.33.139.154.162,seafood_crustacean_talus,Talusian Crustacean Meat,TRUE,{talus}
+1.2.3.4.33.139.154.163,seafood_crustacean_tatooine,Tatooinian Crustacean Meat,TRUE,{tatooine}
+1.2.3.4.33.139.154.164,seafood_crustacean_yavin4,Yavinian Crustacean Meat,TRUE,{yavin}
+1.2.3.4.33.139.154.165,seafood_crustacean_kashyyyk,Kashyyykian Crustacean Meat,TRUE,{kashyyyk}
+1.2.3.4.33.139.154.166,seafood_crustacean_mustafar,Mustafarian Crustacean Meat,TRUE,{mustafar}
+1.2.3.4.33.139.167,seafood_mollusk,Mollusk,FALSE,{}
+1.2.3.4.33.139.167.168,seafood_mollusk_corellia,Corellia Mollusk Meat,TRUE,{corellia}
+1.2.3.4.33.139.167.169,seafood_mollusk_dantooine,Dantooine Mollusk Meat,TRUE,{dantooine}
+1.2.3.4.33.139.167.170,seafood_mollusk_dathomir,Dathomirian Mollusk Meat,TRUE,{dathomir}
+1.2.3.4.33.139.167.171,seafood_mollusk_endor,Endorian Mollusk Meat,TRUE,{endor}
+1.2.3.4.33.139.167.172,seafood_mollusk_lok,Lokian Mollusk Meat,TRUE,{lok}
+1.2.3.4.33.139.167.173,seafood_mollusk_naboo,Nabooian Mollusk Meat,TRUE,{naboo}
+1.2.3.4.33.139.167.174,seafood_mollusk_rori,Rori Mollusk Meat,TRUE,{rori}
+1.2.3.4.33.139.167.175,seafood_mollusk_talus,Talusian Mollusk Meat,TRUE,{talus}
+1.2.3.4.33.139.167.176,seafood_mollusk_tatooine,Tatooinian Mollusk Meat,TRUE,{tatooine}
+1.2.3.4.33.139.167.177,seafood_mollusk_yavin4,Yavinian Mollusk Meat,TRUE,{yavin}
+1.2.3.4.33.139.167.178,seafood_mollusk_kashyyyk,Kashyyykian Mollusk Meat,TRUE,{kashyyyk}
+1.2.3.4.33.139.167.179,seafood_mollusk_mustafar,Mustafarian Mollusk Meat,TRUE,{mustafar}
+1.2.3.4.33.34,processed_meat,Processed Meat,FALSE,{}
+1.2.3.4.33.35,meat_domesticated,Domesticated Meat,FALSE,{}
+1.2.3.4.33.35.36,meat_domesticated_corellia,Corellian Domesticated Meat,TRUE,{corellia}
+1.2.3.4.33.35.37,meat_domesticated_dantooine,Dantooine Domesticated Meat,TRUE,{dantooine}
+1.2.3.4.33.35.38,meat_domesticated_dathomir,Dathomirian Domesticated Meat,TRUE,{dathomir}
+1.2.3.4.33.35.39,meat_domesticated_endor,Endorian Domesticated Meat,TRUE,{endor}
+1.2.3.4.33.35.40,meat_domesticated_lok,Lokian Domesticated Meat,TRUE,{lok}
+1.2.3.4.33.35.41,meat_domesticated_naboo,Nabooian Domesticated Meat,TRUE,{naboo}
+1.2.3.4.33.35.42,meat_domesticated_rori,Rori Domesticated Meat,TRUE,{rori}
+1.2.3.4.33.35.43,meat_domesticated_talus,Talusian Domesticated Meat,TRUE,{talus}
+1.2.3.4.33.35.44,meat_domesticated_tatooine,Tatooinian Domesticated Meat,TRUE,{tatooine}
+1.2.3.4.33.35.45,meat_domesticated_yavin4,Yavinian Domesticated Meat,TRUE,{yavin}
+1.2.3.4.33.35.46,meat_domesticated_kashyyyk,Kashyyykian Domesticated Meat,TRUE,{kashyyyk}
+1.2.3.4.33.35.47,meat_domesticated_mustafar,Mustafarian Domesticated Meat,TRUE,{mustafar}
+1.2.3.4.33.48,meat_wild,Wild Meat,FALSE,{}
+1.2.3.4.33.48.49,meat_wild_corellia,Corellian Wild Meat,TRUE,{corellia}
+1.2.3.4.33.48.50,meat_wild_dantooine,Dantooine Wild Meat,TRUE,{dantooine}
+1.2.3.4.33.48.51,meat_wild_dathomir,Dathomirian Wild Meat,TRUE,{dathomir}
+1.2.3.4.33.48.52,meat_wild_endor,Endorian Wild Meat,TRUE,{endor}
+1.2.3.4.33.48.53,meat_wild_lok,Lokian Wild Meat,TRUE,{lok}
+1.2.3.4.33.48.54,meat_wild_naboo,Nabooian Wild Meat,TRUE,{naboo}
+1.2.3.4.33.48.55,meat_wild_rori,Rori Wild Meat,TRUE,{rori}
+1.2.3.4.33.48.56,meat_wild_talus,Talusian Wild Meat,TRUE,{talus}
+1.2.3.4.33.48.57,meat_wild_tatooine,Tatooinian Wild Meat,TRUE,{tatooine}
+1.2.3.4.33.48.58,meat_wild_yavin4,Yavinian Wild Meat,TRUE,{yavin}
+1.2.3.4.33.48.59,meat_wild_kashyyyk,Kashyyykian Wild Meat,TRUE,{kashyyyk}
+1.2.3.4.33.48.60,meat_wild_mustafar,Mustafarian Wild Meat,TRUE,{mustafar}
+1.2.3.4.33.61,meat_herbivore,Herbivore Meat,FALSE,{}
+1.2.3.4.33.61.62,meat_herbivore_corellia,Corellian Herbivore Meat,TRUE,{corellia}
+1.2.3.4.33.61.63,meat_herbivore_dantooine,Dantooine Herbivore Meat,TRUE,{dantooine}
+1.2.3.4.33.61.64,meat_herbivore_dathomir,Dathomirian Herbivore Meat,TRUE,{dathomir}
+1.2.3.4.33.61.65,meat_herbivore_endor,Endorian Herbivore Meat,TRUE,{endor}
+1.2.3.4.33.61.66,meat_herbivore_lok,Lokian Herbivore Meat,TRUE,{lok}
+1.2.3.4.33.61.67,meat_herbivore_naboo,Nabooian Herbivore Meat,TRUE,{naboo}
+1.2.3.4.33.61.68,meat_herbivore_rori,Rori Herbivore Meat,TRUE,{rori}
+1.2.3.4.33.61.69,meat_herbivore_talus,Talusian Herbivore Meat,TRUE,{talus}
+1.2.3.4.33.61.70,meat_herbivore_tatooine,Tatooinian Herbivore Meat,TRUE,{tatooine}
+1.2.3.4.33.61.71,meat_herbivore_yavin4,Yavinian Herbivore Meat,TRUE,{yavin}
+1.2.3.4.33.61.72,meat_herbivore_kashyyyk,Kashyyykian Herbivore Meat,TRUE,{kashyyyk}
+1.2.3.4.33.61.73,meat_herbivore_mustafar,Mustafarian Herbivore Meat,TRUE,{mustafar}
+1.2.3.4.33.74,meat_carnivore,Carnivore Meat,FALSE,{}
+1.2.3.4.33.74.75,meat_carnivore_corellia,Corellian Carnivore Meat,TRUE,{corellia}
+1.2.3.4.33.74.76,meat_carnivore_dantooine,Dantooine Carnivore Meat,TRUE,{dantooine}
+1.2.3.4.33.74.77,meat_carnivore_dathomir,Dathomirian Carnivore Meat,TRUE,{dathomir}
+1.2.3.4.33.74.78,meat_carnivore_endor,Endorian Carnivore Meat,TRUE,{endor}
+1.2.3.4.33.74.79,meat_carnivore_lok,Lokian Carnivore Meat,TRUE,{lok}
+1.2.3.4.33.74.80,meat_carnivore_naboo,Nabooian Carnivore Meat,TRUE,{naboo}
+1.2.3.4.33.74.81,meat_carnivore_rori,Rori Carnivore Meat,TRUE,{rori}
+1.2.3.4.33.74.82,meat_carnivore_talus,Talusian Carnivore Meat,TRUE,{talus}
+1.2.3.4.33.74.83,meat_carnivore_tatooine,Tatooinian Carnivore Meat,TRUE,{tatooine}
+1.2.3.4.33.74.84,meat_carnivore_yavin4,Yavinian Carnivore Meat,TRUE,{yavin}
+1.2.3.4.33.74.85,meat_carnivore_kashyyyk,Kashyyykian Carnivore Meat,TRUE,{kashyyyk}
+1.2.3.4.33.74.86,meat_carnivore_mustafar,Mustafarian Carnivore Meat,TRUE,{mustafar}
+1.2.3.4.33.87,meat_reptillian,Reptillian Meat,FALSE,{}
+1.2.3.4.33.87.88,meat_reptilian_corellia,Corellian Reptillian Meat,TRUE,{corellia}
+1.2.3.4.33.87.89,meat_reptilian_dantooine,Dantooine Reptillian Meat,TRUE,{dantooine}
+1.2.3.4.33.87.90,meat_reptilian_dathomir,Dathomirian Reptillian Meat,TRUE,{dathomir}
+1.2.3.4.33.87.91,meat_reptilian_endor,Endorian Reptillian Meat,TRUE,{endor}
+1.2.3.4.33.87.92,meat_reptilian_lok,Lokian Reptillian Meat,TRUE,{lok}
+1.2.3.4.33.87.93,meat_reptilian_naboo,Nabooian Reptillian Meat,TRUE,{naboo}
+1.2.3.4.33.87.94,meat_reptilian_rori,Rori Reptillian Meat,TRUE,{rori}
+1.2.3.4.33.87.95,meat_reptilian_talus,Talusian Reptillian Meat,TRUE,{talus}
+1.2.3.4.33.87.96,meat_reptilian_tatooine,Tatooinian Reptillian Meat,TRUE,{tatooine}
+1.2.3.4.33.87.97,meat_reptilian_yavin4,Yavinian Reptillian Meat,TRUE,{yavin}
+1.2.3.4.33.87.98,meat_reptilian_kashyyyk,Kashyyykian Reptilian Meat,TRUE,{kashyyyk}
+1.2.3.4.33.87.99,meat_reptilian_mustafar,Mustafarian Reptilian Meat,TRUE,{mustafar}
+1.2.3.4.5,milk,Milk,FALSE,{}
+1.2.3.4.5.20,milk_wild,Wild Milk,FALSE,{}
+1.2.3.4.5.20.21,milk_wild_corellia,Corellian Wild Milk,TRUE,{corellia}
+1.2.3.4.5.20.22,milk_wild_dantooine,Dantooine Wild Milk,TRUE,{dantooine}
+1.2.3.4.5.20.23,milk_wild_dathomir,Dathomirian Wild Milk,TRUE,{dathomir}
+1.2.3.4.5.20.24,milk_wild_endor,Endorian Wild Milk,TRUE,{endor}
+1.2.3.4.5.20.25,milk_wild_lok,Lokian Wild Milk,TRUE,{lok}
+1.2.3.4.5.20.26,milk_wild_naboo,Nabooian Wild Milk,TRUE,{naboo}
+1.2.3.4.5.20.27,milk_wild_rori,Rori Wild Milk,TRUE,{rori}
+1.2.3.4.5.20.28,milk_wild_talus,Talusian Wild Milk,TRUE,{talus}
+1.2.3.4.5.20.29,milk_wild_tatooine,Tatooinian Wild Milk,TRUE,{tatooine}
+1.2.3.4.5.20.30,milk_wild_yavin4,Yavin IV Wild Milk,TRUE,{yavin}
+1.2.3.4.5.20.31,milk_wild_kashyyyk,Kashyyykian Wild Milk,TRUE,{kashyyyk}
+1.2.3.4.5.20.32,milk_wild_mustafar,Mustafarian Wild Milk,TRUE,{mustafar}
+1.2.3.4.5.6,milk_homogenized,Homogenized Milk,FALSE,{}
+1.2.3.4.5.7,milk_domesticated,Domesticated Milk,FALSE,{}
+1.2.3.4.5.7.10,milk_domesticated_dathomir,Dathomirian  Domesticated Milk,TRUE,{dathomir}
+1.2.3.4.5.7.11,milk_domesticated_endor,Endorian Domesticated Milk,TRUE,{endor}
+1.2.3.4.5.7.12,milk_domesticated_lok,Lokian Domesticated Milk,TRUE,{lok}
+1.2.3.4.5.7.13,milk_domesticated_naboo,Nabooian Domesticated Milk,TRUE,{naboo}
+1.2.3.4.5.7.14,milk_domesticated_rori,Rori Domesticated Milk,TRUE,{rori}
+1.2.3.4.5.7.15,milk_domesticated_talus,Talusian Domesticated Milk,TRUE,{talus}
+1.2.3.4.5.7.16,milk_domesticated_tatooine,Tatooinian Domesticated Milk,TRUE,{tatooine}
+1.2.3.4.5.7.17,milk_domesticated_yavin4,Yavinian Domesticated Milk,TRUE,{yavin}
+1.2.3.4.5.7.18,milk_domesticated_kashyyyk,Kashyyykian Domesticated Milk,TRUE,{kashyyyk}
+1.2.3.4.5.7.19,milk_domesticated_mustafar,Mustafarian Domesticated Milk,TRUE,{mustafar}
+1.2.3.4.5.7.8,milk_domesticated_corellia,Corellian Domesticated Milk,TRUE,{corellia}
+1.2.3.4.5.7.9,milk_domesticated_dantooine,Dantooine Domesticated Milk,TRUE,{dantooine}
+1.526,inorganic,Inorganic,FALSE,{}
+1.526.527,chemical,Chemical,FALSE,{}
+1.526.527.528,chemical_compound,Chemical Compound,FALSE,{}
+1.526.527.529,fuel_petrochem_liquid,Liquid Petrochem Fuel,FALSE,{}
+1.526.527.529.530,petrochem_fuel_liquid_unknown,Unknown Liquid Petrochem Fuel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.527.529.531,fuel_petrochem_liquid_known,Known Liquid Petrochem Fuel,FALSE,{}
+1.526.527.529.531.532,petrochem_fuel_liquid_type1,Class 1 Liquid Petro Fuel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.527.529.531.533,petrochem_fuel_liquid_type2,Class 2 Liquid Petro Fuel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.527.529.531.534,petrochem_fuel_liquid_type3,Class 3 Liquid Petro Fuel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.527.529.531.535,petrochem_fuel_liquid_type4,Class 4 Liquid Petro Fuel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.527.529.531.536,petrochem_fuel_liquid_type5,Class 5 Liquid Petro Fuel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.527.529.531.537,petrochem_fuel_liquid_type6,Class 6 Liquid Petro Fuel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.527.529.531.538,petrochem_fuel_liquid_type7,Class 7 Liquid Petro Fuel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.527.529.531.539,petrochem_fuel_liquid_mustafar,Mustafarian Liquid Petro Fuel,TRUE,{mustafar}
+1.526.527.540,petrochem_inert,Inert Petrochemical,FALSE,{}
+1.526.527.540.541,petrochem_inert_lubricating_oil,Lubricating Oil,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.527.540.542,petrochem_inert_polymer,Polymer,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.527.543,fiberplast,Fiberplast,FALSE,{}
+1.526.527.543.544,fiberplast_corellia,Corellia Fiberplast,TRUE,{corellia}
+1.526.527.543.545,fiberplast_dantooine,Dantooine Fiberplast,TRUE,{dantooine}
+1.526.527.543.546,fiberplast_dathomir,Dathomirian Fiberplast,TRUE,{dathomir}
+1.526.527.543.547,fiberplast_endor,Endorian Fiberplast,TRUE,{endor}
+1.526.527.543.548,fiberplast_lok,Lokian Fiberplast,TRUE,{lok}
+1.526.527.543.549,fiberplast_naboo,Nabooian Fiberplast,TRUE,{naboo}
+1.526.527.543.550,fiberplast_rori,Rori Fiberplast,TRUE,{rori}
+1.526.527.543.551,fiberplast_talus,Talusian Fiberplast,TRUE,{talus}
+1.526.527.543.552,fiberplast_tatooine,Tatooinian Fiberplast,TRUE,{tatooine}
+1.526.527.543.553,fiberplast_gravitonic,Gravitonic Fiberplast,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.527.543.554,fiberplast_yavin4,Yavinian Fiberplast,TRUE,{yavin}
+1.526.527.543.555,fiberplast_kashyyyk,Kashyyykian Fiberplast,TRUE,{kashyyyk}
+1.526.527.543.556,fiberplast_mustafar,Mustafarian Fiberplast,TRUE,{mustafar}
+1.526.557,water,Water,FALSE,{}
+1.526.557.558,water_solution,Water Solution,FALSE,{}
+1.526.557.559,water_vapor_corellia,Corellian Water Vapor,TRUE,{corellia}
+1.526.557.560,water_vapor_dantooine,Dantooine Water Vapor,TRUE,{dantooine}
+1.526.557.561,water_vapor_dathomir,Dathomir Water Vapor,TRUE,{dathomir}
+1.526.557.562,water_vapor_endor,Endorian Water Vapor,TRUE,{endor}
+1.526.557.563,water_vapor_lok,Lokian Water Vapor,TRUE,{lok}
+1.526.557.564,water_vapor_naboo,Nabooian Water Vapor,TRUE,{naboo}
+1.526.557.565,water_vapor_rori,Rori Water Vapor,TRUE,{rori}
+1.526.557.566,water_vapor_talus,Talusian Water Vapor,TRUE,{talus}
+1.526.557.567,water_vapor_tatooine,Tatooinian Water Vapor,TRUE,{tatooine}
+1.526.557.568,water_vapor_yavin4,Yavinian Water Vapor,TRUE,{yavin}
+1.526.557.569,water_vapor_kashyyyk,Kashyyykian Water Vapor,TRUE,{kashyyyk}
+1.526.557.570,water_vapor_mustafar,Mustafarian Water Vapor,TRUE,{mustafar}
+1.526.571,mineral,Mineral,FALSE,{}
+1.526.571.572,fuel_petrochem_solid,Solid Petrochem Fuel,FALSE,{}
+1.526.571.572.573,degraded_fuel_petrochem_solid,Degraded Solid Petrochem Fuel,FALSE,{}
+1.526.571.572.574,petrochem_fuel_solid_unknown,Unknown Solid Petrochem Fuel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.572.575,fuel_petrochem_solid_known,Known Solid Petrochem Fuel,FALSE,{}
+1.526.571.572.575.576,petrochem_fuel_solid_type1,Class 1 Solid Petro Fuel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.572.575.577,petrochem_fuel_solid_type2,Class 2 Solid Petro Fuel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.572.575.578,petrochem_fuel_solid_type3,Class 3 Solid Petro Fuel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.572.575.579,petrochem_fuel_solid_type4,Class 4 Solid Petro Fuel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.572.575.580,petrochem_fuel_solid_type5,Class 5 Solid Petro Fuel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.572.575.581,petrochem_fuel_solid_type6,Class 6 Solid Petro Fuel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.572.575.582,petrochem_fuel_solid_type7,Class 7 Solid Petro Fuel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.572.575.583,petrochem_fuel_solid_mustafar,Mustafarian Solid Petro Fuel,TRUE,{mustafar}
+1.526.571.584,radioactive,Radioactive,FALSE,{}
+1.526.571.584.585,combined_radioactive_isotpopes,Combined Radioactive Isotopes,FALSE,{}
+1.526.571.584.586,radioactive_unknown,Unknown Radioactive,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.584.587,radioactive_known,Known Radioactive,FALSE,{}
+1.526.571.584.587.588,radioactive_type1,Class 1 Radioactive,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.584.587.589,radioactive_type2,Class 2 Radioactive,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.584.587.590,radioactive_type3,Class 3 Radioactive,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.584.587.591,radioactive_type4,Class 4 Radioactive,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.584.587.592,radioactive_type5,Class 5 Radioactive,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.584.587.593,radioactive_type6,Class 6 Radioactive,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.584.587.594,radioactive_type7,Class 7 Radioactive,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.584.587.595,radioactive_mustafar,Mustafarian Radioactive,TRUE,{mustafar}
+1.526.571.584.587.596,radioactive_polymetric,High Grade Polymetric Radioactive,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597,metal,Metal,FALSE,{}
+1.526.571.597.598,metal_ferrous,Ferrous Metal,FALSE,{}
+1.526.571.597.598.599,smelted_metal_ferrous_unknown,Smelted Ferrous Metal,FALSE,{}
+1.526.571.597.598.600,metal_ferrous_unknown,Unknown Ferrous Metal,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.601,steel,Steel,FALSE,{}
+1.526.571.597.598.601.602,steel_smelted,Smelted Steel,FALSE,{}
+1.526.571.597.598.601.603,steel_rhodium,Rhodium Steel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.601.604,steel_kiirium,Kiirium Steel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.601.605,steel_cubirian,Cubirian Steel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.601.606,steel_thoranium,Thoranium Steel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.601.607,steel_neutronium,Neutronium Steel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.601.608,steel_duranium,Duranium Steel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.601.609,steel_ditanium,Ditanium Steel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.601.610,steel_quadranium,Quadranium Steel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.601.611,steel_carbonite,Carbonite Steel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.601.612,steel_arveshian,Hardened Arveshium Steel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.601.613,steel_bicorbantium,Crystallized Bicorbantium Steel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.601.614,steel_duralloy,Duralloy Steel,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.601.615,steel_mustafar,Mustafarian Steel,TRUE,{mustafar}
+1.526.571.597.598.616,iron,Iron,FALSE,{}
+1.526.571.597.598.616.617,iron_smelted,Smelted Iron,FALSE,{}
+1.526.571.597.598.616.618,iron_plumbum,Plumbum Iron,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.616.619,iron_polonium,Polonium Iron,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.616.620,iron_axidite,Axidite Iron,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.616.621,iron_bronzium,Bronzium Iron,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.616.622,iron_colat,Colat Iron,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.616.623,iron_dolovite,Dolovite Iron,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.616.624,iron_doonium,Doonium Iron,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.616.625,iron_kammris,Kammris Iron,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.598.616.626,iron_mustafar,Mustafarian Iron,TRUE,{mustafar}
+1.526.571.597.627,metal_nonferrous,Non-Ferrous Metal,FALSE,{}
+1.526.571.597.627.628,smelted_metal_nonferrous_unknown,Smelted Non-Ferrous Metal,FALSE,{}
+1.526.571.597.627.629,metal_nonferrous_unknown,Unknown Non-Ferrous Metal,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.627.630,aluminum,Aluminum,FALSE,{}
+1.526.571.597.627.630.631,aluminum_smelted,Smelted Aluminum,FALSE,{}
+1.526.571.597.627.630.632,aluminum_titanium,Titanium Aluminum,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.627.630.633,aluminum_agrinium,Agrinium Aluminum,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.627.630.634,aluminum_chromium,Chromium Aluminum,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.627.630.635,aluminum_duralumin,Duralumin Aluminum,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.627.630.636,aluminum_linksteel,Link-Steel Aluminum,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.627.630.637,aluminum_perovskitic,Perovskitic Aluminum,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.627.630.638,aluminum_phrik,Phrik Aluminum,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.627.630.639,aluminum_mustafar,Mustafarian Aluminum,TRUE,{mustafar}
+1.526.571.597.627.640,copper,Copper,FALSE,{}
+1.526.571.597.627.640.641,copper_smelted,Smelted Copper,FALSE,{}
+1.526.571.597.627.640.642,copper_desh,Desh Copper,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.627.640.643,copper_thallium,Thallium Copper,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.627.640.644,copper_beyrllius,Beyrllius Copper,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.627.640.645,copper_codoan,Codoan Copper,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.627.640.646,copper_diatium,Diatium Copper,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.627.640.647,copper_kelsh,Kelsh Copper,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.627.640.648,copper_mythra,Mythra Copper,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.627.640.649,copper_platinite,Platinite Copper,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.627.640.650,copper_polysteel,Polysteel Copper,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.627.640.651,copper_borocarbitic,Conductive Borcarbitic Copper,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.597.627.640.652,copper_mustafar,Mustafarian Copper,TRUE,{mustafar}
+1.526.571.653,ore,Low-Grade Ore,FALSE,{}
+1.526.571.653.654,ore_igneous,Igneous Ore,FALSE,{}
+1.526.571.653.654.655,ore_extrusive_low_grade,Low Grade Ore (igneous),FALSE,{}
+1.526.571.653.654.656,ore_igneous_unknown,Unknown Igneous Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.657,ore_extrusive,Extrusive Ore,FALSE,{}
+1.526.571.653.654.657.658,ore_extrusive_bene,Bene Extrusive Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.657.659,ore_extrusive_chronamite,Chronamite Extrusive Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.657.660,ore_extrusive_ilimium,Ilimium Extrusive Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.657.661,ore_extrusive_kalonterium,Kalonterium Extrusive Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.657.662,ore_extrusive_keschel,Keschel Extrusive Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.657.663,ore_extrusive_lidium,Lidium Extrusive Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.657.664,ore_extrusive_maranium,Maranium Extrusive Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.657.665,ore_extrusive_pholokite,Pholokite Extrusive Ore,TRUE,{lok}
+1.526.571.653.654.657.666,ore_extrusive_quadrenium,Quadrenium Extrusive Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.657.667,ore_extrusive_vintrium,Vintrium Extrusive Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.657.668,ore_extrusive_mustafar,Mustafarian Extrusive Ore,TRUE,{mustafar}
+1.526.571.653.654.669,ore_intrusive,Intrusive Ore,FALSE,{}
+1.526.571.653.654.669.670,ore_intrusive_berubium,Berubium Intrusive Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.669.671,ore_intrusive_chanlon,Chanlon Intrusive Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.669.672,ore_intrusive_corintium,Corintium Intrusive Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.669.673,ore_intrusive_derillium,Derillium Intrusive Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.669.674,ore_intrusive_oridium,Oridium Intrusive Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.669.675,ore_intrusive_dylinium,Dylinium Intrusive Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.669.676,ore_intrusive_hollinium,Hollinium Intrusive Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.669.677,ore_intrusive_ionite,Ionite Intrusive Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.669.678,ore_intrusive_katrium,Katrium Intrusive Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.654.669.679,ore_intrusive_mustafar,Mustafarian Intrusive Ore,TRUE,{mustafar}
+1.526.571.653.680,ore_sedimentary,Sedimentary Ore,FALSE,{}
+1.526.571.653.680.681,ore_carbonate_low_grade,Low Grade Ore (sedimentary),FALSE,{}
+1.526.571.653.680.682,ore_sedimentary_unknown,Unknown Sedimentary Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.680.683,ore_carbonate,Carbonate Ore,FALSE,{}
+1.526.571.653.680.683.684,ore_carbonate_alantium,Alantium Carbonate Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.680.683.685,ore_carbonate_barthierium,Barthierium Carbonate Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.680.683.686,ore_carbonate_chromite,Chromite Carbonate Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.680.683.687,ore_carbonate_frasium,Frasium Carbonate Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.680.683.688,ore_carbonate_lommite,Lommite Carbonate Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.680.683.689,ore_carbonate_ostrine,Ostrine Carbonate Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.680.683.690,ore_carbonate_varium,Varium Carbonate Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.680.683.691,ore_carbonate_zinsiam,Zinsiam Carbonate Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.680.692,ore_siliclastic,Siliclastic Ore,FALSE,{}
+1.526.571.653.680.692.693,ore_siliclastic_low_grade,Low Grade Ore (siliclastic),FALSE,{}
+1.526.571.653.680.692.694,ore_siliclastic_ardanium,Ardanium Siliclastic Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.680.692.695,ore_siliclastic_cortosis,Cortosis Siliclastic Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.680.692.696,ore_siliclastic_crism,Crism Siliclastic Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.680.692.697,ore_siliclastic_malab,Malab Siliclastic Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.680.692.698,ore_siliclastic_robindun,Robindun Siliclastic Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.680.692.699,ore_siliclastic_fermionic,Fermionic Siliclastic Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.653.680.692.700,ore_siliclastic_tertian,Tertian Siliclastic Ore,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701,gemstone,Gemstone,FALSE,{}
+1.526.571.701.702,gemstone_mixed_low_quality,Low Quality Gemstones,FALSE,{}
+1.526.571.701.703,gemstone_unknown,Unknown Gem Type,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.704,gemstone_armophous,Amorphous Gemstone,FALSE,{}
+1.526.571.701.704.705,armophous_bospridium,Bospridium Amorphous Gemstone,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.704.706,armophous_baradium,Baradium Amorphous Gemstone,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.704.707,armophous_regvis,Regvis Amorphous Gemstone,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.704.708,armophous_plexite,Plexite Amorphous Gemstone,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.704.709,armophous_rudic,Rudic Amorphous Gemstone,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.704.710,armophous_ryll,Ryll Amorphous Gemstone,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.704.711,armophous_sedrellium,Sedrellium Amorphous Gemstone,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.704.712,armophous_stygium,Stygium Amorphous Gemstone,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.704.713,armophous_vendusii,Vendusii Crystal Amorphous Gemstone,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.704.714,armophous_baltaran,Bal'ta'ran Crystal Amorphous Gemstone,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.704.715,armophous_mustafar_1,Mustafarian Type 1 Crystal Amorphous Gem,TRUE,{mustafar}
+1.526.571.701.704.716,armophous_mustafar_2,Mustafarian Type 2 Crystal Amorphous Gem,TRUE,{mustafar}
+1.526.571.701.717,gemstone_crystalline,Crystalline Gemstone,FALSE,{}
+1.526.571.701.717.718,crystalline_byrothsis,Byrothsis Crystalline Gemstone,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.717.719,crystalline_gallinorian,Gallinorian Rainbow Gem Crystalline Gemstone,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.717.720,crystalline_green_diamond,Green Diamond Crystalline Gemstone,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.717.721,crystalline_kerol_firegem,Kerol Fire-Gem Crystalline Gemstone,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.717.722,crystalline_seafah_jewel,Seafah Jewel Crystalline Gemstone,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.717.723,crystalline_sormahil_firegem,Sormahil Fire Gem Crystalline Gemstone,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.717.724,crystalline_laboi_mineral_crystal,Laboi Mineral Crystal Crystalline Gemstone,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.717.725,crystalline_vertex,Vertex Crystalline Gemstone,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.571.701.717.726,crystalline_mustafar_1,Mustafarian Type 1 Crystalline Gem,TRUE,{mustafar}
+1.526.571.701.717.727,crystalline_mustafar_2,Mustafarian Type 2 Crystalline Gem,TRUE,{mustafar}
+1.526.728,gas,Gas,FALSE,{}
+1.526.728.729,gas_reactive,Reactive Gas,FALSE,{}
+1.526.728.729.730,gas_reactive_unknown,Unknown Reactive Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.729.731,gas_reactive_known,Known Reactive Gas,FALSE,{}
+1.526.728.729.731.732,gas_reactive_mixed,Mixed Reactive Gas,FALSE,{}
+1.526.728.729.731.733,gas_reactive_eleton,Eleton Reactive Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.729.731.734,gas_reactive_irolunn,Irolunn Reactive Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.729.731.735,gas_reactive_methane,Methane Reactive Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.729.731.736,gas_reactive_orveth,Orveth Reactive Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.729.731.737,gas_reactive_sig,Sig Reactive Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.729.731.738,gas_reactive_skevon,Skevon Reactive Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.729.731.739,gas_reactive_organometallic,Unstable Organometallic Reactive Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.729.731.740,gas_reactive_tolium,Tolium Reactive Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.729.731.741,gas_reactive_mustafar,Mustafarian Reactive Gas,TRUE,{mustafar}
+1.526.728.742,gas_inert,Inert Gas,FALSE,{}
+1.526.728.742.743,gas_inert_unknown,Unknown Inert Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.742.744,gas_inert_known,Known Inert Gas,FALSE,{}
+1.526.728.742.744.745,gas_inert_mixed,Mixed Inert Gas,FALSE,{}
+1.526.728.742.744.746,gas_inert_hydron3,Hydron-3 Inert Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.742.744.747,gas_inert_malium,Malium Inert Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.742.744.748,gas_inert_bilal,Bilal gas Inert Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.742.744.749,gas_inert_corthel,Corthel Inert Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.742.744.750,gas_inert_culsion,Culsion Inert Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.742.744.751,gas_inert_dioxis,Dioxis Inert Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.742.744.752,gas_inert_hurlothrombic,Hurlothrombic Inert Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.742.744.753,gas_inert_kaylon,Kaylon Inert Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.742.744.754,gas_inert_korfaise,Korfaise Inert Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.742.744.755,gas_inert_methanagen,Methanagen Inert Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.742.744.756,gas_inert_mirth,Mirth Inert Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.742.744.757,gas_inert_obah,Obah Inert Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.526.728.742.744.758,gas_inert_rethin,Rethin Inert Gas,TRUE,"{corellia,dantooine,dathomir,endor,lok,naboo,rori,tatooine,talus,yavin}"
+1.759,energy,Energy,FALSE,{}
+1.759.760,energy_renewable,Renewable energy,FALSE,{}
+1.759.760.761,energy_renewable_site_limited,Site-Restricted Renewable Energy,FALSE,{}
+1.759.760.761.762,energy_renewable_site_limited_tidal,Tidal Energy,FALSE,{}
+1.759.760.761.762.763,energy_renewable_site_limited_tidal_weak,Weak Tidal Renewable Energy,FALSE,{}
+1.759.760.761.762.764,energy_renewable_site_limited_tidal_corellia,Corellian Tidal Renewable Energy,TRUE,{corellia}
+1.759.760.761.762.765,energy_renewable_site_limited_tidal_dathomir,Dathomirian Tidal Renewable Energy,TRUE,{dathomir}
+1.759.760.761.762.766,energy_renewable_site_limited_tidal_dantooine,Dantooine Tidal Renewable Energy,TRUE,{dantooine}
+1.759.760.761.762.767,energy_renewable_site_limited_tidal_endor,Endor Tidal Renewable Energy,TRUE,{endor}
+1.759.760.761.762.768,energy_renewable_site_limited_tidal_lok,Lokian Tidal Renewable Energy,TRUE,{lok}
+1.759.760.761.762.769,energy_renewable_site_limited_tidal_naboo,Naboo Tidal Renewable Energy,TRUE,{naboo}
+1.759.760.761.762.770,energy_renewable_site_limited_tidal_rori,Rori Tidal Renewable Energy,TRUE,{rori}
+1.759.760.761.762.771,energy_renewable_site_limited_tidal_talus,Talusian Tidal Renewable Energy,TRUE,{talus}
+1.759.760.761.762.772,energy_renewable_site_limited_tidal_tatooine,Tatooinian Tidal Renewable Energy,TRUE,{tatooine}
+1.759.760.761.762.773,energy_renewable_site_limited_tidal_yavin4,Yavinian Tidal Renewable Energy,TRUE,{yavin}
+1.759.760.761.762.774,energy_renewable_site_limited_tidal_kashyyyk,Kashyyykian Tidal Renewable Energy,TRUE,{kashyyyk}
+1.759.760.761.775,energy_renewable_site_limited_hydron3,Hydron-3 Energy,FALSE,{}
+1.759.760.761.775.776,energy_renewable_site_limited_hydron3_weak,Weak Hydron-3 Renewable Energy,FALSE,{}
+1.759.760.761.775.777,energy_renewable_site_limited_hydron3_corellia,Corellian Hydron-3 Renewable Energy,TRUE,{corellia}
+1.759.760.761.775.778,energy_renewable_site_limited_hydron3_dantooine,Dantooine Hydron-3 Renewable Energy,TRUE,{dantooine}
+1.759.760.761.775.779,energy_renewable_site_limited_hydron3_dathomir,Dathomirian Hydron-3 Renewable Energy,TRUE,{dathomir}
+1.759.760.761.775.780,energy_renewable_site_limited_hydron3_endor,Endorian Hydron-3 Renewable Energy,TRUE,{endor}
+1.759.760.761.775.781,energy_renewable_site_limited_hydron3_lok,Lokian Hydron-3 Renewable Energy,TRUE,{lok}
+1.759.760.761.775.782,energy_renewable_site_limited_hydron3_naboo,Nabooian Hydron-3 Renewable Energy,TRUE,{naboo}
+1.759.760.761.775.783,energy_renewable_site_limited_hydron3_rori,Rori Hydron-3 Renewable Energy,TRUE,{rori}
+1.759.760.761.775.784,energy_renewable_site_limited_hydron3_talus,Talusian Hydron-3 Renewable Energy,TRUE,{talus}
+1.759.760.761.775.785,energy_renewable_site_limited_hydron3_tatooine,Tatooinian Hydron-3 Renewable Energy,TRUE,{tatooine}
+1.759.760.761.775.786,energy_renewable_site_limited_hydron3_yavin4,Yavinian Hydron-3 Renewable Energy,TRUE,{yavin}
+1.759.760.761.775.787,energy_renewable_site_limited_hydron3_kashyyyk,Kashyyykian Hydron-3 Renewable Energy,TRUE,{kashyyyk}
+1.759.760.761.788,energy_renewable_site_limited_geothermal,Geothermal Energy,FALSE,{}
+1.759.760.761.788.789,energy_renewable_site_limited_geothermal_weak,Weak Geothermal Renewable Energy,FALSE,{}
+1.759.760.761.788.790,energy_renewable_site_limited_geothermal_corellia,Corellian Geothermal Renewable Energy,TRUE,{corellia}
+1.759.760.761.788.791,energy_renewable_site_limited_geothermal_dantooine,Dantooine Geothermal Renewable Energy,TRUE,{dantooine}
+1.759.760.761.788.792,energy_renewable_site_limited_geothermal_dathomir,Dathomirian Geothermal Renewable Energy,TRUE,{dathomir}
+1.759.760.761.788.793,energy_renewable_site_limited_geothermal_endor,Endorian Geothermal Renewable Energy,TRUE,{endor}
+1.759.760.761.788.794,energy_renewable_site_limited_geothermal_lok,Lokian Geothermal Renewable Energy,TRUE,{lok}
+1.759.760.761.788.795,energy_renewable_site_limited_geothermal_naboo,Nabooian Geothermal Renewable Energy,TRUE,{naboo}
+1.759.760.761.788.796,energy_renewable_site_limited_geothermal_rori,Rori Geothermal Renewable Energy,TRUE,{rori}
+1.759.760.761.788.797,energy_renewable_site_limited_geothermal_talus,Talusian Geothermal Renewable Energy,TRUE,{talus}
+1.759.760.761.788.798,energy_renewable_site_limited_geothermal_tatooine,Tatooinian Geothermal Renewable Energy,TRUE,{tatooine}
+1.759.760.761.788.799,energy_renewable_site_limited_geothermal_yavin4,Yavinian Geothermal Renewable Energy,TRUE,{yavin}
+1.759.760.761.788.800,energy_renewable_site_limited_geothermal_kashyyyk,Kashyyykian Geothermal Renewable Energy,TRUE,{kashyyyk}
+1.759.760.801,energy_renewable_unlimited,Non Site-Restricted Renewable Energy,FALSE,{}
+1.759.760.801.802,energy_renewable_unlimited_wind,Wind Energy,FALSE,{}
+1.759.760.801.802.803,energy_renewable_unlimited_wind_weak,Weak Wind Renewable Energy,FALSE,{}
+1.759.760.801.802.804,energy_renewable_unlimited_wind_corellia,Corellian Wind Renewable Energy,TRUE,{corellia}
+1.759.760.801.802.805,energy_renewable_unlimited_wind_dantooine,Dantooine Wind Renewable Energy,TRUE,{dantooine}
+1.759.760.801.802.806,energy_renewable_unlimited_wind_dathomir,Dathomirian Wind Renewable Energy,TRUE,{dathomir}
+1.759.760.801.802.807,energy_renewable_unlimited_wind_endor,Endorian Wind Renewable Energy,TRUE,{endor}
+1.759.760.801.802.808,energy_renewable_unlimited_wind_lok,Lokian Wind Renewable Energy,TRUE,{lok}
+1.759.760.801.802.809,energy_renewable_unlimited_wind_naboo,Nabooian Wind Renewable Energy,TRUE,{naboo}
+1.759.760.801.802.810,energy_renewable_unlimited_wind_rori,Rori Wind Renewable Energy,TRUE,{rori}
+1.759.760.801.802.811,energy_renewable_unlimited_wind_talus,Talusian Wind Renewable Energy,TRUE,{talus}
+1.759.760.801.802.812,energy_renewable_unlimited_wind_tatooine,Tatooinian Wind Renewable Energy,TRUE,{tatooine}
+1.759.760.801.802.813,energy_renewable_unlimited_wind_yavin4,Yavinian Wind Renewable Energy,TRUE,{yavin}
+1.759.760.801.802.814,energy_renewable_unlimited_wind_kashyyyk,Kashyyykian Wind Renewable Energy,TRUE,{kashyyyk}
+1.759.760.801.815,energy_renewable_unlimited_solar,Solar Energy,FALSE,{}
+1.759.760.801.815.816,energy_renewable_unlimited_solar_weak,Weak Solar Renewable Energy,FALSE,{}
+1.759.760.801.815.817,energy_renewable_unlimited_solar_corellia,Corellian Solar Renewable Energy,TRUE,{corellia}
+1.759.760.801.815.818,energy_renewable_unlimited_solar_dantooine,Dantooine Solar Renewable Energy,TRUE,{dantooine}
+1.759.760.801.815.819,energy_renewable_unlimited_solar_dathomir,Dathomirian Solar Renewable Energy,TRUE,{dathomir}
+1.759.760.801.815.820,energy_renewable_unlimited_solar_endor,Endorian Solar Renewable Energy,TRUE,{endor}
+1.759.760.801.815.821,energy_renewable_unlimited_solar_lok,Lokian Solar Renewable Energy,TRUE,{lok}
+1.759.760.801.815.822,energy_renewable_unlimited_solar_naboo,Nabooian Solar Renewable Energy,TRUE,{naboo}
+1.759.760.801.815.823,energy_renewable_unlimited_solar_rori,Rori Solar Renewable Energy,TRUE,{rori}
+1.759.760.801.815.824,energy_renewable_unlimited_solar_talus,Talusian Solar Renewable Energy,TRUE,{talus}
+1.759.760.801.815.825,energy_renewable_unlimited_solar_tatooine,Tatooinian Solar Renewable Energy,TRUE,{tatooine}
+1.759.760.801.815.826,energy_renewable_unlimited_solar_yavin4,Yavinian Solar Renewable Energy,TRUE,{yavin}
+1.759.760.801.815.827,energy_renewable_unlimited_solar_kashyyyk,Kashyyykian Solar Renewable Energy,TRUE,{kashyyyk}
+1.828,space_resource,Space Resource,FALSE,{}
+1.828.829,space_metal,Asteroidal Mineral,FALSE,{}
+1.828.829.830,space_metal_iron,Iron Asteroid,FALSE,{}
+1.828.829.831,space_metal_silicaceous,Silicaceous Asteroid,FALSE,{}
+1.828.829.832,space_metal_carbonaceous,Carbonaceous Asteroid,FALSE,{}
+1.828.829.833,space_metal_ice,Icy Asteroid,FALSE,{}
+1.828.829.834,space_metal_obsidian,Obsidian Asteroid,FALSE,{}
+1.828.835,space_gem,Asteroidal Gemstone,FALSE,{}
+1.828.835.836,space_gem_diamond,Diamond Asteroid,FALSE,{}
+1.828.835.837,space_gem_crystal,Crystal Asteroid,FALSE,{}
+1.828.838,space_chemical,Asteroidal Chemical,FALSE,{}
+1.828.838.839,space_chemical_petrochem,Petrochemical Asteroid,FALSE,{}
+1.828.838.840,space_chemical_acid,Acidic Asteroid,FALSE,{}
+1.828.838.841,space_chemical_cyanomethanic,Cyanomethanic Asteroid,FALSE,{}
+1.828.838.842,space_chemical_sulfuric,Sulfuric Asteroid,FALSE,{}
+1.828.843,space_gas,Asteroidal Gas,FALSE,{}
+1.828.843.844,space_gas_methane,Methane Asteroid,FALSE,{}
+1.828.843.845,space_gas_organometallic,Organometallic Asteroid,FALSE,{}
