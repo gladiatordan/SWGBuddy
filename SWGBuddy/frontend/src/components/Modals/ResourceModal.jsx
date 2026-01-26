@@ -279,13 +279,8 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
         // We replace any non-letter character with an empty string
         const sanitized = input.replace(/[^a-zA-Z]/g, '');
 
-        // 2. Formatting: lowercase everything, then capitalize the first letter
-        let formatted = sanitized.toLowerCase();
-        if (formatted.length > 0) {
-            formatted = formatted.charAt(0).toUpperCase() + formatted.slice(1);
-        }
-
-        setFormData(prev => ({ ...prev, name: formatted }));
+		// enforce lowercase
+        setFormData(prev => ({ ...prev, name: sanitized.toLowerCase() }));
     };
 
     const processImageBlob = async (blob) => {
@@ -528,6 +523,8 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                                     required 
                                     placeholder="Enter Resource Name..." 
                                     autoComplete="off"
+									// Capitzalize first letter in input box
+									style={{ textTransform: 'capitalize' }}
                                 />
                             </div>
                         )}

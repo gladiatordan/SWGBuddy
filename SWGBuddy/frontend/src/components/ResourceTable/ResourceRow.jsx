@@ -27,7 +27,7 @@ const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onCli
     return (
         <tr>
             <td className="res-name">
-                <a className="res-link" onClick={(e) => { e.preventDefault(); onClick(resource); }}>
+                <a className="res-link" onClick={(e) => { e.preventDefault(); onClick(resource); }} style={{ textTransform: 'capitalize' }}>
                     {resource.name}
                 </a>
             </td>

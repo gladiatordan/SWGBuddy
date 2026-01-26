@@ -268,6 +268,9 @@ class ValidationService(Core):
 		if not name or len(name) > 100: raise ValueError("Invalid Name")
 		if not re.match(r'^[a-zA-Z0-9\s\-\(\)\.]+$', name): raise ValueError("Invalid characters in Name.")
 
+		# FORCE LOWERCASE ON NAME
+		data['name'] = name.lower()
+
 		if data.get('notes'):
 			data['notes'] = re.sub(r'<[^>]*>', '', data.get('notes'))
 
