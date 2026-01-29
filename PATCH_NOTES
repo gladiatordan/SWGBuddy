@@ -1,0 +1,35 @@
+```
+28 Jan 2026
+
+Schematics
+- New schematics page, ~~woohoo~~ not woohoo, schematic data not going to be provided, I cba to add them all myself.
+
+Resource Table
+- fixed delta sync error, table should automatically update on any add/edit change, adding/removing planets, and toggling status
+
+Resource Details/Edit Resource/Add Resource
+- added a new "Waypoints" section
+  - max 10 waypoints per resource
+  - click on a waypoint to add it to your clipboard
+  - waypoints added require the following format: "/waypoint <x> <y> <name>" (semicolon will automatically be added if there isn't one)
+  - note that in the CU client you cannot specify planet (that I know of) so probably want to include the planet in the name (I'm not checking for this)
+  - waypoints are semicolon-delimited
+- added "Planets" section to Add/Edit Resource Modals
+
+Export
+- added ability to export Resources to CSV or JSON (JSON gives much more data than CSV)
+- added export options to do All Resources, Filtered Selection (only exports based on what all your filters are set to), or Current Page
+
+Backend
+- fixed resource stat caps for core3-based servers
+- some data optimization to get large cache table lookups to O(1)
+
+Misc
+- Added sanitization to name input field (you can type in all caps or lowercase it'll take care of formatting)
+- stat filters will auto adjust if you try and go above 1000
+- Type search dropdowns can be navigated with arrow keys, can click, hit enter, or tab on a highlighted result
+- fixed styling issue with tooltips on hovering over a planet, you should see it now if it's on the top row of the table
+- fixed date sort
+- fixed ServerManagement user role assignment
+
+```
