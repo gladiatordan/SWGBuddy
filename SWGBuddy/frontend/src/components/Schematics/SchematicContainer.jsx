@@ -234,7 +234,7 @@ const SchematicContainer = () => {
 
     const formatWeights = (weights) => {
         return Object.entries(weights)
-            .map(([stat, val]) => `${STAT_MAPPING[stat] || stat} ${val}%`)
+            .map(([stat, val]) => `${STAT_MAPPING[stat] || stat} ${val * 100}%`)
             .join('   ');
     };
 
