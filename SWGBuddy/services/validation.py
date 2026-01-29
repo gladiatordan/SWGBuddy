@@ -29,7 +29,7 @@ class ValidationService(Core):
 	]
 
 	# Added ranking_queue to signature
-	def __init__(self, input_queue, log_queue, reply_queue, cache, ranking_queue=None):
+	def __init__(self, input_queue, log_queue, reply_queue, ranking_queue, cache):
 		super().__init__(log_queue)
 		self.input_queue = input_queue
 		self.reply_queue = reply_queue

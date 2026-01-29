@@ -58,1369 +58,1509 @@
             "exp_experimental_nutritional_value": {
                 "best": [
                     {
-                        "id": "787",
+                        "id": 1673,
                         "rating": "97.1%",
                         "raw_score": 0.971,
                         "stats": {
                             "res_quality": 0.982,
                             "res_potential_energy": 0.966
-                        }
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "455",
+                        "id": 1350,
                         "rating": "78.2%",
                         "raw_score": 0.782,
                         "stats": {
                             "res_quality": 0.52,
                             "res_potential_energy": 0.914
-                        }
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "77.1%",
                         "raw_score": 0.771,
                         "stats": {
                             "res_quality": 0.603,
                             "res_potential_energy": 0.855
-                        }
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "777",
+                        "id": 1644,
                         "rating": "74.3%",
                         "raw_score": 0.743,
                         "stats": {
                             "res_quality": 0.929,
                             "res_potential_energy": 0.65
-                        }
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "744",
+                        "id": 1774,
+                        "rating": "74.3%",
+                        "raw_score": 0.743,
+                        "stats": {
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65
+                        },
+                        "rank": 5
+                    },
+                    {
+                        "id": 1609,
                         "rating": "72.9%",
                         "raw_score": 0.729,
                         "stats": {
                             "res_quality": 0.447,
                             "res_potential_energy": 0.871
-                        }
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "274",
+                        "id": 1143,
                         "rating": "68.2%",
                         "raw_score": 0.682,
                         "stats": {
                             "res_quality": 0.951,
                             "res_potential_energy": 0.548
-                        }
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "66.6%",
                         "raw_score": 0.666,
                         "stats": {
                             "res_quality": 0.614,
                             "res_potential_energy": 0.692
-                        }
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "170",
+                        "id": 1038,
                         "rating": "64.5%",
                         "raw_score": 0.645,
                         "stats": {
                             "res_quality": 0.712,
                             "res_potential_energy": 0.612
-                        }
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "192",
+                        "id": 1061,
                         "rating": "60.9%",
                         "raw_score": 0.609,
                         "stats": {
                             "res_quality": 0.499,
                             "res_potential_energy": 0.665
-                        }
-                    },
-                    {
-                        "id": "351",
-                        "rating": "58.5%",
-                        "raw_score": 0.585,
-                        "stats": {
-                            "res_quality": 0.503,
-                            "res_potential_energy": 0.627
-                        }
+                        },
+                        "rank": 10
                     }
                 ],
                 "current": [
                     {
-                        "id": "787",
-                        "rating": "97.1%",
-                        "raw_score": 0.971,
-                        "stats": {
-                            "res_quality": 0.982,
-                            "res_potential_energy": 0.966
-                        }
-                    },
-                    {
-                        "id": "455",
-                        "rating": "78.2%",
-                        "raw_score": 0.782,
-                        "stats": {
-                            "res_quality": 0.52,
-                            "res_potential_energy": 0.914
-                        }
-                    },
-                    {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "77.1%",
                         "raw_score": 0.771,
                         "stats": {
                             "res_quality": 0.603,
                             "res_potential_energy": 0.855
-                        }
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "777",
+                        "id": 1644,
                         "rating": "74.3%",
                         "raw_score": 0.743,
                         "stats": {
                             "res_quality": 0.929,
                             "res_potential_energy": 0.65
-                        }
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "744",
+                        "id": 1774,
+                        "rating": "74.3%",
+                        "raw_score": 0.743,
+                        "stats": {
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65
+                        },
+                        "rank": 3
+                    },
+                    {
+                        "id": 1609,
                         "rating": "72.9%",
                         "raw_score": 0.729,
                         "stats": {
                             "res_quality": 0.447,
                             "res_potential_energy": 0.871
-                        }
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "66.6%",
                         "raw_score": 0.666,
                         "stats": {
                             "res_quality": 0.614,
                             "res_potential_energy": 0.692
-                        }
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "351",
+                        "id": 1220,
                         "rating": "58.5%",
                         "raw_score": 0.585,
                         "stats": {
                             "res_quality": 0.503,
                             "res_potential_energy": 0.627
-                        }
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "688",
+                        "id": 1949,
+                        "rating": "58.5%",
+                        "raw_score": 0.585,
+                        "stats": {
+                            "res_quality": 0.516,
+                            "res_potential_energy": 0.62
+                        },
+                        "rank": 7
+                    },
+                    {
+                        "id": 1556,
                         "rating": "57.8%",
                         "raw_score": 0.578,
                         "stats": {
                             "res_quality": 0.336,
                             "res_potential_energy": 0.7
-                        }
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "542",
+                        "id": 1867,
+                        "rating": "57.7%",
+                        "raw_score": 0.577,
+                        "stats": {
+                            "res_quality": 0.563,
+                            "res_potential_energy": 0.584
+                        },
+                        "rank": 9
+                    },
+                    {
+                        "id": 1409,
                         "rating": "53.0%",
                         "raw_score": 0.53,
                         "stats": {
                             "res_quality": 0.476,
                             "res_potential_energy": 0.558
-                        }
-                    },
-                    {
-                        "id": "600",
-                        "rating": "52.5%",
-                        "raw_score": 0.525,
-                        "stats": {
-                            "res_quality": 0.545,
-                            "res_potential_energy": 0.516
-                        }
+                        },
+                        "rank": 10
                     }
                 ]
             },
             "exp_experimental_flavor": {
                 "best": [
                     {
-                        "id": "724",
+                        "id": 1750,
+                        "rating": "85.5%",
+                        "raw_score": 0.855,
+                        "stats": {
+                            "res_flavor": 0.825,
+                            "res_quality": 0.917
+                        },
+                        "rank": 1
+                    },
+                    {
+                        "id": 1595,
                         "rating": "78.7%",
                         "raw_score": 0.787,
                         "stats": {
                             "res_flavor": 0.874,
                             "res_quality": 0.614
-                        }
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "651",
+                        "id": 1522,
                         "rating": "69.5%",
                         "raw_score": 0.695,
                         "stats": {
                             "res_flavor": 0.567,
                             "res_quality": 0.952
-                        }
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "571",
+                        "id": 1438,
                         "rating": "68.5%",
                         "raw_score": 0.685,
                         "stats": {
                             "res_flavor": 0.557,
                             "res_quality": 0.942
-                        }
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "31",
+                        "id": 900,
                         "rating": "66.5%",
                         "raw_score": 0.665,
                         "stats": {
                             "res_flavor": 0.611,
                             "res_quality": 0.775
-                        }
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "533",
+                        "id": 1400,
                         "rating": "66.5%",
                         "raw_score": 0.665,
                         "stats": {
                             "res_flavor": 0.732,
                             "res_quality": 0.532
-                        }
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "777",
+                        "id": 1644,
                         "rating": "64.5%",
                         "raw_score": 0.645,
                         "stats": {
                             "res_flavor": 0.504,
                             "res_quality": 0.929
-                        }
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "474",
+                        "id": 1774,
+                        "rating": "64.5%",
+                        "raw_score": 0.645,
+                        "stats": {
+                            "res_flavor": 0.504,
+                            "res_quality": 0.929
+                        },
+                        "rank": 8
+                    },
+                    {
+                        "id": 1337,
                         "rating": "63.7%",
                         "raw_score": 0.637,
                         "stats": {
                             "res_flavor": 0.935,
                             "res_quality": 0.041
-                        }
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "786",
+                        "id": 1669,
                         "rating": "63.1%",
                         "raw_score": 0.631,
                         "stats": {
                             "res_flavor": 0.615,
                             "res_quality": 0.663
-                        }
-                    },
-                    {
-                        "id": "681",
-                        "rating": "62.4%",
-                        "raw_score": 0.624,
-                        "stats": {
-                            "res_flavor": 0.606,
-                            "res_quality": 0.662
-                        }
-                    },
-                    {
-                        "id": "795",
-                        "rating": "62.1%",
-                        "raw_score": 0.621,
-                        "stats": {
-                            "res_flavor": 0.834,
-                            "res_quality": 0.196
-                        }
+                        },
+                        "rank": 10
                     }
                 ],
                 "current": [
                     {
-                        "id": "724",
+                        "id": 1750,
+                        "rating": "85.5%",
+                        "raw_score": 0.855,
+                        "stats": {
+                            "res_flavor": 0.825,
+                            "res_quality": 0.917
+                        },
+                        "rank": 1
+                    },
+                    {
+                        "id": 1595,
                         "rating": "78.7%",
                         "raw_score": 0.787,
                         "stats": {
                             "res_flavor": 0.874,
                             "res_quality": 0.614
-                        }
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "651",
-                        "rating": "69.5%",
-                        "raw_score": 0.695,
-                        "stats": {
-                            "res_flavor": 0.567,
-                            "res_quality": 0.952
-                        }
-                    },
-                    {
-                        "id": "571",
+                        "id": 1438,
                         "rating": "68.5%",
                         "raw_score": 0.685,
                         "stats": {
                             "res_flavor": 0.557,
                             "res_quality": 0.942
-                        }
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "533",
+                        "id": 1400,
                         "rating": "66.5%",
                         "raw_score": 0.665,
                         "stats": {
                             "res_flavor": 0.732,
                             "res_quality": 0.532
-                        }
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "777",
+                        "id": 1644,
                         "rating": "64.5%",
                         "raw_score": 0.645,
                         "stats": {
                             "res_flavor": 0.504,
                             "res_quality": 0.929
-                        }
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "786",
-                        "rating": "63.1%",
-                        "raw_score": 0.631,
+                        "id": 1774,
+                        "rating": "64.5%",
+                        "raw_score": 0.645,
                         "stats": {
-                            "res_flavor": 0.615,
-                            "res_quality": 0.663
-                        }
+                            "res_flavor": 0.504,
+                            "res_quality": 0.929
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "681",
+                        "id": 1548,
                         "rating": "62.4%",
                         "raw_score": 0.624,
                         "stats": {
                             "res_flavor": 0.606,
                             "res_quality": 0.662
-                        }
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "795",
+                        "id": 1659,
                         "rating": "62.1%",
                         "raw_score": 0.621,
                         "stats": {
                             "res_flavor": 0.834,
                             "res_quality": 0.196
-                        }
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "582",
-                        "rating": "61.8%",
-                        "raw_score": 0.618,
+                        "id": 1866,
+                        "rating": "61.9%",
+                        "raw_score": 0.619,
                         "stats": {
-                            "res_flavor": 0.869,
-                            "res_quality": 0.117
-                        }
+                            "res_flavor": 0.69,
+                            "res_quality": 0.477
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "542",
-                        "rating": "60.4%",
-                        "raw_score": 0.604,
+                        "id": 1867,
+                        "rating": "61.7%",
+                        "raw_score": 0.617,
                         "stats": {
-                            "res_flavor": 0.668,
-                            "res_quality": 0.476
-                        }
+                            "res_flavor": 0.645,
+                            "res_quality": 0.563
+                        },
+                        "rank": 10
                     }
                 ]
             },
             "exp_experimental_quantity": {
                 "best": [
                     {
-                        "id": "787",
+                        "id": 1673,
                         "rating": "84.6%",
                         "raw_score": 0.846,
                         "stats": {
                             "res_decay_resist": 0.489,
                             "res_potential_energy": 0.966
-                        }
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "455",
+                        "id": 1350,
                         "rating": "83.3%",
                         "raw_score": 0.833,
                         "stats": {
                             "res_decay_resist": 0.593,
                             "res_potential_energy": 0.914
-                        }
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "79.8%",
                         "raw_score": 0.798,
                         "stats": {
                             "res_decay_resist": 0.631,
                             "res_potential_energy": 0.855
-                        }
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "159",
+                        "id": 1028,
                         "rating": "73.5%",
                         "raw_score": 0.735,
                         "stats": {
                             "res_decay_resist": 0.543,
                             "res_potential_energy": 0.8
-                        }
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "744",
+                        "id": 1609,
                         "rating": "71.8%",
                         "raw_score": 0.718,
                         "stats": {
                             "res_decay_resist": 0.261,
                             "res_potential_energy": 0.871
-                        }
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "192",
+                        "id": 1061,
                         "rating": "65.6%",
                         "raw_score": 0.656,
                         "stats": {
                             "res_decay_resist": 0.63,
                             "res_potential_energy": 0.665
-                        }
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "170",
+                        "id": 1038,
                         "rating": "63.3%",
                         "raw_score": 0.633,
                         "stats": {
                             "res_decay_resist": 0.696,
                             "res_potential_energy": 0.612
-                        }
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "724",
+                        "id": 1949,
+                        "rating": "62.7%",
+                        "raw_score": 0.627,
+                        "stats": {
+                            "res_decay_resist": 0.648,
+                            "res_potential_energy": 0.62
+                        },
+                        "rank": 8
+                    },
+                    {
+                        "id": 1948,
+                        "rating": "60.6%",
+                        "raw_score": 0.606,
+                        "stats": {
+                            "res_decay_resist": 0.573,
+                            "res_potential_energy": 0.618
+                        },
+                        "rank": 9
+                    },
+                    {
+                        "id": 1595,
                         "rating": "60.5%",
                         "raw_score": 0.605,
                         "stats": {
                             "res_decay_resist": 0.348,
                             "res_potential_energy": 0.692
-                        }
-                    },
-                    {
-                        "id": "190",
-                        "rating": "59.8%",
-                        "raw_score": 0.598,
-                        "stats": {
-                            "res_decay_resist": 0.496,
-                            "res_potential_energy": 0.632
-                        }
-                    },
-                    {
-                        "id": "839",
-                        "rating": "59.7%",
-                        "raw_score": 0.597,
-                        "stats": {
-                            "res_decay_resist": 0.37,
-                            "res_potential_energy": 0.673
-                        }
+                        },
+                        "rank": 10
                     }
                 ],
                 "current": [
                     {
-                        "id": "787",
-                        "rating": "84.6%",
-                        "raw_score": 0.846,
-                        "stats": {
-                            "res_decay_resist": 0.489,
-                            "res_potential_energy": 0.966
-                        }
-                    },
-                    {
-                        "id": "455",
-                        "rating": "83.3%",
-                        "raw_score": 0.833,
-                        "stats": {
-                            "res_decay_resist": 0.593,
-                            "res_potential_energy": 0.914
-                        }
-                    },
-                    {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "79.8%",
                         "raw_score": 0.798,
                         "stats": {
                             "res_decay_resist": 0.631,
                             "res_potential_energy": 0.855
-                        }
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "744",
+                        "id": 1609,
                         "rating": "71.8%",
                         "raw_score": 0.718,
                         "stats": {
                             "res_decay_resist": 0.261,
                             "res_potential_energy": 0.871
-                        }
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "724",
+                        "id": 1949,
+                        "rating": "62.7%",
+                        "raw_score": 0.627,
+                        "stats": {
+                            "res_decay_resist": 0.648,
+                            "res_potential_energy": 0.62
+                        },
+                        "rank": 3
+                    },
+                    {
+                        "id": 1948,
+                        "rating": "60.6%",
+                        "raw_score": 0.606,
+                        "stats": {
+                            "res_decay_resist": 0.573,
+                            "res_potential_energy": 0.618
+                        },
+                        "rank": 4
+                    },
+                    {
+                        "id": 1595,
                         "rating": "60.5%",
                         "raw_score": 0.605,
                         "stats": {
                             "res_decay_resist": 0.348,
                             "res_potential_energy": 0.692
-                        }
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "839",
+                        "id": 1705,
                         "rating": "59.7%",
                         "raw_score": 0.597,
                         "stats": {
                             "res_decay_resist": 0.37,
                             "res_potential_energy": 0.673
-                        }
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "818",
+                        "id": 1841,
+                        "rating": "59.1%",
+                        "raw_score": 0.591,
+                        "stats": {
+                            "res_decay_resist": 0.86,
+                            "res_potential_energy": 0.502
+                        },
+                        "rank": 7
+                    },
+                    {
+                        "id": 1831,
+                        "rating": "57.8%",
+                        "raw_score": 0.578,
+                        "stats": {
+                            "res_decay_resist": 0.744,
+                            "res_potential_energy": 0.523
+                        },
+                        "rank": 8
+                    },
+                    {
+                        "id": 1685,
                         "rating": "57.7%",
                         "raw_score": 0.577,
                         "stats": {
                             "res_decay_resist": 0.864,
                             "res_potential_energy": 0.482
-                        }
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "688",
+                        "id": 1556,
                         "rating": "56.6%",
                         "raw_score": 0.566,
                         "stats": {
                             "res_decay_resist": 0.167,
                             "res_potential_energy": 0.7
-                        }
-                    },
-                    {
-                        "id": "542",
-                        "rating": "54.2%",
-                        "raw_score": 0.542,
-                        "stats": {
-                            "res_decay_resist": 0.494,
-                            "res_potential_energy": 0.558
-                        }
-                    },
-                    {
-                        "id": "777",
-                        "rating": "50.3%",
-                        "raw_score": 0.503,
-                        "stats": {
-                            "res_decay_resist": 0.065,
-                            "res_potential_energy": 0.65
-                        }
+                        },
+                        "rank": 10
                     }
                 ]
             },
             "exp_experimental_filling": {
                 "best": [
                     {
-                        "id": "367",
+                        "id": 1233,
                         "rating": "76.9%",
                         "raw_score": 0.769,
                         "stats": {
                             "res_decay_resist": 0.816,
                             "res_quality": 0.628
-                        }
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "818",
+                        "id": 1685,
                         "rating": "74.9%",
                         "raw_score": 0.749,
                         "stats": {
                             "res_decay_resist": 0.864,
                             "res_quality": 0.406
-                        }
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "8",
+                        "id": 877,
                         "rating": "73.5%",
                         "raw_score": 0.735,
                         "stats": {
                             "res_decay_resist": 0.976,
                             "res_quality": 0.013
-                        }
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "534",
+                        "id": 1401,
                         "rating": "72.5%",
                         "raw_score": 0.725,
                         "stats": {
                             "res_decay_resist": 0.751,
                             "res_quality": 0.648
-                        }
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "170",
+                        "id": 1841,
+                        "rating": "71.5%",
+                        "raw_score": 0.715,
+                        "stats": {
+                            "res_decay_resist": 0.86,
+                            "res_quality": 0.281
+                        },
+                        "rank": 5
+                    },
+                    {
+                        "id": 1038,
                         "rating": "70.0%",
                         "raw_score": 0.7,
                         "stats": {
                             "res_decay_resist": 0.696,
                             "res_quality": 0.712
-                        }
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "198",
+                        "id": 1067,
                         "rating": "69.1%",
                         "raw_score": 0.691,
                         "stats": {
                             "res_decay_resist": 0.662,
                             "res_quality": 0.779
-                        }
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "651",
+                        "id": 1522,
                         "rating": "68.4%",
                         "raw_score": 0.684,
                         "stats": {
                             "res_decay_resist": 0.595,
                             "res_quality": 0.952
-                        }
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "373",
+                        "id": 1239,
                         "rating": "66.5%",
                         "raw_score": 0.665,
                         "stats": {
                             "res_decay_resist": 0.752,
                             "res_quality": 0.407
-                        }
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "541",
-                        "rating": "62.4%",
-                        "raw_score": 0.624,
+                        "id": 1831,
+                        "rating": "62.8%",
+                        "raw_score": 0.628,
                         "stats": {
-                            "res_decay_resist": 0.631,
-                            "res_quality": 0.603
-                        }
-                    },
-                    {
-                        "id": "787",
-                        "rating": "61.2%",
-                        "raw_score": 0.612,
-                        "stats": {
-                            "res_decay_resist": 0.489,
-                            "res_quality": 0.982
-                        }
+                            "res_decay_resist": 0.744,
+                            "res_quality": 0.282
+                        },
+                        "rank": 10
                     }
                 ],
                 "current": [
                     {
-                        "id": "818",
+                        "id": 1685,
                         "rating": "74.9%",
                         "raw_score": 0.749,
                         "stats": {
                             "res_decay_resist": 0.864,
                             "res_quality": 0.406
-                        }
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "534",
+                        "id": 1401,
                         "rating": "72.5%",
                         "raw_score": 0.725,
                         "stats": {
                             "res_decay_resist": 0.751,
                             "res_quality": 0.648
-                        }
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "651",
-                        "rating": "68.4%",
-                        "raw_score": 0.684,
+                        "id": 1841,
+                        "rating": "71.5%",
+                        "raw_score": 0.715,
                         "stats": {
-                            "res_decay_resist": 0.595,
-                            "res_quality": 0.952
-                        }
+                            "res_decay_resist": 0.86,
+                            "res_quality": 0.281
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "541",
+                        "id": 1831,
+                        "rating": "62.8%",
+                        "raw_score": 0.628,
+                        "stats": {
+                            "res_decay_resist": 0.744,
+                            "res_quality": 0.282
+                        },
+                        "rank": 4
+                    },
+                    {
+                        "id": 1408,
                         "rating": "62.4%",
                         "raw_score": 0.624,
                         "stats": {
                             "res_decay_resist": 0.631,
                             "res_quality": 0.603
-                        }
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "787",
-                        "rating": "61.2%",
-                        "raw_score": 0.612,
+                        "id": 1949,
+                        "rating": "61.5%",
+                        "raw_score": 0.615,
                         "stats": {
-                            "res_decay_resist": 0.489,
-                            "res_quality": 0.982
-                        }
+                            "res_decay_resist": 0.648,
+                            "res_quality": 0.516
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "455",
-                        "rating": "57.4%",
-                        "raw_score": 0.574,
+                        "id": 1801,
+                        "rating": "60.9%",
+                        "raw_score": 0.609,
                         "stats": {
-                            "res_decay_resist": 0.593,
-                            "res_quality": 0.52
-                        }
+                            "res_decay_resist": 0.591,
+                            "res_quality": 0.664
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "786",
-                        "rating": "57.0%",
-                        "raw_score": 0.57,
-                        "stats": {
-                            "res_decay_resist": 0.54,
-                            "res_quality": 0.663
-                        }
-                    },
-                    {
-                        "id": "533",
+                        "id": 1400,
                         "rating": "55.5%",
                         "raw_score": 0.555,
                         "stats": {
                             "res_decay_resist": 0.563,
                             "res_quality": 0.532
-                        }
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "841",
+                        "id": 1893,
+                        "rating": "52.7%",
+                        "raw_score": 0.527,
+                        "stats": {
+                            "res_decay_resist": 0.624,
+                            "res_quality": 0.237
+                        },
+                        "rank": 9
+                    },
+                    {
+                        "id": 1707,
                         "rating": "51.1%",
                         "raw_score": 0.511,
                         "stats": {
                             "res_decay_resist": 0.483,
                             "res_quality": 0.596
-                        }
-                    },
-                    {
-                        "id": "623",
-                        "rating": "49.5%",
-                        "raw_score": 0.495,
-                        "stats": {
-                            "res_decay_resist": 0.601,
-                            "res_quality": 0.18
-                        }
+                        },
+                        "rank": 10
                     }
                 ]
             },
             "exp_experimental_flavor|exp_experimental_nutritional_value": {
                 "best": [
                     {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "72.6%",
                         "raw_score": 0.726,
                         "stats": {
-                            "res_flavor": 0.874,
                             "res_quality": 0.614,
-                            "res_potential_energy": 0.692
-                        }
+                            "res_potential_energy": 0.692,
+                            "res_flavor": 0.874
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "777",
+                        "id": 1644,
                         "rating": "69.4%",
                         "raw_score": 0.694,
                         "stats": {
-                            "res_flavor": 0.504,
                             "res_quality": 0.929,
-                            "res_potential_energy": 0.65
-                        }
+                            "res_potential_energy": 0.65,
+                            "res_flavor": 0.504
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "787",
+                        "id": 1774,
+                        "rating": "69.4%",
+                        "raw_score": 0.694,
+                        "stats": {
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
+                            "res_flavor": 0.504
+                        },
+                        "rank": 3
+                    },
+                    {
+                        "id": 1750,
+                        "rating": "67.4%",
+                        "raw_score": 0.674,
+                        "stats": {
+                            "res_quality": 0.917,
+                            "res_potential_energy": 0.281,
+                            "res_flavor": 0.825
+                        },
+                        "rank": 4
+                    },
+                    {
+                        "id": 1673,
                         "rating": "65.0%",
                         "raw_score": 0.65,
                         "stats": {
-                            "res_flavor": 0.003,
                             "res_quality": 0.982,
-                            "res_potential_energy": 0.966
-                        }
+                            "res_potential_energy": 0.966,
+                            "res_flavor": 0.003
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "170",
+                        "id": 1038,
                         "rating": "62.9%",
                         "raw_score": 0.629,
                         "stats": {
-                            "res_flavor": 0.565,
                             "res_quality": 0.712,
-                            "res_potential_energy": 0.612
-                        }
+                            "res_potential_energy": 0.612,
+                            "res_flavor": 0.565
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "274",
+                        "id": 1143,
                         "rating": "62.2%",
                         "raw_score": 0.622,
                         "stats": {
-                            "res_flavor": 0.368,
                             "res_quality": 0.951,
-                            "res_potential_energy": 0.548
-                        }
+                            "res_potential_energy": 0.548,
+                            "res_flavor": 0.368
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "31",
+                        "id": 900,
                         "rating": "61.6%",
                         "raw_score": 0.616,
                         "stats": {
-                            "res_flavor": 0.611,
                             "res_quality": 0.775,
-                            "res_potential_energy": 0.462
-                        }
+                            "res_potential_energy": 0.462,
+                            "res_flavor": 0.611
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "651",
+                        "id": 1522,
                         "rating": "60.1%",
                         "raw_score": 0.601,
                         "stats": {
-                            "res_flavor": 0.567,
                             "res_quality": 0.952,
-                            "res_potential_energy": 0.286
-                        }
+                            "res_potential_energy": 0.286,
+                            "res_flavor": 0.567
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "571",
-                        "rating": "59.5%",
-                        "raw_score": 0.595,
+                        "id": 1867,
+                        "rating": "59.7%",
+                        "raw_score": 0.597,
                         "stats": {
-                            "res_flavor": 0.557,
-                            "res_quality": 0.942,
-                            "res_potential_energy": 0.287
-                        }
-                    },
-                    {
-                        "id": "455",
-                        "rating": "59.1%",
-                        "raw_score": 0.591,
-                        "stats": {
-                            "res_flavor": 0.339,
-                            "res_quality": 0.52,
-                            "res_potential_energy": 0.914
-                        }
-                    },
-                    {
-                        "id": "533",
-                        "rating": "57.0%",
-                        "raw_score": 0.57,
-                        "stats": {
-                            "res_flavor": 0.732,
-                            "res_quality": 0.532,
-                            "res_potential_energy": 0.448
-                        }
+                            "res_quality": 0.563,
+                            "res_potential_energy": 0.584,
+                            "res_flavor": 0.645
+                        },
+                        "rank": 10
                     }
                 ],
                 "current": [
                     {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "72.6%",
                         "raw_score": 0.726,
                         "stats": {
-                            "res_flavor": 0.874,
                             "res_quality": 0.614,
-                            "res_potential_energy": 0.692
-                        }
+                            "res_potential_energy": 0.692,
+                            "res_flavor": 0.874
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "777",
+                        "id": 1644,
                         "rating": "69.4%",
                         "raw_score": 0.694,
                         "stats": {
-                            "res_flavor": 0.504,
                             "res_quality": 0.929,
-                            "res_potential_energy": 0.65
-                        }
+                            "res_potential_energy": 0.65,
+                            "res_flavor": 0.504
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "787",
-                        "rating": "65.0%",
-                        "raw_score": 0.65,
+                        "id": 1774,
+                        "rating": "69.4%",
+                        "raw_score": 0.694,
                         "stats": {
-                            "res_flavor": 0.003,
-                            "res_quality": 0.982,
-                            "res_potential_energy": 0.966
-                        }
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
+                            "res_flavor": 0.504
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "651",
-                        "rating": "60.1%",
-                        "raw_score": 0.601,
+                        "id": 1750,
+                        "rating": "67.4%",
+                        "raw_score": 0.674,
                         "stats": {
-                            "res_flavor": 0.567,
-                            "res_quality": 0.952,
-                            "res_potential_energy": 0.286
-                        }
+                            "res_quality": 0.917,
+                            "res_potential_energy": 0.281,
+                            "res_flavor": 0.825
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "571",
+                        "id": 1867,
+                        "rating": "59.7%",
+                        "raw_score": 0.597,
+                        "stats": {
+                            "res_quality": 0.563,
+                            "res_potential_energy": 0.584,
+                            "res_flavor": 0.645
+                        },
+                        "rank": 5
+                    },
+                    {
+                        "id": 1438,
                         "rating": "59.5%",
                         "raw_score": 0.595,
                         "stats": {
-                            "res_flavor": 0.557,
                             "res_quality": 0.942,
-                            "res_potential_energy": 0.287
-                        }
+                            "res_potential_energy": 0.287,
+                            "res_flavor": 0.557
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "455",
-                        "rating": "59.1%",
-                        "raw_score": 0.591,
-                        "stats": {
-                            "res_flavor": 0.339,
-                            "res_quality": 0.52,
-                            "res_potential_energy": 0.914
-                        }
-                    },
-                    {
-                        "id": "533",
+                        "id": 1400,
                         "rating": "57.0%",
                         "raw_score": 0.57,
                         "stats": {
-                            "res_flavor": 0.732,
                             "res_quality": 0.532,
-                            "res_potential_energy": 0.448
-                        }
+                            "res_potential_energy": 0.448,
+                            "res_flavor": 0.732
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "744",
+                        "id": 1609,
                         "rating": "57.0%",
                         "raw_score": 0.57,
                         "stats": {
-                            "res_flavor": 0.393,
                             "res_quality": 0.447,
-                            "res_potential_energy": 0.871
-                        }
+                            "res_potential_energy": 0.871,
+                            "res_flavor": 0.393
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "542",
+                        "id": 1409,
                         "rating": "56.7%",
                         "raw_score": 0.567,
                         "stats": {
-                            "res_flavor": 0.668,
                             "res_quality": 0.476,
-                            "res_potential_energy": 0.558
-                        }
+                            "res_potential_energy": 0.558,
+                            "res_flavor": 0.668
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "795",
-                        "rating": "53.4%",
-                        "raw_score": 0.534,
+                        "id": 1866,
+                        "rating": "56.3%",
+                        "raw_score": 0.563,
                         "stats": {
-                            "res_flavor": 0.834,
-                            "res_quality": 0.196,
-                            "res_potential_energy": 0.572
-                        }
+                            "res_quality": 0.477,
+                            "res_potential_energy": 0.522,
+                            "res_flavor": 0.69
+                        },
+                        "rank": 10
                     }
                 ]
             },
             "exp_experimental_nutritional_value|exp_experimental_quantity": {
                 "best": [
                     {
-                        "id": "787",
+                        "id": 1673,
                         "rating": "90.8%",
                         "raw_score": 0.908,
                         "stats": {
                             "res_quality": 0.982,
                             "res_potential_energy": 0.966,
                             "res_decay_resist": 0.489
-                        }
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "455",
+                        "id": 1350,
                         "rating": "80.8%",
                         "raw_score": 0.808,
                         "stats": {
                             "res_quality": 0.52,
                             "res_potential_energy": 0.914,
                             "res_decay_resist": 0.593
-                        }
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "78.5%",
                         "raw_score": 0.785,
                         "stats": {
                             "res_quality": 0.603,
                             "res_potential_energy": 0.855,
                             "res_decay_resist": 0.631
-                        }
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "744",
+                        "id": 1609,
                         "rating": "72.4%",
                         "raw_score": 0.724,
                         "stats": {
                             "res_quality": 0.447,
                             "res_potential_energy": 0.871,
                             "res_decay_resist": 0.261
-                        }
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "170",
+                        "id": 1038,
                         "rating": "63.9%",
                         "raw_score": 0.639,
                         "stats": {
                             "res_quality": 0.712,
                             "res_potential_energy": 0.612,
                             "res_decay_resist": 0.696
-                        }
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "159",
+                        "id": 1028,
                         "rating": "63.6%",
                         "raw_score": 0.636,
                         "stats": {
                             "res_quality": 0.006,
                             "res_potential_energy": 0.8,
                             "res_decay_resist": 0.543
-                        }
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "63.5%",
                         "raw_score": 0.635,
                         "stats": {
                             "res_quality": 0.614,
                             "res_potential_energy": 0.692,
                             "res_decay_resist": 0.348
-                        }
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "192",
+                        "id": 1061,
                         "rating": "63.3%",
                         "raw_score": 0.633,
                         "stats": {
                             "res_quality": 0.499,
                             "res_potential_energy": 0.665,
                             "res_decay_resist": 0.63
-                        }
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "777",
+                        "id": 1644,
                         "rating": "62.2%",
                         "raw_score": 0.622,
                         "stats": {
                             "res_quality": 0.929,
                             "res_potential_energy": 0.65,
                             "res_decay_resist": 0.065
-                        }
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "274",
-                        "rating": "57.9%",
-                        "raw_score": 0.579,
+                        "id": 1774,
+                        "rating": "62.2%",
+                        "raw_score": 0.622,
                         "stats": {
-                            "res_quality": 0.951,
-                            "res_potential_energy": 0.548,
-                            "res_decay_resist": 0.266
-                        }
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
+                            "res_decay_resist": 0.065
+                        },
+                        "rank": 10
                     }
                 ],
                 "current": [
                     {
-                        "id": "787",
-                        "rating": "90.8%",
-                        "raw_score": 0.908,
-                        "stats": {
-                            "res_quality": 0.982,
-                            "res_potential_energy": 0.966,
-                            "res_decay_resist": 0.489
-                        }
-                    },
-                    {
-                        "id": "455",
-                        "rating": "80.8%",
-                        "raw_score": 0.808,
-                        "stats": {
-                            "res_quality": 0.52,
-                            "res_potential_energy": 0.914,
-                            "res_decay_resist": 0.593
-                        }
-                    },
-                    {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "78.5%",
                         "raw_score": 0.785,
                         "stats": {
                             "res_quality": 0.603,
                             "res_potential_energy": 0.855,
                             "res_decay_resist": 0.631
-                        }
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "744",
+                        "id": 1609,
                         "rating": "72.4%",
                         "raw_score": 0.724,
                         "stats": {
                             "res_quality": 0.447,
                             "res_potential_energy": 0.871,
                             "res_decay_resist": 0.261
-                        }
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "63.5%",
                         "raw_score": 0.635,
                         "stats": {
                             "res_quality": 0.614,
                             "res_potential_energy": 0.692,
                             "res_decay_resist": 0.348
-                        }
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "777",
+                        "id": 1644,
                         "rating": "62.2%",
                         "raw_score": 0.622,
                         "stats": {
                             "res_quality": 0.929,
                             "res_potential_energy": 0.65,
                             "res_decay_resist": 0.065
-                        }
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "688",
+                        "id": 1774,
+                        "rating": "62.2%",
+                        "raw_score": 0.622,
+                        "stats": {
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
+                            "res_decay_resist": 0.065
+                        },
+                        "rank": 5
+                    },
+                    {
+                        "id": 1949,
+                        "rating": "60.6%",
+                        "raw_score": 0.606,
+                        "stats": {
+                            "res_quality": 0.516,
+                            "res_potential_energy": 0.62,
+                            "res_decay_resist": 0.648
+                        },
+                        "rank": 6
+                    },
+                    {
+                        "id": 1556,
                         "rating": "57.2%",
                         "raw_score": 0.572,
                         "stats": {
                             "res_quality": 0.336,
                             "res_potential_energy": 0.7,
                             "res_decay_resist": 0.167
-                        }
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "839",
+                        "id": 1867,
+                        "rating": "54.9%",
+                        "raw_score": 0.549,
+                        "stats": {
+                            "res_quality": 0.563,
+                            "res_potential_energy": 0.584,
+                            "res_decay_resist": 0.341
+                        },
+                        "rank": 8
+                    },
+                    {
+                        "id": 1705,
                         "rating": "54.0%",
                         "raw_score": 0.54,
                         "stats": {
                             "res_quality": 0.102,
                             "res_potential_energy": 0.673,
                             "res_decay_resist": 0.37
-                        }
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "542",
+                        "id": 1409,
                         "rating": "53.6%",
                         "raw_score": 0.536,
                         "stats": {
                             "res_quality": 0.476,
                             "res_potential_energy": 0.558,
                             "res_decay_resist": 0.494
-                        }
-                    },
-                    {
-                        "id": "351",
-                        "rating": "53.3%",
-                        "raw_score": 0.533,
-                        "stats": {
-                            "res_quality": 0.503,
-                            "res_potential_energy": 0.627,
-                            "res_decay_resist": 0.048
-                        }
+                        },
+                        "rank": 10
                     }
                 ]
             },
             "exp_experimental_filling|exp_experimental_nutritional_value": {
                 "best": [
                     {
-                        "id": "787",
+                        "id": 1673,
                         "rating": "79.0%",
                         "raw_score": 0.79,
                         "stats": {
-                            "res_decay_resist": 0.489,
                             "res_quality": 0.982,
-                            "res_potential_energy": 0.966
-                        }
+                            "res_potential_energy": 0.966,
+                            "res_decay_resist": 0.489
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "69.7%",
                         "raw_score": 0.697,
                         "stats": {
-                            "res_decay_resist": 0.631,
                             "res_quality": 0.603,
-                            "res_potential_energy": 0.855
-                        }
+                            "res_potential_energy": 0.855,
+                            "res_decay_resist": 0.631
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "455",
+                        "id": 1350,
                         "rating": "67.8%",
                         "raw_score": 0.678,
                         "stats": {
-                            "res_decay_resist": 0.593,
                             "res_quality": 0.52,
-                            "res_potential_energy": 0.914
-                        }
+                            "res_potential_energy": 0.914,
+                            "res_decay_resist": 0.593
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "170",
+                        "id": 1038,
                         "rating": "67.2%",
                         "raw_score": 0.672,
                         "stats": {
-                            "res_decay_resist": 0.696,
                             "res_quality": 0.712,
-                            "res_potential_energy": 0.612
-                        }
+                            "res_potential_energy": 0.612,
+                            "res_decay_resist": 0.696
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "192",
+                        "id": 1061,
                         "rating": "60.3%",
                         "raw_score": 0.603,
                         "stats": {
-                            "res_decay_resist": 0.63,
                             "res_quality": 0.499,
-                            "res_potential_energy": 0.665
-                        }
+                            "res_potential_energy": 0.665,
+                            "res_decay_resist": 0.63
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "818",
+                        "id": 1685,
                         "rating": "60.3%",
                         "raw_score": 0.603,
                         "stats": {
-                            "res_decay_resist": 0.864,
                             "res_quality": 0.406,
-                            "res_potential_energy": 0.482
-                        }
+                            "res_potential_energy": 0.482,
+                            "res_decay_resist": 0.864
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "651",
+                        "id": 1949,
+                        "rating": "60.0%",
+                        "raw_score": 0.6,
+                        "stats": {
+                            "res_quality": 0.516,
+                            "res_potential_energy": 0.62,
+                            "res_decay_resist": 0.648
+                        },
+                        "rank": 7
+                    },
+                    {
+                        "id": 1522,
                         "rating": "59.6%",
                         "raw_score": 0.596,
                         "stats": {
-                            "res_decay_resist": 0.595,
                             "res_quality": 0.952,
-                            "res_potential_energy": 0.286
-                        }
+                            "res_potential_energy": 0.286,
+                            "res_decay_resist": 0.595
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "198",
+                        "id": 1067,
                         "rating": "58.4%",
                         "raw_score": 0.584,
                         "stats": {
-                            "res_decay_resist": 0.662,
                             "res_quality": 0.779,
-                            "res_potential_energy": 0.326
-                        }
+                            "res_potential_energy": 0.326,
+                            "res_decay_resist": 0.662
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "274",
-                        "rating": "55.9%",
-                        "raw_score": 0.559,
+                        "id": 1841,
+                        "rating": "57.2%",
+                        "raw_score": 0.572,
                         "stats": {
-                            "res_decay_resist": 0.266,
-                            "res_quality": 0.951,
-                            "res_potential_energy": 0.548
-                        }
-                    },
-                    {
-                        "id": "724",
-                        "rating": "53.9%",
-                        "raw_score": 0.539,
-                        "stats": {
-                            "res_decay_resist": 0.348,
-                            "res_quality": 0.614,
-                            "res_potential_energy": 0.692
-                        }
+                            "res_quality": 0.281,
+                            "res_potential_energy": 0.502,
+                            "res_decay_resist": 0.86
+                        },
+                        "rank": 10
                     }
                 ],
                 "current": [
                     {
-                        "id": "787",
-                        "rating": "79.0%",
-                        "raw_score": 0.79,
-                        "stats": {
-                            "res_decay_resist": 0.489,
-                            "res_quality": 0.982,
-                            "res_potential_energy": 0.966
-                        }
-                    },
-                    {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "69.7%",
                         "raw_score": 0.697,
                         "stats": {
-                            "res_decay_resist": 0.631,
                             "res_quality": 0.603,
-                            "res_potential_energy": 0.855
-                        }
+                            "res_potential_energy": 0.855,
+                            "res_decay_resist": 0.631
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "455",
-                        "rating": "67.8%",
-                        "raw_score": 0.678,
-                        "stats": {
-                            "res_decay_resist": 0.593,
-                            "res_quality": 0.52,
-                            "res_potential_energy": 0.914
-                        }
-                    },
-                    {
-                        "id": "818",
+                        "id": 1685,
                         "rating": "60.3%",
                         "raw_score": 0.603,
                         "stats": {
-                            "res_decay_resist": 0.864,
                             "res_quality": 0.406,
-                            "res_potential_energy": 0.482
-                        }
+                            "res_potential_energy": 0.482,
+                            "res_decay_resist": 0.864
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "651",
-                        "rating": "59.6%",
-                        "raw_score": 0.596,
+                        "id": 1949,
+                        "rating": "60.0%",
+                        "raw_score": 0.6,
                         "stats": {
-                            "res_decay_resist": 0.595,
-                            "res_quality": 0.952,
-                            "res_potential_energy": 0.286
-                        }
+                            "res_quality": 0.516,
+                            "res_potential_energy": 0.62,
+                            "res_decay_resist": 0.648
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "724",
+                        "id": 1841,
+                        "rating": "57.2%",
+                        "raw_score": 0.572,
+                        "stats": {
+                            "res_quality": 0.281,
+                            "res_potential_energy": 0.502,
+                            "res_decay_resist": 0.86
+                        },
+                        "rank": 4
+                    },
+                    {
+                        "id": 1595,
                         "rating": "53.9%",
                         "raw_score": 0.539,
                         "stats": {
-                            "res_decay_resist": 0.348,
                             "res_quality": 0.614,
-                            "res_potential_energy": 0.692
-                        }
+                            "res_potential_energy": 0.692,
+                            "res_decay_resist": 0.348
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "744",
+                        "id": 1831,
+                        "rating": "53.6%",
+                        "raw_score": 0.536,
+                        "stats": {
+                            "res_quality": 0.282,
+                            "res_potential_energy": 0.523,
+                            "res_decay_resist": 0.744
+                        },
+                        "rank": 6
+                    },
+                    {
+                        "id": 1609,
                         "rating": "51.7%",
                         "raw_score": 0.517,
                         "stats": {
-                            "res_decay_resist": 0.261,
                             "res_quality": 0.447,
-                            "res_potential_energy": 0.871
-                        }
+                            "res_potential_energy": 0.871,
+                            "res_decay_resist": 0.261
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "533",
+                        "id": 1400,
                         "rating": "51.5%",
                         "raw_score": 0.515,
                         "stats": {
-                            "res_decay_resist": 0.563,
                             "res_quality": 0.532,
-                            "res_potential_energy": 0.448
-                        }
+                            "res_potential_energy": 0.448,
+                            "res_decay_resist": 0.563
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "777",
+                        "id": 1644,
                         "rating": "51.0%",
                         "raw_score": 0.51,
                         "stats": {
-                            "res_decay_resist": 0.065,
                             "res_quality": 0.929,
-                            "res_potential_energy": 0.65
-                        }
+                            "res_potential_energy": 0.65,
+                            "res_decay_resist": 0.065
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "542",
-                        "rating": "50.9%",
-                        "raw_score": 0.509,
+                        "id": 1774,
+                        "rating": "51.0%",
+                        "raw_score": 0.51,
                         "stats": {
-                            "res_decay_resist": 0.494,
-                            "res_quality": 0.476,
-                            "res_potential_energy": 0.558
-                        }
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
+                            "res_decay_resist": 0.065
+                        },
+                        "rank": 10
                     }
                 ]
             },
             "exp_experimental_flavor|exp_experimental_quantity": {
                 "best": [
                     {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "69.6%",
                         "raw_score": 0.696,
                         "stats": {
@@ -1428,10 +1568,11 @@
                             "res_quality": 0.614,
                             "res_decay_resist": 0.348,
                             "res_potential_energy": 0.692
-                        }
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "170",
+                        "id": 1038,
                         "rating": "62.3%",
                         "raw_score": 0.623,
                         "stats": {
@@ -1439,10 +1580,11 @@
                             "res_quality": 0.712,
                             "res_decay_resist": 0.696,
                             "res_potential_energy": 0.612
-                        }
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "455",
+                        "id": 1350,
                         "rating": "61.7%",
                         "raw_score": 0.617,
                         "stats": {
@@ -1450,10 +1592,11 @@
                             "res_quality": 0.52,
                             "res_decay_resist": 0.593,
                             "res_potential_energy": 0.914
-                        }
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "81",
+                        "id": 949,
                         "rating": "59.6%",
                         "raw_score": 0.596,
                         "stats": {
@@ -1461,10 +1604,11 @@
                             "res_quality": 0.135,
                             "res_decay_resist": 0.594,
                             "res_potential_energy": 0.573
-                        }
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "787",
+                        "id": 1673,
                         "rating": "58.9%",
                         "raw_score": 0.589,
                         "stats": {
@@ -1472,10 +1616,11 @@
                             "res_quality": 0.982,
                             "res_decay_resist": 0.489,
                             "res_potential_energy": 0.966
-                        }
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "777",
+                        "id": 1644,
                         "rating": "57.4%",
                         "raw_score": 0.574,
                         "stats": {
@@ -1483,10 +1628,23 @@
                             "res_quality": 0.929,
                             "res_decay_resist": 0.065,
                             "res_potential_energy": 0.65
-                        }
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "542",
+                        "id": 1774,
+                        "rating": "57.4%",
+                        "raw_score": 0.574,
+                        "stats": {
+                            "res_flavor": 0.504,
+                            "res_quality": 0.929,
+                            "res_decay_resist": 0.065,
+                            "res_potential_energy": 0.65
+                        },
+                        "rank": 7
+                    },
+                    {
+                        "id": 1409,
                         "rating": "57.2%",
                         "raw_score": 0.572,
                         "stats": {
@@ -1494,10 +1652,11 @@
                             "res_quality": 0.476,
                             "res_decay_resist": 0.494,
                             "res_potential_energy": 0.558
-                        }
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "533",
+                        "id": 1400,
                         "rating": "57.0%",
                         "raw_score": 0.57,
                         "stats": {
@@ -1505,34 +1664,25 @@
                             "res_quality": 0.532,
                             "res_decay_resist": 0.563,
                             "res_potential_energy": 0.448
-                        }
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "744",
-                        "rating": "56.5%",
-                        "raw_score": 0.565,
+                        "id": 1867,
+                        "rating": "57.0%",
+                        "raw_score": 0.57,
                         "stats": {
-                            "res_flavor": 0.393,
-                            "res_quality": 0.447,
-                            "res_decay_resist": 0.261,
-                            "res_potential_energy": 0.871
-                        }
-                    },
-                    {
-                        "id": "159",
-                        "rating": "55.4%",
-                        "raw_score": 0.554,
-                        "stats": {
-                            "res_flavor": 0.554,
-                            "res_quality": 0.006,
-                            "res_decay_resist": 0.543,
-                            "res_potential_energy": 0.8
-                        }
+                            "res_flavor": 0.645,
+                            "res_quality": 0.563,
+                            "res_decay_resist": 0.341,
+                            "res_potential_energy": 0.584
+                        },
+                        "rank": 10
                     }
                 ],
                 "current": [
                     {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "69.6%",
                         "raw_score": 0.696,
                         "stats": {
@@ -1540,32 +1690,11 @@
                             "res_quality": 0.614,
                             "res_decay_resist": 0.348,
                             "res_potential_energy": 0.692
-                        }
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "455",
-                        "rating": "61.7%",
-                        "raw_score": 0.617,
-                        "stats": {
-                            "res_flavor": 0.339,
-                            "res_quality": 0.52,
-                            "res_decay_resist": 0.593,
-                            "res_potential_energy": 0.914
-                        }
-                    },
-                    {
-                        "id": "787",
-                        "rating": "58.9%",
-                        "raw_score": 0.589,
-                        "stats": {
-                            "res_flavor": 0.003,
-                            "res_quality": 0.982,
-                            "res_decay_resist": 0.489,
-                            "res_potential_energy": 0.966
-                        }
-                    },
-                    {
-                        "id": "777",
+                        "id": 1644,
                         "rating": "57.4%",
                         "raw_score": 0.574,
                         "stats": {
@@ -1573,10 +1702,23 @@
                             "res_quality": 0.929,
                             "res_decay_resist": 0.065,
                             "res_potential_energy": 0.65
-                        }
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "542",
+                        "id": 1774,
+                        "rating": "57.4%",
+                        "raw_score": 0.574,
+                        "stats": {
+                            "res_flavor": 0.504,
+                            "res_quality": 0.929,
+                            "res_decay_resist": 0.065,
+                            "res_potential_energy": 0.65
+                        },
+                        "rank": 3
+                    },
+                    {
+                        "id": 1409,
                         "rating": "57.2%",
                         "raw_score": 0.572,
                         "stats": {
@@ -1584,10 +1726,11 @@
                             "res_quality": 0.476,
                             "res_decay_resist": 0.494,
                             "res_potential_energy": 0.558
-                        }
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "533",
+                        "id": 1400,
                         "rating": "57.0%",
                         "raw_score": 0.57,
                         "stats": {
@@ -1595,10 +1738,23 @@
                             "res_quality": 0.532,
                             "res_decay_resist": 0.563,
                             "res_potential_energy": 0.448
-                        }
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "744",
+                        "id": 1867,
+                        "rating": "57.0%",
+                        "raw_score": 0.57,
+                        "stats": {
+                            "res_flavor": 0.645,
+                            "res_quality": 0.563,
+                            "res_decay_resist": 0.341,
+                            "res_potential_energy": 0.584
+                        },
+                        "rank": 6
+                    },
+                    {
+                        "id": 1609,
                         "rating": "56.5%",
                         "raw_score": 0.565,
                         "stats": {
@@ -1606,10 +1762,23 @@
                             "res_quality": 0.447,
                             "res_decay_resist": 0.261,
                             "res_potential_energy": 0.871
-                        }
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "795",
+                        "id": 1750,
+                        "rating": "56.3%",
+                        "raw_score": 0.563,
+                        "stats": {
+                            "res_flavor": 0.825,
+                            "res_quality": 0.917,
+                            "res_decay_resist": 0.253,
+                            "res_potential_energy": 0.281
+                        },
+                        "rank": 8
+                    },
+                    {
+                        "id": 1659,
                         "rating": "55.1%",
                         "raw_score": 0.551,
                         "stats": {
@@ -1617,10 +1786,11 @@
                             "res_quality": 0.196,
                             "res_decay_resist": 0.215,
                             "res_potential_energy": 0.572
-                        }
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "53.4%",
                         "raw_score": 0.534,
                         "stats": {
@@ -1628,1543 +1798,1674 @@
                             "res_quality": 0.603,
                             "res_decay_resist": 0.631,
                             "res_potential_energy": 0.855
-                        }
-                    },
-                    {
-                        "id": "651",
-                        "rating": "52.8%",
-                        "raw_score": 0.528,
-                        "stats": {
-                            "res_flavor": 0.567,
-                            "res_quality": 0.952,
-                            "res_decay_resist": 0.595,
-                            "res_potential_energy": 0.286
-                        }
+                        },
+                        "rank": 10
                     }
                 ]
             },
             "exp_experimental_filling|exp_experimental_flavor": {
                 "best": [
                     {
-                        "id": "651",
+                        "id": 1522,
                         "rating": "68.9%",
                         "raw_score": 0.689,
                         "stats": {
-                            "res_decay_resist": 0.595,
+                            "res_flavor": 0.567,
                             "res_quality": 0.952,
-                            "res_flavor": 0.567
-                        }
+                            "res_decay_resist": 0.595
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "170",
+                        "id": 1038,
                         "rating": "65.7%",
                         "raw_score": 0.657,
                         "stats": {
-                            "res_decay_resist": 0.696,
+                            "res_flavor": 0.565,
                             "res_quality": 0.712,
-                            "res_flavor": 0.565
-                        }
+                            "res_decay_resist": 0.696
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "367",
+                        "id": 1233,
                         "rating": "64.6%",
                         "raw_score": 0.646,
                         "stats": {
-                            "res_decay_resist": 0.816,
+                            "res_flavor": 0.471,
                             "res_quality": 0.628,
-                            "res_flavor": 0.471
-                        }
+                            "res_decay_resist": 0.816
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "534",
+                        "id": 1401,
                         "rating": "63.6%",
                         "raw_score": 0.636,
                         "stats": {
-                            "res_decay_resist": 0.751,
+                            "res_flavor": 0.497,
                             "res_quality": 0.648,
-                            "res_flavor": 0.497
-                        }
+                            "res_decay_resist": 0.751
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "373",
+                        "id": 1750,
+                        "rating": "63.6%",
+                        "raw_score": 0.636,
+                        "stats": {
+                            "res_flavor": 0.825,
+                            "res_quality": 0.917,
+                            "res_decay_resist": 0.253
+                        },
+                        "rank": 5
+                    },
+                    {
+                        "id": 1239,
                         "rating": "62.4%",
                         "raw_score": 0.624,
                         "stats": {
-                            "res_decay_resist": 0.752,
+                            "res_flavor": 0.672,
                             "res_quality": 0.407,
-                            "res_flavor": 0.672
-                        }
+                            "res_decay_resist": 0.752
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "533",
+                        "id": 1400,
                         "rating": "61.0%",
                         "raw_score": 0.61,
                         "stats": {
-                            "res_decay_resist": 0.563,
+                            "res_flavor": 0.732,
                             "res_quality": 0.532,
-                            "res_flavor": 0.732
-                        }
+                            "res_decay_resist": 0.563
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "786",
+                        "id": 1669,
                         "rating": "60.0%",
                         "raw_score": 0.6,
                         "stats": {
-                            "res_decay_resist": 0.54,
+                            "res_flavor": 0.615,
                             "res_quality": 0.663,
-                            "res_flavor": 0.615
-                        }
+                            "res_decay_resist": 0.54
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "59.9%",
                         "raw_score": 0.599,
                         "stats": {
-                            "res_decay_resist": 0.348,
+                            "res_flavor": 0.874,
                             "res_quality": 0.614,
-                            "res_flavor": 0.874
-                        }
+                            "res_decay_resist": 0.348
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "53",
+                        "id": 922,
                         "rating": "57.1%",
                         "raw_score": 0.571,
                         "stats": {
-                            "res_decay_resist": 0.633,
+                            "res_flavor": 0.541,
                             "res_quality": 0.528,
-                            "res_flavor": 0.541
-                        }
-                    },
-                    {
-                        "id": "268",
-                        "rating": "55.7%",
-                        "raw_score": 0.557,
-                        "stats": {
-                            "res_decay_resist": 0.699,
-                            "res_quality": 0.328,
-                            "res_flavor": 0.598
-                        }
+                            "res_decay_resist": 0.633
+                        },
+                        "rank": 10
                     }
                 ],
                 "current": [
                     {
-                        "id": "651",
-                        "rating": "68.9%",
-                        "raw_score": 0.689,
-                        "stats": {
-                            "res_decay_resist": 0.595,
-                            "res_quality": 0.952,
-                            "res_flavor": 0.567
-                        }
-                    },
-                    {
-                        "id": "534",
+                        "id": 1401,
                         "rating": "63.6%",
                         "raw_score": 0.636,
                         "stats": {
-                            "res_decay_resist": 0.751,
+                            "res_flavor": 0.497,
                             "res_quality": 0.648,
-                            "res_flavor": 0.497
-                        }
+                            "res_decay_resist": 0.751
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "533",
+                        "id": 1750,
+                        "rating": "63.6%",
+                        "raw_score": 0.636,
+                        "stats": {
+                            "res_flavor": 0.825,
+                            "res_quality": 0.917,
+                            "res_decay_resist": 0.253
+                        },
+                        "rank": 2
+                    },
+                    {
+                        "id": 1400,
                         "rating": "61.0%",
                         "raw_score": 0.61,
                         "stats": {
-                            "res_decay_resist": 0.563,
+                            "res_flavor": 0.732,
                             "res_quality": 0.532,
-                            "res_flavor": 0.732
-                        }
+                            "res_decay_resist": 0.563
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "786",
-                        "rating": "60.0%",
-                        "raw_score": 0.6,
-                        "stats": {
-                            "res_decay_resist": 0.54,
-                            "res_quality": 0.663,
-                            "res_flavor": 0.615
-                        }
-                    },
-                    {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "59.9%",
                         "raw_score": 0.599,
                         "stats": {
-                            "res_decay_resist": 0.348,
+                            "res_flavor": 0.874,
                             "res_quality": 0.614,
-                            "res_flavor": 0.874
-                        }
+                            "res_decay_resist": 0.348
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "818",
+                        "id": 1685,
                         "rating": "55.4%",
                         "raw_score": 0.554,
                         "stats": {
-                            "res_decay_resist": 0.864,
+                            "res_flavor": 0.332,
                             "res_quality": 0.406,
-                            "res_flavor": 0.332
-                        }
+                            "res_decay_resist": 0.864
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "542",
+                        "id": 1409,
                         "rating": "54.6%",
                         "raw_score": 0.546,
                         "stats": {
-                            "res_decay_resist": 0.494,
+                            "res_flavor": 0.668,
                             "res_quality": 0.476,
-                            "res_flavor": 0.668
-                        }
+                            "res_decay_resist": 0.494
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "841",
+                        "id": 1707,
                         "rating": "54.4%",
                         "raw_score": 0.544,
                         "stats": {
-                            "res_decay_resist": 0.483,
+                            "res_flavor": 0.569,
                             "res_quality": 0.596,
-                            "res_flavor": 0.569
-                        }
+                            "res_decay_resist": 0.483
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "455",
-                        "rating": "48.7%",
-                        "raw_score": 0.487,
+                        "id": 1867,
+                        "rating": "50.6%",
+                        "raw_score": 0.506,
                         "stats": {
-                            "res_decay_resist": 0.593,
-                            "res_quality": 0.52,
-                            "res_flavor": 0.339
-                        }
+                            "res_flavor": 0.645,
+                            "res_quality": 0.563,
+                            "res_decay_resist": 0.341
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "600",
+                        "id": 1467,
                         "rating": "48.2%",
                         "raw_score": 0.482,
                         "stats": {
-                            "res_decay_resist": 0.432,
+                            "res_flavor": 0.486,
                             "res_quality": 0.545,
-                            "res_flavor": 0.486
-                        }
+                            "res_decay_resist": 0.432
+                        },
+                        "rank": 9
+                    },
+                    {
+                        "id": 1841,
+                        "rating": "47.8%",
+                        "raw_score": 0.478,
+                        "stats": {
+                            "res_flavor": 0.22,
+                            "res_quality": 0.281,
+                            "res_decay_resist": 0.86
+                        },
+                        "rank": 10
                     }
                 ]
             },
             "exp_experimental_filling|exp_experimental_quantity": {
                 "best": [
                     {
-                        "id": "787",
+                        "id": 1673,
                         "rating": "72.9%",
                         "raw_score": 0.729,
                         "stats": {
                             "res_decay_resist": 0.489,
-                            "res_quality": 0.982,
-                            "res_potential_energy": 0.966
-                        }
+                            "res_potential_energy": 0.966,
+                            "res_quality": 0.982
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "71.1%",
                         "raw_score": 0.711,
                         "stats": {
                             "res_decay_resist": 0.631,
-                            "res_quality": 0.603,
-                            "res_potential_energy": 0.855
-                        }
+                            "res_potential_energy": 0.855,
+                            "res_quality": 0.603
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "455",
+                        "id": 1350,
                         "rating": "70.4%",
                         "raw_score": 0.704,
                         "stats": {
                             "res_decay_resist": 0.593,
-                            "res_quality": 0.52,
-                            "res_potential_energy": 0.914
-                        }
+                            "res_potential_energy": 0.914,
+                            "res_quality": 0.52
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "170",
+                        "id": 1038,
                         "rating": "66.6%",
                         "raw_score": 0.666,
                         "stats": {
                             "res_decay_resist": 0.696,
-                            "res_quality": 0.712,
-                            "res_potential_energy": 0.612
-                        }
+                            "res_potential_energy": 0.612,
+                            "res_quality": 0.712
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "818",
+                        "id": 1685,
                         "rating": "66.3%",
                         "raw_score": 0.663,
                         "stats": {
                             "res_decay_resist": 0.864,
-                            "res_quality": 0.406,
-                            "res_potential_energy": 0.482
-                        }
+                            "res_potential_energy": 0.482,
+                            "res_quality": 0.406
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "8",
+                        "id": 1841,
+                        "rating": "65.3%",
+                        "raw_score": 0.653,
+                        "stats": {
+                            "res_decay_resist": 0.86,
+                            "res_potential_energy": 0.502,
+                            "res_quality": 0.281
+                        },
+                        "rank": 6
+                    },
+                    {
+                        "id": 877,
                         "rating": "63.2%",
                         "raw_score": 0.632,
                         "stats": {
                             "res_decay_resist": 0.976,
-                            "res_quality": 0.013,
-                            "res_potential_energy": 0.381
-                        }
+                            "res_potential_energy": 0.381,
+                            "res_quality": 0.013
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "192",
+                        "id": 1061,
                         "rating": "62.6%",
                         "raw_score": 0.626,
                         "stats": {
                             "res_decay_resist": 0.63,
-                            "res_quality": 0.499,
-                            "res_potential_energy": 0.665
-                        }
+                            "res_potential_energy": 0.665,
+                            "res_quality": 0.499
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "268",
-                        "rating": "58.2%",
-                        "raw_score": 0.582,
+                        "id": 1949,
+                        "rating": "62.1%",
+                        "raw_score": 0.621,
                         "stats": {
-                            "res_decay_resist": 0.699,
-                            "res_quality": 0.328,
-                            "res_potential_energy": 0.513
-                        }
+                            "res_decay_resist": 0.648,
+                            "res_potential_energy": 0.62,
+                            "res_quality": 0.516
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "373",
-                        "rating": "57.8%",
-                        "raw_score": 0.578,
+                        "id": 1831,
+                        "rating": "60.3%",
+                        "raw_score": 0.603,
                         "stats": {
-                            "res_decay_resist": 0.752,
-                            "res_quality": 0.407,
-                            "res_potential_energy": 0.403
-                        }
-                    },
-                    {
-                        "id": "159",
-                        "rating": "57.2%",
-                        "raw_score": 0.572,
-                        "stats": {
-                            "res_decay_resist": 0.543,
-                            "res_quality": 0.006,
-                            "res_potential_energy": 0.8
-                        }
+                            "res_decay_resist": 0.744,
+                            "res_potential_energy": 0.523,
+                            "res_quality": 0.282
+                        },
+                        "rank": 10
                     }
                 ],
                 "current": [
                     {
-                        "id": "787",
-                        "rating": "72.9%",
-                        "raw_score": 0.729,
-                        "stats": {
-                            "res_decay_resist": 0.489,
-                            "res_quality": 0.982,
-                            "res_potential_energy": 0.966
-                        }
-                    },
-                    {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "71.1%",
                         "raw_score": 0.711,
                         "stats": {
                             "res_decay_resist": 0.631,
-                            "res_quality": 0.603,
-                            "res_potential_energy": 0.855
-                        }
+                            "res_potential_energy": 0.855,
+                            "res_quality": 0.603
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "455",
-                        "rating": "70.4%",
-                        "raw_score": 0.704,
-                        "stats": {
-                            "res_decay_resist": 0.593,
-                            "res_quality": 0.52,
-                            "res_potential_energy": 0.914
-                        }
-                    },
-                    {
-                        "id": "818",
+                        "id": 1685,
                         "rating": "66.3%",
                         "raw_score": 0.663,
                         "stats": {
                             "res_decay_resist": 0.864,
-                            "res_quality": 0.406,
-                            "res_potential_energy": 0.482
-                        }
+                            "res_potential_energy": 0.482,
+                            "res_quality": 0.406
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "651",
-                        "rating": "52.3%",
-                        "raw_score": 0.523,
+                        "id": 1841,
+                        "rating": "65.3%",
+                        "raw_score": 0.653,
                         "stats": {
-                            "res_decay_resist": 0.595,
-                            "res_quality": 0.952,
-                            "res_potential_energy": 0.286
-                        }
+                            "res_decay_resist": 0.86,
+                            "res_potential_energy": 0.502,
+                            "res_quality": 0.281
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "533",
+                        "id": 1949,
+                        "rating": "62.1%",
+                        "raw_score": 0.621,
+                        "stats": {
+                            "res_decay_resist": 0.648,
+                            "res_potential_energy": 0.62,
+                            "res_quality": 0.516
+                        },
+                        "rank": 4
+                    },
+                    {
+                        "id": 1831,
+                        "rating": "60.3%",
+                        "raw_score": 0.603,
+                        "stats": {
+                            "res_decay_resist": 0.744,
+                            "res_potential_energy": 0.523,
+                            "res_quality": 0.282
+                        },
+                        "rank": 5
+                    },
+                    {
+                        "id": 1948,
+                        "rating": "52.6%",
+                        "raw_score": 0.526,
+                        "stats": {
+                            "res_decay_resist": 0.573,
+                            "res_potential_energy": 0.618,
+                            "res_quality": 0.063
+                        },
+                        "rank": 6
+                    },
+                    {
+                        "id": 1400,
                         "rating": "51.6%",
                         "raw_score": 0.516,
                         "stats": {
                             "res_decay_resist": 0.563,
-                            "res_quality": 0.532,
-                            "res_potential_energy": 0.448
-                        }
+                            "res_potential_energy": 0.448,
+                            "res_quality": 0.532
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "542",
+                        "id": 1409,
                         "rating": "51.5%",
                         "raw_score": 0.515,
                         "stats": {
                             "res_decay_resist": 0.494,
-                            "res_quality": 0.476,
-                            "res_potential_energy": 0.558
-                        }
+                            "res_potential_energy": 0.558,
+                            "res_quality": 0.476
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "744",
+                        "id": 1609,
                         "rating": "51.3%",
                         "raw_score": 0.513,
                         "stats": {
                             "res_decay_resist": 0.261,
-                            "res_quality": 0.447,
-                            "res_potential_energy": 0.871
-                        }
+                            "res_potential_energy": 0.871,
+                            "res_quality": 0.447
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "51.0%",
                         "raw_score": 0.51,
                         "stats": {
                             "res_decay_resist": 0.348,
-                            "res_quality": 0.614,
-                            "res_potential_energy": 0.692
-                        }
-                    },
-                    {
-                        "id": "600",
-                        "rating": "47.7%",
-                        "raw_score": 0.477,
-                        "stats": {
-                            "res_decay_resist": 0.432,
-                            "res_quality": 0.545,
-                            "res_potential_energy": 0.516
-                        }
+                            "res_potential_energy": 0.692,
+                            "res_quality": 0.614
+                        },
+                        "rank": 10
                     }
                 ]
             },
             "exp_experimental_flavor|exp_experimental_nutritional_value|exp_experimental_quantity": {
                 "best": [
                     {
-                        "id": "787",
+                        "id": 1673,
                         "rating": "71.6%",
                         "raw_score": 0.716,
                         "stats": {
-                            "res_flavor": 0.003,
                             "res_quality": 0.982,
                             "res_potential_energy": 0.966,
+                            "res_flavor": 0.003,
                             "res_decay_resist": 0.489
-                        }
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "68.6%",
                         "raw_score": 0.686,
                         "stats": {
-                            "res_flavor": 0.874,
                             "res_quality": 0.614,
                             "res_potential_energy": 0.692,
+                            "res_flavor": 0.874,
                             "res_decay_resist": 0.348
-                        }
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "455",
+                        "id": 1350,
                         "rating": "67.2%",
                         "raw_score": 0.672,
                         "stats": {
-                            "res_flavor": 0.339,
                             "res_quality": 0.52,
                             "res_potential_energy": 0.914,
+                            "res_flavor": 0.339,
                             "res_decay_resist": 0.593
-                        }
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "170",
+                        "id": 1038,
                         "rating": "63.0%",
                         "raw_score": 0.63,
                         "stats": {
-                            "res_flavor": 0.565,
                             "res_quality": 0.712,
                             "res_potential_energy": 0.612,
+                            "res_flavor": 0.565,
                             "res_decay_resist": 0.696
-                        }
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "777",
+                        "id": 1644,
                         "rating": "63.0%",
                         "raw_score": 0.63,
                         "stats": {
-                            "res_flavor": 0.504,
                             "res_quality": 0.929,
                             "res_potential_energy": 0.65,
+                            "res_flavor": 0.504,
                             "res_decay_resist": 0.065
-                        }
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "744",
+                        "id": 1774,
+                        "rating": "63.0%",
+                        "raw_score": 0.63,
+                        "stats": {
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
+                            "res_flavor": 0.504,
+                            "res_decay_resist": 0.065
+                        },
+                        "rank": 6
+                    },
+                    {
+                        "id": 1609,
                         "rating": "62.0%",
                         "raw_score": 0.62,
                         "stats": {
-                            "res_flavor": 0.393,
                             "res_quality": 0.447,
                             "res_potential_energy": 0.871,
+                            "res_flavor": 0.393,
                             "res_decay_resist": 0.261
-                        }
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "61.2%",
                         "raw_score": 0.612,
                         "stats": {
-                            "res_flavor": 0.098,
                             "res_quality": 0.603,
                             "res_potential_energy": 0.855,
+                            "res_flavor": 0.098,
                             "res_decay_resist": 0.631
-                        }
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "274",
+                        "id": 1143,
                         "rating": "57.3%",
                         "raw_score": 0.573,
                         "stats": {
-                            "res_flavor": 0.368,
                             "res_quality": 0.951,
                             "res_potential_energy": 0.548,
+                            "res_flavor": 0.368,
                             "res_decay_resist": 0.266
-                        }
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "542",
-                        "rating": "55.8%",
-                        "raw_score": 0.558,
+                        "id": 1867,
+                        "rating": "57.2%",
+                        "raw_score": 0.572,
                         "stats": {
-                            "res_flavor": 0.668,
-                            "res_quality": 0.476,
-                            "res_potential_energy": 0.558,
-                            "res_decay_resist": 0.494
-                        }
-                    },
-                    {
-                        "id": "159",
-                        "rating": "54.8%",
-                        "raw_score": 0.548,
-                        "stats": {
-                            "res_flavor": 0.554,
-                            "res_quality": 0.006,
-                            "res_potential_energy": 0.8,
-                            "res_decay_resist": 0.543
-                        }
+                            "res_quality": 0.563,
+                            "res_potential_energy": 0.584,
+                            "res_flavor": 0.645,
+                            "res_decay_resist": 0.341
+                        },
+                        "rank": 10
                     }
                 ],
                 "current": [
                     {
-                        "id": "787",
-                        "rating": "71.6%",
-                        "raw_score": 0.716,
-                        "stats": {
-                            "res_flavor": 0.003,
-                            "res_quality": 0.982,
-                            "res_potential_energy": 0.966,
-                            "res_decay_resist": 0.489
-                        }
-                    },
-                    {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "68.6%",
                         "raw_score": 0.686,
                         "stats": {
-                            "res_flavor": 0.874,
                             "res_quality": 0.614,
                             "res_potential_energy": 0.692,
+                            "res_flavor": 0.874,
                             "res_decay_resist": 0.348
-                        }
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "455",
-                        "rating": "67.2%",
-                        "raw_score": 0.672,
-                        "stats": {
-                            "res_flavor": 0.339,
-                            "res_quality": 0.52,
-                            "res_potential_energy": 0.914,
-                            "res_decay_resist": 0.593
-                        }
-                    },
-                    {
-                        "id": "777",
+                        "id": 1644,
                         "rating": "63.0%",
                         "raw_score": 0.63,
                         "stats": {
-                            "res_flavor": 0.504,
                             "res_quality": 0.929,
                             "res_potential_energy": 0.65,
+                            "res_flavor": 0.504,
                             "res_decay_resist": 0.065
-                        }
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "744",
+                        "id": 1774,
+                        "rating": "63.0%",
+                        "raw_score": 0.63,
+                        "stats": {
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
+                            "res_flavor": 0.504,
+                            "res_decay_resist": 0.065
+                        },
+                        "rank": 3
+                    },
+                    {
+                        "id": 1609,
                         "rating": "62.0%",
                         "raw_score": 0.62,
                         "stats": {
-                            "res_flavor": 0.393,
                             "res_quality": 0.447,
                             "res_potential_energy": 0.871,
+                            "res_flavor": 0.393,
                             "res_decay_resist": 0.261
-                        }
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "61.2%",
                         "raw_score": 0.612,
                         "stats": {
-                            "res_flavor": 0.098,
                             "res_quality": 0.603,
                             "res_potential_energy": 0.855,
+                            "res_flavor": 0.098,
                             "res_decay_resist": 0.631
-                        }
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "542",
+                        "id": 1867,
+                        "rating": "57.2%",
+                        "raw_score": 0.572,
+                        "stats": {
+                            "res_quality": 0.563,
+                            "res_potential_energy": 0.584,
+                            "res_flavor": 0.645,
+                            "res_decay_resist": 0.341
+                        },
+                        "rank": 6
+                    },
+                    {
+                        "id": 1409,
                         "rating": "55.8%",
                         "raw_score": 0.558,
                         "stats": {
-                            "res_flavor": 0.668,
                             "res_quality": 0.476,
                             "res_potential_energy": 0.558,
+                            "res_flavor": 0.668,
                             "res_decay_resist": 0.494
-                        }
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "533",
+                        "id": 1400,
                         "rating": "53.9%",
                         "raw_score": 0.539,
                         "stats": {
-                            "res_flavor": 0.732,
                             "res_quality": 0.532,
                             "res_potential_energy": 0.448,
+                            "res_flavor": 0.732,
                             "res_decay_resist": 0.563
-                        }
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "651",
-                        "rating": "52.1%",
-                        "raw_score": 0.521,
+                        "id": 1750,
+                        "rating": "53.9%",
+                        "raw_score": 0.539,
                         "stats": {
-                            "res_flavor": 0.567,
-                            "res_quality": 0.952,
-                            "res_potential_energy": 0.286,
-                            "res_decay_resist": 0.595
-                        }
+                            "res_quality": 0.917,
+                            "res_potential_energy": 0.281,
+                            "res_flavor": 0.825,
+                            "res_decay_resist": 0.253
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "795",
+                        "id": 1659,
                         "rating": "51.6%",
                         "raw_score": 0.516,
                         "stats": {
-                            "res_flavor": 0.834,
                             "res_quality": 0.196,
                             "res_potential_energy": 0.572,
+                            "res_flavor": 0.834,
                             "res_decay_resist": 0.215
-                        }
+                        },
+                        "rank": 10
                     }
                 ]
             },
             "exp_experimental_filling|exp_experimental_flavor|exp_experimental_nutritional_value": {
                 "best": [
                     {
-                        "id": "170",
+                        "id": 1038,
                         "rating": "65.3%",
                         "raw_score": 0.653,
                         "stats": {
-                            "res_decay_resist": 0.696,
                             "res_quality": 0.712,
+                            "res_potential_energy": 0.612,
                             "res_flavor": 0.565,
-                            "res_potential_energy": 0.612
-                        }
+                            "res_decay_resist": 0.696
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "787",
+                        "id": 1673,
                         "rating": "63.7%",
                         "raw_score": 0.637,
                         "stats": {
-                            "res_decay_resist": 0.489,
                             "res_quality": 0.982,
+                            "res_potential_energy": 0.966,
                             "res_flavor": 0.003,
-                            "res_potential_energy": 0.966
-                        }
+                            "res_decay_resist": 0.489
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "651",
+                        "id": 1522,
                         "rating": "62.9%",
                         "raw_score": 0.629,
                         "stats": {
-                            "res_decay_resist": 0.595,
                             "res_quality": 0.952,
+                            "res_potential_energy": 0.286,
                             "res_flavor": 0.567,
-                            "res_potential_energy": 0.286
-                        }
+                            "res_decay_resist": 0.595
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "62.1%",
                         "raw_score": 0.621,
                         "stats": {
-                            "res_decay_resist": 0.348,
                             "res_quality": 0.614,
+                            "res_potential_energy": 0.692,
                             "res_flavor": 0.874,
-                            "res_potential_energy": 0.692
-                        }
+                            "res_decay_resist": 0.348
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "455",
+                        "id": 1750,
+                        "rating": "58.8%",
+                        "raw_score": 0.588,
+                        "stats": {
+                            "res_quality": 0.917,
+                            "res_potential_energy": 0.281,
+                            "res_flavor": 0.825,
+                            "res_decay_resist": 0.253
+                        },
+                        "rank": 5
+                    },
+                    {
+                        "id": 1350,
                         "rating": "58.5%",
                         "raw_score": 0.585,
                         "stats": {
-                            "res_decay_resist": 0.593,
                             "res_quality": 0.52,
+                            "res_potential_energy": 0.914,
                             "res_flavor": 0.339,
-                            "res_potential_energy": 0.914
-                        }
+                            "res_decay_resist": 0.593
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "533",
+                        "id": 1400,
                         "rating": "56.5%",
                         "raw_score": 0.565,
                         "stats": {
-                            "res_decay_resist": 0.563,
                             "res_quality": 0.532,
+                            "res_potential_energy": 0.448,
                             "res_flavor": 0.732,
-                            "res_potential_energy": 0.448
-                        }
+                            "res_decay_resist": 0.563
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "274",
+                        "id": 1143,
                         "rating": "56.0%",
                         "raw_score": 0.56,
                         "stats": {
-                            "res_decay_resist": 0.266,
                             "res_quality": 0.951,
+                            "res_potential_energy": 0.548,
                             "res_flavor": 0.368,
-                            "res_potential_energy": 0.548
-                        }
+                            "res_decay_resist": 0.266
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "777",
+                        "id": 1644,
                         "rating": "55.5%",
                         "raw_score": 0.555,
                         "stats": {
-                            "res_decay_resist": 0.065,
                             "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
                             "res_flavor": 0.504,
-                            "res_potential_energy": 0.65
-                        }
+                            "res_decay_resist": 0.065
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "541",
-                        "rating": "55.4%",
-                        "raw_score": 0.554,
+                        "id": 1774,
+                        "rating": "55.5%",
+                        "raw_score": 0.555,
                         "stats": {
-                            "res_decay_resist": 0.631,
-                            "res_quality": 0.603,
-                            "res_flavor": 0.098,
-                            "res_potential_energy": 0.855
-                        }
-                    },
-                    {
-                        "id": "373",
-                        "rating": "55.1%",
-                        "raw_score": 0.551,
-                        "stats": {
-                            "res_decay_resist": 0.752,
-                            "res_quality": 0.407,
-                            "res_flavor": 0.672,
-                            "res_potential_energy": 0.403
-                        }
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
+                            "res_flavor": 0.504,
+                            "res_decay_resist": 0.065
+                        },
+                        "rank": 10
                     }
                 ],
                 "current": [
                     {
-                        "id": "787",
-                        "rating": "63.7%",
-                        "raw_score": 0.637,
-                        "stats": {
-                            "res_decay_resist": 0.489,
-                            "res_quality": 0.982,
-                            "res_flavor": 0.003,
-                            "res_potential_energy": 0.966
-                        }
-                    },
-                    {
-                        "id": "651",
-                        "rating": "62.9%",
-                        "raw_score": 0.629,
-                        "stats": {
-                            "res_decay_resist": 0.595,
-                            "res_quality": 0.952,
-                            "res_flavor": 0.567,
-                            "res_potential_energy": 0.286
-                        }
-                    },
-                    {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "62.1%",
                         "raw_score": 0.621,
                         "stats": {
-                            "res_decay_resist": 0.348,
                             "res_quality": 0.614,
+                            "res_potential_energy": 0.692,
                             "res_flavor": 0.874,
-                            "res_potential_energy": 0.692
-                        }
+                            "res_decay_resist": 0.348
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "455",
-                        "rating": "58.5%",
-                        "raw_score": 0.585,
+                        "id": 1750,
+                        "rating": "58.8%",
+                        "raw_score": 0.588,
                         "stats": {
-                            "res_decay_resist": 0.593,
-                            "res_quality": 0.52,
-                            "res_flavor": 0.339,
-                            "res_potential_energy": 0.914
-                        }
+                            "res_quality": 0.917,
+                            "res_potential_energy": 0.281,
+                            "res_flavor": 0.825,
+                            "res_decay_resist": 0.253
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "533",
+                        "id": 1400,
                         "rating": "56.5%",
                         "raw_score": 0.565,
                         "stats": {
-                            "res_decay_resist": 0.563,
                             "res_quality": 0.532,
+                            "res_potential_energy": 0.448,
                             "res_flavor": 0.732,
-                            "res_potential_energy": 0.448
-                        }
+                            "res_decay_resist": 0.563
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "777",
+                        "id": 1644,
                         "rating": "55.5%",
                         "raw_score": 0.555,
                         "stats": {
-                            "res_decay_resist": 0.065,
                             "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
                             "res_flavor": 0.504,
-                            "res_potential_energy": 0.65
-                        }
+                            "res_decay_resist": 0.065
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "541",
+                        "id": 1774,
+                        "rating": "55.5%",
+                        "raw_score": 0.555,
+                        "stats": {
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
+                            "res_flavor": 0.504,
+                            "res_decay_resist": 0.065
+                        },
+                        "rank": 5
+                    },
+                    {
+                        "id": 1408,
                         "rating": "55.4%",
                         "raw_score": 0.554,
                         "stats": {
-                            "res_decay_resist": 0.631,
                             "res_quality": 0.603,
+                            "res_potential_energy": 0.855,
                             "res_flavor": 0.098,
-                            "res_potential_energy": 0.855
-                        }
+                            "res_decay_resist": 0.631
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "542",
+                        "id": 1409,
                         "rating": "54.1%",
                         "raw_score": 0.541,
                         "stats": {
-                            "res_decay_resist": 0.494,
                             "res_quality": 0.476,
+                            "res_potential_energy": 0.558,
                             "res_flavor": 0.668,
-                            "res_potential_energy": 0.558
-                        }
+                            "res_decay_resist": 0.494
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "786",
-                        "rating": "53.9%",
-                        "raw_score": 0.539,
+                        "id": 1867,
+                        "rating": "52.9%",
+                        "raw_score": 0.529,
                         "stats": {
-                            "res_decay_resist": 0.54,
-                            "res_quality": 0.663,
-                            "res_flavor": 0.615,
-                            "res_potential_energy": 0.293
-                        }
+                            "res_quality": 0.563,
+                            "res_potential_energy": 0.584,
+                            "res_flavor": 0.645,
+                            "res_decay_resist": 0.341
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "818",
+                        "id": 1685,
                         "rating": "52.1%",
                         "raw_score": 0.521,
                         "stats": {
-                            "res_decay_resist": 0.864,
                             "res_quality": 0.406,
+                            "res_potential_energy": 0.482,
                             "res_flavor": 0.332,
-                            "res_potential_energy": 0.482
-                        }
+                            "res_decay_resist": 0.864
+                        },
+                        "rank": 9
+                    },
+                    {
+                        "id": 1401,
+                        "rating": "50.2%",
+                        "raw_score": 0.502,
+                        "stats": {
+                            "res_quality": 0.648,
+                            "res_potential_energy": 0.027,
+                            "res_flavor": 0.497,
+                            "res_decay_resist": 0.751
+                        },
+                        "rank": 10
                     }
                 ]
             },
             "exp_experimental_filling|exp_experimental_nutritional_value|exp_experimental_quantity": {
                 "best": [
                     {
-                        "id": "787",
+                        "id": 1673,
                         "rating": "80.9%",
                         "raw_score": 0.809,
                         "stats": {
-                            "res_decay_resist": 0.489,
                             "res_quality": 0.982,
-                            "res_potential_energy": 0.966
-                        }
+                            "res_potential_energy": 0.966,
+                            "res_decay_resist": 0.489
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "73.1%",
                         "raw_score": 0.731,
                         "stats": {
-                            "res_decay_resist": 0.631,
                             "res_quality": 0.603,
-                            "res_potential_energy": 0.855
-                        }
+                            "res_potential_energy": 0.855,
+                            "res_decay_resist": 0.631
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "455",
+                        "id": 1350,
                         "rating": "73.0%",
                         "raw_score": 0.73,
                         "stats": {
-                            "res_decay_resist": 0.593,
                             "res_quality": 0.52,
-                            "res_potential_energy": 0.914
-                        }
+                            "res_potential_energy": 0.914,
+                            "res_decay_resist": 0.593
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "170",
+                        "id": 1038,
                         "rating": "65.9%",
                         "raw_score": 0.659,
                         "stats": {
-                            "res_decay_resist": 0.696,
                             "res_quality": 0.712,
-                            "res_potential_energy": 0.612
-                        }
+                            "res_potential_energy": 0.612,
+                            "res_decay_resist": 0.696
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "192",
+                        "id": 1061,
                         "rating": "62.1%",
                         "raw_score": 0.621,
                         "stats": {
-                            "res_decay_resist": 0.63,
                             "res_quality": 0.499,
-                            "res_potential_energy": 0.665
-                        }
+                            "res_potential_energy": 0.665,
+                            "res_decay_resist": 0.63
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "818",
+                        "id": 1949,
+                        "rating": "60.9%",
+                        "raw_score": 0.609,
+                        "stats": {
+                            "res_quality": 0.516,
+                            "res_potential_energy": 0.62,
+                            "res_decay_resist": 0.648
+                        },
+                        "rank": 6
+                    },
+                    {
+                        "id": 1685,
                         "rating": "59.5%",
                         "raw_score": 0.595,
                         "stats": {
-                            "res_decay_resist": 0.864,
                             "res_quality": 0.406,
-                            "res_potential_energy": 0.482
-                        }
+                            "res_potential_energy": 0.482,
+                            "res_decay_resist": 0.864
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "744",
+                        "id": 1609,
                         "rating": "58.4%",
                         "raw_score": 0.584,
                         "stats": {
-                            "res_decay_resist": 0.261,
                             "res_quality": 0.447,
-                            "res_potential_energy": 0.871
-                        }
+                            "res_potential_energy": 0.871,
+                            "res_decay_resist": 0.261
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "724",
+                        "id": 1841,
+                        "rating": "57.8%",
+                        "raw_score": 0.578,
+                        "stats": {
+                            "res_quality": 0.281,
+                            "res_potential_energy": 0.502,
+                            "res_decay_resist": 0.86
+                        },
+                        "rank": 9
+                    },
+                    {
+                        "id": 1595,
                         "rating": "56.1%",
                         "raw_score": 0.561,
                         "stats": {
-                            "res_decay_resist": 0.348,
                             "res_quality": 0.614,
-                            "res_potential_energy": 0.692
-                        }
-                    },
-                    {
-                        "id": "159",
-                        "rating": "56.0%",
-                        "raw_score": 0.56,
-                        "stats": {
-                            "res_decay_resist": 0.543,
-                            "res_quality": 0.006,
-                            "res_potential_energy": 0.8
-                        }
-                    },
-                    {
-                        "id": "608",
-                        "rating": "54.4%",
-                        "raw_score": 0.544,
-                        "stats": {
-                            "res_decay_resist": 0.574,
-                            "res_quality": 0.387,
-                            "res_potential_energy": 0.588
-                        }
+                            "res_potential_energy": 0.692,
+                            "res_decay_resist": 0.348
+                        },
+                        "rank": 10
                     }
                 ],
                 "current": [
                     {
-                        "id": "787",
-                        "rating": "80.9%",
-                        "raw_score": 0.809,
-                        "stats": {
-                            "res_decay_resist": 0.489,
-                            "res_quality": 0.982,
-                            "res_potential_energy": 0.966
-                        }
-                    },
-                    {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "73.1%",
                         "raw_score": 0.731,
                         "stats": {
-                            "res_decay_resist": 0.631,
                             "res_quality": 0.603,
-                            "res_potential_energy": 0.855
-                        }
+                            "res_potential_energy": 0.855,
+                            "res_decay_resist": 0.631
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "455",
-                        "rating": "73.0%",
-                        "raw_score": 0.73,
+                        "id": 1949,
+                        "rating": "60.9%",
+                        "raw_score": 0.609,
                         "stats": {
-                            "res_decay_resist": 0.593,
-                            "res_quality": 0.52,
-                            "res_potential_energy": 0.914
-                        }
+                            "res_quality": 0.516,
+                            "res_potential_energy": 0.62,
+                            "res_decay_resist": 0.648
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "818",
+                        "id": 1685,
                         "rating": "59.5%",
                         "raw_score": 0.595,
                         "stats": {
-                            "res_decay_resist": 0.864,
                             "res_quality": 0.406,
-                            "res_potential_energy": 0.482
-                        }
+                            "res_potential_energy": 0.482,
+                            "res_decay_resist": 0.864
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "744",
+                        "id": 1609,
                         "rating": "58.4%",
                         "raw_score": 0.584,
                         "stats": {
-                            "res_decay_resist": 0.261,
                             "res_quality": 0.447,
-                            "res_potential_energy": 0.871
-                        }
+                            "res_potential_energy": 0.871,
+                            "res_decay_resist": 0.261
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "724",
+                        "id": 1841,
+                        "rating": "57.8%",
+                        "raw_score": 0.578,
+                        "stats": {
+                            "res_quality": 0.281,
+                            "res_potential_energy": 0.502,
+                            "res_decay_resist": 0.86
+                        },
+                        "rank": 5
+                    },
+                    {
+                        "id": 1595,
                         "rating": "56.1%",
                         "raw_score": 0.561,
                         "stats": {
-                            "res_decay_resist": 0.348,
                             "res_quality": 0.614,
-                            "res_potential_energy": 0.692
-                        }
+                            "res_potential_energy": 0.692,
+                            "res_decay_resist": 0.348
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "542",
+                        "id": 1831,
+                        "rating": "55.0%",
+                        "raw_score": 0.55,
+                        "stats": {
+                            "res_quality": 0.282,
+                            "res_potential_energy": 0.523,
+                            "res_decay_resist": 0.744
+                        },
+                        "rank": 7
+                    },
+                    {
+                        "id": 1409,
                         "rating": "52.0%",
                         "raw_score": 0.52,
                         "stats": {
-                            "res_decay_resist": 0.494,
                             "res_quality": 0.476,
-                            "res_potential_energy": 0.558
-                        }
+                            "res_potential_energy": 0.558,
+                            "res_decay_resist": 0.494
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "651",
-                        "rating": "51.8%",
-                        "raw_score": 0.518,
-                        "stats": {
-                            "res_decay_resist": 0.595,
-                            "res_quality": 0.952,
-                            "res_potential_energy": 0.286
-                        }
-                    },
-                    {
-                        "id": "777",
+                        "id": 1644,
                         "rating": "50.8%",
                         "raw_score": 0.508,
                         "stats": {
-                            "res_decay_resist": 0.065,
                             "res_quality": 0.929,
-                            "res_potential_energy": 0.65
-                        }
+                            "res_potential_energy": 0.65,
+                            "res_decay_resist": 0.065
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "533",
-                        "rating": "50.2%",
-                        "raw_score": 0.502,
+                        "id": 1774,
+                        "rating": "50.8%",
+                        "raw_score": 0.508,
                         "stats": {
-                            "res_decay_resist": 0.563,
-                            "res_quality": 0.532,
-                            "res_potential_energy": 0.448
-                        }
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
+                            "res_decay_resist": 0.065
+                        },
+                        "rank": 10
                     }
                 ]
             },
             "exp_experimental_filling|exp_experimental_flavor|exp_experimental_quantity": {
                 "best": [
                     {
-                        "id": "170",
+                        "id": 1038,
                         "rating": "64.9%",
                         "raw_score": 0.649,
                         "stats": {
-                            "res_decay_resist": 0.696,
-                            "res_quality": 0.712,
                             "res_flavor": 0.565,
+                            "res_quality": 0.712,
+                            "res_decay_resist": 0.696,
                             "res_potential_energy": 0.612
-                        }
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "455",
+                        "id": 1350,
                         "rating": "60.3%",
                         "raw_score": 0.603,
                         "stats": {
-                            "res_decay_resist": 0.593,
-                            "res_quality": 0.52,
                             "res_flavor": 0.339,
+                            "res_quality": 0.52,
+                            "res_decay_resist": 0.593,
                             "res_potential_energy": 0.914
-                        }
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "60.1%",
                         "raw_score": 0.601,
                         "stats": {
-                            "res_decay_resist": 0.348,
-                            "res_quality": 0.614,
                             "res_flavor": 0.874,
+                            "res_quality": 0.614,
+                            "res_decay_resist": 0.348,
                             "res_potential_energy": 0.692
-                        }
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "787",
+                        "id": 1673,
                         "rating": "59.7%",
                         "raw_score": 0.597,
                         "stats": {
-                            "res_decay_resist": 0.489,
-                            "res_quality": 0.982,
                             "res_flavor": 0.003,
+                            "res_quality": 0.982,
+                            "res_decay_resist": 0.489,
                             "res_potential_energy": 0.966
-                        }
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "651",
+                        "id": 1522,
                         "rating": "58.0%",
                         "raw_score": 0.58,
                         "stats": {
-                            "res_decay_resist": 0.595,
-                            "res_quality": 0.952,
                             "res_flavor": 0.567,
+                            "res_quality": 0.952,
+                            "res_decay_resist": 0.595,
                             "res_potential_energy": 0.286
-                        }
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "373",
+                        "id": 1239,
                         "rating": "57.9%",
                         "raw_score": 0.579,
                         "stats": {
-                            "res_decay_resist": 0.752,
-                            "res_quality": 0.407,
                             "res_flavor": 0.672,
+                            "res_quality": 0.407,
+                            "res_decay_resist": 0.752,
                             "res_potential_energy": 0.403
-                        }
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "533",
+                        "id": 1400,
                         "rating": "56.5%",
                         "raw_score": 0.565,
                         "stats": {
-                            "res_decay_resist": 0.563,
-                            "res_quality": 0.532,
                             "res_flavor": 0.732,
+                            "res_quality": 0.532,
+                            "res_decay_resist": 0.563,
                             "res_potential_energy": 0.448
-                        }
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "56.4%",
                         "raw_score": 0.564,
                         "stats": {
-                            "res_decay_resist": 0.631,
-                            "res_quality": 0.603,
                             "res_flavor": 0.098,
+                            "res_quality": 0.603,
+                            "res_decay_resist": 0.631,
                             "res_potential_energy": 0.855
-                        }
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "818",
+                        "id": 1685,
                         "rating": "56.1%",
                         "raw_score": 0.561,
                         "stats": {
-                            "res_decay_resist": 0.864,
-                            "res_quality": 0.406,
                             "res_flavor": 0.332,
+                            "res_quality": 0.406,
+                            "res_decay_resist": 0.864,
                             "res_potential_energy": 0.482
-                        }
+                        },
+                        "rank": 9
                     },
                     {
-                        "id": "268",
+                        "id": 1137,
                         "rating": "55.8%",
                         "raw_score": 0.558,
                         "stats": {
-                            "res_decay_resist": 0.699,
-                            "res_quality": 0.328,
                             "res_flavor": 0.598,
+                            "res_quality": 0.328,
+                            "res_decay_resist": 0.699,
                             "res_potential_energy": 0.513
-                        }
+                        },
+                        "rank": 10
                     }
                 ],
                 "current": [
                     {
-                        "id": "455",
-                        "rating": "60.3%",
-                        "raw_score": 0.603,
-                        "stats": {
-                            "res_decay_resist": 0.593,
-                            "res_quality": 0.52,
-                            "res_flavor": 0.339,
-                            "res_potential_energy": 0.914
-                        }
-                    },
-                    {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "60.1%",
                         "raw_score": 0.601,
                         "stats": {
-                            "res_decay_resist": 0.348,
-                            "res_quality": 0.614,
                             "res_flavor": 0.874,
+                            "res_quality": 0.614,
+                            "res_decay_resist": 0.348,
                             "res_potential_energy": 0.692
-                        }
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "787",
-                        "rating": "59.7%",
-                        "raw_score": 0.597,
-                        "stats": {
-                            "res_decay_resist": 0.489,
-                            "res_quality": 0.982,
-                            "res_flavor": 0.003,
-                            "res_potential_energy": 0.966
-                        }
-                    },
-                    {
-                        "id": "651",
-                        "rating": "58.0%",
-                        "raw_score": 0.58,
-                        "stats": {
-                            "res_decay_resist": 0.595,
-                            "res_quality": 0.952,
-                            "res_flavor": 0.567,
-                            "res_potential_energy": 0.286
-                        }
-                    },
-                    {
-                        "id": "533",
+                        "id": 1400,
                         "rating": "56.5%",
                         "raw_score": 0.565,
                         "stats": {
-                            "res_decay_resist": 0.563,
-                            "res_quality": 0.532,
                             "res_flavor": 0.732,
+                            "res_quality": 0.532,
+                            "res_decay_resist": 0.563,
                             "res_potential_energy": 0.448
-                        }
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "56.4%",
                         "raw_score": 0.564,
                         "stats": {
-                            "res_decay_resist": 0.631,
-                            "res_quality": 0.603,
                             "res_flavor": 0.098,
+                            "res_quality": 0.603,
+                            "res_decay_resist": 0.631,
                             "res_potential_energy": 0.855
-                        }
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "818",
+                        "id": 1685,
                         "rating": "56.1%",
                         "raw_score": 0.561,
                         "stats": {
-                            "res_decay_resist": 0.864,
-                            "res_quality": 0.406,
                             "res_flavor": 0.332,
+                            "res_quality": 0.406,
+                            "res_decay_resist": 0.864,
                             "res_potential_energy": 0.482
-                        }
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "542",
+                        "id": 1409,
                         "rating": "54.4%",
                         "raw_score": 0.544,
                         "stats": {
-                            "res_decay_resist": 0.494,
-                            "res_quality": 0.476,
                             "res_flavor": 0.668,
+                            "res_quality": 0.476,
+                            "res_decay_resist": 0.494,
                             "res_potential_energy": 0.558
-                        }
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "786",
-                        "rating": "51.8%",
-                        "raw_score": 0.518,
+                        "id": 1841,
+                        "rating": "51.6%",
+                        "raw_score": 0.516,
                         "stats": {
-                            "res_decay_resist": 0.54,
-                            "res_quality": 0.663,
-                            "res_flavor": 0.615,
-                            "res_potential_energy": 0.293
-                        }
+                            "res_flavor": 0.22,
+                            "res_quality": 0.281,
+                            "res_decay_resist": 0.86,
+                            "res_potential_energy": 0.502
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "534",
+                        "id": 1750,
+                        "rating": "51.5%",
+                        "raw_score": 0.515,
+                        "stats": {
+                            "res_flavor": 0.825,
+                            "res_quality": 0.917,
+                            "res_decay_resist": 0.253,
+                            "res_potential_energy": 0.281
+                        },
+                        "rank": 7
+                    },
+                    {
+                        "id": 1867,
+                        "rating": "51.2%",
+                        "raw_score": 0.512,
+                        "stats": {
+                            "res_flavor": 0.645,
+                            "res_quality": 0.563,
+                            "res_decay_resist": 0.341,
+                            "res_potential_energy": 0.584
+                        },
+                        "rank": 8
+                    },
+                    {
+                        "id": 1831,
+                        "rating": "49.9%",
+                        "raw_score": 0.499,
+                        "stats": {
+                            "res_flavor": 0.294,
+                            "res_quality": 0.282,
+                            "res_decay_resist": 0.744,
+                            "res_potential_energy": 0.523
+                        },
+                        "rank": 9
+                    },
+                    {
+                        "id": 1401,
                         "rating": "49.3%",
                         "raw_score": 0.493,
                         "stats": {
-                            "res_decay_resist": 0.751,
-                            "res_quality": 0.648,
                             "res_flavor": 0.497,
+                            "res_quality": 0.648,
+                            "res_decay_resist": 0.751,
                             "res_potential_energy": 0.027
-                        }
+                        },
+                        "rank": 10
                     }
                 ]
             },
             "exp_experimental_filling|exp_experimental_flavor|exp_experimental_nutritional_value|exp_experimental_quantity": {
                 "best": [
                     {
-                        "id": "787",
+                        "id": 1673,
                         "rating": "69.0%",
                         "raw_score": 0.69,
                         "stats": {
-                            "res_decay_resist": 0.489,
                             "res_quality": 0.982,
+                            "res_potential_energy": 0.966,
                             "res_flavor": 0.003,
-                            "res_potential_energy": 0.966
-                        }
+                            "res_decay_resist": 0.489
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "170",
+                        "id": 1038,
                         "rating": "64.8%",
                         "raw_score": 0.648,
                         "stats": {
-                            "res_decay_resist": 0.696,
                             "res_quality": 0.712,
+                            "res_potential_energy": 0.612,
                             "res_flavor": 0.565,
-                            "res_potential_energy": 0.612
-                        }
+                            "res_decay_resist": 0.696
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "455",
+                        "id": 1350,
                         "rating": "64.7%",
                         "raw_score": 0.647,
                         "stats": {
-                            "res_decay_resist": 0.593,
                             "res_quality": 0.52,
+                            "res_potential_energy": 0.914,
                             "res_flavor": 0.339,
-                            "res_potential_energy": 0.914
-                        }
+                            "res_decay_resist": 0.593
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "61.7%",
                         "raw_score": 0.617,
                         "stats": {
-                            "res_decay_resist": 0.348,
                             "res_quality": 0.614,
+                            "res_potential_energy": 0.692,
                             "res_flavor": 0.874,
-                            "res_potential_energy": 0.692
-                        }
+                            "res_decay_resist": 0.348
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "61.5%",
                         "raw_score": 0.615,
                         "stats": {
-                            "res_decay_resist": 0.631,
                             "res_quality": 0.603,
+                            "res_potential_energy": 0.855,
                             "res_flavor": 0.098,
-                            "res_potential_energy": 0.855
-                        }
+                            "res_decay_resist": 0.631
+                        },
+                        "rank": 5
                     },
                     {
-                        "id": "651",
+                        "id": 1522,
                         "rating": "56.2%",
                         "raw_score": 0.562,
                         "stats": {
-                            "res_decay_resist": 0.595,
                             "res_quality": 0.952,
+                            "res_potential_energy": 0.286,
                             "res_flavor": 0.567,
-                            "res_potential_energy": 0.286
-                        }
+                            "res_decay_resist": 0.595
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "533",
+                        "id": 1400,
                         "rating": "54.3%",
                         "raw_score": 0.543,
                         "stats": {
-                            "res_decay_resist": 0.563,
                             "res_quality": 0.532,
+                            "res_potential_energy": 0.448,
                             "res_flavor": 0.732,
-                            "res_potential_energy": 0.448
-                        }
+                            "res_decay_resist": 0.563
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "777",
+                        "id": 1644,
                         "rating": "54.2%",
                         "raw_score": 0.542,
                         "stats": {
-                            "res_decay_resist": 0.065,
                             "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
                             "res_flavor": 0.504,
-                            "res_potential_energy": 0.65
-                        }
+                            "res_decay_resist": 0.065
+                        },
+                        "rank": 8
                     },
                     {
-                        "id": "542",
+                        "id": 1774,
+                        "rating": "54.2%",
+                        "raw_score": 0.542,
+                        "stats": {
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
+                            "res_flavor": 0.504,
+                            "res_decay_resist": 0.065
+                        },
+                        "rank": 9
+                    },
+                    {
+                        "id": 1409,
                         "rating": "54.1%",
                         "raw_score": 0.541,
                         "stats": {
-                            "res_decay_resist": 0.494,
                             "res_quality": 0.476,
+                            "res_potential_energy": 0.558,
                             "res_flavor": 0.668,
-                            "res_potential_energy": 0.558
-                        }
-                    },
-                    {
-                        "id": "744",
-                        "rating": "54.1%",
-                        "raw_score": 0.541,
-                        "stats": {
-                            "res_decay_resist": 0.261,
-                            "res_quality": 0.447,
-                            "res_flavor": 0.393,
-                            "res_potential_energy": 0.871
-                        }
+                            "res_decay_resist": 0.494
+                        },
+                        "rank": 10
                     }
                 ],
                 "current": [
                     {
-                        "id": "787",
-                        "rating": "69.0%",
-                        "raw_score": 0.69,
-                        "stats": {
-                            "res_decay_resist": 0.489,
-                            "res_quality": 0.982,
-                            "res_flavor": 0.003,
-                            "res_potential_energy": 0.966
-                        }
-                    },
-                    {
-                        "id": "455",
-                        "rating": "64.7%",
-                        "raw_score": 0.647,
-                        "stats": {
-                            "res_decay_resist": 0.593,
-                            "res_quality": 0.52,
-                            "res_flavor": 0.339,
-                            "res_potential_energy": 0.914
-                        }
-                    },
-                    {
-                        "id": "724",
+                        "id": 1595,
                         "rating": "61.7%",
                         "raw_score": 0.617,
                         "stats": {
-                            "res_decay_resist": 0.348,
                             "res_quality": 0.614,
+                            "res_potential_energy": 0.692,
                             "res_flavor": 0.874,
-                            "res_potential_energy": 0.692
-                        }
+                            "res_decay_resist": 0.348
+                        },
+                        "rank": 1
                     },
                     {
-                        "id": "541",
+                        "id": 1408,
                         "rating": "61.5%",
                         "raw_score": 0.615,
                         "stats": {
-                            "res_decay_resist": 0.631,
                             "res_quality": 0.603,
+                            "res_potential_energy": 0.855,
                             "res_flavor": 0.098,
-                            "res_potential_energy": 0.855
-                        }
+                            "res_decay_resist": 0.631
+                        },
+                        "rank": 2
                     },
                     {
-                        "id": "651",
-                        "rating": "56.2%",
-                        "raw_score": 0.562,
-                        "stats": {
-                            "res_decay_resist": 0.595,
-                            "res_quality": 0.952,
-                            "res_flavor": 0.567,
-                            "res_potential_energy": 0.286
-                        }
-                    },
-                    {
-                        "id": "533",
+                        "id": 1400,
                         "rating": "54.3%",
                         "raw_score": 0.543,
                         "stats": {
-                            "res_decay_resist": 0.563,
                             "res_quality": 0.532,
+                            "res_potential_energy": 0.448,
                             "res_flavor": 0.732,
-                            "res_potential_energy": 0.448
-                        }
+                            "res_decay_resist": 0.563
+                        },
+                        "rank": 3
                     },
                     {
-                        "id": "777",
+                        "id": 1644,
                         "rating": "54.2%",
                         "raw_score": 0.542,
                         "stats": {
-                            "res_decay_resist": 0.065,
                             "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
                             "res_flavor": 0.504,
-                            "res_potential_energy": 0.65
-                        }
+                            "res_decay_resist": 0.065
+                        },
+                        "rank": 4
                     },
                     {
-                        "id": "542",
+                        "id": 1774,
+                        "rating": "54.2%",
+                        "raw_score": 0.542,
+                        "stats": {
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
+                            "res_flavor": 0.504,
+                            "res_decay_resist": 0.065
+                        },
+                        "rank": 5
+                    },
+                    {
+                        "id": 1409,
                         "rating": "54.1%",
                         "raw_score": 0.541,
                         "stats": {
-                            "res_decay_resist": 0.494,
                             "res_quality": 0.476,
+                            "res_potential_energy": 0.558,
                             "res_flavor": 0.668,
-                            "res_potential_energy": 0.558
-                        }
+                            "res_decay_resist": 0.494
+                        },
+                        "rank": 6
                     },
                     {
-                        "id": "744",
+                        "id": 1609,
                         "rating": "54.1%",
                         "raw_score": 0.541,
                         "stats": {
-                            "res_decay_resist": 0.261,
                             "res_quality": 0.447,
+                            "res_potential_energy": 0.871,
                             "res_flavor": 0.393,
-                            "res_potential_energy": 0.871
-                        }
+                            "res_decay_resist": 0.261
+                        },
+                        "rank": 7
                     },
                     {
-                        "id": "818",
+                        "id": 1685,
                         "rating": "53.5%",
                         "raw_score": 0.535,
                         "stats": {
-                            "res_decay_resist": 0.864,
                             "res_quality": 0.406,
+                            "res_potential_energy": 0.482,
                             "res_flavor": 0.332,
-                            "res_potential_energy": 0.482
-                        }
+                            "res_decay_resist": 0.864
+                        },
+                        "rank": 8
+                    },
+                    {
+                        "id": 1867,
+                        "rating": "52.8%",
+                        "raw_score": 0.528,
+                        "stats": {
+                            "res_quality": 0.563,
+                            "res_potential_energy": 0.584,
+                            "res_flavor": 0.645,
+                            "res_decay_resist": 0.341
+                        },
+                        "rank": 9
+                    },
+                    {
+                        "id": 1750,
+                        "rating": "50.9%",
+                        "raw_score": 0.509,
+                        "stats": {
+                            "res_quality": 0.917,
+                            "res_potential_energy": 0.281,
+                            "res_flavor": 0.825,
+                            "res_decay_resist": 0.253
+                        },
+                        "rank": 10
                     }
                 ]
             }
         }
-    }
+    },
+    "last_updated": 1769673707
 }

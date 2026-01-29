@@ -134,9 +134,12 @@ const API = {
 
 	async recalculateRankings(serverId) {
         // Requires Superadmin
-        const response = await api.post('/admin/recalc-rankings', { server_id: serverId });
-		// console.log('Recalculate Rankings Response:', response);
-        return response.data;
+        const response = await this._fetch('/api/admin/recalc-rankings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ server_id: serverId })
+        });
+        return await response.json();
     }
 };
 
