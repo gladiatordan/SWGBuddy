@@ -1,28 +1,29 @@
+// frontend/src/components/Layout/Header.jsx
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import AuthWidget from '../Auth/AuthWidget';
-import { useServer } from '../../contexts/ServerContext';
 import ManagementModal from '../Modals/ManagementModal';
 
-// Now accepts props for state control
-const Header = ({ activeTab, setActiveTab, selectedServer, setSelectedServer }) => {
+const Header = ({ selectedServer, setSelectedServer }) => {
     const [isMgmtOpen, setIsMgmtOpen] = useState(false);
+    
     return (
         <header className="main-header">
             <div className="logo"><span>SWG</span>BUDDY</div>
             
             <nav className="top-nav">
-                <button 
-                    className={`nav-btn ${activeTab === 'resources' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('resources')}
+                <NavLink 
+                    to="/resources" 
+                    className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}
                 >
                     RESOURCES
-                </button>
-                <button 
-                    className={`nav-btn ${activeTab === 'schematics' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('schematics')}
+                </NavLink>
+                <NavLink 
+                    to="/schematics" 
+                    className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}
                 >
                     SCHEMATICS
-                </button>
+                </NavLink>
             </nav>
 
             <div className="controls-section">
