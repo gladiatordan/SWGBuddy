@@ -29,7 +29,7 @@ class ValidationService(Core):
 	]
 
 	# Added ranking_queue to signature
-	def __init__(self, input_queue, log_queue, reply_queue, cache, ranking_queue=None):
+	def __init__(self, input_queue, log_queue, reply_queue, ranking_queue, cache):
 		super().__init__(log_queue)
 		self.input_queue = input_queue
 		self.reply_queue = reply_queue
@@ -134,6 +134,17 @@ class ValidationService(Core):
 			elif action == "reload_cache":
 				self._hydrate_permissions()
 				self.info("Permissions reloaded.")
+			
+			elif action == "recalculate_rankings":
+				# Forward to Ranking Service
+				if self.ranking_queue:
+					self.ranking_queue.put({
+						"action": "recalculate_rankings",
+						"server_id": server_id
+					})
+					self.info(f"User {user_ctx.get('username')} triggered full ranking recalculation for {server_id}")
+				else:
+					raise ValueError("Ranking queue unavailable.")
 
 			else:
 				raise ValueError(f"No handler for action: {action}")
