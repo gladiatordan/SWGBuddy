@@ -34,12 +34,14 @@
     padding: 10px 10px;
     transition: all 0.3s ease;
     border-bottom: 2px solid transparent;
+	text-decoration: none;
 }
 
 .nav-btn.active {
     color: var(--accent-blue);
     border-bottom: 2px solid var(--accent-blue);
     text-shadow: 0 0 10px var(--accent-blue);
+	text-decoration: none;
 }
 
 .nav-btn:hover:not(:enabled) {
