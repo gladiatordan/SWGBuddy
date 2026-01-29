@@ -129,6 +129,11 @@
     font-weight: 800;
 }
 
+.role-superadmin { background: #ff4444; color: white; }
+.role-admin { background: #ffbb33; color: black; }
+.role-editor { background: #00C851; color: white; }
+.role-user { background: #33b5e5; color: white; }
+
 
 /* Header Controls Layout */
 .controls-section {
