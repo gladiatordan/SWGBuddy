@@ -1,14 +1,19 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import API from '../../services/api';
 import { useServer } from '../../contexts/ServerContext';
+import { useAuth } from '../../contexts/AuthContext'; // Import Auth
 import TaxonomySearch from '../Common/TaxonomySearch';
 
 const SchematicSidebar = ({ selectedId, onSelect }) => {
     const { selectedServer } = useServer();
+    const { hasPermission } = useAuth(); // Get Permission Helper
     const [indexData, setIndexData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [activeFilter, setActiveFilter] = useState(null); 
+    
+    // State for Recalculate Button
+    const [isRecalculating, setIsRecalculating] = useState(false);
 
     // Fetch Index
     useEffect(() => {
@@ -16,7 +21,6 @@ const SchematicSidebar = ({ selectedId, onSelect }) => {
             if (!selectedServer) return;
             setIsLoading(true);
             try {
-                // FIX: selectedServer is a string, pass it directly
                 const data = await API.fetchSchematicIndex(selectedServer);
                 setIndexData(data || []);
             } catch (err) {
@@ -66,6 +70,30 @@ const SchematicSidebar = ({ selectedId, onSelect }) => {
         });
     }, [indexData, search, activeFilter]);
 
+    // --- HANDLERS ---
+    
+    const handleRecalculate = async () => {
+        if (!window.confirm("This will trigger a full recalculation of all schematic rankings for this server. This process is resource-intensive. Continue?")) {
+            return;
+        }
+
+        setIsRecalculating(true);
+        try {
+            await API.recalculateRankings(selectedServer);
+            alert("Rankings recalculation started. Updates will appear as they process.");
+        } catch (err) {
+            alert("Failed to trigger recalculation: " + (err.response?.data?.error || err.message));
+        } finally {
+            setIsRecalculating(false);
+        }
+    };
+
+    const handleAddSchematic = () => {
+        // Placeholder for future Modal logic
+        console.log("Open Add Schematic Modal");
+        alert("Add Schematic feature coming soon!");
+    };
+
     return (
         <aside className="schematics-sidebar">
             <div className="sidebar-header">
@@ -112,6 +140,44 @@ const SchematicSidebar = ({ selectedId, onSelect }) => {
                     <div style={{padding: '20px', textAlign: 'center', color: 'var(--text-dim)', fontSize: '0.9rem'}}>
                         No matches found.
                     </div>
+                )}
+            </div>
+
+            {/* --- ADMIN FOOTER --- */}
+            <div className="sidebar-footer" style={{
+                padding: '10px',
+                borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                background: 'rgba(0, 0, 0, 0.2)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '8px'
+            }}>
+                {/* Superadmin Only: Recalculate */}
+                {hasPermission('SUPERADMIN') && (
+                    <button 
+                        className="btn-secondary" 
+                        onClick={handleRecalculate}
+                        disabled={isRecalculating}
+                        style={{ width: '100%', fontSize: '0.85rem', padding: '8px' }}
+                        title="Force update of all schematic rankings"
+                    >
+                        {isRecalculating ? (
+                            <><i className="fa-solid fa-spinner fa-spin"></i> Processing...</>
+                        ) : (
+                            <><i className="fa-solid fa-calculator"></i> Recalc Rankings</>
+                        )}
+                    </button>
+                )}
+
+                {/* Admin Only: Add Schematic */}
+                {hasPermission('ADMIN') && (
+                    <button 
+                        className="btn-primary" 
+                        onClick={handleAddSchematic}
+                        style={{ width: '100%', fontSize: '0.85rem', padding: '8px' }}
+                    >
+                        <i className="fa-solid fa-plus"></i> Add Schematic
+                    </button>
                 )}
             </div>
         </aside>

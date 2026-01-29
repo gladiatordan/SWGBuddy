@@ -130,6 +130,13 @@ const API = {
             body: JSON.stringify({ server: serverId, ids: schematicIds })
         });
         return await response.json();
+    },
+
+	async recalculateRankings(serverId) {
+        // Requires Superadmin
+        const response = await api.post('/admin/recalc-rankings', { server_id: serverId });
+		// console.log('Recalculate Rankings Response:', response);
+        return response.data;
     }
 };
 

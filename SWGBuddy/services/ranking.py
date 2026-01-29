@@ -109,8 +109,12 @@ class RankingService(Core):
         return combos
 
     def _process_message(self, packet):
-        if packet.get('action') == "rank_resource":
+        action = packet.get('action')
+        
+        if action == "rank_resource":
             self._handle_rank_resource(packet)
+        elif action == "recalculate_rankings":
+            self._handle_recalculate_all(packet)
 
     def _handle_rank_resource(self, packet):
         resource = packet.get('resource')
@@ -144,6 +148,36 @@ class RankingService(Core):
         
         for sch_id, slot_name, ing_name, req_tree_id in affected_schematics:
             self._update_schematic_ranking(server_id, sch_id, ing_name, req_tree_id, resource)
+
+    def _handle_recalculate_all(self, packet):
+        server_id = packet.get('server_id')
+        if not server_id: return
+        
+        schematics = self.schematic_definitions.get(server_id, {})
+        lookup = self.ingredient_lookup.get(server_id, {}) 
+        
+        self.info(f"Starting full recalculation for {server_id} ({len(schematics)} schematics)...")
+        
+        count = 0
+        for sch_id, schem_data in schematics.items():
+            slots = schem_data.get('slots', {})
+            for slot_name, slot_def in slots.items():
+                if slot_def.get('slot_type') != 0: continue # Only resources
+                
+                ing_str = slot_def.get('ingredient')
+                # Resolve ingredient string to class tree ID
+                req_id = lookup.get(ing_str) or lookup.get(ing_str.lower())
+                if not req_id and ing_str.replace('.', '').isdigit(): req_id = ing_str
+                
+                if req_id:
+                    # Update this slot. Pass None for new_resource to skip alerts.
+                    self._update_schematic_ranking(server_id, sch_id, ing_str, req_id, None)
+            
+            count += 1
+            if count % 10 == 0:
+                self.info(f"Recalculated {count}/{len(schematics)}...")
+
+        self.info(f"Full recalculation complete for {server_id}.")
 
     def _update_schematic_ranking(self, server_id, sch_id, ing_key, req_tree_id, new_resource):
         schematic = self.schematic_definitions[server_id][sch_id]
@@ -280,6 +314,7 @@ class RankingService(Core):
         return breakdown
 
     def _check_discord_alert(self, new_resource, best_list, current_list, schem_name, combo_key):
+        if not new_resource: return 
         new_id = new_resource.get('id')
         found = False
         rank = 0

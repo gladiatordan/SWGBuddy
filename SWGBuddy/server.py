@@ -681,5 +681,26 @@ def check_schematic_updates():
     except Exception as e:
         return jsonify({"error": f"Update check error: {e}"}), 500
 
+@app.route('/api/admin/recalc-rankings', methods=['POST'])
+def recalc_rankings():
+    if 'discord_id' not in session: 
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    # Strict Superadmin Check
+    if not session.get('is_superadmin'): 
+        return jsonify({"error": "Forbidden"}), 403
+
+    data = request.json
+    server_id = data.get('server_id', 'cuemu')
+
+    # Send command to the backend processing queue
+    # Action 'recalculate_rankings' must be handled by your core.py or backend worker
+    resp = send_command("recalculate_rankings", {"server_id": server_id}, server_id=server_id)
+    
+    if resp['status'] == 'success':
+        return jsonify({"success": True, "message": "Recalculation started."})
+    
+    return jsonify({"error": resp.get('error', 'Unknown error')}), 500
+
 if __name__ == '__main__':
 	app.run(debug=True, port=5000)
