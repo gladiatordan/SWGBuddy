@@ -37,8 +37,8 @@ const API = {
         return await response.json();
     },
 
-    async fetchTaxonomy() {
-        const response = await this._fetch('/api/taxonomy');
+    async fetchTaxonomy(serverId) {
+        const response = await this._fetch(`/api/${serverId}/taxonomy`);
         return await response.json();
     },
 
@@ -109,6 +109,25 @@ const API = {
                 'X-Requested-With': 'XMLHttpRequest' 
             },
             body: formData
+        });
+        return await response.json();
+    },
+
+	async fetchSchematicIndex(serverId) {
+        const response = await this._fetch(`/api/schematics/index?server=${serverId}`);
+        return await response.json();
+    },
+
+	async fetchSchematicDetails(schematicId, serverId) {
+        const response = await this._fetch(`/api/schematics/${schematicId}?server=${serverId}`);
+        return await response.json();
+    },
+
+    async checkSchematicUpdates(serverId, schematicIds) {
+        const response = await this._fetch('/api/schematics/updates', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ server: serverId, ids: schematicIds })
         });
         return await response.json();
     }

@@ -1,9 +1,17 @@
 // Data & Formatting Utilities
 
 export const STAT_MAPPING = {
-    'res_oq': 'OQ', 'res_cr': 'CR', 'res_cd': 'CD', 'res_dr': 'DR', 
-    'res_fl': 'FL', 'res_hr': 'HR', 'res_ma': 'MA', 'res_pe': 'PE', 
-    'res_sr': 'SR', 'res_ut': 'UT'
+    'res_quality': 'OQ',
+    'res_cold_resist': 'CR',
+    'res_conductivity': 'CD',
+    'res_decay_resist': 'DR',
+    'res_flavor': 'FL',
+    'res_heat_resist': 'HR',
+    'res_malleability': 'MA',
+    'res_potential_energy': 'PE',
+    'res_shock_resistance': 'SR',
+    'res_toughness': 'UT'
+    // 'entangle_resistance': 'ER'
 };
 
 export const getStatColorClass = (rating) => {
@@ -44,35 +52,6 @@ export const formatResourceDate = (rawDate) => {
 };
 
 // --- FILTERING & SORTING LOGIC ---
-export const getDescendantLabels = (taxonomyTree, parentLabel) => {
-    if (!parentLabel || !taxonomyTree) return [];
-    let descendants = [];
-
-    const findNode = (nodes, target) => {
-        for (const node of nodes) {
-            if (node.label === target) return node;
-            if (node.children) {
-                const found = findNode(node.children, target);
-                if (found) return found;
-            }
-        }
-        return null;
-    };
-
-    const collect = (node) => {
-        if (node.children) {
-            node.children.forEach(child => {
-                descendants.push(child.label.toLowerCase());
-                collect(child);
-            });
-        }
-    };
-
-    const parentNode = findNode(taxonomyTree, parentLabel);
-    if (parentNode) collect(parentNode);
-    return descendants;
-};
-
 const SORT_BEHAVIOR = {
     // Name/Type: Up = A-Z (Ascending)
     alpha: 'asc', 
@@ -94,31 +73,30 @@ const COLUMN_CONFIG = {
     is_active: 'status',
 };
 
-export const filterResources = (data, filters, taxonomyTree) => {
+export const filterResources = (data, filters) => {
     if (!data) return [];
     
-    // Pre-calculate valid labels if a category is selected
-    let validLabels = [];
-    if (filters.category && filters.category !== "Resources" && filters.category !== "All Resources") {
-        validLabels = [
-            filters.category.toLowerCase(), 
-            ...getDescendantLabels(taxonomyTree, filters.category)
-        ];
-    }
-
     return data.filter(res => {
-        // 1. Search (Name/Type)
+        // 1. Search (Name match)
         if (filters.search) {
             const term = filters.search.toLowerCase();
             const name = (res.name || "").toLowerCase();
-            const type = (res.type || "").toLowerCase();
-            if (!name.includes(term) && !type.includes(term)) return false;
+            // Note: If you want to search by Type label text here, you'd need a lookup map.
+            // For now, checking name is standard.
+            if (!name.includes(term)) return false;
         }
 
-        // 2. Taxonomy (Category) - NOW USES HIERARCHY
-        if (validLabels.length > 0) {
-            const type = (res.type || "").toLowerCase();
-            if (!validLabels.includes(type)) return false;
+        // 2. Taxonomy (Hierarchical ID Check)
+        // filters.category is now the class_tree string (e.g., "1.2.3")
+        if (filters.category) {
+            if (!res.class_tree) return false;
+            // "1.2.3" should match "1.2.3" AND "1.2.3.4"
+            // We append a dot to ensure "1.2" doesn't match "1.20"
+            const prefix = filters.category + '.';
+            const exact = filters.category === res.class_tree;
+            const descendant = res.class_tree.startsWith(prefix);
+            
+            if (!exact && !descendant) return false;
         }
 
         // 3. Stats
@@ -190,4 +168,40 @@ export const findTaxonomyNode = (nodes, label) => {
         }
     }
     return null;
+};
+
+export const formatAge = (dateString) => {
+    if (!dateString) return '-';
+    
+    const now = new Date();
+    const date = new Date(dateString);
+    if (isNaN(date)) return '-';
+
+    const diffMs = now - date;
+    const diffSec = Math.floor(diffMs / 1000);
+    const diffMin = Math.floor(diffSec / 60);
+    const diffHour = Math.floor(diffMin / 60);
+    const diffDay = Math.floor(diffHour / 24);
+    
+    // Years (approx 365 days)
+    if (diffDay >= 365) {
+        const years = Math.floor(diffDay / 365);
+        return `${years} year${years > 1 ? 's' : ''}`;
+    }
+    
+    // Months (approx 30 days)
+    if (diffDay >= 30) {
+        const months = Math.floor(diffDay / 30);
+        return `${months} month${months > 1 ? 's' : ''}`;
+    }
+    
+    // Days
+    if (diffDay >= 1) {
+        // e.g. 5 days 4 hours
+        const remainingHours = diffHour % 24;
+        return `${diffDay} day${diffDay > 1 ? 's' : ''} ${remainingHours} hour${remainingHours !== 1 ? 's' : ''}`;
+    }
+    
+    // Hours
+    return `${diffHour} hour${diffHour !== 1 ? 's' : ''}`;
 };

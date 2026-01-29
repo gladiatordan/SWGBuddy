@@ -35,7 +35,6 @@ const Header = ({ activeTab, setActiveTab, selectedServer, setSelectedServer }) 
                         className="themed-select"
                     >
                         <option value="cuemu">CUEmu</option>
-                        {/* Future servers can be mapped here */}
                     </select>
                 </div>
 

@@ -9,6 +9,11 @@ const PermissionsTab = ({ serverId }) => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    // New State for Update Logic
+    const [pendingRole, setPendingRole] = useState('');
+    const [updating, setUpdating] = useState(false);
+    const [statusMsg, setStatusMsg] = useState(null);
+
     const ROLES_HIERARCHY = ['GUEST', 'USER', 'EDITOR', 'ADMIN', 'SUPERADMIN'];
 
     const fetchUsers = async () => {
@@ -25,52 +30,49 @@ const PermissionsTab = ({ serverId }) => {
 
     useEffect(() => { fetchUsers(); }, [serverId]);
 
+    // Sync pending role when user selection changes
+    useEffect(() => {
+        if (selectedUser) {
+            setPendingRole(selectedUser.role);
+            setStatusMsg(null);
+        }
+    }, [selectedUser]);
+
     const filteredUsers = useMemo(() => {
         return users.filter(u => u.username.toLowerCase().includes(search.toLowerCase()));
     }, [users, search]);
 
-    const handleUpdateRole = async (newRole) => {
-		// Prevent self-editing to avoid accidental lockout
-		if (selectedUser.id === currentUser.id) {
-			alert("You cannot modify your own permissions through this interface.");
-			return;
-		}
+    const handleUpdateRole = async () => {
+        if (!selectedUser) return;
 
-		try {
-			// serverId is now pulled from ServerContext or passed as a prop
-			await API.setRole(selectedUser.id, newRole, serverId);
-			alert(`Successfully updated ${selectedUser.username} to ${newRole}`);
-			fetchUsers(); // Re-sync the list to show the new role
-		} catch (err) {
-			alert("Failed to update role: " + err.message);
-		}
-	};
+        // Prevent self-editing
+        if (selectedUser.id === currentUser.id) {
+            setStatusMsg({ type: 'error', text: "You cannot modify your own permissions." });
+            return;
+        }
 
-	const renderRoleOptions = () => {
-		// Roles and levels aligned with backend validation.py and auth.js
-		const ROLES_HIERARCHY = ['GUEST', 'USER', 'EDITOR', 'ADMIN', 'SUPERADMIN'];
-		
-		// Determine the current user's effective role level for this server
-		const myRole = currentUser.is_superadmin ? 'SUPERADMIN' : (currentUser.server_perms?.[serverId] || 'GUEST');
-		const myLevel = ROLES_HIERARCHY.indexOf(myRole);
+        setUpdating(true);
+        setStatusMsg(null);
 
-		return ROLES_HIERARCHY.map((role, idx) => {
-			// HIERARCHY RULES: 
-			// 1. You cannot assign a role equal to or higher than your own.
-			// 2. Regular Admins (idx 3) can assign up to EDITOR (idx 2).
-			if (idx >= myLevel && !currentUser.is_superadmin) return null;
-			
-			// 3. Prevent assigning SUPERADMIN via UI unless backend specifically supports it.
-			// Typically, SUPERADMIN is a database-level flag.
-			if (role === 'SUPERADMIN' && !currentUser.is_superadmin) return null;
+        try {
+            await API.setRole(selectedUser.id, pendingRole, serverId);
+            
+            // Success Feedback
+            setStatusMsg({ type: 'success', text: `Successfully updated ${selectedUser.username} to ${pendingRole}` });
+            
+            // Update local state to reflect change immediately
+            const updatedUser = { ...selectedUser, role: pendingRole };
+            setSelectedUser(updatedUser);
+            setUsers(prev => prev.map(u => u.id === selectedUser.id ? updatedUser : u));
 
-			return (
-				<option key={role} value={role}>
-					{role}
-				</option>
-			);
-		});
-	};
+            // Background refresh to ensure consistency (optional, but good practice)
+            fetchUsers(); 
+        } catch (err) {
+            setStatusMsg({ type: 'error', text: "Failed to update role: " + err.message });
+        } finally {
+            setUpdating(false);
+        }
+    };
 
     const getAvatar = (u) => `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.png`;
 
@@ -118,16 +120,16 @@ const PermissionsTab = ({ serverId }) => {
                         <div className="role-select-container">
                             <label style={{color:'var(--text-dim)', fontSize:'0.8rem', marginBottom:'5px', display:'block'}}>SET ROLE</label>
                             
-                            {/* INTEGRATED ROLE OPTIONS LOGIC */}
                             <select 
                                 className="themed-select" 
                                 style={{width:'100%', border:'1px solid var(--border-color)'}}
-                                value={selectedUser.role}
-                                onChange={(e) => handleUpdateRole(e.target.value)}
+                                value={pendingRole}
+                                onChange={(e) => setPendingRole(e.target.value)}
                             >
                                 {ROLES_HIERARCHY.map((role, idx) => {
                                     // Determine effective role level for hierarchy check
-                                    const myRole = currentUser.is_superadmin ? 'SUPERADMIN' : (currentUser.server_perms?.[selectedServer] || 'GUEST');
+                                    // Fixed: Use serverId prop instead of undefined 'selectedServer'
+                                    const myRole = currentUser.is_superadmin ? 'SUPERADMIN' : (currentUser.server_perms?.[serverId] || 'GUEST');
                                     const myLevel = ROLES_HIERARCHY.indexOf(myRole);
 
                                     // HIERARCHY RULE: You cannot assign a role equal to or higher than your own
@@ -139,6 +141,28 @@ const PermissionsTab = ({ serverId }) => {
                                     return <option key={role} value={role}>{role}</option>;
                                 })}
                             </select>
+
+                            {/* Status Message */}
+                            {statusMsg && (
+                                <div className={`status-bar status-${statusMsg.type}`} style={{marginTop: '15px', padding: '8px', fontSize: '0.9rem'}}>
+                                    {statusMsg.text}
+                                </div>
+                            )}
+
+                            {/* Update Button */}
+                            <button 
+                                className="btn-primary" 
+                                style={{marginTop: '15px', width: '100%'}}
+                                onClick={handleUpdateRole}
+                                disabled={updating || pendingRole === selectedUser.role}
+                            >
+                                {updating ? (
+                                    <>
+                                        <i className="fa-solid fa-spinner fa-spin" style={{marginRight: '8px'}}></i>
+                                        Updating...
+                                    </>
+                                ) : 'Update Role'}
+                            </button>
                         </div>
                     </>
                 )}

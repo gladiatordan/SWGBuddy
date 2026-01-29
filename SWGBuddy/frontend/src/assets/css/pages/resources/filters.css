@@ -45,27 +45,10 @@
     gap: 8px;
 }
 
-.stat-filter-input {
-    background-color: #000;
-    color: var(--text-main);
-    border: 1px solid var(--border-color);
-    padding: 6px 4px;
-    border-radius: 4px;
-    font-family: 'Rajdhani', sans-serif;
-    width: 100%;
-    text-align: center;
-    font-size: 0.9rem;
-    transition: border-color 0.2s;
-}
-
-.stat-filter-input:focus {
-    border-color: var(--accent-blue);
-    outline: none;
-}
-
 .stat-filter-input::placeholder {
     color: var(--text-dim);
     opacity: 0.5;
+	text-align: center;
 }
 
 /* Row 4: Planets & Toggles */
@@ -144,19 +127,22 @@
     position: relative;
     display: flex;
     align-items: center;
+	width: 100%;
 }
 
 .reset-filter-btn {
     position: absolute;
-    right: 10px;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
     background: none;
     border: none;
     color: var(--text-dim);
     cursor: pointer;
-    font-size: 14px;
-    padding: 0;
-    z-index: 1001;
-    display: none;
+    font-size: 16px;
+    padding: 0 4px;
+    z-index: 1001; /* Above input */
+    line-height: 1;
     transition: color 0.2s;
 }
 
@@ -164,18 +150,9 @@
     color: var(--accent-blue);
 }
 
-.search-input {
-    background-color: #000;
-    color: var(--text-main);
-    border: 1px solid var(--border-color);
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-family: 'Rajdhani', sans-serif;
-    width: 250px;
-    padding-right: 30px; 
-}
-
-.search-input:focus {
+.search-input:focus, 
+.dropdown-search-input:focus,
+.stat-filter-input:focus {
     border-color: var(--accent-blue);
     outline: none;
 }
@@ -191,6 +168,14 @@
     border-radius: 4px;
     cursor: pointer;
     z-index: 1000;
+}
+
+.filter-input-wrapper,
+.custom-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 .dropdown-selected {
@@ -209,7 +194,12 @@
     background: #000;
     border: 1px solid var(--border-color);
     display: none;
-	/* z-index: 9999; */
+	z-index: var(--z-dropdown);
+	scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+.custom-dropdown .dropdown-list::-webkit-scrollbar {
+	display: none;
 }
 
 .dropdown-item {
@@ -256,11 +246,7 @@
     outline: none;
 }
 
-.dropdown-search:focus {
-    border-color: var(--accent-blue);
-}
-
-.dropdown-search-input, .modal-search-input {
+.modal-search-input {
     width: 100%;
     background: #000;
     border: 1px solid var(--border-color);
@@ -339,8 +325,16 @@
     width: 100%;
 }
 
-.grow-input {
-    flex: 1; /* Makes Name and Type equal width */
+.search-inputs-container {
+	display: flex;
+	flex-grow: 1;
+	gap: 4px;
+}
+
+.search-inputs-container .filter-input-wrapper,
+.search-inputs-container .custom-dropdown {
+    flex: 1; 
+    min-width: 0; /* Prevents overflow in narrow flex containers */
 }
 
 .active-toggle-inline {
@@ -367,13 +361,8 @@
 	text-align: center;
 }
 
-.filter-input-wrapper {
-    position: relative;
-    width: 100%;
-}
-
 .search-input, .dropdown-search-input {
-    width: 120%;
+    width: 100%;
     background: #000;
     color: var(--text-main);
     border: 1px solid var(--border-color);
@@ -382,6 +371,7 @@
     font-family: 'Rajdhani', sans-serif;
     font-size: 14px;
     box-sizing: border-box;
+	transition: border-color 0.2s;
 }
 
 /* Ensure the Reset Button sits on top of the input */
@@ -390,13 +380,20 @@
     right: 8px;
     top: 50%;
     transform: translateY(-50%);
-    color: #555;
     background: none;
     border: none;
+    color: var(--text-dim);
     cursor: pointer;
-    display: none; /* Toggled by JS */
+    font-size: 18px; /* Slightly larger touch target */
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    z-index: 10; /* Above Input */
+    padding: 0;
+    transition: color 0.2s;
 }
-.reset-filter-btn:hover { color: #fff; }
+.reset-filter-btn:hover { color: var(--accent-blue); }
 
 /* --- Column 3: Stats Grid --- */
 .filter-col-stats {
@@ -419,6 +416,7 @@
     position: relative;
     display: flex;
     align-items: center;
+	width: 100%;
 }
 
 .stat-filter-input {
@@ -426,13 +424,17 @@
     background: #000;
     border: 1px solid var(--border-color);
     color: var(--stat-high);
-    padding: 6px 16px 6px 4px; /* Room for X */
+    
+    /* Centering Logic */
+    text-align: center;
+    padding: 6px 18px; /* Equal padding left/right keeps it centered */
+    
     font-family: 'Rajdhani', sans-serif;
     font-size: 13px;
     font-weight: bold;
-    text-align: center;
     border-radius: 3px;
     appearance: textfield;
+	transition: border-color 0.2s;
 }
 .stat-filter-input::-webkit-outer-spin-button,
 .stat-filter-input::-webkit-inner-spin-button {
@@ -442,14 +444,18 @@
 
 .stat-clear {
     position: absolute;
-    right: 3px;
-    font-size: 14px; /* Larger */
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
     font-weight: bold;
     color: #666;
     cursor: pointer;
-    display: none;
     line-height: 1;
+    z-index: 5;
+    background: rgba(0,0,0,0.5); /* Slight backing to ensure legibility if over text */
     padding: 0 2px;
+    border-radius: 2px;
 }
 .stat-clear:hover { color: #f44; }
 .stat-filter-input:not(:placeholder-shown) + .stat-clear { display: block; }
@@ -493,4 +499,28 @@
     align-items: center;
     justify-content: center;
     padding-left: 5px;
+}
+
+.dropdown-header {
+    background-color: #111; /* Darker than items */
+    color: var(--accent-blue);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 8px 10px 4px 10px;
+    cursor: default;
+    pointer-events: none; /* Prevent clicks */
+    border-bottom: 1px solid var(--border-dim);
+    margin-top: 4px;
+}
+
+/* Ensure first header doesn't have top margin */
+.dropdown-header:first-child {
+    margin-top: 0;
+}
+
+/* Hover state override for header (just in case) */
+.dropdown-item.dropdown-header:hover {
+    background-color: #111;
 }

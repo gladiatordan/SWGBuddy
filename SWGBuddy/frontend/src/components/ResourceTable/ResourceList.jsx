@@ -1,16 +1,17 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useResources } from '../../hooks/useResources';
 import { useAuth } from '../../contexts/AuthContext';
-import { filterResources, sortResources } from '../../utils/resourceUtils';
+import { filterResources, sortResources, STAT_MAPPING } from '../../utils/resourceUtils';
 import ResourceRow from './ResourceRow';
-import TaxonomyFilter from './TaxonomyFilter';
+import TaxonomySearch from '../Common/TaxonomySearch';
 import ResourceModal from '../Modals/ResourceModal';
 import Loader from '../Common/Loader';
 
-const ResourceList = ({ serverId }) => {
-    const { resources, taxonomy, loading, actions } = useResources(serverId);
+const ResourceList = () => {
+    const { resources, cache, loading, actions } = useResources();
     const { hasPermission } = useAuth();
     const isEditor = hasPermission('EDITOR');
+	const isAdmin = hasPermission('ADMIN');
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedResource, setSelectedResource] = useState(null);
@@ -25,8 +26,9 @@ const ResourceList = ({ serverId }) => {
         setIsModalOpen(true);
     };
 
-    const handleModalSave = () => {
-        actions.refresh(); // Refresh the table after save
+    // --- Critical Update: Async Wait for Sync ---
+    const handleModalSave = async () => {
+        await actions.refresh(); // Refresh the table after save
     };
 
     // --- View State ---
@@ -42,6 +44,10 @@ const ResourceList = ({ serverId }) => {
     const [sortStack, setSortStack] = useState([{ key: 'date_reported', mode: 'up' }]);
     const [page, setPage] = useState(1);
     const [resultsPerPage, setResultsPerPage] = useState(50);
+
+	// --- Export State ---
+    const [exportScope, setExportScope] = useState('filtered'); // 'all', 'filtered', 'page'
+    const [exportFormat, setExportFormat] = useState('csv'); // 'csv', 'json'
 
     // --- Sort Handlers ---
 
@@ -81,9 +87,17 @@ const ResourceList = ({ serverId }) => {
     };
 
     const handleStatChange = (key, value) => {
+       // Clamp Logic: 0 to 1000
+        let val = value === '' ? null : parseInt(value, 10);
+        
+        if (val !== null) {
+            if (isNaN(val)) val = null;
+            else val = Math.max(0, Math.min(1000, val));
+        }
+
         setFilters(prev => ({
             ...prev,
-            stats: { ...prev.stats, [key]: value ? parseInt(value) : null }
+            stats: { ...prev.stats, [key]: val }
         }));
     };
 
@@ -95,16 +109,126 @@ const ResourceList = ({ serverId }) => {
         });
     };
 
+	// --- DEEP LINKING LOGIC ---
+    useEffect(() => {
+        // Only run if resources are loaded
+        if (loading || !resources.length) return;
+
+        const params = new URLSearchParams(window.location.search);
+        const linkedName = params.get('resource');
+
+        if (linkedName) {
+            const found = resources.find(r => r.name.toLowerCase() === linkedName.toLowerCase());
+            if (found) {
+                handleRowClick(found);
+                
+                // Optional: Clean up URL after opening (removes ?resource=... but keeps ?server=...)
+                params.delete('resource');
+                window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
+            }
+        }
+    }, [resources, loading]); // Dependency on resources ensures this runs once data arrives
+
     // --- Data Pipeline ---
     const processedData = useMemo(() => {
-        let data = filterResources(resources, filters, taxonomy); 
+        // filterResources no longer needs the 3rd arg (taxonomy)
+        let data = filterResources(resources, filters); 
         data = sortResources(data, sortStack);
         return data;
-    }, [resources, filters, sortStack, taxonomy]);
+    }, [resources, filters, sortStack]);
 
     // Pagination
     const totalPages = Math.ceil(processedData.length / resultsPerPage) || 1;
     const paginatedData = processedData.slice((page - 1) * resultsPerPage, page * resultsPerPage);
+
+	// --- Export Handler ---
+    const handleExport = () => {
+        // 1. Determine Dataset
+        let dataToExport = [];
+        if (exportScope === 'all') {
+            dataToExport = resources;
+        } else if (exportScope === 'filtered') {
+            dataToExport = processedData;
+        } else if (exportScope === 'page') {
+            dataToExport = paginatedData;
+        }
+
+        if (!dataToExport || dataToExport.length === 0) {
+            alert("No data to export.");
+            return;
+        }
+
+        // 2. Format Data
+        let content = "";
+        let filename = `swgbuddy_export_${new Date().toISOString().slice(0, 10)}`;
+        let mimeType = "";
+
+        if (exportFormat === 'json') {
+            content = JSON.stringify(dataToExport, null, 2);
+            filename += ".json";
+            mimeType = "application/json";
+        } else {
+            // CSV
+            filename += ".csv";
+            mimeType = "text/csv";
+
+            // Headers: Name, Type, Stats..., Planet, Date, Active, Notes
+            const statKeys = Object.keys(STAT_MAPPING);
+            const statLabels = Object.values(STAT_MAPPING);
+            const headers = ['Name', 'Type', ...statLabels, 'Planets', 'Date', 'Active', 'Notes'];
+
+            const rows = dataToExport.map(res => {
+                const stats = statKeys.map(k => res[k] !== null && res[k] !== undefined ? res[k] : "");
+                
+                // Format Planet (array to pipe-delimited string)
+                let planets = "";
+                if (Array.isArray(res.planet)) planets = res.planet.join(" | ");
+                else if (res.planet) planets = String(res.planet);
+
+                // Format Date
+                let dateStr = "";
+                if (res.date_reported) {
+                    try {
+                        dateStr = new Date(res.date_reported).toISOString().split('T')[0];
+                    } catch (e) { dateStr = String(res.date_reported); }
+                }
+
+                // Escape CSV Function
+                const escape = (val) => {
+                    const str = String(val || "");
+                    if (str.includes(",") || str.includes("\n") || str.includes('"')) {
+                        return `"${str.replace(/"/g, '""')}"`;
+                    }
+                    return str;
+                };
+
+                const fields = [
+                    res.name,
+                    res.type,
+                    ...stats,
+                    planets,
+                    dateStr,
+                    res.is_active ? "Yes" : "No",
+                    res.notes
+                ];
+
+                return fields.map(escape).join(",");
+            });
+
+            content = [headers.join(","), ...rows].join("\n");
+        }
+
+        // 3. Trigger Download
+        const blob = new Blob([content], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    };
 
     if (loading && resources.length === 0) {
         return <div style={{textAlign: 'center', padding: '50px', color: 'var(--accent-blue)'}}>LOADING DATAPAD...</div>;
@@ -142,44 +266,88 @@ const ResourceList = ({ serverId }) => {
                     )}
                 </div>
 
-                {/* 2. Search Row */}
+                {/* 2. Search Row & Export Section */}
                 <div className="filter-col-search">
-                    <div className="search-row">
-                        <div className="filter-input-wrapper grow-input">
-                            <input 
-                                type="text" 
-                                placeholder="Search Name..." 
-                                className="search-input"
-                                value={filters.search}
-                                onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
-                            />
-                             {filters.search && (
-                                <button 
-                                    className="reset-filter-btn" 
-                                    onClick={() => setFilters(prev => ({ ...prev, search: '' }))}
-                                    style={{ display: 'block' }}
+                    {/* NEW EXPORT SECTION (Admin Only) */}
+                    {isAdmin && (
+                        <div style={{marginBottom: '2px', paddingBottom: '2px', borderBottom: '1px solid rgba(255,255,255,0.1)'}}>
+                            <span style={{display:'block', paddingBottom: '10px', fontSize: '14px', fontWeight: 700, textTransform: 'uppercase', fontFamily: "'Orbitron', sans-serif", color: 'var(--accent-blue)'}}>
+                                Export Resources
+                            </span>
+                            <div style={{display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap'}}>
+                                <select 
+                                    className="results-select" 
+                                    style={{minWidth: '150px'}}
+                                    value={exportScope}
+                                    onChange={(e) => setExportScope(e.target.value)}
                                 >
-                                    <i className="fa-solid fa-times"></i>
+                                    <option value="all">All Resources</option>
+                                    <option value="filtered">Filtered Selection</option>
+                                    <option value="page">Current Page</option>
+                                </select>
+                                <select 
+                                    className="results-select"
+                                    style={{minWidth: '100px'}}
+                                    value={exportFormat}
+                                    onChange={(e) => setExportFormat(e.target.value)}
+                                >
+                                    <option value="csv">CSV</option>
+                                    <option value="json">JSON</option>
+                                </select>
+                                <button 
+                                    className="page-nav-btn" 
+                                    onClick={handleExport}
+                                    title="Download"
+                                    style={{padding: '0 20px', height: '22px', borderRadius: '4px'}}
+                                >
+                                    <i className="fa-solid fa-download"></i>
                                 </button>
-                            )}
+                            </div>
                         </div>
+                    )}
 
-                        <TaxonomyFilter 
-                            taxonomyTree={taxonomy} 
-                            selectedCategory={filters.category}
-                            onSelect={(cat) => setFilters(prev => ({ ...prev, category: cat }))}
-                        />
+					<span style={{textAlign: 'left', display:'block', paddingBottom: '10px', fontSize: '14px', fontWeight: 700, textTransform: 'uppercase', fontFamily: "'Orbitron', sans-serif", color: 'var(--accent-blue)'}}>
+                        Filter By Name
+                    </span>
+                    <div className="search-row">
+						<div className="search-inputs-container">
+							<div className="filter-input-wrapper">
+								<input 
+									type="text" 
+									placeholder="Search Name..." 
+									className="search-input"
+									value={filters.search}
+									onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
+								/>
+								{filters.search && (
+									<button 
+										className="reset-filter-btn" 
+										onClick={() => setFilters(prev => ({ ...prev, search: '' }))}
+									>
+										<i className="fa-solid fa-times"></i>
+									</button>
+								)}
+							</div>
 
-                        <div className="active-toggle-inline">
-                            <label className="toggle-label" title="Show Active Only">
-                                <input 
-                                    type="checkbox" 
-                                    checked={filters.activeOnly}
-                                    onChange={(e) => setFilters(prev => ({ ...prev, activeOnly: e.target.checked }))} 
-                                />
-                                Show Active Only
-                            </label>
-                        </div>
+							<TaxonomySearch 
+								options={cache?.filter_list || {}} 
+								value={filters.category}
+								onChange={(cat) => setFilters(prev => ({ ...prev, category: cat }))}
+								onlyValid={false}
+								placeholder="Search Type..."
+							/>
+
+							<div className="active-toggle-inline">
+								<label className="toggle-label" title="Show Active Only">
+									<input 
+										type="checkbox" 
+										checked={filters.activeOnly}
+										onChange={(e) => setFilters(prev => ({ ...prev, activeOnly: e.target.checked }))} 
+									/>
+									Show Active Only
+								</label>
+							</div>
+						</div>
                     </div>
                 </div>
 
@@ -189,16 +357,29 @@ const ResourceList = ({ serverId }) => {
                         Filter By Stats
                     </span>
                     <div className="stats-grid-wrapper">
-                        {['oq','cr','cd','dr','fl','hr','ma','pe','sr','ut'].map(stat => (
-                            <div className="stat-input-wrapper" key={stat}>
-                                <input 
-                                    type="number" 
-                                    placeholder={stat.toUpperCase()} 
-                                    className="stat-filter-input"
-                                    onChange={(e) => handleStatChange(`res_${stat}`, e.target.value)}
-                                />
-                            </div>
-                        ))}
+                        {Object.entries(STAT_MAPPING).map(([key, label]) => {
+                            const val = filters.stats[key] || '';
+                            return (
+                                <div className="stat-input-wrapper" key={key}>
+                                    <input 
+                                        type="number" 
+                                        placeholder={label} 
+                                        className="stat-filter-input"
+                                        value={val}
+                                        onChange={(e) => handleStatChange(key, e.target.value)}
+                                    />
+                                    {/* Added Clear Button */}
+                                    {val && (
+                                        <span 
+                                            className="stat-clear" 
+                                            onClick={() => handleStatChange(key, '')}
+                                        >
+                                            &times;
+                                        </span>
+                                    )}
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
 
@@ -226,6 +407,9 @@ const ResourceList = ({ serverId }) => {
                 {/* 5. Pagination */}
                 <div className="filter-col-page">
                     <div className="pagination-stack">
+						<span style={{paddingBottom: '25px', fontSize: '14px', fontWeight: 700, textTransform: 'uppercase', fontFamily: "'Orbitron', sans-serif", color: 'var(--accent-blue)'}}>
+                        Page Control
+                    	</span>
                         <div className="pagination-controls">
                             <label htmlFor="results-per-page" style={{whiteSpace: 'nowrap'}}>Show Results:</label>
                             <select 
@@ -304,7 +488,7 @@ const ResourceList = ({ serverId }) => {
                                 key={res.id} 
                                 resource={res} 
                                 isEditor={isEditor}
-								taxonomy={taxonomy}
+								taxonomy={cache?.taxonomy || {}}
                                 onToggleStatus={actions.toggleStatus}
                                 onTogglePlanet={actions.togglePlanet}
                                 onClick={handleRowClick}

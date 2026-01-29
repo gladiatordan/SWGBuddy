@@ -12,10 +12,11 @@ from SWGBuddy.server import app, start_response_router, current_app
 
 
 class WebService(Core):
-    def __init__(self, validation_queue, log_queue, reply_queue):
+    def __init__(self, validation_queue, log_queue, reply_queue, cache):
         super().__init__(log_queue)
         self.validation_queue = validation_queue
         self.reply_queue = reply_queue
+        self.cache = cache
 
     def run(self):
         self.info("Initializing Web Service (Waitress)...")
@@ -24,6 +25,9 @@ class WebService(Core):
         # Since we are in the same process tree (or forked from it), 
         # we can pass these objects directly.
         app.config['VAL_QUEUE'] = self.validation_queue
+        
+		# add cache
+        app.config['CACHE'] = self.cache
         
         # 2. Start the Response Router (Background Thread)
         start_response_router(self.reply_queue)

@@ -22,7 +22,7 @@ CORS(app)
 # SECURITY CONFIGURATION
 # --------------------------------------------------------------------------
 # 1. Secret Key: Must be random in production.
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev_secret_key_change_me")
+app.secret_key = os.getenv("FLASK_SECRET_KEY")
 
 # 2. Cookie Security:
 # 'Lax' prevents CSRF for most top-level navigations while preserving login.
@@ -114,7 +114,73 @@ def send_command(action, payload, server_id='cuemu', timeout=10):
 
 @app.route('/')
 def index():
-	return render_template("index.html")
+	# 1. Parse Query Params
+	page = request.args.get('page', 'resources')
+	server_id = request.args.get('server', 'cuemu') # Default to cuemu if not specified
+
+	# 2. Define Default Metadata
+	og_title = "SWGBuddy Resource Tracker"
+	og_desc = "Track, share, and find Star Wars Galaxies resources."
+
+	# 2. Router Logic for Metadata
+	if page == 'resources':
+		resource_name = request.args.get('resource')
+		if resource_name:
+			try:
+				with DatabaseContext.cursor() as cur:
+					# Query resource details for the embed
+					sql = """
+						SELECT rl.name, rl.res_weight_rating, rc.label as type_label, gs.name as server_name
+						FROM resource_log rl
+						JOIN resource_class rc ON rl.class_tree = rc.class_tree
+						JOIN game_servers gs ON rl.server_id = gs.id
+						WHERE rl.server_id = %s AND LOWER(rl.name) = LOWER(%s)
+						LIMIT 1
+					"""
+					cur.execute(sql, (server_id, resource_name))
+					row = cur.fetchone()
+					
+					if row:
+						# Format: "Calypsa (Corn) - 98.5%"
+						pct = int(row['res_weight_rating'] * 1000) / 10
+						og_title = f"{row['name']} ({row['type_label']}) - {pct}%"
+						og_desc = f"Server: {row['server_name']} | Type: {row['type_label']}"
+			except Exception as e:
+				print(f"Metadata injection error: {e}")
+			
+	elif page == 'schematics':
+		schematic_id = request.args.get('schematic_id') # Example param
+		if schematic_id:
+			# Placeholder for Schematic Logic
+			# row = query_schematic(schematic_id)
+			# og_title = f"Schematic: {row['name']}"
+			og_title = "SWG Schematic"
+			og_desc = "Schematic details coming soon."
+	
+
+	# 4. Inject into HTML
+	# We manually read and replace to avoid React/Jinja conflicts
+	try:
+		# Determine path to templates/index.html
+		template_folder = app.template_folder or 'templates'
+		template_path = os.path.join(template_folder, 'index.html')
+
+		# If running in dev without build, this might fail, fallback to render_template
+		if not os.path.exists(template_path):
+				return render_template("index.html")
+
+		with open(template_path, 'r', encoding='utf-8') as f:
+			html_content = f.read()
+
+		# Replace Placeholders
+		html_content = html_content.replace('__OG_TITLE__', str(og_title))
+		html_content = html_content.replace('__OG_DESCRIPTION__', str(og_desc))
+
+		return html_content
+
+	except Exception as e:
+		print(f"Error serving index with injection: {e}")
+		return render_template("index.html")
 
 # --- AUTHENTICATION ---
 
@@ -384,18 +450,20 @@ def queryResourceLog():
 		since = 0
 	
 	sql = """
-		SELECT rs.*, 
-			   rt.class_label as type, 
+		SELECT rl.*, 
+			   rc.label as type, -- Get human readable label
 			   u.username as reporter_name,
-			   EXTRACT(EPOCH FROM rs.date_reported) as date_reported_ts,
-			   EXTRACT(EPOCH FROM rs.last_modified) as last_modified_ts
-		FROM resource_spawns rs
-		JOIN resource_taxonomy rt ON rs.resource_class_id = rt.id
-		LEFT JOIN users u ON rs.reporter_id = u.discord_id
-		WHERE rs.server_id = %s 
-		AND (EXTRACT(EPOCH FROM rs.date_reported) > %s 
-			 OR (rs.last_modified IS NOT NULL AND EXTRACT(EPOCH FROM rs.last_modified) > %s))
-		ORDER BY rs.date_reported DESC
+			   u2.username as updater_name,
+			   EXTRACT(EPOCH FROM rl.date_reported) as date_reported_ts,
+			   EXTRACT(EPOCH FROM rl.last_modified) as last_modified_ts
+		FROM resource_log rl
+		JOIN resource_class rc ON rl.class_tree = rc.class_tree
+		LEFT JOIN users u ON rl.reporter_id = u.discord_id
+		LEFT JOIN users u2 ON rl.last_updated_by = u2.discord_id
+		WHERE rl.server_id = %s 
+		AND (EXTRACT(EPOCH FROM rl.date_reported) > %s 
+			 OR (rl.last_modified IS NOT NULL AND EXTRACT(EPOCH FROM rl.last_modified) > %s))
+		ORDER BY rl.date_reported DESC
 	"""
 	
 	try:
@@ -406,18 +474,30 @@ def queryResourceLog():
 	except Exception as e:
 		return jsonify({"error": str(e)}), 500
 
-@app.route('/api/taxonomy', methods=['GET'])
-def get_taxonomy():
+@app.route('/api/<server_id>/taxonomy', methods=['GET'])
+def get_server_taxonomy(server_id):
+	"""
+	Fetches pre-computed taxonomy and validation rules from the Shared Cache.
+	Replaces the old static file load.
+	"""
 	try:
-		base_dir = os.path.dirname(os.path.abspath(__file__))
-		path = os.path.join(base_dir, "assets", "resource_taxonomy.json")
-		with open(path, 'r') as f:
-			data = json.load(f)
-		resp = jsonify(data)
-		resp.headers['Cache-Control'] = 'public, max-age=86400'
-		return resp
+		cache = current_app.config.get('CACHE')
+		if not cache:
+			return jsonify({"error": "Cache service unavailable"}), 503
+
+		# CacheManager returns a dict with keys: 'taxonomy', 'valid_resources', 'filter_flatlist'
+		data = cache.get_server_data(server_id)
+		
+		if not data:
+			return jsonify({"error": f"No data found for server {server_id}"}), 404
+
+		return jsonify({
+			"taxonomy": data.get("taxonomy", {}),
+			"valid_resources": data.get("valid_resources", {}),
+			"filter_list": data.get("filter_flatlist", {})
+		})
 	except Exception as e:
-		return jsonify({"error": f"Taxonomy unavailable: {e}"}), 500
+		return jsonify({"error": f"Taxonomy error: {e}"}), 500
 
 # --- WRITE OPERATIONS ---
 
@@ -425,6 +505,12 @@ def get_taxonomy():
 def add_resource():
 	if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
 	data = request.json
+	
+	# Ensure frontend sends 'class_tree' now, not just 'type'
+	if 'class_tree' not in data and 'type' in data:
+		# Fallback if frontend sends 'type' as the tree ID
+		data['class_tree'] = data['type']
+
 	resp = send_command("add_resource", data, server_id=data.get('server_id', 'cuemu'))
 	if resp['status'] == 'success': return jsonify({"success": True})
 	return jsonify({"error": resp.get('error')}), 500
@@ -433,6 +519,12 @@ def add_resource():
 def update_resource():
 	if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
 	data = request.json
+
+	# Ensure frontend sends 'class_tree' now, not just 'type'
+	if 'class_tree' not in data and 'type' in data:
+		# Fallback if frontend sends 'type' as the tree ID
+		data['class_tree'] = data['type']
+
 	resp = send_command("update_resource", data, server_id=data.get('server_id', 'cuemu'))
 	if resp['status'] == 'success': return jsonify({"success": True})
 	return jsonify({"error": resp.get('error')}), 500
@@ -441,6 +533,13 @@ def update_resource():
 def retire_resource():
 	if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
 	data = request.json
+
+	# Ensure frontend sends 'class_tree' now, not just 'type'
+	if 'class_tree' not in data and 'type' in data:
+		# Fallback if frontend sends 'type' as the tree ID
+		data['class_tree'] = data['type']
+
+
 	resp = send_command("retire_resource", data, server_id=data.get('server_id', 'cuemu'))
 	if resp['status'] == 'success': return jsonify({"success": True})
 	return jsonify({"error": resp.get('error')}), 500
@@ -453,7 +552,6 @@ def set_role():
 	if resp['status'] == 'success': return jsonify({"success": True})
 	return jsonify({"error": resp.get('error')}), 500
 
-
 # IMAGE SCANNING
 @app.route('/api/scan-image', methods=['POST'])
 def scan_image():
@@ -463,66 +561,125 @@ def scan_image():
 	if 'image' not in request.files:
 		return jsonify({"error": "No image provided"}), 400
 
+	if not Image:
+		return jsonify({"error": "OCR libraries not installed"}), 500
+
 	file = request.files['image']
 	
 	try:
-		# 1. Open and Sanitize Image (Strip metadata/exif)
-		img = Image.open(file.stream)
-		# Convert to RGB to handle alpha channels or palettes which might confuse simple OCR
-		img = img.convert('RGB')
-		
-		# 2. Perform OCR
-		# Custom config: assume single block of text (6), preserve structure
+		img = Image.open(file.stream).convert('RGB')
 		raw_text = pytesseract.image_to_string(img, config='--psm 6')
 		
-		# 3. Parse Data (SWG Resource Window format)
 		extracted = {
 			"name": "",
-			"type": "",
+			"class_tree": "", # OCR likely can't derive this, user must select
 			"stats": {}
 		}
 		
 		lines = [l.strip() for l in raw_text.split('\n') if l.strip()]
 		
-		# Heuristic: Line 1 is usually Name, Line 2 is usually Type
+		# Name Extraction Heuristic
 		if len(lines) > 0: 
 			for i in range(len(lines)):
 				if "Resource Type:" in lines[i]:
 					extracted['name'] = lines[i].split(": ")[1]
 
-		# We don't set Type automatically from OCR as it often misreads complex names.
-		# Instead, we rely on the user or fuzzy matching if you wanted to go deeper.
-		
-		# Regex for Stats (e.g., "OQ: 954" or "Overall Quality 954")
-		# Matches standard abbreviations or full names roughly
+		# UPDATED STAT MAPPING: Legacy Text -> New Column Names
 		stat_patterns = {
-			'res_cr': r'(Cold Resistance).*?(\d{1,4})',
-			'res_cd': r'(Conductivity).*?(\d{1,4})',
-			'res_dr': r'(Decay Resistance).*?(\d{1,4})',
-			'res_fl': r'(Flavor).*?(\d{1,4})',
-			'res_hr': r'(Heat Resistance).*?(\d{1,4})',
-			'res_ma': r'(Malleability).*?(\d{1,4})',
-			'res_pe': r'(Potential Energy).*?(\d{1,4})',
-			'res_oq': r'(Overall Quality).*?(\d{1,4})',
-			'res_sr': r'(Shock Resistance).*?(\d{1,4})',
-			'res_ut': r'(Unit Toughness).*?(\d{1,4})'
+			'res_cold_resist': r'(Cold Resistance).*?(\d{1,4})',
+			'res_conductivity': r'(Conductivity).*?(\d{1,4})',
+			'res_decay_resist': r'(Decay Resistance).*?(\d{1,4})',
+			'res_flavor': r'(Flavor).*?(\d{1,4})',
+			'res_heat_resist': r'(Heat Resistance).*?(\d{1,4})',
+			'res_malleability': r'(Malleability).*?(\d{1,4})',
+			'res_potential_energy': r'(Potential Energy).*?(\d{1,4})',
+			'res_quality': r'(Overall Quality).*?(\d{1,4})',
+			'res_shock_resistance': r'(Shock Resistance).*?(\d{1,4})',
+			'res_toughness': r'(Unit Toughness).*?(\d{1,4})',
+			'entangle_resistance': r'(Entangle Resistance).*?(\d{1,4})'
 		}
 		
 		for key, pattern in stat_patterns.items():
 			match = re.search(pattern, raw_text, re.IGNORECASE)
 			if match:
-				# Group 2 is the number
 				val = int(match.group(2))
-				# Sanity check SWG stats range
 				if 1 <= val <= 1000:
 					extracted['stats'][key] = val
-		print(f"Extracted -> {extracted}")
+		
 		return jsonify({"success": True, "data": extracted})
 
 	except Exception as e:
 		print(f"OCR Error: {e}")
-		return jsonify({"error": "Failed to process image. Ensure Tesseract is installed on server."}), 500
+		return jsonify({"error": "Failed to process image."}), 500
 
+
+# --- SCHEMATICS ENDPOINTS ---
+@app.route('/api/schematics/index', methods=['GET'])
+def get_schematic_index():
+    server_id = request.args.get('server', 'cuemu')
+    
+    try:
+        cache = current_app.config.get('CACHE')
+        if not cache:
+            return jsonify({"error": "Cache service unavailable"}), 503
+
+        data = cache.get_server_data(server_id)
+        if not data:
+            return jsonify({"error": f"No data found for server {server_id}"}), 404
+            
+        # Return just the lightweight index
+        return jsonify(data.get("schematic_index", []))
+        
+    except Exception as e:
+        return jsonify({"error": f"Schematic index error: {e}"}), 500
+
+@app.route('/api/schematics/<schematic_id>', methods=['GET'])
+def get_schematic_details(schematic_id):
+    server_id = request.args.get('server', 'cuemu')
+    
+    try:
+        cache = current_app.config.get('CACHE')
+        if not cache:
+            return jsonify({"error": "Cache service unavailable"}), 503
+
+        data = cache.get_server_data(server_id)
+        schematic_map = data.get("schematic_map", {})
+        
+        schematic = schematic_map.get(schematic_id)
+        
+        if not schematic:
+            return jsonify({"error": "Schematic not found"}), 404
+            
+        return jsonify(schematic)
+        
+    except Exception as e:
+        return jsonify({"error": f"Schematic details error: {e}"}), 500
+
+@app.route('/api/schematics/updates', methods=['POST'])
+def check_schematic_updates():
+    server_id = request.json.get('server', 'cuemu')
+    ids = request.json.get('ids', [])
+    
+    try:
+        cache = current_app.config.get('CACHE')
+        if not cache:
+            return jsonify({"error": "Cache service unavailable"}), 503
+
+        data = cache.get_server_data(server_id)
+        schematic_map = data.get("schematic_map", {})
+        
+        updates = {}
+        for sch_id in ids:
+            schematic = schematic_map.get(sch_id)
+            if schematic:
+                # Return timestamps to the frontend to compare against their local version
+                # Defaults to 0 if the schematic hasn't been ranked/updated yet
+                updates[sch_id] = schematic.get('last_updated', 0)
+                
+        return jsonify(updates)
+        
+    except Exception as e:
+        return jsonify({"error": f"Update check error: {e}"}), 500
 
 if __name__ == '__main__':
 	app.run(debug=True, port=5000)

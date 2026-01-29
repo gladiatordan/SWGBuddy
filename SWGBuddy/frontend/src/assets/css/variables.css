@@ -1,13 +1,36 @@
 :root {
+    /* --- Colors --- */
     --bg-dark: #0a0c10;
+    --bg-secondary: #000000; /* Added for consistency */
     --panel-bg: #14181f;
     --accent-blue: #00d4ff;
+    
     --text-main: #e0e0e0;
+    --text-highlight: #ffffff;
     --text-dim: #94a3b8;
+    --text-muted: #666; /* Standardized from hardcodes */
+    
     --border-color: #2d3748;
+    --border-dim: rgba(255, 255, 255, 0.1);
+    
     --stat-high: #00ff9d;
     --stat-mid: #ffcc00;
     --stat-low: #ff4444;
+    --danger-color: #ff4444;
+
+    /* --- Typography --- */
+    --font-main: 'Rajdhani', sans-serif;
+    --font-display: 'Orbitron', sans-serif;
+
+    /* --- Layout Z-Indices (The Stack) --- */
+    --z-sticky: 10;
+    --z-footer: 100;
+    --z-dropdown: 1000;
+    --z-tooltip: 1100;
+    --z-modal: 2000;
+    --z-modal-dropdown: 2500;
+    --z-user-menu: 3000;
+    --z-loader: 9999;
 }
 
 /* Global Utility Classes */
@@ -15,18 +38,23 @@
 .stat-yellow { color: var(--stat-mid) !important; font-weight: 600; }
 .stat-green { color: var(--stat-high) !important; }
 
-/* Shared Tooltip Logic (Consolidated from Planets and Stats) */
+.hidden { display: none !important; }
+
+/* Global Tooltip Logic */
 [data-tooltip] {
     position: relative;
-    cursor: help;
+    /* cursor: help; */
+	z-index: auto;
 }
 
 [data-tooltip]::after {
     content: attr(data-tooltip);
-    position: absolute;
-    bottom: 125%;
-    left: 50%;
-    transform: translateX(-50%);
+    position: fixed;
+	/* top: var(--mouse-y); */
+	top: var(--mouse-y);
+	left: var(--mouse-x);
+    transform: translate(10px, 10px);
+
     background-color: #000;
     color: var(--accent-blue);
     padding: 4px 8px;
@@ -37,7 +65,8 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.2s ease;
-    z-index: 1000;
+    z-index: var(--z-tooltip);
+    pointer-events: none;
 }
 
 [data-tooltip]:hover::after {

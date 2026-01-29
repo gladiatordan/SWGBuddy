@@ -1,0 +1,430 @@
+/* Layout Wrapper */
+.schematics-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 15px;
+    
+    /* Fills the remaining vertical space from base.css #main-content */
+    flex: 1; 
+    height: 100%;
+    
+    padding: 10px 0;
+    overflow: hidden; 
+}
+
+/* --- SIDEBAR --- */
+.schematics-sidebar {
+    flex: 0 0 25%;
+    min-width: 250px;
+    max-width: 350px;
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(5px);
+}
+
+.sidebar-header {
+    padding: 15px 10px;
+    background: var(--bg-dark);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filter-row { display: flex; gap: 8px; }
+
+.sidebar-select {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-dim);
+    color: var(--text-main);
+    padding: 6px;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    outline: none;
+}
+.sidebar-select:focus { border-color: var(--accent-blue); }
+
+.sidebar-search {
+    width: 94.5%; /* Changed from 95% to 100% due to border-box */
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-dim);
+    color: var(--text-main);
+    padding: 8px;
+    border-radius: 3px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.sidebar-search:focus { border-color: var(--accent-blue); }
+
+.sidebar-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 5px;
+}
+
+/* --- MAIN CONTENT AREA --- */
+.schematics-main-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Tabs */
+.schematics-tabs-bar {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    padding: 0 10px;
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(0, 0, 0, 0.2);
+    height: 40px;
+    flex-shrink: 0;
+}
+
+.schematic-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-dim);
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    font-family: var(--font-display);
+    cursor: pointer;
+    transition: all 0.2s;
+    max-width: 200px;
+    position: relative;
+}
+
+.schematic-tab:hover { background: rgba(255, 255, 255, 0.1); }
+
+.schematic-tab.active {
+    background: rgba(10, 15, 20, 0.8);
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    border-bottom: 1px solid rgba(10, 15, 20, 0.8);
+    margin-bottom: -1px;
+    z-index: var(--z-sticky);
+}
+
+.tab-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.close-tab-btn {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0 2px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+}
+.close-tab-btn:hover { color: var(--danger-color); background: rgba(255,0,0,0.1); opacity: 1; }
+
+.add-tab-btn {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: color 0.2s;
+}
+.add-tab-btn:hover { color: var(--accent-blue); }
+
+/* Panels */
+.schematics-content-area,
+.schematics-data-container {
+    flex: 1;
+    background: rgba(10, 15, 20, 0.5);
+    border: 1px solid var(--border-color);
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    position: relative;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+/* Schematic List Items */
+.schematic-item {
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.schematic-item:hover { background: rgba(0, 200, 255, 0.1); }
+.schematic-item.active {
+    background: rgba(0, 200, 255, 0.15);
+    border-left: 3px solid var(--accent-blue);
+    padding-left: 7px;
+}
+
+.schematic-name { color: var(--text-highlight); font-weight: 600; font-size: 0.9rem; }
+.schematic-meta { font-size: 0.75rem; color: var(--text-dim); display: flex; justify-content: space-between; }
+
+/* Detail View */
+.empty-state {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dim);
+    text-align: center;
+}
+.empty-state i { font-size: 4rem; margin-bottom: 20px; opacity: 0.3; }
+
+.schematic-header {
+    border-bottom: 1px solid var(--accent-blue);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+.schematic-title {
+    color: var(--text-highlight);
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.specs-container { display: flex; gap: 20px; width: 100%; }
+.specs-left-column { flex: 0 0 50%; display: flex; gap: 10px; }
+
+.info-table-wrapper {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-dim);
+    border-radius: 4px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.table-header {
+    color: var(--accent-blue);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 4px;
+}
+
+.schematic-info-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+}
+.schematic-info-table td {
+    padding: 4px 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.schematic-info-table tr:last-child td { border-bottom: none; }
+
+.info-label { color: var(--text-dim); width: 40%; }
+.info-value {
+    color: var(--text-main);
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+}
+
+.ingredient-slot { color: var(--text-highlight); }
+.ingredient-type { color: var(--text-dim); font-style: italic; text-align: right; }
+.quality-high { color: var(--accent-blue); }
+.quality-low { color: var(--text-dim); opacity: 0.7; }
+
+
+.resource-tabs-bar {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 0; /* Connects directly to the table below */
+    padding: 0 10px;
+    background: rgba(0, 0, 0, 0.2); /* Same distinct BG as main tab bar */
+    height: 36px; /* Slightly smaller than main tabs (40px) */
+    border-radius: 4px 4px 0 0;
+}
+
+.resource-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-dim);
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    font-family: var(--font-display);
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 140px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    position: relative;
+}
+
+.resource-tab:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-highlight);
+}
+
+.resource-tab.active {
+    background: rgba(10, 15, 20, 0.5); /* Matches the table/container background */
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    border-bottom: 1px solid rgba(10, 15, 20, 0.5); /* "Opens" the tab into the content */
+    margin-bottom: -1px;
+    z-index: 2;
+}
+
+/* Helper to make the table look like it belongs to the tab */
+.resource-tab-content {
+    border-top: none !important;
+    border-radius: 0 0 4px 4px !important;
+}
+
+.info-tooltip-icon {
+    margin-left: 8px;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    cursor: help;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+    vertical-align: middle;
+}
+
+.info-tooltip-icon:hover {
+    color: var(--accent-blue);
+    opacity: 1;
+}
+
+.exp-cat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.exp-cat-item {
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.exp-cat-item.selected {
+    background: rgba(0, 200, 255, 0.05);
+    border-color: rgba(0, 200, 255, 0.2);
+}
+
+.exp-cat-item.dimmed {
+    opacity: 0.6;
+}
+
+.exp-cat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.exp-cat-label {
+    color: var(--text-highlight);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.exp-cat-weights {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    padding-left: 2px;
+}
+
+.exp-cat-item.selected .exp-cat-weights {
+    color: var(--text-main);
+}
+
+/* --- TOGGLE SWITCH --- */
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 16px;
+    margin-left: 10px;
+}
+
+.toggle-switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--border-dim);
+    transition: .3s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .3s;
+}
+
+/* Rounded Sliders */
+.slider.round {
+    border-radius: 20px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Checked State */
+input:checked + .slider {
+    background-color: var(--accent-blue);
+}
+
+input:checked + .slider:before {
+    transform: translateX(14px);
+}

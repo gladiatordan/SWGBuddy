@@ -4,7 +4,9 @@ import sys
 import multiprocessing
 from dotenv import load_dotenv
 from services.logger import LogService
+from services.cache import CacheManager
 from services.validation import ValidationService
+from services.ranking import RankingService
 from services.web import WebService
 
 
@@ -17,22 +19,23 @@ class ServiceManager:
         # Shared Queues
         self.log_queue = multiprocessing.Queue()
         self.validation_queue = multiprocessing.Queue()
-        # FIX 1: Add the missing reply queue
+        self.ranking_queue = multiprocessing.Queue()
+        self.discord_queue = multiprocessing.Queue()
         self.reply_queue = multiprocessing.Queue()
+        self.cache = CacheManager()
+        self.cache.initialize() # Loads DB once into shared memory
 
     def start(self):
         print("[Manager] Spawning Services...")
 
         services = [
             ("Logger", LogService, (self.log_queue,)),
-            # FIX 2: Pass reply_queue to Validation & Web
-            ("Validation", ValidationService, (self.validation_queue, self.log_queue, self.reply_queue)),
-            ("Web", WebService, (self.validation_queue, self.log_queue, self.reply_queue))
+            ("Validation", ValidationService, (self.validation_queue, self.log_queue, self.reply_queue, self.ranking_queue, self.cache)),
+            ("Ranking", RankingService, (self.ranking_queue, self.log_queue, self.discord_queue, self.cache)),
+            ("Web", WebService, (self.validation_queue, self.log_queue, self.reply_queue, self.cache))
         ]
 
         for name, cls, args in services:
-            # FIX 3: Use the static method (ServiceManager._wrapper) instead of self._wrapper
-            # This prevents pickling the 'self' instance which holds unpickleable Process objects
             p = multiprocessing.Process(target=ServiceManager._wrapper, args=(name, cls, args), name=name)
             p.start()
             self.processes.append(p)
@@ -69,6 +72,18 @@ class ServiceManager:
 
 if __name__ == "__main__":
     load_dotenv() # Load environment into os.environ (local dev mode)
+    multiprocessing.freeze_support()
     manager = ServiceManager()
     signal.signal(signal.SIGINT, manager.stop)
+    
+	# 1. Initialize Cache FIRST (This blocks until the DB is read)
+    print("[Main] Pre-loading Cache Manager...")
+    try:
+        manager.cache.initialize()
+        print("[Main] Cache ready.")
+    except Exception as e:
+        print(f"[Main] FATAL: Cache failed to initialize: {e}")
+        sys.exit(1)
+    
+	# 2. Start Manager AFTER CacheManager is fully loaded
     manager.start()

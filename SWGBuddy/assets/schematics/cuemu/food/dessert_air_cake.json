@@ -1,0 +1,3170 @@
+{
+    "custom_object_name": "Air Cake",
+    "base_profession": "Chef",
+    "category": "food",
+    "certification": "Novice Chef",
+    "complexity": 3,
+    "experience_type": "Food Crafting",
+    "experience": 80,
+    "assembly_skill": "Food Assembly",
+    "experimentation_skill": "Food Experimentation",
+    "customization_skill": "",
+    "slots": {
+        "Carbosyrup": {
+            "slot_type": 1,
+            "ingredient": "Carbosyrup",
+            "quantity": 1
+        },
+        "Dough": {
+            "slot_type": 1,
+            "ingredient": "Dough",
+            "quantity": 1
+        },
+        "Fruit Core": {
+            "slot_type": 0,
+            "ingredient": "1.2.276.277.388.443",
+            "quantity": 20
+        },
+        "Additive": {
+            "slot_type": 3,
+            "ingredient": "Light Additive",
+            "quantity": 1
+        }
+    },
+    "experiment_weights": {
+        "Experimental Nutritional Value": {
+            "res_quality": 0.33,
+            "res_potential_energy": 0.66
+        },
+        "Experimental Flavor": {
+            "res_flavor": 0.66,
+            "res_quality": 0.33
+        },
+        "Experimental Quantity": {
+            "res_decay_resist": 0.25,
+            "res_potential_energy": 0.75
+        },
+        "Experimental Filling": {
+            "res_decay_resist": 0.75,
+            "res_quality": 0.25
+        }
+    },
+    "rankings": {
+        "1.2.276.277.388.443": {
+            "default": {
+                "best": [],
+                "current": []
+            },
+            "exp_experimental_nutritional_value": {
+                "best": [
+                    {
+                        "id": "787",
+                        "rating": "97.1%",
+                        "raw_score": 0.971,
+                        "stats": {
+                            "res_quality": 0.982,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "78.2%",
+                        "raw_score": 0.782,
+                        "stats": {
+                            "res_quality": 0.52,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "77.1%",
+                        "raw_score": 0.771,
+                        "stats": {
+                            "res_quality": 0.603,
+                            "res_potential_energy": 0.855
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "74.3%",
+                        "raw_score": 0.743,
+                        "stats": {
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65
+                        }
+                    },
+                    {
+                        "id": "744",
+                        "rating": "72.9%",
+                        "raw_score": 0.729,
+                        "stats": {
+                            "res_quality": 0.447,
+                            "res_potential_energy": 0.871
+                        }
+                    },
+                    {
+                        "id": "274",
+                        "rating": "68.2%",
+                        "raw_score": 0.682,
+                        "stats": {
+                            "res_quality": 0.951,
+                            "res_potential_energy": 0.548
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "66.6%",
+                        "raw_score": 0.666,
+                        "stats": {
+                            "res_quality": 0.614,
+                            "res_potential_energy": 0.692
+                        }
+                    },
+                    {
+                        "id": "170",
+                        "rating": "64.5%",
+                        "raw_score": 0.645,
+                        "stats": {
+                            "res_quality": 0.712,
+                            "res_potential_energy": 0.612
+                        }
+                    },
+                    {
+                        "id": "192",
+                        "rating": "60.9%",
+                        "raw_score": 0.609,
+                        "stats": {
+                            "res_quality": 0.499,
+                            "res_potential_energy": 0.665
+                        }
+                    },
+                    {
+                        "id": "351",
+                        "rating": "58.5%",
+                        "raw_score": 0.585,
+                        "stats": {
+                            "res_quality": 0.503,
+                            "res_potential_energy": 0.627
+                        }
+                    }
+                ],
+                "current": [
+                    {
+                        "id": "787",
+                        "rating": "97.1%",
+                        "raw_score": 0.971,
+                        "stats": {
+                            "res_quality": 0.982,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "78.2%",
+                        "raw_score": 0.782,
+                        "stats": {
+                            "res_quality": 0.52,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "77.1%",
+                        "raw_score": 0.771,
+                        "stats": {
+                            "res_quality": 0.603,
+                            "res_potential_energy": 0.855
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "74.3%",
+                        "raw_score": 0.743,
+                        "stats": {
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65
+                        }
+                    },
+                    {
+                        "id": "744",
+                        "rating": "72.9%",
+                        "raw_score": 0.729,
+                        "stats": {
+                            "res_quality": 0.447,
+                            "res_potential_energy": 0.871
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "66.6%",
+                        "raw_score": 0.666,
+                        "stats": {
+                            "res_quality": 0.614,
+                            "res_potential_energy": 0.692
+                        }
+                    },
+                    {
+                        "id": "351",
+                        "rating": "58.5%",
+                        "raw_score": 0.585,
+                        "stats": {
+                            "res_quality": 0.503,
+                            "res_potential_energy": 0.627
+                        }
+                    },
+                    {
+                        "id": "688",
+                        "rating": "57.8%",
+                        "raw_score": 0.578,
+                        "stats": {
+                            "res_quality": 0.336,
+                            "res_potential_energy": 0.7
+                        }
+                    },
+                    {
+                        "id": "542",
+                        "rating": "53.0%",
+                        "raw_score": 0.53,
+                        "stats": {
+                            "res_quality": 0.476,
+                            "res_potential_energy": 0.558
+                        }
+                    },
+                    {
+                        "id": "600",
+                        "rating": "52.5%",
+                        "raw_score": 0.525,
+                        "stats": {
+                            "res_quality": 0.545,
+                            "res_potential_energy": 0.516
+                        }
+                    }
+                ]
+            },
+            "exp_experimental_flavor": {
+                "best": [
+                    {
+                        "id": "724",
+                        "rating": "78.7%",
+                        "raw_score": 0.787,
+                        "stats": {
+                            "res_flavor": 0.874,
+                            "res_quality": 0.614
+                        }
+                    },
+                    {
+                        "id": "651",
+                        "rating": "69.5%",
+                        "raw_score": 0.695,
+                        "stats": {
+                            "res_flavor": 0.567,
+                            "res_quality": 0.952
+                        }
+                    },
+                    {
+                        "id": "571",
+                        "rating": "68.5%",
+                        "raw_score": 0.685,
+                        "stats": {
+                            "res_flavor": 0.557,
+                            "res_quality": 0.942
+                        }
+                    },
+                    {
+                        "id": "31",
+                        "rating": "66.5%",
+                        "raw_score": 0.665,
+                        "stats": {
+                            "res_flavor": 0.611,
+                            "res_quality": 0.775
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "66.5%",
+                        "raw_score": 0.665,
+                        "stats": {
+                            "res_flavor": 0.732,
+                            "res_quality": 0.532
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "64.5%",
+                        "raw_score": 0.645,
+                        "stats": {
+                            "res_flavor": 0.504,
+                            "res_quality": 0.929
+                        }
+                    },
+                    {
+                        "id": "474",
+                        "rating": "63.7%",
+                        "raw_score": 0.637,
+                        "stats": {
+                            "res_flavor": 0.935,
+                            "res_quality": 0.041
+                        }
+                    },
+                    {
+                        "id": "786",
+                        "rating": "63.1%",
+                        "raw_score": 0.631,
+                        "stats": {
+                            "res_flavor": 0.615,
+                            "res_quality": 0.663
+                        }
+                    },
+                    {
+                        "id": "681",
+                        "rating": "62.4%",
+                        "raw_score": 0.624,
+                        "stats": {
+                            "res_flavor": 0.606,
+                            "res_quality": 0.662
+                        }
+                    },
+                    {
+                        "id": "795",
+                        "rating": "62.1%",
+                        "raw_score": 0.621,
+                        "stats": {
+                            "res_flavor": 0.834,
+                            "res_quality": 0.196
+                        }
+                    }
+                ],
+                "current": [
+                    {
+                        "id": "724",
+                        "rating": "78.7%",
+                        "raw_score": 0.787,
+                        "stats": {
+                            "res_flavor": 0.874,
+                            "res_quality": 0.614
+                        }
+                    },
+                    {
+                        "id": "651",
+                        "rating": "69.5%",
+                        "raw_score": 0.695,
+                        "stats": {
+                            "res_flavor": 0.567,
+                            "res_quality": 0.952
+                        }
+                    },
+                    {
+                        "id": "571",
+                        "rating": "68.5%",
+                        "raw_score": 0.685,
+                        "stats": {
+                            "res_flavor": 0.557,
+                            "res_quality": 0.942
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "66.5%",
+                        "raw_score": 0.665,
+                        "stats": {
+                            "res_flavor": 0.732,
+                            "res_quality": 0.532
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "64.5%",
+                        "raw_score": 0.645,
+                        "stats": {
+                            "res_flavor": 0.504,
+                            "res_quality": 0.929
+                        }
+                    },
+                    {
+                        "id": "786",
+                        "rating": "63.1%",
+                        "raw_score": 0.631,
+                        "stats": {
+                            "res_flavor": 0.615,
+                            "res_quality": 0.663
+                        }
+                    },
+                    {
+                        "id": "681",
+                        "rating": "62.4%",
+                        "raw_score": 0.624,
+                        "stats": {
+                            "res_flavor": 0.606,
+                            "res_quality": 0.662
+                        }
+                    },
+                    {
+                        "id": "795",
+                        "rating": "62.1%",
+                        "raw_score": 0.621,
+                        "stats": {
+                            "res_flavor": 0.834,
+                            "res_quality": 0.196
+                        }
+                    },
+                    {
+                        "id": "582",
+                        "rating": "61.8%",
+                        "raw_score": 0.618,
+                        "stats": {
+                            "res_flavor": 0.869,
+                            "res_quality": 0.117
+                        }
+                    },
+                    {
+                        "id": "542",
+                        "rating": "60.4%",
+                        "raw_score": 0.604,
+                        "stats": {
+                            "res_flavor": 0.668,
+                            "res_quality": 0.476
+                        }
+                    }
+                ]
+            },
+            "exp_experimental_quantity": {
+                "best": [
+                    {
+                        "id": "787",
+                        "rating": "84.6%",
+                        "raw_score": 0.846,
+                        "stats": {
+                            "res_decay_resist": 0.489,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "83.3%",
+                        "raw_score": 0.833,
+                        "stats": {
+                            "res_decay_resist": 0.593,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "79.8%",
+                        "raw_score": 0.798,
+                        "stats": {
+                            "res_decay_resist": 0.631,
+                            "res_potential_energy": 0.855
+                        }
+                    },
+                    {
+                        "id": "159",
+                        "rating": "73.5%",
+                        "raw_score": 0.735,
+                        "stats": {
+                            "res_decay_resist": 0.543,
+                            "res_potential_energy": 0.8
+                        }
+                    },
+                    {
+                        "id": "744",
+                        "rating": "71.8%",
+                        "raw_score": 0.718,
+                        "stats": {
+                            "res_decay_resist": 0.261,
+                            "res_potential_energy": 0.871
+                        }
+                    },
+                    {
+                        "id": "192",
+                        "rating": "65.6%",
+                        "raw_score": 0.656,
+                        "stats": {
+                            "res_decay_resist": 0.63,
+                            "res_potential_energy": 0.665
+                        }
+                    },
+                    {
+                        "id": "170",
+                        "rating": "63.3%",
+                        "raw_score": 0.633,
+                        "stats": {
+                            "res_decay_resist": 0.696,
+                            "res_potential_energy": 0.612
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "60.5%",
+                        "raw_score": 0.605,
+                        "stats": {
+                            "res_decay_resist": 0.348,
+                            "res_potential_energy": 0.692
+                        }
+                    },
+                    {
+                        "id": "190",
+                        "rating": "59.8%",
+                        "raw_score": 0.598,
+                        "stats": {
+                            "res_decay_resist": 0.496,
+                            "res_potential_energy": 0.632
+                        }
+                    },
+                    {
+                        "id": "839",
+                        "rating": "59.7%",
+                        "raw_score": 0.597,
+                        "stats": {
+                            "res_decay_resist": 0.37,
+                            "res_potential_energy": 0.673
+                        }
+                    }
+                ],
+                "current": [
+                    {
+                        "id": "787",
+                        "rating": "84.6%",
+                        "raw_score": 0.846,
+                        "stats": {
+                            "res_decay_resist": 0.489,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "83.3%",
+                        "raw_score": 0.833,
+                        "stats": {
+                            "res_decay_resist": 0.593,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "79.8%",
+                        "raw_score": 0.798,
+                        "stats": {
+                            "res_decay_resist": 0.631,
+                            "res_potential_energy": 0.855
+                        }
+                    },
+                    {
+                        "id": "744",
+                        "rating": "71.8%",
+                        "raw_score": 0.718,
+                        "stats": {
+                            "res_decay_resist": 0.261,
+                            "res_potential_energy": 0.871
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "60.5%",
+                        "raw_score": 0.605,
+                        "stats": {
+                            "res_decay_resist": 0.348,
+                            "res_potential_energy": 0.692
+                        }
+                    },
+                    {
+                        "id": "839",
+                        "rating": "59.7%",
+                        "raw_score": 0.597,
+                        "stats": {
+                            "res_decay_resist": 0.37,
+                            "res_potential_energy": 0.673
+                        }
+                    },
+                    {
+                        "id": "818",
+                        "rating": "57.7%",
+                        "raw_score": 0.577,
+                        "stats": {
+                            "res_decay_resist": 0.864,
+                            "res_potential_energy": 0.482
+                        }
+                    },
+                    {
+                        "id": "688",
+                        "rating": "56.6%",
+                        "raw_score": 0.566,
+                        "stats": {
+                            "res_decay_resist": 0.167,
+                            "res_potential_energy": 0.7
+                        }
+                    },
+                    {
+                        "id": "542",
+                        "rating": "54.2%",
+                        "raw_score": 0.542,
+                        "stats": {
+                            "res_decay_resist": 0.494,
+                            "res_potential_energy": 0.558
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "50.3%",
+                        "raw_score": 0.503,
+                        "stats": {
+                            "res_decay_resist": 0.065,
+                            "res_potential_energy": 0.65
+                        }
+                    }
+                ]
+            },
+            "exp_experimental_filling": {
+                "best": [
+                    {
+                        "id": "367",
+                        "rating": "76.9%",
+                        "raw_score": 0.769,
+                        "stats": {
+                            "res_decay_resist": 0.816,
+                            "res_quality": 0.628
+                        }
+                    },
+                    {
+                        "id": "818",
+                        "rating": "74.9%",
+                        "raw_score": 0.749,
+                        "stats": {
+                            "res_decay_resist": 0.864,
+                            "res_quality": 0.406
+                        }
+                    },
+                    {
+                        "id": "8",
+                        "rating": "73.5%",
+                        "raw_score": 0.735,
+                        "stats": {
+                            "res_decay_resist": 0.976,
+                            "res_quality": 0.013
+                        }
+                    },
+                    {
+                        "id": "534",
+                        "rating": "72.5%",
+                        "raw_score": 0.725,
+                        "stats": {
+                            "res_decay_resist": 0.751,
+                            "res_quality": 0.648
+                        }
+                    },
+                    {
+                        "id": "170",
+                        "rating": "70.0%",
+                        "raw_score": 0.7,
+                        "stats": {
+                            "res_decay_resist": 0.696,
+                            "res_quality": 0.712
+                        }
+                    },
+                    {
+                        "id": "198",
+                        "rating": "69.1%",
+                        "raw_score": 0.691,
+                        "stats": {
+                            "res_decay_resist": 0.662,
+                            "res_quality": 0.779
+                        }
+                    },
+                    {
+                        "id": "651",
+                        "rating": "68.4%",
+                        "raw_score": 0.684,
+                        "stats": {
+                            "res_decay_resist": 0.595,
+                            "res_quality": 0.952
+                        }
+                    },
+                    {
+                        "id": "373",
+                        "rating": "66.5%",
+                        "raw_score": 0.665,
+                        "stats": {
+                            "res_decay_resist": 0.752,
+                            "res_quality": 0.407
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "62.4%",
+                        "raw_score": 0.624,
+                        "stats": {
+                            "res_decay_resist": 0.631,
+                            "res_quality": 0.603
+                        }
+                    },
+                    {
+                        "id": "787",
+                        "rating": "61.2%",
+                        "raw_score": 0.612,
+                        "stats": {
+                            "res_decay_resist": 0.489,
+                            "res_quality": 0.982
+                        }
+                    }
+                ],
+                "current": [
+                    {
+                        "id": "818",
+                        "rating": "74.9%",
+                        "raw_score": 0.749,
+                        "stats": {
+                            "res_decay_resist": 0.864,
+                            "res_quality": 0.406
+                        }
+                    },
+                    {
+                        "id": "534",
+                        "rating": "72.5%",
+                        "raw_score": 0.725,
+                        "stats": {
+                            "res_decay_resist": 0.751,
+                            "res_quality": 0.648
+                        }
+                    },
+                    {
+                        "id": "651",
+                        "rating": "68.4%",
+                        "raw_score": 0.684,
+                        "stats": {
+                            "res_decay_resist": 0.595,
+                            "res_quality": 0.952
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "62.4%",
+                        "raw_score": 0.624,
+                        "stats": {
+                            "res_decay_resist": 0.631,
+                            "res_quality": 0.603
+                        }
+                    },
+                    {
+                        "id": "787",
+                        "rating": "61.2%",
+                        "raw_score": 0.612,
+                        "stats": {
+                            "res_decay_resist": 0.489,
+                            "res_quality": 0.982
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "57.4%",
+                        "raw_score": 0.574,
+                        "stats": {
+                            "res_decay_resist": 0.593,
+                            "res_quality": 0.52
+                        }
+                    },
+                    {
+                        "id": "786",
+                        "rating": "57.0%",
+                        "raw_score": 0.57,
+                        "stats": {
+                            "res_decay_resist": 0.54,
+                            "res_quality": 0.663
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "55.5%",
+                        "raw_score": 0.555,
+                        "stats": {
+                            "res_decay_resist": 0.563,
+                            "res_quality": 0.532
+                        }
+                    },
+                    {
+                        "id": "841",
+                        "rating": "51.1%",
+                        "raw_score": 0.511,
+                        "stats": {
+                            "res_decay_resist": 0.483,
+                            "res_quality": 0.596
+                        }
+                    },
+                    {
+                        "id": "623",
+                        "rating": "49.5%",
+                        "raw_score": 0.495,
+                        "stats": {
+                            "res_decay_resist": 0.601,
+                            "res_quality": 0.18
+                        }
+                    }
+                ]
+            },
+            "exp_experimental_flavor|exp_experimental_nutritional_value": {
+                "best": [
+                    {
+                        "id": "724",
+                        "rating": "72.6%",
+                        "raw_score": 0.726,
+                        "stats": {
+                            "res_flavor": 0.874,
+                            "res_quality": 0.614,
+                            "res_potential_energy": 0.692
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "69.4%",
+                        "raw_score": 0.694,
+                        "stats": {
+                            "res_flavor": 0.504,
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65
+                        }
+                    },
+                    {
+                        "id": "787",
+                        "rating": "65.0%",
+                        "raw_score": 0.65,
+                        "stats": {
+                            "res_flavor": 0.003,
+                            "res_quality": 0.982,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "170",
+                        "rating": "62.9%",
+                        "raw_score": 0.629,
+                        "stats": {
+                            "res_flavor": 0.565,
+                            "res_quality": 0.712,
+                            "res_potential_energy": 0.612
+                        }
+                    },
+                    {
+                        "id": "274",
+                        "rating": "62.2%",
+                        "raw_score": 0.622,
+                        "stats": {
+                            "res_flavor": 0.368,
+                            "res_quality": 0.951,
+                            "res_potential_energy": 0.548
+                        }
+                    },
+                    {
+                        "id": "31",
+                        "rating": "61.6%",
+                        "raw_score": 0.616,
+                        "stats": {
+                            "res_flavor": 0.611,
+                            "res_quality": 0.775,
+                            "res_potential_energy": 0.462
+                        }
+                    },
+                    {
+                        "id": "651",
+                        "rating": "60.1%",
+                        "raw_score": 0.601,
+                        "stats": {
+                            "res_flavor": 0.567,
+                            "res_quality": 0.952,
+                            "res_potential_energy": 0.286
+                        }
+                    },
+                    {
+                        "id": "571",
+                        "rating": "59.5%",
+                        "raw_score": 0.595,
+                        "stats": {
+                            "res_flavor": 0.557,
+                            "res_quality": 0.942,
+                            "res_potential_energy": 0.287
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "59.1%",
+                        "raw_score": 0.591,
+                        "stats": {
+                            "res_flavor": 0.339,
+                            "res_quality": 0.52,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "57.0%",
+                        "raw_score": 0.57,
+                        "stats": {
+                            "res_flavor": 0.732,
+                            "res_quality": 0.532,
+                            "res_potential_energy": 0.448
+                        }
+                    }
+                ],
+                "current": [
+                    {
+                        "id": "724",
+                        "rating": "72.6%",
+                        "raw_score": 0.726,
+                        "stats": {
+                            "res_flavor": 0.874,
+                            "res_quality": 0.614,
+                            "res_potential_energy": 0.692
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "69.4%",
+                        "raw_score": 0.694,
+                        "stats": {
+                            "res_flavor": 0.504,
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65
+                        }
+                    },
+                    {
+                        "id": "787",
+                        "rating": "65.0%",
+                        "raw_score": 0.65,
+                        "stats": {
+                            "res_flavor": 0.003,
+                            "res_quality": 0.982,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "651",
+                        "rating": "60.1%",
+                        "raw_score": 0.601,
+                        "stats": {
+                            "res_flavor": 0.567,
+                            "res_quality": 0.952,
+                            "res_potential_energy": 0.286
+                        }
+                    },
+                    {
+                        "id": "571",
+                        "rating": "59.5%",
+                        "raw_score": 0.595,
+                        "stats": {
+                            "res_flavor": 0.557,
+                            "res_quality": 0.942,
+                            "res_potential_energy": 0.287
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "59.1%",
+                        "raw_score": 0.591,
+                        "stats": {
+                            "res_flavor": 0.339,
+                            "res_quality": 0.52,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "57.0%",
+                        "raw_score": 0.57,
+                        "stats": {
+                            "res_flavor": 0.732,
+                            "res_quality": 0.532,
+                            "res_potential_energy": 0.448
+                        }
+                    },
+                    {
+                        "id": "744",
+                        "rating": "57.0%",
+                        "raw_score": 0.57,
+                        "stats": {
+                            "res_flavor": 0.393,
+                            "res_quality": 0.447,
+                            "res_potential_energy": 0.871
+                        }
+                    },
+                    {
+                        "id": "542",
+                        "rating": "56.7%",
+                        "raw_score": 0.567,
+                        "stats": {
+                            "res_flavor": 0.668,
+                            "res_quality": 0.476,
+                            "res_potential_energy": 0.558
+                        }
+                    },
+                    {
+                        "id": "795",
+                        "rating": "53.4%",
+                        "raw_score": 0.534,
+                        "stats": {
+                            "res_flavor": 0.834,
+                            "res_quality": 0.196,
+                            "res_potential_energy": 0.572
+                        }
+                    }
+                ]
+            },
+            "exp_experimental_nutritional_value|exp_experimental_quantity": {
+                "best": [
+                    {
+                        "id": "787",
+                        "rating": "90.8%",
+                        "raw_score": 0.908,
+                        "stats": {
+                            "res_quality": 0.982,
+                            "res_potential_energy": 0.966,
+                            "res_decay_resist": 0.489
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "80.8%",
+                        "raw_score": 0.808,
+                        "stats": {
+                            "res_quality": 0.52,
+                            "res_potential_energy": 0.914,
+                            "res_decay_resist": 0.593
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "78.5%",
+                        "raw_score": 0.785,
+                        "stats": {
+                            "res_quality": 0.603,
+                            "res_potential_energy": 0.855,
+                            "res_decay_resist": 0.631
+                        }
+                    },
+                    {
+                        "id": "744",
+                        "rating": "72.4%",
+                        "raw_score": 0.724,
+                        "stats": {
+                            "res_quality": 0.447,
+                            "res_potential_energy": 0.871,
+                            "res_decay_resist": 0.261
+                        }
+                    },
+                    {
+                        "id": "170",
+                        "rating": "63.9%",
+                        "raw_score": 0.639,
+                        "stats": {
+                            "res_quality": 0.712,
+                            "res_potential_energy": 0.612,
+                            "res_decay_resist": 0.696
+                        }
+                    },
+                    {
+                        "id": "159",
+                        "rating": "63.6%",
+                        "raw_score": 0.636,
+                        "stats": {
+                            "res_quality": 0.006,
+                            "res_potential_energy": 0.8,
+                            "res_decay_resist": 0.543
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "63.5%",
+                        "raw_score": 0.635,
+                        "stats": {
+                            "res_quality": 0.614,
+                            "res_potential_energy": 0.692,
+                            "res_decay_resist": 0.348
+                        }
+                    },
+                    {
+                        "id": "192",
+                        "rating": "63.3%",
+                        "raw_score": 0.633,
+                        "stats": {
+                            "res_quality": 0.499,
+                            "res_potential_energy": 0.665,
+                            "res_decay_resist": 0.63
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "62.2%",
+                        "raw_score": 0.622,
+                        "stats": {
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
+                            "res_decay_resist": 0.065
+                        }
+                    },
+                    {
+                        "id": "274",
+                        "rating": "57.9%",
+                        "raw_score": 0.579,
+                        "stats": {
+                            "res_quality": 0.951,
+                            "res_potential_energy": 0.548,
+                            "res_decay_resist": 0.266
+                        }
+                    }
+                ],
+                "current": [
+                    {
+                        "id": "787",
+                        "rating": "90.8%",
+                        "raw_score": 0.908,
+                        "stats": {
+                            "res_quality": 0.982,
+                            "res_potential_energy": 0.966,
+                            "res_decay_resist": 0.489
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "80.8%",
+                        "raw_score": 0.808,
+                        "stats": {
+                            "res_quality": 0.52,
+                            "res_potential_energy": 0.914,
+                            "res_decay_resist": 0.593
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "78.5%",
+                        "raw_score": 0.785,
+                        "stats": {
+                            "res_quality": 0.603,
+                            "res_potential_energy": 0.855,
+                            "res_decay_resist": 0.631
+                        }
+                    },
+                    {
+                        "id": "744",
+                        "rating": "72.4%",
+                        "raw_score": 0.724,
+                        "stats": {
+                            "res_quality": 0.447,
+                            "res_potential_energy": 0.871,
+                            "res_decay_resist": 0.261
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "63.5%",
+                        "raw_score": 0.635,
+                        "stats": {
+                            "res_quality": 0.614,
+                            "res_potential_energy": 0.692,
+                            "res_decay_resist": 0.348
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "62.2%",
+                        "raw_score": 0.622,
+                        "stats": {
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
+                            "res_decay_resist": 0.065
+                        }
+                    },
+                    {
+                        "id": "688",
+                        "rating": "57.2%",
+                        "raw_score": 0.572,
+                        "stats": {
+                            "res_quality": 0.336,
+                            "res_potential_energy": 0.7,
+                            "res_decay_resist": 0.167
+                        }
+                    },
+                    {
+                        "id": "839",
+                        "rating": "54.0%",
+                        "raw_score": 0.54,
+                        "stats": {
+                            "res_quality": 0.102,
+                            "res_potential_energy": 0.673,
+                            "res_decay_resist": 0.37
+                        }
+                    },
+                    {
+                        "id": "542",
+                        "rating": "53.6%",
+                        "raw_score": 0.536,
+                        "stats": {
+                            "res_quality": 0.476,
+                            "res_potential_energy": 0.558,
+                            "res_decay_resist": 0.494
+                        }
+                    },
+                    {
+                        "id": "351",
+                        "rating": "53.3%",
+                        "raw_score": 0.533,
+                        "stats": {
+                            "res_quality": 0.503,
+                            "res_potential_energy": 0.627,
+                            "res_decay_resist": 0.048
+                        }
+                    }
+                ]
+            },
+            "exp_experimental_filling|exp_experimental_nutritional_value": {
+                "best": [
+                    {
+                        "id": "787",
+                        "rating": "79.0%",
+                        "raw_score": 0.79,
+                        "stats": {
+                            "res_decay_resist": 0.489,
+                            "res_quality": 0.982,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "69.7%",
+                        "raw_score": 0.697,
+                        "stats": {
+                            "res_decay_resist": 0.631,
+                            "res_quality": 0.603,
+                            "res_potential_energy": 0.855
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "67.8%",
+                        "raw_score": 0.678,
+                        "stats": {
+                            "res_decay_resist": 0.593,
+                            "res_quality": 0.52,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "170",
+                        "rating": "67.2%",
+                        "raw_score": 0.672,
+                        "stats": {
+                            "res_decay_resist": 0.696,
+                            "res_quality": 0.712,
+                            "res_potential_energy": 0.612
+                        }
+                    },
+                    {
+                        "id": "192",
+                        "rating": "60.3%",
+                        "raw_score": 0.603,
+                        "stats": {
+                            "res_decay_resist": 0.63,
+                            "res_quality": 0.499,
+                            "res_potential_energy": 0.665
+                        }
+                    },
+                    {
+                        "id": "818",
+                        "rating": "60.3%",
+                        "raw_score": 0.603,
+                        "stats": {
+                            "res_decay_resist": 0.864,
+                            "res_quality": 0.406,
+                            "res_potential_energy": 0.482
+                        }
+                    },
+                    {
+                        "id": "651",
+                        "rating": "59.6%",
+                        "raw_score": 0.596,
+                        "stats": {
+                            "res_decay_resist": 0.595,
+                            "res_quality": 0.952,
+                            "res_potential_energy": 0.286
+                        }
+                    },
+                    {
+                        "id": "198",
+                        "rating": "58.4%",
+                        "raw_score": 0.584,
+                        "stats": {
+                            "res_decay_resist": 0.662,
+                            "res_quality": 0.779,
+                            "res_potential_energy": 0.326
+                        }
+                    },
+                    {
+                        "id": "274",
+                        "rating": "55.9%",
+                        "raw_score": 0.559,
+                        "stats": {
+                            "res_decay_resist": 0.266,
+                            "res_quality": 0.951,
+                            "res_potential_energy": 0.548
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "53.9%",
+                        "raw_score": 0.539,
+                        "stats": {
+                            "res_decay_resist": 0.348,
+                            "res_quality": 0.614,
+                            "res_potential_energy": 0.692
+                        }
+                    }
+                ],
+                "current": [
+                    {
+                        "id": "787",
+                        "rating": "79.0%",
+                        "raw_score": 0.79,
+                        "stats": {
+                            "res_decay_resist": 0.489,
+                            "res_quality": 0.982,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "69.7%",
+                        "raw_score": 0.697,
+                        "stats": {
+                            "res_decay_resist": 0.631,
+                            "res_quality": 0.603,
+                            "res_potential_energy": 0.855
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "67.8%",
+                        "raw_score": 0.678,
+                        "stats": {
+                            "res_decay_resist": 0.593,
+                            "res_quality": 0.52,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "818",
+                        "rating": "60.3%",
+                        "raw_score": 0.603,
+                        "stats": {
+                            "res_decay_resist": 0.864,
+                            "res_quality": 0.406,
+                            "res_potential_energy": 0.482
+                        }
+                    },
+                    {
+                        "id": "651",
+                        "rating": "59.6%",
+                        "raw_score": 0.596,
+                        "stats": {
+                            "res_decay_resist": 0.595,
+                            "res_quality": 0.952,
+                            "res_potential_energy": 0.286
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "53.9%",
+                        "raw_score": 0.539,
+                        "stats": {
+                            "res_decay_resist": 0.348,
+                            "res_quality": 0.614,
+                            "res_potential_energy": 0.692
+                        }
+                    },
+                    {
+                        "id": "744",
+                        "rating": "51.7%",
+                        "raw_score": 0.517,
+                        "stats": {
+                            "res_decay_resist": 0.261,
+                            "res_quality": 0.447,
+                            "res_potential_energy": 0.871
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "51.5%",
+                        "raw_score": 0.515,
+                        "stats": {
+                            "res_decay_resist": 0.563,
+                            "res_quality": 0.532,
+                            "res_potential_energy": 0.448
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "51.0%",
+                        "raw_score": 0.51,
+                        "stats": {
+                            "res_decay_resist": 0.065,
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65
+                        }
+                    },
+                    {
+                        "id": "542",
+                        "rating": "50.9%",
+                        "raw_score": 0.509,
+                        "stats": {
+                            "res_decay_resist": 0.494,
+                            "res_quality": 0.476,
+                            "res_potential_energy": 0.558
+                        }
+                    }
+                ]
+            },
+            "exp_experimental_flavor|exp_experimental_quantity": {
+                "best": [
+                    {
+                        "id": "724",
+                        "rating": "69.6%",
+                        "raw_score": 0.696,
+                        "stats": {
+                            "res_flavor": 0.874,
+                            "res_quality": 0.614,
+                            "res_decay_resist": 0.348,
+                            "res_potential_energy": 0.692
+                        }
+                    },
+                    {
+                        "id": "170",
+                        "rating": "62.3%",
+                        "raw_score": 0.623,
+                        "stats": {
+                            "res_flavor": 0.565,
+                            "res_quality": 0.712,
+                            "res_decay_resist": 0.696,
+                            "res_potential_energy": 0.612
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "61.7%",
+                        "raw_score": 0.617,
+                        "stats": {
+                            "res_flavor": 0.339,
+                            "res_quality": 0.52,
+                            "res_decay_resist": 0.593,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "81",
+                        "rating": "59.6%",
+                        "raw_score": 0.596,
+                        "stats": {
+                            "res_flavor": 0.855,
+                            "res_quality": 0.135,
+                            "res_decay_resist": 0.594,
+                            "res_potential_energy": 0.573
+                        }
+                    },
+                    {
+                        "id": "787",
+                        "rating": "58.9%",
+                        "raw_score": 0.589,
+                        "stats": {
+                            "res_flavor": 0.003,
+                            "res_quality": 0.982,
+                            "res_decay_resist": 0.489,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "57.4%",
+                        "raw_score": 0.574,
+                        "stats": {
+                            "res_flavor": 0.504,
+                            "res_quality": 0.929,
+                            "res_decay_resist": 0.065,
+                            "res_potential_energy": 0.65
+                        }
+                    },
+                    {
+                        "id": "542",
+                        "rating": "57.2%",
+                        "raw_score": 0.572,
+                        "stats": {
+                            "res_flavor": 0.668,
+                            "res_quality": 0.476,
+                            "res_decay_resist": 0.494,
+                            "res_potential_energy": 0.558
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "57.0%",
+                        "raw_score": 0.57,
+                        "stats": {
+                            "res_flavor": 0.732,
+                            "res_quality": 0.532,
+                            "res_decay_resist": 0.563,
+                            "res_potential_energy": 0.448
+                        }
+                    },
+                    {
+                        "id": "744",
+                        "rating": "56.5%",
+                        "raw_score": 0.565,
+                        "stats": {
+                            "res_flavor": 0.393,
+                            "res_quality": 0.447,
+                            "res_decay_resist": 0.261,
+                            "res_potential_energy": 0.871
+                        }
+                    },
+                    {
+                        "id": "159",
+                        "rating": "55.4%",
+                        "raw_score": 0.554,
+                        "stats": {
+                            "res_flavor": 0.554,
+                            "res_quality": 0.006,
+                            "res_decay_resist": 0.543,
+                            "res_potential_energy": 0.8
+                        }
+                    }
+                ],
+                "current": [
+                    {
+                        "id": "724",
+                        "rating": "69.6%",
+                        "raw_score": 0.696,
+                        "stats": {
+                            "res_flavor": 0.874,
+                            "res_quality": 0.614,
+                            "res_decay_resist": 0.348,
+                            "res_potential_energy": 0.692
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "61.7%",
+                        "raw_score": 0.617,
+                        "stats": {
+                            "res_flavor": 0.339,
+                            "res_quality": 0.52,
+                            "res_decay_resist": 0.593,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "787",
+                        "rating": "58.9%",
+                        "raw_score": 0.589,
+                        "stats": {
+                            "res_flavor": 0.003,
+                            "res_quality": 0.982,
+                            "res_decay_resist": 0.489,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "57.4%",
+                        "raw_score": 0.574,
+                        "stats": {
+                            "res_flavor": 0.504,
+                            "res_quality": 0.929,
+                            "res_decay_resist": 0.065,
+                            "res_potential_energy": 0.65
+                        }
+                    },
+                    {
+                        "id": "542",
+                        "rating": "57.2%",
+                        "raw_score": 0.572,
+                        "stats": {
+                            "res_flavor": 0.668,
+                            "res_quality": 0.476,
+                            "res_decay_resist": 0.494,
+                            "res_potential_energy": 0.558
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "57.0%",
+                        "raw_score": 0.57,
+                        "stats": {
+                            "res_flavor": 0.732,
+                            "res_quality": 0.532,
+                            "res_decay_resist": 0.563,
+                            "res_potential_energy": 0.448
+                        }
+                    },
+                    {
+                        "id": "744",
+                        "rating": "56.5%",
+                        "raw_score": 0.565,
+                        "stats": {
+                            "res_flavor": 0.393,
+                            "res_quality": 0.447,
+                            "res_decay_resist": 0.261,
+                            "res_potential_energy": 0.871
+                        }
+                    },
+                    {
+                        "id": "795",
+                        "rating": "55.1%",
+                        "raw_score": 0.551,
+                        "stats": {
+                            "res_flavor": 0.834,
+                            "res_quality": 0.196,
+                            "res_decay_resist": 0.215,
+                            "res_potential_energy": 0.572
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "53.4%",
+                        "raw_score": 0.534,
+                        "stats": {
+                            "res_flavor": 0.098,
+                            "res_quality": 0.603,
+                            "res_decay_resist": 0.631,
+                            "res_potential_energy": 0.855
+                        }
+                    },
+                    {
+                        "id": "651",
+                        "rating": "52.8%",
+                        "raw_score": 0.528,
+                        "stats": {
+                            "res_flavor": 0.567,
+                            "res_quality": 0.952,
+                            "res_decay_resist": 0.595,
+                            "res_potential_energy": 0.286
+                        }
+                    }
+                ]
+            },
+            "exp_experimental_filling|exp_experimental_flavor": {
+                "best": [
+                    {
+                        "id": "651",
+                        "rating": "68.9%",
+                        "raw_score": 0.689,
+                        "stats": {
+                            "res_decay_resist": 0.595,
+                            "res_quality": 0.952,
+                            "res_flavor": 0.567
+                        }
+                    },
+                    {
+                        "id": "170",
+                        "rating": "65.7%",
+                        "raw_score": 0.657,
+                        "stats": {
+                            "res_decay_resist": 0.696,
+                            "res_quality": 0.712,
+                            "res_flavor": 0.565
+                        }
+                    },
+                    {
+                        "id": "367",
+                        "rating": "64.6%",
+                        "raw_score": 0.646,
+                        "stats": {
+                            "res_decay_resist": 0.816,
+                            "res_quality": 0.628,
+                            "res_flavor": 0.471
+                        }
+                    },
+                    {
+                        "id": "534",
+                        "rating": "63.6%",
+                        "raw_score": 0.636,
+                        "stats": {
+                            "res_decay_resist": 0.751,
+                            "res_quality": 0.648,
+                            "res_flavor": 0.497
+                        }
+                    },
+                    {
+                        "id": "373",
+                        "rating": "62.4%",
+                        "raw_score": 0.624,
+                        "stats": {
+                            "res_decay_resist": 0.752,
+                            "res_quality": 0.407,
+                            "res_flavor": 0.672
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "61.0%",
+                        "raw_score": 0.61,
+                        "stats": {
+                            "res_decay_resist": 0.563,
+                            "res_quality": 0.532,
+                            "res_flavor": 0.732
+                        }
+                    },
+                    {
+                        "id": "786",
+                        "rating": "60.0%",
+                        "raw_score": 0.6,
+                        "stats": {
+                            "res_decay_resist": 0.54,
+                            "res_quality": 0.663,
+                            "res_flavor": 0.615
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "59.9%",
+                        "raw_score": 0.599,
+                        "stats": {
+                            "res_decay_resist": 0.348,
+                            "res_quality": 0.614,
+                            "res_flavor": 0.874
+                        }
+                    },
+                    {
+                        "id": "53",
+                        "rating": "57.1%",
+                        "raw_score": 0.571,
+                        "stats": {
+                            "res_decay_resist": 0.633,
+                            "res_quality": 0.528,
+                            "res_flavor": 0.541
+                        }
+                    },
+                    {
+                        "id": "268",
+                        "rating": "55.7%",
+                        "raw_score": 0.557,
+                        "stats": {
+                            "res_decay_resist": 0.699,
+                            "res_quality": 0.328,
+                            "res_flavor": 0.598
+                        }
+                    }
+                ],
+                "current": [
+                    {
+                        "id": "651",
+                        "rating": "68.9%",
+                        "raw_score": 0.689,
+                        "stats": {
+                            "res_decay_resist": 0.595,
+                            "res_quality": 0.952,
+                            "res_flavor": 0.567
+                        }
+                    },
+                    {
+                        "id": "534",
+                        "rating": "63.6%",
+                        "raw_score": 0.636,
+                        "stats": {
+                            "res_decay_resist": 0.751,
+                            "res_quality": 0.648,
+                            "res_flavor": 0.497
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "61.0%",
+                        "raw_score": 0.61,
+                        "stats": {
+                            "res_decay_resist": 0.563,
+                            "res_quality": 0.532,
+                            "res_flavor": 0.732
+                        }
+                    },
+                    {
+                        "id": "786",
+                        "rating": "60.0%",
+                        "raw_score": 0.6,
+                        "stats": {
+                            "res_decay_resist": 0.54,
+                            "res_quality": 0.663,
+                            "res_flavor": 0.615
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "59.9%",
+                        "raw_score": 0.599,
+                        "stats": {
+                            "res_decay_resist": 0.348,
+                            "res_quality": 0.614,
+                            "res_flavor": 0.874
+                        }
+                    },
+                    {
+                        "id": "818",
+                        "rating": "55.4%",
+                        "raw_score": 0.554,
+                        "stats": {
+                            "res_decay_resist": 0.864,
+                            "res_quality": 0.406,
+                            "res_flavor": 0.332
+                        }
+                    },
+                    {
+                        "id": "542",
+                        "rating": "54.6%",
+                        "raw_score": 0.546,
+                        "stats": {
+                            "res_decay_resist": 0.494,
+                            "res_quality": 0.476,
+                            "res_flavor": 0.668
+                        }
+                    },
+                    {
+                        "id": "841",
+                        "rating": "54.4%",
+                        "raw_score": 0.544,
+                        "stats": {
+                            "res_decay_resist": 0.483,
+                            "res_quality": 0.596,
+                            "res_flavor": 0.569
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "48.7%",
+                        "raw_score": 0.487,
+                        "stats": {
+                            "res_decay_resist": 0.593,
+                            "res_quality": 0.52,
+                            "res_flavor": 0.339
+                        }
+                    },
+                    {
+                        "id": "600",
+                        "rating": "48.2%",
+                        "raw_score": 0.482,
+                        "stats": {
+                            "res_decay_resist": 0.432,
+                            "res_quality": 0.545,
+                            "res_flavor": 0.486
+                        }
+                    }
+                ]
+            },
+            "exp_experimental_filling|exp_experimental_quantity": {
+                "best": [
+                    {
+                        "id": "787",
+                        "rating": "72.9%",
+                        "raw_score": 0.729,
+                        "stats": {
+                            "res_decay_resist": 0.489,
+                            "res_quality": 0.982,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "71.1%",
+                        "raw_score": 0.711,
+                        "stats": {
+                            "res_decay_resist": 0.631,
+                            "res_quality": 0.603,
+                            "res_potential_energy": 0.855
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "70.4%",
+                        "raw_score": 0.704,
+                        "stats": {
+                            "res_decay_resist": 0.593,
+                            "res_quality": 0.52,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "170",
+                        "rating": "66.6%",
+                        "raw_score": 0.666,
+                        "stats": {
+                            "res_decay_resist": 0.696,
+                            "res_quality": 0.712,
+                            "res_potential_energy": 0.612
+                        }
+                    },
+                    {
+                        "id": "818",
+                        "rating": "66.3%",
+                        "raw_score": 0.663,
+                        "stats": {
+                            "res_decay_resist": 0.864,
+                            "res_quality": 0.406,
+                            "res_potential_energy": 0.482
+                        }
+                    },
+                    {
+                        "id": "8",
+                        "rating": "63.2%",
+                        "raw_score": 0.632,
+                        "stats": {
+                            "res_decay_resist": 0.976,
+                            "res_quality": 0.013,
+                            "res_potential_energy": 0.381
+                        }
+                    },
+                    {
+                        "id": "192",
+                        "rating": "62.6%",
+                        "raw_score": 0.626,
+                        "stats": {
+                            "res_decay_resist": 0.63,
+                            "res_quality": 0.499,
+                            "res_potential_energy": 0.665
+                        }
+                    },
+                    {
+                        "id": "268",
+                        "rating": "58.2%",
+                        "raw_score": 0.582,
+                        "stats": {
+                            "res_decay_resist": 0.699,
+                            "res_quality": 0.328,
+                            "res_potential_energy": 0.513
+                        }
+                    },
+                    {
+                        "id": "373",
+                        "rating": "57.8%",
+                        "raw_score": 0.578,
+                        "stats": {
+                            "res_decay_resist": 0.752,
+                            "res_quality": 0.407,
+                            "res_potential_energy": 0.403
+                        }
+                    },
+                    {
+                        "id": "159",
+                        "rating": "57.2%",
+                        "raw_score": 0.572,
+                        "stats": {
+                            "res_decay_resist": 0.543,
+                            "res_quality": 0.006,
+                            "res_potential_energy": 0.8
+                        }
+                    }
+                ],
+                "current": [
+                    {
+                        "id": "787",
+                        "rating": "72.9%",
+                        "raw_score": 0.729,
+                        "stats": {
+                            "res_decay_resist": 0.489,
+                            "res_quality": 0.982,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "71.1%",
+                        "raw_score": 0.711,
+                        "stats": {
+                            "res_decay_resist": 0.631,
+                            "res_quality": 0.603,
+                            "res_potential_energy": 0.855
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "70.4%",
+                        "raw_score": 0.704,
+                        "stats": {
+                            "res_decay_resist": 0.593,
+                            "res_quality": 0.52,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "818",
+                        "rating": "66.3%",
+                        "raw_score": 0.663,
+                        "stats": {
+                            "res_decay_resist": 0.864,
+                            "res_quality": 0.406,
+                            "res_potential_energy": 0.482
+                        }
+                    },
+                    {
+                        "id": "651",
+                        "rating": "52.3%",
+                        "raw_score": 0.523,
+                        "stats": {
+                            "res_decay_resist": 0.595,
+                            "res_quality": 0.952,
+                            "res_potential_energy": 0.286
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "51.6%",
+                        "raw_score": 0.516,
+                        "stats": {
+                            "res_decay_resist": 0.563,
+                            "res_quality": 0.532,
+                            "res_potential_energy": 0.448
+                        }
+                    },
+                    {
+                        "id": "542",
+                        "rating": "51.5%",
+                        "raw_score": 0.515,
+                        "stats": {
+                            "res_decay_resist": 0.494,
+                            "res_quality": 0.476,
+                            "res_potential_energy": 0.558
+                        }
+                    },
+                    {
+                        "id": "744",
+                        "rating": "51.3%",
+                        "raw_score": 0.513,
+                        "stats": {
+                            "res_decay_resist": 0.261,
+                            "res_quality": 0.447,
+                            "res_potential_energy": 0.871
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "51.0%",
+                        "raw_score": 0.51,
+                        "stats": {
+                            "res_decay_resist": 0.348,
+                            "res_quality": 0.614,
+                            "res_potential_energy": 0.692
+                        }
+                    },
+                    {
+                        "id": "600",
+                        "rating": "47.7%",
+                        "raw_score": 0.477,
+                        "stats": {
+                            "res_decay_resist": 0.432,
+                            "res_quality": 0.545,
+                            "res_potential_energy": 0.516
+                        }
+                    }
+                ]
+            },
+            "exp_experimental_flavor|exp_experimental_nutritional_value|exp_experimental_quantity": {
+                "best": [
+                    {
+                        "id": "787",
+                        "rating": "71.6%",
+                        "raw_score": 0.716,
+                        "stats": {
+                            "res_flavor": 0.003,
+                            "res_quality": 0.982,
+                            "res_potential_energy": 0.966,
+                            "res_decay_resist": 0.489
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "68.6%",
+                        "raw_score": 0.686,
+                        "stats": {
+                            "res_flavor": 0.874,
+                            "res_quality": 0.614,
+                            "res_potential_energy": 0.692,
+                            "res_decay_resist": 0.348
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "67.2%",
+                        "raw_score": 0.672,
+                        "stats": {
+                            "res_flavor": 0.339,
+                            "res_quality": 0.52,
+                            "res_potential_energy": 0.914,
+                            "res_decay_resist": 0.593
+                        }
+                    },
+                    {
+                        "id": "170",
+                        "rating": "63.0%",
+                        "raw_score": 0.63,
+                        "stats": {
+                            "res_flavor": 0.565,
+                            "res_quality": 0.712,
+                            "res_potential_energy": 0.612,
+                            "res_decay_resist": 0.696
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "63.0%",
+                        "raw_score": 0.63,
+                        "stats": {
+                            "res_flavor": 0.504,
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
+                            "res_decay_resist": 0.065
+                        }
+                    },
+                    {
+                        "id": "744",
+                        "rating": "62.0%",
+                        "raw_score": 0.62,
+                        "stats": {
+                            "res_flavor": 0.393,
+                            "res_quality": 0.447,
+                            "res_potential_energy": 0.871,
+                            "res_decay_resist": 0.261
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "61.2%",
+                        "raw_score": 0.612,
+                        "stats": {
+                            "res_flavor": 0.098,
+                            "res_quality": 0.603,
+                            "res_potential_energy": 0.855,
+                            "res_decay_resist": 0.631
+                        }
+                    },
+                    {
+                        "id": "274",
+                        "rating": "57.3%",
+                        "raw_score": 0.573,
+                        "stats": {
+                            "res_flavor": 0.368,
+                            "res_quality": 0.951,
+                            "res_potential_energy": 0.548,
+                            "res_decay_resist": 0.266
+                        }
+                    },
+                    {
+                        "id": "542",
+                        "rating": "55.8%",
+                        "raw_score": 0.558,
+                        "stats": {
+                            "res_flavor": 0.668,
+                            "res_quality": 0.476,
+                            "res_potential_energy": 0.558,
+                            "res_decay_resist": 0.494
+                        }
+                    },
+                    {
+                        "id": "159",
+                        "rating": "54.8%",
+                        "raw_score": 0.548,
+                        "stats": {
+                            "res_flavor": 0.554,
+                            "res_quality": 0.006,
+                            "res_potential_energy": 0.8,
+                            "res_decay_resist": 0.543
+                        }
+                    }
+                ],
+                "current": [
+                    {
+                        "id": "787",
+                        "rating": "71.6%",
+                        "raw_score": 0.716,
+                        "stats": {
+                            "res_flavor": 0.003,
+                            "res_quality": 0.982,
+                            "res_potential_energy": 0.966,
+                            "res_decay_resist": 0.489
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "68.6%",
+                        "raw_score": 0.686,
+                        "stats": {
+                            "res_flavor": 0.874,
+                            "res_quality": 0.614,
+                            "res_potential_energy": 0.692,
+                            "res_decay_resist": 0.348
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "67.2%",
+                        "raw_score": 0.672,
+                        "stats": {
+                            "res_flavor": 0.339,
+                            "res_quality": 0.52,
+                            "res_potential_energy": 0.914,
+                            "res_decay_resist": 0.593
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "63.0%",
+                        "raw_score": 0.63,
+                        "stats": {
+                            "res_flavor": 0.504,
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65,
+                            "res_decay_resist": 0.065
+                        }
+                    },
+                    {
+                        "id": "744",
+                        "rating": "62.0%",
+                        "raw_score": 0.62,
+                        "stats": {
+                            "res_flavor": 0.393,
+                            "res_quality": 0.447,
+                            "res_potential_energy": 0.871,
+                            "res_decay_resist": 0.261
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "61.2%",
+                        "raw_score": 0.612,
+                        "stats": {
+                            "res_flavor": 0.098,
+                            "res_quality": 0.603,
+                            "res_potential_energy": 0.855,
+                            "res_decay_resist": 0.631
+                        }
+                    },
+                    {
+                        "id": "542",
+                        "rating": "55.8%",
+                        "raw_score": 0.558,
+                        "stats": {
+                            "res_flavor": 0.668,
+                            "res_quality": 0.476,
+                            "res_potential_energy": 0.558,
+                            "res_decay_resist": 0.494
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "53.9%",
+                        "raw_score": 0.539,
+                        "stats": {
+                            "res_flavor": 0.732,
+                            "res_quality": 0.532,
+                            "res_potential_energy": 0.448,
+                            "res_decay_resist": 0.563
+                        }
+                    },
+                    {
+                        "id": "651",
+                        "rating": "52.1%",
+                        "raw_score": 0.521,
+                        "stats": {
+                            "res_flavor": 0.567,
+                            "res_quality": 0.952,
+                            "res_potential_energy": 0.286,
+                            "res_decay_resist": 0.595
+                        }
+                    },
+                    {
+                        "id": "795",
+                        "rating": "51.6%",
+                        "raw_score": 0.516,
+                        "stats": {
+                            "res_flavor": 0.834,
+                            "res_quality": 0.196,
+                            "res_potential_energy": 0.572,
+                            "res_decay_resist": 0.215
+                        }
+                    }
+                ]
+            },
+            "exp_experimental_filling|exp_experimental_flavor|exp_experimental_nutritional_value": {
+                "best": [
+                    {
+                        "id": "170",
+                        "rating": "65.3%",
+                        "raw_score": 0.653,
+                        "stats": {
+                            "res_decay_resist": 0.696,
+                            "res_quality": 0.712,
+                            "res_flavor": 0.565,
+                            "res_potential_energy": 0.612
+                        }
+                    },
+                    {
+                        "id": "787",
+                        "rating": "63.7%",
+                        "raw_score": 0.637,
+                        "stats": {
+                            "res_decay_resist": 0.489,
+                            "res_quality": 0.982,
+                            "res_flavor": 0.003,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "651",
+                        "rating": "62.9%",
+                        "raw_score": 0.629,
+                        "stats": {
+                            "res_decay_resist": 0.595,
+                            "res_quality": 0.952,
+                            "res_flavor": 0.567,
+                            "res_potential_energy": 0.286
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "62.1%",
+                        "raw_score": 0.621,
+                        "stats": {
+                            "res_decay_resist": 0.348,
+                            "res_quality": 0.614,
+                            "res_flavor": 0.874,
+                            "res_potential_energy": 0.692
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "58.5%",
+                        "raw_score": 0.585,
+                        "stats": {
+                            "res_decay_resist": 0.593,
+                            "res_quality": 0.52,
+                            "res_flavor": 0.339,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "56.5%",
+                        "raw_score": 0.565,
+                        "stats": {
+                            "res_decay_resist": 0.563,
+                            "res_quality": 0.532,
+                            "res_flavor": 0.732,
+                            "res_potential_energy": 0.448
+                        }
+                    },
+                    {
+                        "id": "274",
+                        "rating": "56.0%",
+                        "raw_score": 0.56,
+                        "stats": {
+                            "res_decay_resist": 0.266,
+                            "res_quality": 0.951,
+                            "res_flavor": 0.368,
+                            "res_potential_energy": 0.548
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "55.5%",
+                        "raw_score": 0.555,
+                        "stats": {
+                            "res_decay_resist": 0.065,
+                            "res_quality": 0.929,
+                            "res_flavor": 0.504,
+                            "res_potential_energy": 0.65
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "55.4%",
+                        "raw_score": 0.554,
+                        "stats": {
+                            "res_decay_resist": 0.631,
+                            "res_quality": 0.603,
+                            "res_flavor": 0.098,
+                            "res_potential_energy": 0.855
+                        }
+                    },
+                    {
+                        "id": "373",
+                        "rating": "55.1%",
+                        "raw_score": 0.551,
+                        "stats": {
+                            "res_decay_resist": 0.752,
+                            "res_quality": 0.407,
+                            "res_flavor": 0.672,
+                            "res_potential_energy": 0.403
+                        }
+                    }
+                ],
+                "current": [
+                    {
+                        "id": "787",
+                        "rating": "63.7%",
+                        "raw_score": 0.637,
+                        "stats": {
+                            "res_decay_resist": 0.489,
+                            "res_quality": 0.982,
+                            "res_flavor": 0.003,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "651",
+                        "rating": "62.9%",
+                        "raw_score": 0.629,
+                        "stats": {
+                            "res_decay_resist": 0.595,
+                            "res_quality": 0.952,
+                            "res_flavor": 0.567,
+                            "res_potential_energy": 0.286
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "62.1%",
+                        "raw_score": 0.621,
+                        "stats": {
+                            "res_decay_resist": 0.348,
+                            "res_quality": 0.614,
+                            "res_flavor": 0.874,
+                            "res_potential_energy": 0.692
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "58.5%",
+                        "raw_score": 0.585,
+                        "stats": {
+                            "res_decay_resist": 0.593,
+                            "res_quality": 0.52,
+                            "res_flavor": 0.339,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "56.5%",
+                        "raw_score": 0.565,
+                        "stats": {
+                            "res_decay_resist": 0.563,
+                            "res_quality": 0.532,
+                            "res_flavor": 0.732,
+                            "res_potential_energy": 0.448
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "55.5%",
+                        "raw_score": 0.555,
+                        "stats": {
+                            "res_decay_resist": 0.065,
+                            "res_quality": 0.929,
+                            "res_flavor": 0.504,
+                            "res_potential_energy": 0.65
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "55.4%",
+                        "raw_score": 0.554,
+                        "stats": {
+                            "res_decay_resist": 0.631,
+                            "res_quality": 0.603,
+                            "res_flavor": 0.098,
+                            "res_potential_energy": 0.855
+                        }
+                    },
+                    {
+                        "id": "542",
+                        "rating": "54.1%",
+                        "raw_score": 0.541,
+                        "stats": {
+                            "res_decay_resist": 0.494,
+                            "res_quality": 0.476,
+                            "res_flavor": 0.668,
+                            "res_potential_energy": 0.558
+                        }
+                    },
+                    {
+                        "id": "786",
+                        "rating": "53.9%",
+                        "raw_score": 0.539,
+                        "stats": {
+                            "res_decay_resist": 0.54,
+                            "res_quality": 0.663,
+                            "res_flavor": 0.615,
+                            "res_potential_energy": 0.293
+                        }
+                    },
+                    {
+                        "id": "818",
+                        "rating": "52.1%",
+                        "raw_score": 0.521,
+                        "stats": {
+                            "res_decay_resist": 0.864,
+                            "res_quality": 0.406,
+                            "res_flavor": 0.332,
+                            "res_potential_energy": 0.482
+                        }
+                    }
+                ]
+            },
+            "exp_experimental_filling|exp_experimental_nutritional_value|exp_experimental_quantity": {
+                "best": [
+                    {
+                        "id": "787",
+                        "rating": "80.9%",
+                        "raw_score": 0.809,
+                        "stats": {
+                            "res_decay_resist": 0.489,
+                            "res_quality": 0.982,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "73.1%",
+                        "raw_score": 0.731,
+                        "stats": {
+                            "res_decay_resist": 0.631,
+                            "res_quality": 0.603,
+                            "res_potential_energy": 0.855
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "73.0%",
+                        "raw_score": 0.73,
+                        "stats": {
+                            "res_decay_resist": 0.593,
+                            "res_quality": 0.52,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "170",
+                        "rating": "65.9%",
+                        "raw_score": 0.659,
+                        "stats": {
+                            "res_decay_resist": 0.696,
+                            "res_quality": 0.712,
+                            "res_potential_energy": 0.612
+                        }
+                    },
+                    {
+                        "id": "192",
+                        "rating": "62.1%",
+                        "raw_score": 0.621,
+                        "stats": {
+                            "res_decay_resist": 0.63,
+                            "res_quality": 0.499,
+                            "res_potential_energy": 0.665
+                        }
+                    },
+                    {
+                        "id": "818",
+                        "rating": "59.5%",
+                        "raw_score": 0.595,
+                        "stats": {
+                            "res_decay_resist": 0.864,
+                            "res_quality": 0.406,
+                            "res_potential_energy": 0.482
+                        }
+                    },
+                    {
+                        "id": "744",
+                        "rating": "58.4%",
+                        "raw_score": 0.584,
+                        "stats": {
+                            "res_decay_resist": 0.261,
+                            "res_quality": 0.447,
+                            "res_potential_energy": 0.871
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "56.1%",
+                        "raw_score": 0.561,
+                        "stats": {
+                            "res_decay_resist": 0.348,
+                            "res_quality": 0.614,
+                            "res_potential_energy": 0.692
+                        }
+                    },
+                    {
+                        "id": "159",
+                        "rating": "56.0%",
+                        "raw_score": 0.56,
+                        "stats": {
+                            "res_decay_resist": 0.543,
+                            "res_quality": 0.006,
+                            "res_potential_energy": 0.8
+                        }
+                    },
+                    {
+                        "id": "608",
+                        "rating": "54.4%",
+                        "raw_score": 0.544,
+                        "stats": {
+                            "res_decay_resist": 0.574,
+                            "res_quality": 0.387,
+                            "res_potential_energy": 0.588
+                        }
+                    }
+                ],
+                "current": [
+                    {
+                        "id": "787",
+                        "rating": "80.9%",
+                        "raw_score": 0.809,
+                        "stats": {
+                            "res_decay_resist": 0.489,
+                            "res_quality": 0.982,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "73.1%",
+                        "raw_score": 0.731,
+                        "stats": {
+                            "res_decay_resist": 0.631,
+                            "res_quality": 0.603,
+                            "res_potential_energy": 0.855
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "73.0%",
+                        "raw_score": 0.73,
+                        "stats": {
+                            "res_decay_resist": 0.593,
+                            "res_quality": 0.52,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "818",
+                        "rating": "59.5%",
+                        "raw_score": 0.595,
+                        "stats": {
+                            "res_decay_resist": 0.864,
+                            "res_quality": 0.406,
+                            "res_potential_energy": 0.482
+                        }
+                    },
+                    {
+                        "id": "744",
+                        "rating": "58.4%",
+                        "raw_score": 0.584,
+                        "stats": {
+                            "res_decay_resist": 0.261,
+                            "res_quality": 0.447,
+                            "res_potential_energy": 0.871
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "56.1%",
+                        "raw_score": 0.561,
+                        "stats": {
+                            "res_decay_resist": 0.348,
+                            "res_quality": 0.614,
+                            "res_potential_energy": 0.692
+                        }
+                    },
+                    {
+                        "id": "542",
+                        "rating": "52.0%",
+                        "raw_score": 0.52,
+                        "stats": {
+                            "res_decay_resist": 0.494,
+                            "res_quality": 0.476,
+                            "res_potential_energy": 0.558
+                        }
+                    },
+                    {
+                        "id": "651",
+                        "rating": "51.8%",
+                        "raw_score": 0.518,
+                        "stats": {
+                            "res_decay_resist": 0.595,
+                            "res_quality": 0.952,
+                            "res_potential_energy": 0.286
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "50.8%",
+                        "raw_score": 0.508,
+                        "stats": {
+                            "res_decay_resist": 0.065,
+                            "res_quality": 0.929,
+                            "res_potential_energy": 0.65
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "50.2%",
+                        "raw_score": 0.502,
+                        "stats": {
+                            "res_decay_resist": 0.563,
+                            "res_quality": 0.532,
+                            "res_potential_energy": 0.448
+                        }
+                    }
+                ]
+            },
+            "exp_experimental_filling|exp_experimental_flavor|exp_experimental_quantity": {
+                "best": [
+                    {
+                        "id": "170",
+                        "rating": "64.9%",
+                        "raw_score": 0.649,
+                        "stats": {
+                            "res_decay_resist": 0.696,
+                            "res_quality": 0.712,
+                            "res_flavor": 0.565,
+                            "res_potential_energy": 0.612
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "60.3%",
+                        "raw_score": 0.603,
+                        "stats": {
+                            "res_decay_resist": 0.593,
+                            "res_quality": 0.52,
+                            "res_flavor": 0.339,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "60.1%",
+                        "raw_score": 0.601,
+                        "stats": {
+                            "res_decay_resist": 0.348,
+                            "res_quality": 0.614,
+                            "res_flavor": 0.874,
+                            "res_potential_energy": 0.692
+                        }
+                    },
+                    {
+                        "id": "787",
+                        "rating": "59.7%",
+                        "raw_score": 0.597,
+                        "stats": {
+                            "res_decay_resist": 0.489,
+                            "res_quality": 0.982,
+                            "res_flavor": 0.003,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "651",
+                        "rating": "58.0%",
+                        "raw_score": 0.58,
+                        "stats": {
+                            "res_decay_resist": 0.595,
+                            "res_quality": 0.952,
+                            "res_flavor": 0.567,
+                            "res_potential_energy": 0.286
+                        }
+                    },
+                    {
+                        "id": "373",
+                        "rating": "57.9%",
+                        "raw_score": 0.579,
+                        "stats": {
+                            "res_decay_resist": 0.752,
+                            "res_quality": 0.407,
+                            "res_flavor": 0.672,
+                            "res_potential_energy": 0.403
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "56.5%",
+                        "raw_score": 0.565,
+                        "stats": {
+                            "res_decay_resist": 0.563,
+                            "res_quality": 0.532,
+                            "res_flavor": 0.732,
+                            "res_potential_energy": 0.448
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "56.4%",
+                        "raw_score": 0.564,
+                        "stats": {
+                            "res_decay_resist": 0.631,
+                            "res_quality": 0.603,
+                            "res_flavor": 0.098,
+                            "res_potential_energy": 0.855
+                        }
+                    },
+                    {
+                        "id": "818",
+                        "rating": "56.1%",
+                        "raw_score": 0.561,
+                        "stats": {
+                            "res_decay_resist": 0.864,
+                            "res_quality": 0.406,
+                            "res_flavor": 0.332,
+                            "res_potential_energy": 0.482
+                        }
+                    },
+                    {
+                        "id": "268",
+                        "rating": "55.8%",
+                        "raw_score": 0.558,
+                        "stats": {
+                            "res_decay_resist": 0.699,
+                            "res_quality": 0.328,
+                            "res_flavor": 0.598,
+                            "res_potential_energy": 0.513
+                        }
+                    }
+                ],
+                "current": [
+                    {
+                        "id": "455",
+                        "rating": "60.3%",
+                        "raw_score": 0.603,
+                        "stats": {
+                            "res_decay_resist": 0.593,
+                            "res_quality": 0.52,
+                            "res_flavor": 0.339,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "60.1%",
+                        "raw_score": 0.601,
+                        "stats": {
+                            "res_decay_resist": 0.348,
+                            "res_quality": 0.614,
+                            "res_flavor": 0.874,
+                            "res_potential_energy": 0.692
+                        }
+                    },
+                    {
+                        "id": "787",
+                        "rating": "59.7%",
+                        "raw_score": 0.597,
+                        "stats": {
+                            "res_decay_resist": 0.489,
+                            "res_quality": 0.982,
+                            "res_flavor": 0.003,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "651",
+                        "rating": "58.0%",
+                        "raw_score": 0.58,
+                        "stats": {
+                            "res_decay_resist": 0.595,
+                            "res_quality": 0.952,
+                            "res_flavor": 0.567,
+                            "res_potential_energy": 0.286
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "56.5%",
+                        "raw_score": 0.565,
+                        "stats": {
+                            "res_decay_resist": 0.563,
+                            "res_quality": 0.532,
+                            "res_flavor": 0.732,
+                            "res_potential_energy": 0.448
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "56.4%",
+                        "raw_score": 0.564,
+                        "stats": {
+                            "res_decay_resist": 0.631,
+                            "res_quality": 0.603,
+                            "res_flavor": 0.098,
+                            "res_potential_energy": 0.855
+                        }
+                    },
+                    {
+                        "id": "818",
+                        "rating": "56.1%",
+                        "raw_score": 0.561,
+                        "stats": {
+                            "res_decay_resist": 0.864,
+                            "res_quality": 0.406,
+                            "res_flavor": 0.332,
+                            "res_potential_energy": 0.482
+                        }
+                    },
+                    {
+                        "id": "542",
+                        "rating": "54.4%",
+                        "raw_score": 0.544,
+                        "stats": {
+                            "res_decay_resist": 0.494,
+                            "res_quality": 0.476,
+                            "res_flavor": 0.668,
+                            "res_potential_energy": 0.558
+                        }
+                    },
+                    {
+                        "id": "786",
+                        "rating": "51.8%",
+                        "raw_score": 0.518,
+                        "stats": {
+                            "res_decay_resist": 0.54,
+                            "res_quality": 0.663,
+                            "res_flavor": 0.615,
+                            "res_potential_energy": 0.293
+                        }
+                    },
+                    {
+                        "id": "534",
+                        "rating": "49.3%",
+                        "raw_score": 0.493,
+                        "stats": {
+                            "res_decay_resist": 0.751,
+                            "res_quality": 0.648,
+                            "res_flavor": 0.497,
+                            "res_potential_energy": 0.027
+                        }
+                    }
+                ]
+            },
+            "exp_experimental_filling|exp_experimental_flavor|exp_experimental_nutritional_value|exp_experimental_quantity": {
+                "best": [
+                    {
+                        "id": "787",
+                        "rating": "69.0%",
+                        "raw_score": 0.69,
+                        "stats": {
+                            "res_decay_resist": 0.489,
+                            "res_quality": 0.982,
+                            "res_flavor": 0.003,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "170",
+                        "rating": "64.8%",
+                        "raw_score": 0.648,
+                        "stats": {
+                            "res_decay_resist": 0.696,
+                            "res_quality": 0.712,
+                            "res_flavor": 0.565,
+                            "res_potential_energy": 0.612
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "64.7%",
+                        "raw_score": 0.647,
+                        "stats": {
+                            "res_decay_resist": 0.593,
+                            "res_quality": 0.52,
+                            "res_flavor": 0.339,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "61.7%",
+                        "raw_score": 0.617,
+                        "stats": {
+                            "res_decay_resist": 0.348,
+                            "res_quality": 0.614,
+                            "res_flavor": 0.874,
+                            "res_potential_energy": 0.692
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "61.5%",
+                        "raw_score": 0.615,
+                        "stats": {
+                            "res_decay_resist": 0.631,
+                            "res_quality": 0.603,
+                            "res_flavor": 0.098,
+                            "res_potential_energy": 0.855
+                        }
+                    },
+                    {
+                        "id": "651",
+                        "rating": "56.2%",
+                        "raw_score": 0.562,
+                        "stats": {
+                            "res_decay_resist": 0.595,
+                            "res_quality": 0.952,
+                            "res_flavor": 0.567,
+                            "res_potential_energy": 0.286
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "54.3%",
+                        "raw_score": 0.543,
+                        "stats": {
+                            "res_decay_resist": 0.563,
+                            "res_quality": 0.532,
+                            "res_flavor": 0.732,
+                            "res_potential_energy": 0.448
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "54.2%",
+                        "raw_score": 0.542,
+                        "stats": {
+                            "res_decay_resist": 0.065,
+                            "res_quality": 0.929,
+                            "res_flavor": 0.504,
+                            "res_potential_energy": 0.65
+                        }
+                    },
+                    {
+                        "id": "542",
+                        "rating": "54.1%",
+                        "raw_score": 0.541,
+                        "stats": {
+                            "res_decay_resist": 0.494,
+                            "res_quality": 0.476,
+                            "res_flavor": 0.668,
+                            "res_potential_energy": 0.558
+                        }
+                    },
+                    {
+                        "id": "744",
+                        "rating": "54.1%",
+                        "raw_score": 0.541,
+                        "stats": {
+                            "res_decay_resist": 0.261,
+                            "res_quality": 0.447,
+                            "res_flavor": 0.393,
+                            "res_potential_energy": 0.871
+                        }
+                    }
+                ],
+                "current": [
+                    {
+                        "id": "787",
+                        "rating": "69.0%",
+                        "raw_score": 0.69,
+                        "stats": {
+                            "res_decay_resist": 0.489,
+                            "res_quality": 0.982,
+                            "res_flavor": 0.003,
+                            "res_potential_energy": 0.966
+                        }
+                    },
+                    {
+                        "id": "455",
+                        "rating": "64.7%",
+                        "raw_score": 0.647,
+                        "stats": {
+                            "res_decay_resist": 0.593,
+                            "res_quality": 0.52,
+                            "res_flavor": 0.339,
+                            "res_potential_energy": 0.914
+                        }
+                    },
+                    {
+                        "id": "724",
+                        "rating": "61.7%",
+                        "raw_score": 0.617,
+                        "stats": {
+                            "res_decay_resist": 0.348,
+                            "res_quality": 0.614,
+                            "res_flavor": 0.874,
+                            "res_potential_energy": 0.692
+                        }
+                    },
+                    {
+                        "id": "541",
+                        "rating": "61.5%",
+                        "raw_score": 0.615,
+                        "stats": {
+                            "res_decay_resist": 0.631,
+                            "res_quality": 0.603,
+                            "res_flavor": 0.098,
+                            "res_potential_energy": 0.855
+                        }
+                    },
+                    {
+                        "id": "651",
+                        "rating": "56.2%",
+                        "raw_score": 0.562,
+                        "stats": {
+                            "res_decay_resist": 0.595,
+                            "res_quality": 0.952,
+                            "res_flavor": 0.567,
+                            "res_potential_energy": 0.286
+                        }
+                    },
+                    {
+                        "id": "533",
+                        "rating": "54.3%",
+                        "raw_score": 0.543,
+                        "stats": {
+                            "res_decay_resist": 0.563,
+                            "res_quality": 0.532,
+                            "res_flavor": 0.732,
+                            "res_potential_energy": 0.448
+                        }
+                    },
+                    {
+                        "id": "777",
+                        "rating": "54.2%",
+                        "raw_score": 0.542,
+                        "stats": {
+                            "res_decay_resist": 0.065,
+                            "res_quality": 0.929,
+                            "res_flavor": 0.504,
+                            "res_potential_energy": 0.65
+                        }
+                    },
+                    {
+                        "id": "542",
+                        "rating": "54.1%",
+                        "raw_score": 0.541,
+                        "stats": {
+                            "res_decay_resist": 0.494,
+                            "res_quality": 0.476,
+                            "res_flavor": 0.668,
+                            "res_potential_energy": 0.558
+                        }
+                    },
+                    {
+                        "id": "744",
+                        "rating": "54.1%",
+                        "raw_score": 0.541,
+                        "stats": {
+                            "res_decay_resist": 0.261,
+                            "res_quality": 0.447,
+                            "res_flavor": 0.393,
+                            "res_potential_energy": 0.871
+                        }
+                    },
+                    {
+                        "id": "818",
+                        "rating": "53.5%",
+                        "raw_score": 0.535,
+                        "stats": {
+                            "res_decay_resist": 0.864,
+                            "res_quality": 0.406,
+                            "res_flavor": 0.332,
+                            "res_potential_energy": 0.482
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

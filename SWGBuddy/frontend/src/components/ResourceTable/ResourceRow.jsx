@@ -1,19 +1,19 @@
 import React from 'react';
-import { getStatColorClass, formatDate, findTaxonomyNode } from '../../utils/resourceUtils';
+import { getStatColorClass, formatDate, formatAge, STAT_MAPPING } from '../../utils/resourceUtils';
 import { useResources } from '../../hooks/useResources';
 import { useServer } from '../../contexts/ServerContext';
 
 const ALL_PLANETS = ["Corellia", "Dantooine", "Dathomir", "Endor", "Lok", "Naboo", "Rori", "Talus", "Tatooine", "Yavin", "Mustafar", "Kashyyyk"];
 
-const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onClick, taxonomy }) => {
+const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onClick, taxonomy, showAge = false }) => {
     // Stat Keys to iterate
-    const statKeys = ['res_oq', 'res_cr', 'res_cd', 'res_dr', 'res_fl', 'res_hr', 'res_ma', 'res_pe', 'res_sr', 'res_ut'];
+    const statKeys = Object.keys(STAT_MAPPING);
 
     // Planet Logic
     const currentPlanets = Array.isArray(resource.planet) ? resource.planet : (resource.planet ? [resource.planet] : []);
     const sortedPlanets = [...currentPlanets].sort();
 
-    const resourceConfig = findTaxonomyNode(taxonomy, resource.type);
+    const resourceConfig = taxonomy ? taxonomy[resource.class_tree] : null;
 
     // 3. Logic ported from table.js
     const allowedPlanets = resourceConfig?.planets || ALL_PLANETS;
@@ -27,7 +27,7 @@ const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onCli
     return (
         <tr>
             <td className="res-name">
-                <a className="res-link" onClick={(e) => { e.preventDefault(); onClick(resource); }}>
+                <a className="res-link" onClick={(e) => { e.preventDefault(); onClick(resource); }} style={{ textTransform: 'capitalize' }}>
                     {resource.name}
                 </a>
             </td>
@@ -44,7 +44,7 @@ const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onCli
                 const rating = resource[`${key}_rating`];
                 const color = getStatColorClass(rating);
                 return (
-                    <td key={key} className={`col-stat ${color}`} title={rating ? `${(rating*100).toFixed(1)}%` : ''}>
+                    <td key={key} className={`col-stat ${color}`} data-tooltip={rating ? `${(rating*100).toFixed(1)}%` : ''}>
                         {val || '-'}
                     </td>
                 );
@@ -87,8 +87,10 @@ const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onCli
                 )}
             </td>
 
-            {/* Date */}
-            <td className="col-date">{formatDate(resource.date_reported)}</td>
+            {/* Date or Age */}
+            <td className="col-date">
+                {showAge ? formatAge(resource.date_reported) : formatDate(resource.date_reported)}
+            </td>
 
             {/* Status */}
             <td className="col-status" onClick={(e) => e.stopPropagation()}>

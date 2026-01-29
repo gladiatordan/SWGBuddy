@@ -5,11 +5,21 @@ import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
 import Loader from './components/Common/Loader';
 import ResourceList from './components/ResourceTable/ResourceList';
+import SchematicContainer from './components/Schematics/SchematicContainer';
+import { ResourceProvider } from './contexts/ResourceContext';
 
 
 function App() {
     // 1. Centralized Application State
-    const [activeTab, setActiveTab] = useState('resources');
+    const [activeTab, setActiveTab] = useState(() => {
+        const params = new URLSearchParams(window.location.search);
+        const page = params.get('page');
+        
+        // precise mapping of allowed pages
+        if (page === 'schematics') return 'schematics';
+        if (page === 'management') return 'management';
+        return 'resources'; // Default
+    });
     const [selectedServer, setSelectedServer] = useState('cuemu');
     
     // 2. Loading State
@@ -34,22 +44,24 @@ function App() {
         setIsTransitioning(true);
         setActiveTab(tab);
 
+		const params = new URLSearchParams(window.location.search);
+        params.set('page', tab);
+        
+        // Clear item-specific params when switching contexts
+        if (tab !== 'resources') params.delete('resource');
+        
+        const newUrl = `${window.location.pathname}?${params.toString()}`;
+        window.history.pushState({}, '', newUrl);
+
         setTimeout(() => {
             setIsTransitioning(false);
             setTimeout(() => setShouldRenderLoader(false), 500);
-        }, 400); 
+        }, 400);
     };
 
     return (
         <AuthProvider>
 			<ServerProvider>
-				{/* Global Loader Overlay */}
-				{shouldRenderLoader && (
-					<Loader 
-						message={isAppLoading ? "INITIALIZING DATAPAD..." : "ACCESSING DATAPAD..."} 
-						fadeOut={!isAppLoading && !isTransitioning} 
-					/>
-				)}
 				{/* Header controls App State */}
 				<Header 
 					activeTab={activeTab} 
@@ -57,21 +69,25 @@ function App() {
 					selectedServer={selectedServer}
 					setSelectedServer={setSelectedServer}
 				/>
-				<div className="app-container">
-					<main id="main-content">
-						{!isTransitioning && (
-							<>
-								{activeTab === 'resources' && <ResourceList serverId={selectedServer} />}
-								
-								{activeTab === 'schematics' && (
-									<section id="schematics-container" className="page-container active">
-										<div className="placeholder-msg">Schematics functionality coming soon...</div>
-									</section>
-								)}
-							</>
-						)}
-					</main>
-				</div>
+				<ResourceProvider serverId={selectedServer}>
+					<div className="app-container">
+						<main id="main-content">
+							{shouldRenderLoader && (
+									<Loader 
+										message={isAppLoading ? "INITIALIZING DATAPAD..." : "ACCESSING DATAPAD..."} 
+										fadeOut={!isAppLoading && !isTransitioning} 
+									/>
+							)}
+							{!isTransitioning && (
+								<>
+									{activeTab === 'resources' && <ResourceList />}
+									
+									{activeTab === 'schematics' && <SchematicContainer />}
+								</>
+							)}
+						</main>
+					</div>
+				</ResourceProvider>
 				<Footer />
 			</ServerProvider>
         </AuthProvider>

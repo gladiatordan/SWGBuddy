@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import API from '../../services/api';
 import { useServer } from '../../contexts/ServerContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { useResources } from '../../hooks/useResources';
-import TaxonomySelector from './ResourceModal/TaxonomySelector';
-import { getStatColorClass, formatResourceDate, STAT_MAPPING, findTaxonomyNode } from '../../utils/resourceUtils';
+import TaxonomySearch from '../Common/TaxonomySearch';
+import { getStatColorClass, formatResourceDate, STAT_MAPPING } from '../../utils/resourceUtils';
 
 const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
     const { selectedServer } = useServer();
     const { hasPermission } = useAuth();
     const { taxonomy } = useResources(selectedServer);
+
+	const { cache } = useResources(selectedServer);
 
     // Modes: 'view', 'edit', 'add'
     const [mode, setMode] = useState('view');
@@ -22,11 +24,18 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
         type: '',
         stats: {},
         notes: '',
-        markInactive: false
+        markInactive: false,
+		waypoints: []
     });
 
-	const selectedTypeConfig = findTaxonomyNode(taxonomy, formData.type);
-	const validStatsForType = selectedTypeConfig?.stats ? Object.keys(selectedTypeConfig.stats) : [];
+	const selectedTypeConfig = useMemo(() => {
+        if (!formData.type || !cache?.valid_resources) return null;
+        return cache.valid_resources[formData.type] || null;
+    }, [formData.type, cache]);
+
+	const validStatsForType = useMemo(() => {
+        return selectedTypeConfig?.stats ? Object.keys(selectedTypeConfig.stats) : [];
+    }, [selectedTypeConfig]);
     
 	useEffect(() => {
 		if (mode === 'view' || !formData.type) return;
@@ -50,16 +59,101 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
 		});
 	}, [formData.type, validStatsForType.length]);
 
-    // Helper: Extract stats from resource object
-    const extractStats = (res) => {
-		const stats = {};
-		['oq','cr','cd','dr','fl','hr','ma','pe','sr','ut'].forEach(key => {
-			// Store both the raw value and the rating for view-mode coloring
-			stats[`res_${key}`] = res[`res_${key}`];
-			stats[`res_${key}_rating`] = res[`res_${key}_rating`];
+	useEffect(() => {
+		if (mode === 'view' || !formData.type) return;
+
+		setFormData(prev => {
+            // 1. Stat Sanitization
+			const newStats = { ...prev.stats };
+			let hasChanged = false;
+			Object.keys(STAT_MAPPING).forEach(statKey => {
+				if (!validStatsForType.includes(statKey)) {
+					if (newStats[statKey] !== null && newStats[statKey] !== undefined) {
+						newStats[statKey] = null;
+						hasChanged = true;
+					}
+				}
+			});
+
+            // 2. Planet Sanitization
+            const validPlanets = selectedTypeConfig?.planets || [];
+            let newPlanets = [...(prev.planet || [])]; // Copy existing selection
+            
+            // Filter: Remove planets that are no longer valid for this type
+            const filteredPlanets = newPlanets.filter(p => validPlanets.includes(p));
+            
+            // Constraint: If only 1 valid planet exists, enforce it (checked & locked)
+            if (validPlanets.length === 1) {
+                // If it's not already in the list, add it (effectively checking it)
+                if (filteredPlanets.length !== 1 || filteredPlanets[0] !== validPlanets[0]) {
+                    filteredPlanets.length = 0;
+                    filteredPlanets.push(validPlanets[0]);
+                }
+            }
+
+            // Detect if planets actually changed to avoid infinite loops
+            const planetsChanged = JSON.stringify(prev.planet?.sort()) !== JSON.stringify(filteredPlanets.sort());
+
+			if (hasChanged || planetsChanged) {
+                return { 
+                    ...prev, 
+                    stats: hasChanged ? newStats : prev.stats,
+                    planet: filteredPlanets
+                };
+            }
+
+			return prev;
 		});
-		return stats;
-	};
+	}, [formData.type, validStatsForType.length, selectedTypeConfig]);
+
+	const parseWaypoints = (wpString) => {
+        if (!wpString) return [];
+        // Expected format: "/waypoint <x> <y> <name>;"
+        const rawParts = wpString.split(';').filter(s => s.trim().length > 0);
+        const result = [];
+        
+        rawParts.forEach(part => {
+            const match = part.trim().match(/^\/waypoint\s+(-?\d+)\s+(-?\d+)\s+(.+)$/);
+            if (match) {
+                result.push({
+                    x: parseInt(match[1], 10),
+                    y: parseInt(match[2], 10),
+                    name: match[3].trim()
+                });
+            }
+        });
+        return result;
+    };
+
+	const serializeWaypoints = (wpArray) => {
+        if (!wpArray || wpArray.length === 0) return null;
+        return wpArray.map(wp => {
+            const cleanName = wp.name.trim();
+            // Smart Semicolon Check:
+            // If the user already typed a semicolon at the end, use it. 
+            // If not, automatically add one to denote the end of the entry.
+            const finalName = cleanName.endsWith(';') ? cleanName : `${cleanName};`;
+            
+            return `/waypoint ${wp.x} ${wp.y} ${finalName}`;
+        }).join('');
+    };
+
+    // Helper: Extract stats from resource object
+   const extractStats = (res) => {
+        const stats = {};
+        
+        // Use the exact keys defined in STAT_MAPPING (res_quality, res_cold_resist, etc.)
+        Object.keys(STAT_MAPPING).forEach(key => {
+            const ratingKey = `${key}_rating`;
+            
+            // Extract values directly from the resource object using the keys from STAT_MAPPING
+            // If the value is null in the DB, it stays null in the form (hiding it in view mode)
+            stats[key] = res[key];
+            stats[ratingKey] = res[ratingKey];
+        });
+        // console.log("[ResourceModal] Extracted Stats:", stats);
+        return stats;
+    };
 
     // Reset state when opening or switching resources
     useEffect(() => {
@@ -67,12 +161,19 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
             setStatusMsg(null);
             if (resource) {
                 setMode('view');
+                // Normalize resource.planet to always be an array
+                const planetArr = Array.isArray(resource.planet) 
+                    ? resource.planet 
+                    : (resource.planet ? [resource.planet] : []);
+
                 setFormData({
                     name: resource.name,
-                    type: resource.type,
+                    type: resource.class_tree,
                     stats: extractStats(resource),
                     notes: resource.notes || '',
-                    markInactive: false
+                    planet: planetArr,
+                    markInactive: false,
+					waypoints: parseWaypoints(resource.waypoints)
                 });
             } else {
                 setMode('add');
@@ -81,7 +182,9 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                     type: '',
                     stats: {},
                     notes: '',
-                    markInactive: false
+                    planet: [],
+                    markInactive: false,
+					waypoints: []
                 });
             }
         }
@@ -89,8 +192,52 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
 
     // --- Actions ---
 
+	// --- Waypoint Handlers ---
+    const handleWaypointChange = (index, field, value) => {
+        const newWaypoints = [...formData.waypoints];
+        
+        if (field === 'x' || field === 'y') {
+            // Fix: Allow empty string or single minus sign to support typing/clearing
+            if (value === '' || value === '-') {
+                newWaypoints[index][field] = value;
+            } else {
+                let intVal = parseInt(value, 10);
+                if (!isNaN(intVal)) {
+                    // Clamp value
+                    intVal = Math.max(-15000, Math.min(15000, intVal));
+                    newWaypoints[index][field] = intVal;
+                }
+            }
+        } else if (field === 'name') {
+            newWaypoints[index][field] = value.slice(0, 30);
+        }
+        
+        setFormData(prev => ({ ...prev, waypoints: newWaypoints }));
+    };
+
+    const addWaypoint = () => {
+        if (formData.waypoints.length >= 10) return;
+        setFormData(prev => ({
+            ...prev,
+            waypoints: [...prev.waypoints, { x: null, y: null, name: '' }]
+        }));
+    };
+
+    const removeWaypoint = (index) => {
+        setFormData(prev => ({
+            ...prev,
+            waypoints: prev.waypoints.filter((_, i) => i !== index)
+        }));
+    };
+
+    const copyToClipboard = (text) => {
+        navigator.clipboard.writeText(text).then(() => {
+            setStatusMsg({ type: 'success', text: 'Copied to clipboard!' });
+            setTimeout(() => setStatusMsg(null), 2000);
+        }).catch(err => console.error('Copy failed', err));
+    };
+
     const handleStatChange = (key, value) => {
-		// 1. If empty, set to null
 		if (value === '') {
 			setFormData(prev => ({
 				...prev,
@@ -99,12 +246,11 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
 			return;
 		}
 
-		// 2. Enforce Integer only
 		const numValue = parseInt(value, 10);
 		if (isNaN(numValue)) return;
 
-		// 3. Enforce 1-1000 range
-		const clampedValue = Math.max(1, Math.min(1000, numValue));
+		// 3. Enforce 0-1000 range (Updated from 1-1000)
+		const clampedValue = Math.max(0, Math.min(1000, numValue));
 
 		setFormData(prev => ({
 			...prev,
@@ -114,6 +260,28 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
 			}
 		}));
 	};
+
+	const handlePlanetToggle = (planetName) => {
+        setFormData(prev => {
+            const current = prev.planet || [];
+            if (current.includes(planetName)) {
+                return { ...prev, planet: current.filter(p => p !== planetName) };
+            } else {
+                return { ...prev, planet: [...current, planetName] };
+            }
+        });
+    };
+
+	const handleNameChange = (e) => {
+        const input = e.target.value;
+        
+        // 1. Regex to reject anything other than a-z/A-Z
+        // We replace any non-letter character with an empty string
+        const sanitized = input.replace(/[^a-zA-Z]/g, '');
+
+		// enforce lowercase
+        setFormData(prev => ({ ...prev, name: sanitized.toLowerCase() }));
+    };
 
     const processImageBlob = async (blob) => {
         setLoading(true);
@@ -145,7 +313,7 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
         }
     };
 
-    // --- NEW: Global Paste Listener (The Fix) ---
+    // --- Global Paste Listener ---
     useEffect(() => {
         const handleGlobalPaste = (e) => {
             // Only listen if modal is open and we are editing/adding
@@ -169,7 +337,7 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
         return () => document.removeEventListener('paste', handleGlobalPaste);
     }, [isOpen, mode, processImageBlob]); // Re-bind only if mode changes
 
-    // --- UPDATED: Button Click Handler ---
+    // --- Button Click Handler ---
     const handlePaste = async () => {
         // setLoading(true);
         setStatusMsg({ type: 'info', text: 'Requesting clipboard...' });
@@ -202,12 +370,20 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
         if (mode === 'edit') {
             // Revert changes and go back to view
             setMode('view');
+            
+            // Normalize planet array again (same logic as the opening useEffect)
+            const planetArr = Array.isArray(resource.planet) 
+                ? resource.planet 
+                : (resource.planet ? [resource.planet] : []);
+
             setFormData({
                 name: resource.name,
-                type: resource.type,
+                type: resource.class_tree,
                 stats: extractStats(resource),
                 notes: resource.notes || '',
-                markInactive: false
+                planet: planetArr, // <--- This was missing
+                markInactive: false,
+				waypoints: parseWaypoints(resource.waypoints)
             });
             setStatusMsg(null);
         } else {
@@ -221,18 +397,26 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
         setLoading(true);
         setStatusMsg(null);
 
-        // Validation
-        if (!formData.name || !formData.type) {
-            setStatusMsg({ type: 'error', text: "Name and Type are required." });
+		if (!formData.name || formData.name.length < 2) {
+            setStatusMsg({ type: 'error', text: "Please enter a valid resource name (letters only)." });
             setLoading(false);
             return;
         }
+		if (!formData.type) {
+            setStatusMsg({ type: 'error', text:"Type is required." });
+            setLoading(false);
+            return;
+        }
+
+		const serializedWaypoints = serializeWaypoints(formData.waypoints);
 
         const payload = {
             ...formData.stats,
             name: formData.name,
             type: formData.type,
             notes: formData.notes,
+            planet: formData.planet, // Pass array directly
+			waypoints: serializedWaypoints,
             server_id: selectedServer,
             auto_deactivate: mode === 'add' ? formData.markInactive : undefined
         };
@@ -240,14 +424,16 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
         try {
             if (mode === 'add') {
                 await API.addResource(payload, selectedServer);
-                onSave(); // Refresh parent
+                setStatusMsg({ type: 'info', text: 'Syncing...' });
+                await onSave();
                 setMode('view'); 
         		setStatusMsg({ type: 'success', text: 'Resource added successfully!' });
             } else {
                 payload.id = resource.id;
                 await API.updateResource(payload, selectedServer);
-                onSave(); // Refresh parent
-                setMode('view'); // Go back to View Mode on success
+                setStatusMsg({ type: 'info', text: 'Syncing...' });
+                await onSave();
+                setMode('view'); 
                 setStatusMsg({ type: 'success', text: 'Resource updated successfully' });
             }
         } catch (err) {
@@ -257,6 +443,47 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
         }
     };
 
+	const isDirty = useMemo(() => {
+        // Always dirty in Add mode (unless empty, but validation handles that)
+        if (mode === 'add') return true; 
+        if (!resource) return false;
+
+        // 1. Check Top-Level Fields
+        if (formData.name !== resource.name) return true;
+        if (formData.type !== resource.class_tree) return true;
+        if ((formData.notes || '') !== (resource.notes || '')) return true;
+
+        // 2. Check Planets (Normalize arrays and sort)
+        const currentPlanets = [...(formData.planet || [])].sort();
+        const originalPlanets = Array.isArray(resource.planet) 
+            ? [...resource.planet].sort() 
+            : (resource.planet ? [resource.planet] : []);
+        
+        if (JSON.stringify(currentPlanets) !== JSON.stringify(originalPlanets)) return true;
+
+		const oldWps = parseWaypoints(resource.waypoints);
+        if (JSON.stringify(formData.waypoints) !== JSON.stringify(oldWps)) return true;
+
+        // 3. Check Stats
+        // We only care about the numeric values (res_oq, etc), not the ratings or derived fields
+        const relevantStats = ['oq','cr','cd','dr','fl','hr','ma','pe','sr','ut'];
+        for (const stat of relevantStats) {
+            const key = `res_${stat}`;
+            
+            // Normalize: Form uses null for empty, DB might have null or 0 or undefined
+            // We treat null, undefined, and '' as equivalent for comparison
+            let formVal = formData.stats[key];
+            let origVal = resource[key];
+
+            if (formVal === '' || formVal === undefined) formVal = null;
+            if (origVal === '' || origVal === undefined || origVal === 0) origVal = null;
+
+            if (formVal !== origVal) return true;
+        }
+
+        return false;
+    }, [formData, resource, mode]);
+
     // --- Render Helpers ---
 
     if (!isOpen) return null;
@@ -264,11 +491,8 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
     const isEditable = mode !== 'view';
     const canEdit = hasPermission('EDITOR'); 
 
-    // Dynamic Title Logic
-    let modalTitle = "Resource Details";
-    if (mode === 'add') modalTitle = "Add Resource";
-    else if (mode === 'view') modalTitle = `Resource Details - ${formData.name}`;
-    else if (mode === 'edit') modalTitle = `Edit Details - ${formData.name}`;
+    // Change Title based on mode
+    let modalTitle = mode === 'add' ? "Add Resource" : (mode === 'edit' ? `Edit Details - ${formData.name}` : `Resource Details - ${formData.name}`);
 
     return (
         <div className="modal">
@@ -295,10 +519,12 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                                 <input 
                                     type="text" 
                                     value={formData.name}
-                                    onChange={e => setFormData({...formData, name: e.target.value})}
+                                    onChange={handleNameChange}
                                     required 
-                                    placeholder="e.g. Polonium" 
+                                    placeholder="Enter Resource Name..." 
                                     autoComplete="off"
+									// Capitzalize first letter in input box
+									style={{ textTransform: 'capitalize' }}
                                 />
                             </div>
                         )}
@@ -306,10 +532,11 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                         {/* Type Field - Visible in ALL modes (First field in Edit/View) */}
                         <div className="form-group">
                             <label>Type</label>
-                            <TaxonomySelector 
-                                taxonomy={taxonomy} 
+                            <TaxonomySearch 
+                                options={cache?.valid_resources || {}} 
                                 value={formData.type} 
                                 onChange={val => setFormData({...formData, type: val})}
+								onlyValid={true}
                                 disabled={!isEditable}
                             />
                         </div>
@@ -319,15 +546,21 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                         <div className={isEditable ? "stats-grid" : "stats-grid-view"}>
                             {Object.entries(STAT_MAPPING).map(([valKey, label]) => {
 								const ratKey = `${valKey}_rating`;
-								const value = formData.stats[valKey] || '';
+								const value = formData.stats[valKey]
 								const rating = formData.stats[ratKey];
-
+								// console.log("[ResourceModal] Value:", value);
+								// console.log("[ResourceModal] Rating:", rating);
 								// Check if this specific stat is allowed for the chosen resource type
+								// console.log("[ResourceModal] Valid Stats for Type:", validStatsForType);
 								const isDisabled = !validStatsForType.includes(valKey);
+
 
 								if (!isEditable) {
 									// View Mode: Hide stats that are empty or N/A for this type
-									if (!value || value === '-' || isDisabled) return null;
+									if (!value || value === '-' || isDisabled) {
+										// console.log("[ResourceModal] Skipping stat in view mode:", valKey);
+										return null;
+									}
 									
 									const tooltip = rating !== null ? `Rating: ${(rating * 100).toFixed(1)}%` : '';
 									
@@ -371,27 +604,159 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                             })}
                         </div>
 
-                        {/* Meta Info (View Only) */}
+						{/* Meta Info (View Only) */}
                         {mode !== 'add' && resource && (
                             <div className="meta-grid">
                                 <div className="form-group">
-									<label>Last Updated</label>
+									<label>Date Reported</label>
 									<div className="static-value">
-										{formatResourceDate(resource.last_updated || resource.date_reported)}
+                                        {/* Format: {date} by {username} */}
+										{formatResourceDate(resource.date_reported)} by {resource.reporter_name || 'Unknown'}
 									</div>
 								</div>
-                                <div className="form-group">
-                                    <label>Reporter</label>
-                                    <div className="static-value">{resource.reporter_name || '-'}</div>
-                                </div>
-                                <div className="form-group">
-                                    <label>Planets</label>
-                                    <div className="static-value">
-                                        {Array.isArray(resource.planet) ? resource.planet.join(', ') : resource.planet}
+
+                                {/* Only show Last Updated if it exists */}
+                                {resource.last_modified && (
+                                    <div className="form-group">
+                                        <label>Last Updated</label>
+                                        <div className="static-value">
+                                            {formatResourceDate(resource.last_modified)} by {resource.updater_name || resource.reporter_name || 'Unknown'}
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                             </div>
                         )}
+
+						{/* PLANETS SECTION */}
+                        {isEditable ? (
+                             <div className="form-group full-width" style={{ marginTop: '15px' }}>
+                                <label>Planets</label>
+                                <div className="planet-checkbox-grid">
+                                    {(selectedTypeConfig?.planets || []).map(p => {
+                                        const isChecked = formData.planet.includes(p);
+                                        const isSingle = selectedTypeConfig.planets.length === 1;
+                                        return (
+                                            <label 
+                                                key={p} 
+                                                className={`planet-checkbox-label ${isChecked ? 'checked' : ''} ${isSingle ? 'disabled' : ''}`}
+                                            >
+                                                <input 
+                                                    type="checkbox"
+                                                    checked={isChecked}
+                                                    disabled={isSingle} 
+                                                    onChange={() => handlePlanetToggle(p)}
+                                                />
+                                                {p}
+                                            </label>
+                                        );
+                                    })}
+                                    {(!selectedTypeConfig?.planets || selectedTypeConfig.planets.length === 0) && (
+                                        <div style={{color: '#666', gridColumn: '1 / -1', textAlign: 'center', padding: '10px'}}>
+                                            Select a Type to view available planets.
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        ) : (
+							<div className="form-group">
+								<label>Planets</label>
+								<div className="static-value">
+                                    {/* Add resource check to prevent crash on Add Mode init */}
+									{resource && (Array.isArray(resource.planet) ? resource.planet.join(', ') : resource.planet)}
+								</div>
+							</div>
+						)}
+
+						{/* WAYPOINTS SECTION */}
+                        <div className="form-group full-width" style={{ marginTop: '15px' }}>
+                            <label>Waypoints</label>
+                            
+                            {/* View Mode Waypoints */}
+                            {!isEditable && (
+                                <div className="waypoints-view-container">
+                                    {formData.waypoints.length === 0 ? (
+                                        <div className="static-value" style={{color: '#666', fontStyle: 'italic'}}>No waypoints recorded.</div>
+                                    ) : (
+                                        formData.waypoints.map((wp, idx) => {
+                                            const wpStr = `/waypoint ${wp.x} ${wp.y} ${wp.name};`;
+                                            return (
+                                                <div key={idx} className="waypoint-row-view">
+                                                    <span className="waypoint-text">{wpStr}</span>
+                                                    <button 
+                                                        type="button" 
+                                                        className="waypoint-copy-btn"
+                                                        onClick={() => copyToClipboard(wpStr)}
+                                                        title="Copy to Clipboard"
+                                                    >
+                                                        <i className="fa-solid fa-copy"></i> Copy
+                                                    </button>
+                                                </div>
+                                            );
+                                        })
+                                    )}
+                                </div>
+                            )}
+
+                            {/* Edit Mode Waypoints */}
+                            {isEditable && (
+                                <div className="waypoints-edit-container">
+                                    {formData.waypoints.map((wp, idx) => (
+                                        <div key={idx} className="waypoint-row-edit">
+                                            <div className="wp-input-group small">
+                                                <span className="wp-prefix">X</span>
+                                                <input 
+                                                    type="text" 
+                                                    value={wp.x}
+                                                    onChange={e => handleWaypointChange(idx, 'x', e.target.value)}
+                                                    min="-15000" max="15000"
+                                                />
+                                            </div>
+                                            <div className="wp-input-group small">
+                                                <span className="wp-prefix">Y</span>
+                                                <input 
+                                                    type="text" 
+                                                    value={wp.y}
+                                                    onChange={e => handleWaypointChange(idx, 'y', e.target.value)}
+                                                    min="-15000" max="15000"
+                                                />
+                                            </div>
+                                            <div className="wp-input-group large">
+                                                <input 
+                                                    type="text" 
+                                                    value={wp.name}
+                                                    onChange={e => handleWaypointChange(idx, 'name', e.target.value)}
+                                                    placeholder="Waypoint Name"
+                                                    maxLength="30"
+                                                />
+                                            </div>
+                                            <button 
+                                                type="button" 
+                                                className="waypoint-delete-btn"
+                                                onClick={() => removeWaypoint(idx)}
+                                                title="Remove Waypoint"
+                                            >
+                                                <i className="fa-solid fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    ))}
+
+                                    {formData.waypoints.length < 10 && (
+                                        <button 
+                                            type="button" 
+                                            className="add-waypoint-btn"
+                                            onClick={() => {
+                                                setFormData(prev => ({
+                                                    ...prev,
+                                                    waypoints: [...prev.waypoints, { x: 0, y: 0, name: 'New Waypoint' }]
+                                                }));
+                                            }}
+                                        >
+                                            <i className="fa-solid fa-plus"></i> Add Waypoint
+                                        </button>
+                                    )}
+                                </div>
+                            )}
+                        </div>
 
                         {/* Notes */}
                         <div className="form-group full-width" style={{marginTop: '15px'}}>
@@ -459,7 +824,8 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
                                 ) : <div></div>
                             ) : (
                                 <div className="footer-actions">
-                                    <button type="submit" className="btn-primary" disabled={loading}>Save</button>
+                                    <button type="submit" className="btn-primary" disabled={loading || (mode === 'edit' && !isDirty)}>Save</button>
+                                    {/* Use handleCancel function instead of inline duplicate */}
                                     <button type="button" className="btn-danger" onClick={handleCancel}>Cancel</button>
                                 </div>
                             )}

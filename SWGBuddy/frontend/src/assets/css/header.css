@@ -1,0 +1,221 @@
+
+.main-header {
+    background: var(--panel-bg);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.logo span { color: var(--accent-blue); }
+
+.top-nav {
+    display: flex;
+    gap: 20px;
+    margin-left: 20px;
+    margin-right: auto;
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    color: #666;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 10px 10px;
+    transition: all 0.3s ease;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-btn.active {
+    color: var(--accent-blue);
+    border-bottom: 2px solid var(--accent-blue);
+    text-shadow: 0 0 10px var(--accent-blue);
+}
+
+.nav-btn:hover:not(:enabled) {
+	color: var(--text-main);
+}
+
+
+/* User Profile Styles */
+.user-profile-container {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.user-profile {
+	position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-secondary);
+    padding: 4px 12px;
+	padding-right: 25px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.user-profile::after {
+    content: '▼';
+    font-size: 0.7rem;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dim);
+    transition: transform 0.2s;
+}
+
+.user-profile-container:hover .user-profile::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Dropdown Menu */
+.user-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    display: none;
+    flex-direction: column;
+    z-index: 3000;
+    margin-top: 5px;
+}
+
+.user-profile-container:hover .user-dropdown-menu {
+    display: flex;
+}
+
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--accent-color);
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.role-badge {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-weight: 800;
+}
+
+.role-superadmin { background: #ff4444; color: white; }
+.role-admin { background: #ffbb33; color: black; }
+.role-editor { background: #00C851; color: white; }
+.role-user { background: #33b5e5; color: white; }
+
+
+/* Header Controls Layout */
+.controls-section {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between Server Select and Login */
+    margin-left: auto; /* Pushes the entire group to the right of the nav */
+}
+
+/* Themed Server Select */
+.server-select-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 243, 255, 0.05);
+    padding: 5px 12px;
+    border: 1px solid var(--accent-color);
+    border-radius: 4px;
+    height: 38px;
+}
+
+.server-select-wrapper label {
+    color: var(--accent-color);
+    font-size: 0.9rem;
+}
+
+.themed-select {
+    background: transparent;
+    color: var(--text-color);
+    border: none;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    outline: none;
+}
+
+.themed-select option {
+    background: var(--bg-secondary);
+    color: var(--text-color);
+}
+
+/* Auth Section Styling */
+.auth-section {
+    display: flex;
+    align-items: center;
+	width: 150px;
+    height: 26px;
+}
+
+.btn-discord {
+    display: flex;
+    align-items: center;
+	justify-content: center;
+    gap: 8px;
+    background: #5865F2; /* Discord Brand Color */
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    text-decoration: none;
+    transition: filter 0.2s, transform 0.1s;
+	width: 150px;
+    height: 26px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-discord:hover {
+    filter: brightness(1.1);
+}
+
+.btn-discord:active {
+    transform: translateY(1px);
+}
+
+.btn-logout {
+    color: var(--text-muted);
+    transition: color 0.2s;
+}
+
+.btn-logout:hover {
+    color: #ff4444;
+}
