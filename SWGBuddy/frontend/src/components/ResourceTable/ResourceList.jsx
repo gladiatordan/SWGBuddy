@@ -11,6 +11,7 @@ const ResourceList = () => {
     const { resources, cache, loading, actions } = useResources();
     const { hasPermission } = useAuth();
     const isEditor = hasPermission('EDITOR');
+	const isAdmin = hasPermission('ADMIN');
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedResource, setSelectedResource] = useState(null);
@@ -43,6 +44,10 @@ const ResourceList = () => {
     const [sortStack, setSortStack] = useState([{ key: 'date_reported', mode: 'up' }]);
     const [page, setPage] = useState(1);
     const [resultsPerPage, setResultsPerPage] = useState(50);
+
+	// --- Export State ---
+    const [exportScope, setExportScope] = useState('filtered'); // 'all', 'filtered', 'page'
+    const [exportFormat, setExportFormat] = useState('csv'); // 'csv', 'json'
 
     // --- Sort Handlers ---
 
@@ -136,6 +141,95 @@ const ResourceList = () => {
     const totalPages = Math.ceil(processedData.length / resultsPerPage) || 1;
     const paginatedData = processedData.slice((page - 1) * resultsPerPage, page * resultsPerPage);
 
+	// --- Export Handler ---
+    const handleExport = () => {
+        // 1. Determine Dataset
+        let dataToExport = [];
+        if (exportScope === 'all') {
+            dataToExport = resources;
+        } else if (exportScope === 'filtered') {
+            dataToExport = processedData;
+        } else if (exportScope === 'page') {
+            dataToExport = paginatedData;
+        }
+
+        if (!dataToExport || dataToExport.length === 0) {
+            alert("No data to export.");
+            return;
+        }
+
+        // 2. Format Data
+        let content = "";
+        let filename = `swgbuddy_export_${new Date().toISOString().slice(0, 10)}`;
+        let mimeType = "";
+
+        if (exportFormat === 'json') {
+            content = JSON.stringify(dataToExport, null, 2);
+            filename += ".json";
+            mimeType = "application/json";
+        } else {
+            // CSV
+            filename += ".csv";
+            mimeType = "text/csv";
+
+            // Headers: Name, Type, Stats..., Planet, Date, Active, Notes
+            const statKeys = Object.keys(STAT_MAPPING);
+            const statLabels = Object.values(STAT_MAPPING);
+            const headers = ['Name', 'Type', ...statLabels, 'Planets', 'Date', 'Active', 'Notes'];
+
+            const rows = dataToExport.map(res => {
+                const stats = statKeys.map(k => res[k] !== null && res[k] !== undefined ? res[k] : "");
+                
+                // Format Planet (array to pipe-delimited string)
+                let planets = "";
+                if (Array.isArray(res.planet)) planets = res.planet.join(" | ");
+                else if (res.planet) planets = String(res.planet);
+
+                // Format Date
+                let dateStr = "";
+                if (res.date_reported) {
+                    try {
+                        dateStr = new Date(res.date_reported).toISOString().split('T')[0];
+                    } catch (e) { dateStr = String(res.date_reported); }
+                }
+
+                // Escape CSV Function
+                const escape = (val) => {
+                    const str = String(val || "");
+                    if (str.includes(",") || str.includes("\n") || str.includes('"')) {
+                        return `"${str.replace(/"/g, '""')}"`;
+                    }
+                    return str;
+                };
+
+                const fields = [
+                    res.name,
+                    res.type,
+                    ...stats,
+                    planets,
+                    dateStr,
+                    res.is_active ? "Yes" : "No",
+                    res.notes
+                ];
+
+                return fields.map(escape).join(",");
+            });
+
+            content = [headers.join(","), ...rows].join("\n");
+        }
+
+        // 3. Trigger Download
+        const blob = new Blob([content], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    };
+
     if (loading && resources.length === 0) {
         return <div style={{textAlign: 'center', padding: '50px', color: 'var(--accent-blue)'}}>LOADING DATAPAD...</div>;
     }
@@ -172,8 +266,49 @@ const ResourceList = () => {
                     )}
                 </div>
 
-                {/* 2. Search Row */}
+                {/* 2. Search Row & Export Section */}
                 <div className="filter-col-search">
+                    {/* NEW EXPORT SECTION (Admin Only) */}
+                    {isAdmin && (
+                        <div style={{marginBottom: '2px', paddingBottom: '2px', borderBottom: '1px solid rgba(255,255,255,0.1)'}}>
+                            <span style={{display:'block', paddingBottom: '10px', fontSize: '14px', fontWeight: 700, textTransform: 'uppercase', fontFamily: "'Orbitron', sans-serif", color: 'var(--accent-blue)'}}>
+                                Export Resources
+                            </span>
+                            <div style={{display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap'}}>
+                                <select 
+                                    className="results-select" 
+                                    style={{minWidth: '150px'}}
+                                    value={exportScope}
+                                    onChange={(e) => setExportScope(e.target.value)}
+                                >
+                                    <option value="all">All Resources</option>
+                                    <option value="filtered">Filtered Selection</option>
+                                    <option value="page">Current Page</option>
+                                </select>
+                                <select 
+                                    className="results-select"
+                                    style={{minWidth: '100px'}}
+                                    value={exportFormat}
+                                    onChange={(e) => setExportFormat(e.target.value)}
+                                >
+                                    <option value="csv">CSV</option>
+                                    <option value="json">JSON</option>
+                                </select>
+                                <button 
+                                    className="page-nav-btn" 
+                                    onClick={handleExport}
+                                    title="Download"
+                                    style={{padding: '0 20px', height: '22px', borderRadius: '4px'}}
+                                >
+                                    <i className="fa-solid fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+					<span style={{textAlign: 'left', display:'block', paddingBottom: '10px', fontSize: '14px', fontWeight: 700, textTransform: 'uppercase', fontFamily: "'Orbitron', sans-serif", color: 'var(--accent-blue)'}}>
+                        Filter By Name
+                    </span>
                     <div className="search-row">
 						<div className="search-inputs-container">
 							<div className="filter-input-wrapper">
