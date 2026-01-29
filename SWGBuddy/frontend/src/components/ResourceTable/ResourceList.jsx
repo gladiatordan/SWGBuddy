@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useResources } from '../../hooks/useResources';
 import { useAuth } from '../../contexts/AuthContext';
-import { filterResources, sortResources } from '../../utils/resourceUtils';
+import { filterResources, sortResources, STAT_MAPPING } from '../../utils/resourceUtils';
 import ResourceRow from './ResourceRow';
 import TaxonomySearch from '../Common/TaxonomySearch';
 import ResourceModal from '../Modals/ResourceModal';
@@ -222,22 +222,22 @@ const ResourceList = () => {
                         Filter By Stats
                     </span>
                     <div className="stats-grid-wrapper">
-                        {['oq','cr','cd','dr','fl','hr','ma','pe','sr','ut'].map(stat => {
-                            const val = filters.stats[`res_${stat}`] || '';
+                        {Object.entries(STAT_MAPPING).map(([key, label]) => {
+                            const val = filters.stats[key] || '';
                             return (
-                                <div className="stat-input-wrapper" key={stat}>
+                                <div className="stat-input-wrapper" key={key}>
                                     <input 
                                         type="number" 
-                                        placeholder={stat.toUpperCase()} 
+                                        placeholder={label} 
                                         className="stat-filter-input"
                                         value={val}
-                                        onChange={(e) => handleStatChange(`res_${stat}`, e.target.value)}
+                                        onChange={(e) => handleStatChange(key, e.target.value)}
                                     />
                                     {/* Added Clear Button */}
                                     {val && (
                                         <span 
                                             className="stat-clear" 
-                                            onClick={() => handleStatChange(`res_${stat}`, '')}
+                                            onClick={() => handleStatChange(key, '')}
                                         >
                                             &times;
                                         </span>
