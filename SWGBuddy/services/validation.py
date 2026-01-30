@@ -274,7 +274,7 @@ class ValidationService(Core):
 		rules = self._get_rules(data, server_id)
 		stats_def = rules.get('stats', {})
 		allowed_planets = rules.get('planets', [])
-
+		self.info(f"allowed_planets: {allowed_planets}")
 		name = data.get('name', '')
 		if not name or len(name) > 100: raise ValueError("Invalid Name")
 		if not re.match(r'^[a-zA-Z0-9\s\-\(\)\.]+$', name): raise ValueError("Invalid characters in Name.")
@@ -288,12 +288,12 @@ class ValidationService(Core):
 		planet_input = data.get('planet')
 		if planet_input:
 			if isinstance(planet_input, list):
-				clean_list = [str(p).capitalize() for p in planet_input]
+				clean_list = [str(p).lower() for p in planet_input]
 				data['planet'] = clean_list 
 				for p in clean_list:
 					if p not in allowed_planets: raise ValueError(f"Planet '{p}' invalid.")
 			else:
-				planet_str = str(planet_input).capitalize()
+				planet_str = str(planet_input).lower()
 				data['planet'] = planet_str 
 				if planet_str not in allowed_planets: raise ValueError(f"Planet '{planet_str}' invalid.")
 
