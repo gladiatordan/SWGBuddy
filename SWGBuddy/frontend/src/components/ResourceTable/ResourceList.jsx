@@ -253,6 +253,19 @@ const ResourceList = () => {
         );
     }
 
+	const statColumns = [
+        { label: 'OQ', key: 'res_quality' },
+        { label: 'CR', key: 'res_cold_resist' },
+        { label: 'CD', key: 'res_conductivity' },
+        { label: 'DR', key: 'res_decay_resist' },
+        { label: 'FL', key: 'res_flavor' },
+        { label: 'HR', key: 'res_heat_resist' },
+        { label: 'MA', key: 'res_malleability' },
+        { label: 'PE', key: 'res_potential_energy' },
+        { label: 'SR', key: 'res_shock_resistance' },
+        { label: 'UT', key: 'res_toughness' }
+    ];
+
     return (
         <section id="resources-container" className="page-container active">
             <div className="filters-layout-grid">
@@ -456,17 +469,14 @@ const ResourceList = () => {
                                     <SortArrows colKey="res_weight_rating" />
                                 </div>
                             </th>
-                            {['OQ','CR','CD','DR','FL','HR','MA','PE','SR','UT'].map(s => {
-                                const key = `res_${s.toLowerCase()}`;
-                                return (
-                                    <th key={s} className="col-stat" onClick={() => handleSort(key)}>
-                                        <div className="sort-wrapper center">
-                                            <span>{s}</span>
-                                            <SortArrows colKey={key} />
-                                        </div>
-                                    </th>
-                                );
-                            })}
+                            {statColumns.map(({ label, key }) => (
+                                <th key={label} className="col-stat" onClick={() => handleSort(key)}>
+                                    <div className="sort-wrapper center">
+                                        <span>{label}</span>
+                                        <SortArrows colKey={key} />
+                                    </div>
+                                </th>
+                            ))}
                             <th className="col-loc">LOCATION</th>
                             <th className="col-date" onClick={() => handleSort('date_reported')}>
                                 <div className="sort-wrapper center">
