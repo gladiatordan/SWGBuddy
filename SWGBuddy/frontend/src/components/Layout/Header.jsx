@@ -1,11 +1,25 @@
 // frontend/src/components/Layout/Header.jsx
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useSearchParams } from 'react-router-dom';
 import AuthWidget from '../Auth/AuthWidget';
 import ManagementModal from '../Modals/ManagementModal';
 
 const Header = ({ selectedServer, setSelectedServer }) => {
     const [isMgmtOpen, setIsMgmtOpen] = useState(false);
+	const [searchParams] = useSearchParams();
+
+	const getLink = (path) => {
+        const newParams = new URLSearchParams(searchParams);
+        // Ensure selectedServer is prioritized
+        if (selectedServer) {
+            newParams.set('server', selectedServer);
+        }
+        // Remove specific page params when switching contexts (optional but cleaner)
+        newParams.delete('id'); 
+        newParams.delete('modal');
+        
+        return `${path}?${newParams.toString()}`;
+    };
     
     return (
         <header className="main-header">
@@ -13,13 +27,13 @@ const Header = ({ selectedServer, setSelectedServer }) => {
             
             <nav className="top-nav">
                 <NavLink 
-                    to="/resources" 
+                    to={getLink('/resources')} 
                     className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}
                 >
                     RESOURCES
                 </NavLink>
                 <NavLink 
-                    to="/schematics" 
+                    to={getLink('/schematics')} 
                     className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}
                 >
                     SCHEMATICS

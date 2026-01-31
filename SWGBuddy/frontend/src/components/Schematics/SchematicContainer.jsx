@@ -1,5 +1,6 @@
 // frontend/src/components/Schematics/SchematicContainer.jsx
 import React, { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import API from '../../services/api';
 import { useServer } from '../../contexts/ServerContext';
 import SchematicSidebar from './SchematicSidebar';
@@ -12,17 +13,20 @@ import SchematicView from './SchematicView';
 import ResourceModal from '../Modals/ResourceModal';
 
 const SchematicContainer = () => {
+	const [searchParams, setSearchParams] = useSearchParams();
     const { selectedServer } = useServer();
     const { resources: allResources, cache, actions } = useResources();
     
-    // Modal State
+    // --- State Management ---
+    // Instead of simple booleans, we can derive modal state from URL or sync URL to state
+    // For smoother UI, we keep local state and sync TO URL when changed.
+    
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedResource, setSelectedResource] = useState(null);
-
 	const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
     const [indexData, setIndexData] = useState([]);
-    const [isIndexLoading, setIsIndexLoading] = useState(true); // kept for potential future UI use
+    const [isIndexLoading, setIsIndexLoading] = useState(true);
 
     const [tabs, setTabs] = useState([
         { id: 1, schematic: null, details: null, loading: false, activeSubTab: 'best', lastUpdated: 0 }
@@ -30,8 +34,69 @@ const SchematicContainer = () => {
     const [activeTabId, setActiveTabId] = useState(1);
 
     const activeTab = tabs.find(t => t.id === activeTabId) || tabs[0];
-
     const hydratedRankings = useSchematicRanker(allResources, activeTab?.details);
+
+	// --- URL SYNC HELPERS ---
+    
+    // Helper to update params without losing 'server'
+    const updateParams = (updates) => {
+        setSearchParams(prev => {
+            const newParams = new URLSearchParams(prev);
+            Object.entries(updates).forEach(([key, val]) => {
+                if (val === null || val === undefined) {
+                    newParams.delete(key);
+                } else {
+                    newParams.set(key, val);
+                }
+            });
+            // Ensure server is always set if we have it in context
+            if (selectedServer) newParams.set('server', selectedServer);
+            return newParams;
+        }, { replace: true });
+    };
+
+    // --- INITIALIZATION & ROUTING EFFECTS ---
+
+    // 1. Check URL on mount/update for Active Schematic
+    useEffect(() => {
+        const idFromUrl = searchParams.get('id');
+        const modalFromUrl = searchParams.get('modal');
+
+        // Handle Schematic ID
+        if (idFromUrl && (!activeTab.schematic || activeTab.schematic.id !== idFromUrl)) {
+            // Check if it's already in another tab
+            const existingTab = tabs.find(t => t.schematic && t.schematic.id === idFromUrl);
+            if (existingTab) {
+                if (activeTabId !== existingTab.id) setActiveTabId(existingTab.id);
+            } else if (indexData.length > 0) {
+                // Find in index and open new tab
+                const schem = indexData.find(i => i.id === idFromUrl);
+                if (schem) {
+                    // Replace empty first tab or add new?
+                    // Simple logic: if only 1 tab and it's empty, replace it.
+                    if (tabs.length === 1 && !tabs[0].schematic) {
+                        fetchDetailsForTab(schem, tabs[0].id);
+                    } else {
+                        handleBackgroundOpen(schem); // Will add and fetch
+                    }
+                }
+            }
+        }
+
+        // Handle Modals
+        if (modalFromUrl === 'add') {
+            if (!isAddModalOpen) setIsAddModalOpen(true);
+        } else if (modalFromUrl === 'resource') {
+            // Resource Modal logic typically needs a resource ID too
+            // Not fully implementing deep link for specific resource ID here unless needed
+            // But if we wanted to: const resId = searchParams.get('resourceId');
+        } else {
+            // Close modals if URL doesn't have them? 
+            // This enables "Back button closes modal" behavior
+            if (isAddModalOpen) setIsAddModalOpen(false);
+        }
+
+    }, [searchParams, indexData]);
 
     // Load Index
     useEffect(() => {
@@ -116,6 +181,7 @@ const SchematicContainer = () => {
         const newId = Date.now();
         setTabs(prev => [...prev, { id: newId, schematic: null, details: null, loading: false, activeSubTab: 'best' }]);
         setActiveTabId(newId);
+		updateParams({ id: null });
     };
 
     const handleCloseTab = (e, tabId) => {
@@ -125,12 +191,14 @@ const SchematicContainer = () => {
             const resetId = Date.now();
             setTabs([{ id: resetId, schematic: null, details: null, loading: false, activeSubTab: 'best' }]);
             setActiveTabId(resetId);
+			updateParams({ id: null });
         } else {
             setTabs(newTabs);
             if (activeTabId === tabId) {
                 const index = tabs.findIndex(t => t.id === tabId);
                 const nextTab = newTabs[index - 1] || newTabs[index] || newTabs[0];
                 setActiveTabId(nextTab.id);
+				updateParams({ id: nextTab.schematic?.id || null });
             }
         }
     };
@@ -185,7 +253,22 @@ const SchematicContainer = () => {
     };
 
     const handleSelect = (schematic) => {
-        fetchDetailsForTab(schematic, activeTabId);
+        // Select logic from Sidebar
+        // 1. Check if already open
+        const existingTab = tabs.find(t => t.schematic?.id === schematic.id);
+        if (existingTab) {
+            setActiveTabId(existingTab.id);
+        } else {
+            // Use current tab if empty, else new tab logic (omitted for brevity, assume current active tab target)
+            fetchDetailsForTab(schematic, activeTabId);
+        }
+        updateParams({ id: schematic.id });
+    };
+
+	// Triggered when clicking a tab header
+    const handleTabClick = (tab) => {
+        setActiveTabId(tab.id);
+        updateParams({ id: tab.schematic?.id || null });
     };
 
     const handleBackgroundOpen = (schematic) => {
@@ -223,13 +306,32 @@ const SchematicContainer = () => {
         setTabs(prev => prev.map(t => t.id === activeTabId ? { ...t, activeSubTab: subTab } : t));
     };
 
+    // --- MODAL HANDLERS ---
+    
+    const openAddSchematicModal = () => {
+        setIsAddModalOpen(true);
+        updateParams({ modal: 'add-schematic' });
+    };
+
+    const closeAddSchematicModal = () => {
+        setIsAddModalOpen(false);
+        updateParams({ modal: null });
+    };
+
+	const handleModalSave = async () => {
+        await actions.refresh();
+		closeResourceModal();
+    };
+
     const handleResourceClick = (resource) => {
         setSelectedResource(resource);
         setIsModalOpen(true);
+        updateParams({ modal: 'resource', resourceId: resource.id });
     };
 
-    const handleModalSave = async () => {
-        await actions.refresh();
+    const closeResourceModal = () => {
+        setIsModalOpen(false);
+        updateParams({ modal: null, resourceId: null });
     };
 
     return (
@@ -239,7 +341,7 @@ const SchematicContainer = () => {
 				key={refreshKey}
                 selectedId={activeTab?.schematic?.id}
                 onSelect={handleSelect}
-				onAddClick={() => setIsAddModalOpen(true)}
+				onAddClick={openAddSchematicModal}
             />
 
             <div className="schematics-main-area">
@@ -248,7 +350,7 @@ const SchematicContainer = () => {
                         <div 
                             key={tab.id}
                             className={`schematic-tab ${activeTabId === tab.id ? 'active' : ''}`}
-                            onClick={() => setActiveTabId(tab.id)}
+                            onClick={() => handleTabClick(tab)}
                             title={tab.schematic?.name || "New Tab"}
                         >
                             <span className="tab-title">{tab.schematic ? tab.schematic.name : "New Tab"}</span>
@@ -288,7 +390,7 @@ const SchematicContainer = () => {
 
             <AddSchematicModal 
                 isOpen={isAddModalOpen} 
-                onClose={() => setIsAddModalOpen(false)} 
+                onClose={closeAddSchematicModal} 
                 onSave={handleSaveAndRefresh}
             />
         </section>
