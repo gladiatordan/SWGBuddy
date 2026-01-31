@@ -13,17 +13,14 @@ import SchematicView from './SchematicView';
 import ResourceModal from '../Modals/ResourceModal';
 
 const SchematicContainer = () => {
-	const [searchParams, setSearchParams] = useSearchParams();
-    const { selectedServer } = useServer();
+	const { selectedServer } = useServer();
     const { resources: allResources, cache, actions } = useResources();
+    const [searchParams, setSearchParams] = useSearchParams();
     
     // --- State Management ---
-    // Instead of simple booleans, we can derive modal state from URL or sync URL to state
-    // For smoother UI, we keep local state and sync TO URL when changed.
-    
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedResource, setSelectedResource] = useState(null);
-	const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
     const [indexData, setIndexData] = useState([]);
     const [isIndexLoading, setIsIndexLoading] = useState(true);
@@ -106,37 +103,40 @@ const SchematicContainer = () => {
 
     // 2. Handle URL Routing (Deep Links)
     useEffect(() => {
-        // Wait for index to load before attempting to resolve ID
+        const modalFromUrl = searchParams.get('modal');
+
+        if (modalFromUrl === 'add-schematic') {
+            if (!isAddModalOpen) setIsAddModalOpen(true);
+        } else if (modalFromUrl === 'resource') {
+            // Resource modal handling if needed from direct link
+            const rId = searchParams.get('resourceId');
+            if (rId && !isModalOpen) {
+                // If we had a way to fetch single resource by ID easily, we'd do it here.
+                // For now, we assume user flow sets selectedResource.
+                // If selectedResource is set, ensure modal is open.
+                if (selectedResource) setIsModalOpen(true);
+            }
+        } else {
+            // Close modals if URL doesn't have them
+            if (isAddModalOpen) setIsAddModalOpen(false);
+            if (isModalOpen) setIsModalOpen(false);
+        }
+    }, [searchParams, selectedResource]); // Re-run when index finishes loading
+
+	// 3. Handle URL Routing - SCHEMATICS (Dependent on Index)
+    useEffect(() => {
         if (isIndexLoading) return;
 
         const idFromUrl = searchParams.get('id');
-        const modalFromUrl = searchParams.get('modal');
-
-        // Handle Schematic ID
         if (idFromUrl) {
-            // If the URL has an ID, and the active tab isn't showing it...
             if (!activeTab.schematic || activeTab.schematic.id !== idFromUrl) {
-                // Find it in the index
                 const schem = indexData.find(i => i.id === idFromUrl);
                 if (schem) {
                     openAndFocusSchematic(schem);
                 }
             }
         }
-
-        // Handle Modals
-        if (modalFromUrl === 'add') {
-            if (!isAddModalOpen) setIsAddModalOpen(true);
-        } else if (modalFromUrl === 'resource') {
-            const rId = searchParams.get('resourceId');
-            // Logic to open resource modal if not open would go here
-            // But we need the full resource object usually. 
-            // For now, we skip deep linking specific resource modal unless we fetch it.
-        } else {
-            if (isAddModalOpen) setIsAddModalOpen(false);
-        }
-
-    }, [searchParams, indexData, isIndexLoading]); // Re-run when index finishes loading
+    }, [searchParams, indexData, isIndexLoading]);
 
     // --- REALTIME POLLING LOGIC ---
     const tabsRef = useRef(tabs);
@@ -177,7 +177,7 @@ const SchematicContainer = () => {
     const handleSaveSchematic = async (formData) => {
         try {
             await API.addSchematic(formData, selectedServer);
-            closeAddModal(); 
+            closeAddSchematicModal(); 
         } catch (err) {
             console.error("Failed to add schematic", err);
             throw err;
@@ -207,14 +207,14 @@ const SchematicContainer = () => {
             const resetId = Date.now();
             setTabs([{ id: resetId, schematic: null, details: null, loading: false, activeSubTab: 'best' }]);
             setActiveTabId(resetId);
-			updateParams({ id: null });
+            updateParams({ id: null });
         } else {
             setTabs(newTabs);
             if (activeTabId === tabId) {
                 const index = tabs.findIndex(t => t.id === tabId);
                 const nextTab = newTabs[index - 1] || newTabs[index] || newTabs[0];
                 setActiveTabId(nextTab.id);
-				updateParams({ id: nextTab.schematic?.id || null });
+                updateParams({ id: nextTab.schematic?.id || null });
             }
         }
     };
@@ -325,28 +325,24 @@ const SchematicContainer = () => {
     // --- MODAL HANDLERS ---
     
     const openAddSchematicModal = () => {
-        setIsAddModalOpen(true);
         updateParams({ modal: 'add-schematic' });
     };
 
     const closeAddSchematicModal = () => {
-        setIsAddModalOpen(false);
         updateParams({ modal: null });
     };
 
 	const handleModalSave = async () => {
         await actions.refresh();
-		closeResourceModal();
+		closeAddSchematicModal();
     };
 
     const handleResourceClick = (resource) => {
         setSelectedResource(resource);
-        setIsModalOpen(true);
         updateParams({ modal: 'resource', resourceId: resource.id });
     };
 
     const closeResourceModal = () => {
-        setIsModalOpen(false);
         updateParams({ modal: null, resourceId: null });
     };
 
@@ -399,7 +395,7 @@ const SchematicContainer = () => {
 
             <ResourceModal 
                 isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
+                onClose={closeResourceModal}
                 resource={selectedResource}
                 onSave={handleModalSave}
             />
