@@ -261,24 +261,24 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
             if (val === '') {
                 newExp[catIdx].weights[weightIdx][field] = '';
             } else {
-                let floatVal = parseFloat(val);
-                if (!isNaN(floatVal)) {
-                    // clamp 0-1
-                    floatVal = Math.max(0, Math.min(1, floatVal));
-                    // format to 2 decimals for display/storage?
-                    // user said "must sanitize to 2 decimal places"
-                    // We'll store the float, but maybe round it? 
-                    // Let's store string to allow typing "0.5" without it jumping to "0.50" immediately
-                    // But on blur or logic we treat it as 2 decimals.
-                    // For input, just ensure valid float logic.
-                    // Let's restrict decimal places to 2.
-                     const strVal = val.toString();
-                     if (strVal.includes('.')) {
-                        const parts = strVal.split('.');
-                        if (parts[1].length > 2) return; // prevent typing more than 2
-                     }
-                    newExp[catIdx].weights[weightIdx][field] = val; // Keep as string for input feel
-                }
+				// Allow valid starting chars for decimals
+				if (val === '.' || val === '0.') {
+					newExp[catIdx].weights[weightIdx][field] = val;
+				} else {
+					let floatVal = parseFloat(val);
+					if (!isNaN(floatVal)) {
+						// Clamp 0-100 (Changed from 0-1)
+						if (floatVal > 100) floatVal = 100;
+						if (floatVal < 0) floatVal = 0;
+
+						// If input is within bounds, use raw string to preserve precision
+						if (parseFloat(val) >= 0 && parseFloat(val) <= 100) {
+							newExp[catIdx].weights[weightIdx][field] = val;
+						} else {
+							newExp[catIdx].weights[weightIdx][field] = floatVal.toString();
+						}
+					}
+				}
             }
         } else {
             newExp[catIdx].weights[weightIdx][field] = val;
@@ -317,7 +317,7 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
         // 2. Ensure weights are floats
         const finalExpWeights = formData.experimentWeights.map(cat => ({
             ...cat,
-            weights: cat.weights.map(w => ({ ...w, value: parseFloat(w.value) || 0 }))
+            weights: cat.weights.map(w => ({ ...w, value: (parseFloat(w.value) || 0) / 100 }))
         }));
 
         const payload = { ...formData, slots: cleanedSlots, experimentWeights: finalExpWeights };
@@ -568,7 +568,7 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
                                                         value={w.value}
 														className="stat-input-no-spinner"
                                                         onChange={e => updateStatWeight(catIdx, wIdx, 'value', e.target.value)}
-                                                        step="0.01" min="0" max="1"
+                                                        step="1" min="1" max="100"
                                                     />
                                                 </div>
                                                 <button type="button" className="waypoint-delete-btn" onClick={() => removeStatWeight(catIdx, wIdx)}>
