@@ -19,14 +19,25 @@ const TaxonomySearch = ({
         
         // If it's already an array, assume it's pre-sorted/grouped
         if (Array.isArray(options)) {
-            return options;
+            // FIX: Normalize simple string/number arrays to objects
+            return options.map(opt => {
+                if (typeof opt === 'string' || typeof opt === 'number') {
+                    return { label: String(opt), value: String(opt) };
+                }
+                return opt;
+            });
         }
 
         // Legacy Dictionary support
         return Object.entries(options).map(([key, val]) => {
-            const label = typeof val === 'object' ? val.label : val;
+            // Handle case where val might be null or primitive
+            const label = (val && typeof val === 'object' && val.label) ? val.label : val;
             return { value: key, label: label };
-        }).sort((a, b) => a.label.localeCompare(b.label));
+        }).sort((a, b) => {
+            const la = a.label ? String(a.label) : "";
+            const lb = b.label ? String(b.label) : "";
+            return la.localeCompare(lb);
+        });
     }, [options]);
 
     // 2. Resolve Label for Input Display
@@ -43,10 +54,12 @@ const TaxonomySearch = ({
         
         return flatList.filter(item => {
             // Always keep headers visible if their children match? 
-            // For simplicity, just filter by label, headers usually don't match search terms.
-            // Better UX: Filter normally, but maybe hiding headers is fine during search.
-            if (item.isHeader) return true; // Optional: Keep headers or filter them out.
-            return item.label.toLowerCase().includes(search.toLowerCase());
+            // For simplicity, just filter by label.
+            if (item.isHeader) return true;
+            
+            // Safe check for label existence
+            const label = item.label ? String(item.label) : "";
+            return label.toLowerCase().includes(search.toLowerCase());
         });
     }, [flatList, search, isOpen]);
 
