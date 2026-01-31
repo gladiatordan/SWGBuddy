@@ -23,8 +23,30 @@ class RankingService(Core):
 	def run(self):
 		DatabaseContext.initialize()
 		self.info("Initializing Ranking Service...")
+
+		# 1. Safety Wait: Ensure Cache is populated by Main Process
+		# This prevents race conditions if the service starts before CacheManager finishes writing.
+		retries = 0
+		while retries < 15:
+			if self.cache._shared_data and len(self.cache._shared_data.keys()) > 0:
+				break
+			if retries == 0:
+				self.info("Waiting for Shared Cache population...")
+			time.sleep(1)
+			retries += 1
+		
 		self._hydrate_lookups()
 		self._initialize_schematics()
+
+		# 3. Startup Recalculation
+		if self.cache._shared_data:
+			self.info("Triggering startup ranking recalculation...")
+			# Iterate over all available servers in cache
+			for server_id in self.cache._shared_data.keys():
+				self._handle_recalculate_all({'server_id': server_id})
+		else:
+			self.warning("Cache appeared empty after wait. Skipping startup rankings.")
+
 		self.info("Ranking Service Ready.")
 
 		while self.running:
@@ -216,7 +238,7 @@ class RankingService(Core):
 
 	def _update_schematic_ranking(self, server_id, sch_id, ing_key, req_tree_id, new_resource):
 		schematic = self.schematic_definitions[server_id][sch_id]
-		
+
 		experiment_weights = schematic.get('experiment_weights', {})
 		exp_keys = list(experiment_weights.keys())
 		combos = self._generate_combinatorial_keys(exp_keys)
