@@ -10,6 +10,7 @@ const SchematicView = ({
     activeSubTab,
     hydratedRankings,
     indexData,
+	cache,
     onToggleCategory,
     onSubTabChange,
     onResourceClick,
@@ -57,6 +58,18 @@ const SchematicView = ({
             .join('   ');
     };
 
+	const getResourceDisplayName = (classTree) => {
+        if (!classTree) return "Unknown";
+        // Attempt to find label in cache.filter_list dictionary if available
+        // OR simply Title Case the last part of the tree string
+        // Assuming classTree is a string like "mineral_ore_iron"
+        if (cache?.filter_list && cache.filter_list[classTree]) {
+            return cache.filter_list[classTree];
+        }
+        // Fallback: return just the classTree
+        return classTree;
+    };
+
     const renderIngredients = (slots) => {
         if (!slots) return <tr><td colSpan="2">No ingredients</td></tr>;
         const sortedSlots = Object.entries(slots).sort(([, a], [, b]) => a.slot_type - b.slot_type);
@@ -101,7 +114,7 @@ const SchematicView = ({
 
             switch (data.slot_type) {
                 case 0:
-                    displayString = <span>{data.quantity} units of {ingredientName}</span>;
+                    displayString = <span>{data.quantity} units of {getResourceDisplayName(ingredientName)}</span>;
                     break;
                 case 1:
                     displayString = (
@@ -157,12 +170,19 @@ const SchematicView = ({
 
     const renderRankingTable = (ingredientName, resources) => {
         // Ideally we pass a lookup for nice labels, but raw is safe fallback
-        const decodedTitle = ingredientName; 
+        const decodedTitle = getResourceDisplayName(ingredientName); 
 
         if (!resources || resources.length === 0) {
             return (
                 <div key={ingredientName} className="slot-group-empty">
-                     <h4 className="slot-header">{decodedTitle}</h4>
+                     <h4 className="slot-header" style={{ 
+                    fontSize: '30px', 
+                    color: 'var(--accent-blue)', 
+                    marginBottom: '10px', 
+                    textTransform: 'uppercase',
+                    borderBottom: '1px solid var(--border-dim)',
+                    paddingBottom: '5px'
+                }}>{decodedTitle}</h4>
                      <div className="empty-message">No matching resources found for this configuration.</div>
                 </div>
             );
@@ -171,7 +191,7 @@ const SchematicView = ({
         return (
             <div key={ingredientName} className="slot-group-container" style={{ marginBottom: '30px' }}>
                 <h4 className="slot-header" style={{ 
-                    fontSize: '16px', 
+                    fontSize: '30px', 
                     color: 'var(--accent-blue)', 
                     marginBottom: '10px', 
                     textTransform: 'uppercase',

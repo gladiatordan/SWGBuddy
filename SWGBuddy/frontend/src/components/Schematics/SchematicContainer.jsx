@@ -270,6 +270,7 @@ const SchematicContainer = () => {
                         activeSubTab={activeTab.activeSubTab}
                         hydratedRankings={hydratedRankings}
                         indexData={indexData}
+						cache={cache}
                         onToggleCategory={handleToggleCategory}
                         onSubTabChange={handleSubTabChange}
                         onResourceClick={handleResourceClick}
