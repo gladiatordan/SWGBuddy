@@ -449,6 +449,9 @@ def queryResourceLog():
 	except:
 		since = 0
 	
+	# optional filter
+	res_type = request.args.get('type')
+	
 	sql = """
 		SELECT rl.*, 
 			   rc.label as type, -- Get human readable label
@@ -465,10 +468,16 @@ def queryResourceLog():
 			 OR (rl.last_modified IS NOT NULL AND EXTRACT(EPOCH FROM rl.last_modified) > %s))
 		ORDER BY rl.date_reported DESC
 	"""
+
+	if res_type:
+		sql = sql.replace("ORDER BY", "AND rl.class_tree LIKE %s ORDER BY")
 	
 	try:
 		with DatabaseContext.cursor() as cur:
-			cur.execute(sql, (server_id, since, since))
+			if res_type:
+				cur.execute(sql, (server_id, since, since, f"{res_type}%"))
+			else:
+				cur.execute(sql, (server_id, since, since))
 			rows = cur.fetchall()
 		return jsonify({"resources": rows})
 	except Exception as e:
@@ -680,6 +689,22 @@ def check_schematic_updates():
         
     except Exception as e:
         return jsonify({"error": f"Update check error: {e}"}), 500
+
+@app.route('/api/schematics/add', methods=['POST'])
+def add_schematic():
+    if 'discord_id' not in session: 
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    data = request.json
+    server_id = data.get('server_id', 'cuemu')
+
+    # Send command to ValidationService
+    resp = send_command("add_schematic", data, server_id=server_id)
+    
+    if resp['status'] == 'success':
+        return jsonify({"success": True})
+    
+    return jsonify({"error": resp.get('error', 'Unknown error')}), 500
 
 @app.route('/api/admin/recalc-rankings', methods=['POST'])
 def recalc_rankings():

@@ -132,6 +132,18 @@ const API = {
         return await response.json();
     },
 
+	async addSchematic(data, serverId) {
+        data.server_id = serverId;
+        const response = await this._fetch('/api/schematics/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        const result = await response.json();
+        if (!result.success) throw new Error(result.error || 'Unknown error');
+        return result;
+    },
+
 	async recalculateRankings(serverId) {
         // Requires Superadmin
         const response = await this._fetch('/api/admin/recalc-rankings', {

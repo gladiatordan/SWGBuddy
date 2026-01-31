@@ -3,8 +3,9 @@ import API from '../../services/api';
 import { useServer } from '../../contexts/ServerContext';
 import { useAuth } from '../../contexts/AuthContext'; // Import Auth
 import TaxonomySearch from '../Common/TaxonomySearch';
+import AddSchematicModal from '../Modals/AddSchematicModal';
 
-const SchematicSidebar = ({ selectedId, onSelect }) => {
+const SchematicSidebar = ({ selectedId, onSelect, onAddClick }) => {
     const { selectedServer } = useServer();
     const { hasPermission } = useAuth(); // Get Permission Helper
     const [indexData, setIndexData] = useState([]);
@@ -16,20 +17,21 @@ const SchematicSidebar = ({ selectedId, onSelect }) => {
     const [isRecalculating, setIsRecalculating] = useState(false);
 
     // Fetch Index
+    const loadIndex = async () => {
+        if (!selectedServer) return;
+        setIsLoading(true);
+        try {
+            const data = await API.fetchSchematicIndex(selectedServer);
+            setIndexData(data || []);
+        } catch (err) {
+            console.error("Failed to load schematic index", err);
+            setIndexData([]);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const loadIndex = async () => {
-            if (!selectedServer) return;
-            setIsLoading(true);
-            try {
-                const data = await API.fetchSchematicIndex(selectedServer);
-                setIndexData(data || []);
-            } catch (err) {
-                console.error("Failed to load schematic index", err);
-                setIndexData([]);
-            } finally {
-                setIsLoading(false);
-            }
-        };
         loadIndex();
     }, [selectedServer]);
 
@@ -86,12 +88,6 @@ const SchematicSidebar = ({ selectedId, onSelect }) => {
         } finally {
             setIsRecalculating(false);
         }
-    };
-
-    const handleAddSchematic = () => {
-        // Placeholder for future Modal logic
-        console.log("Open Add Schematic Modal");
-        alert("Add Schematic feature coming soon!");
     };
 
     return (
@@ -173,7 +169,7 @@ const SchematicSidebar = ({ selectedId, onSelect }) => {
                 {hasPermission('ADMIN') && (
                     <button 
                         className="btn-primary" 
-                        onClick={handleAddSchematic}
+                        onClick={onAddClick} 
                         style={{ width: '100%', fontSize: '0.85rem', padding: '8px' }}
                     >
                         <i className="fa-solid fa-plus"></i> Add Schematic

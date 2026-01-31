@@ -3,6 +3,7 @@ SWGBuddy ValidationService Module
 Updated for resource_log schema and class_tree taxonomy.
 """
 import sys
+import time
 import re
 import json
 import os
@@ -134,6 +135,19 @@ class ValidationService(Core):
 			elif action == "reload_cache":
 				self._hydrate_permissions()
 				self.info("Permissions reloaded.")
+			
+			elif action == "add_schematic":
+				schematic_data = self._handle_add_schematic(payload, server_id, user_ctx)
+				self._log_command(server_id, user_ctx, action, payload)
+				self.info(f"User {user_ctx.get('username')} added schematic: {payload.get('name')}")
+				
+				# Push to Ranking Service
+				if self.ranking_queue:
+					self.ranking_queue.put({
+						"action": "rank_schematic",
+						"schematic": schematic_data,
+						"server_id": server_id
+					})
 			
 			elif action == "recalculate_rankings":
 				# Forward to Ranking Service
@@ -332,6 +346,101 @@ class ValidationService(Core):
 			data['res_weight_rating'] = round(sum(valid_ratings) / len(valid_ratings), 3)
 		else:
 			data['res_weight_rating'] = 0.0
+	
+	def _handle_add_schematic(self, data, server_id, user_ctx):
+		# 1. Input Sanitization & Structuring
+		name = data.get('name', '').strip()
+		if not name: raise ValueError("Schematic Name is required.")
+
+		# Formatting: lower case name, replace spaces with underscores for ID/Filename
+		schematic_id = name.lower().replace(" ", "_")
+		
+		# Simple heuristic mapping based on XP Type
+		xp_type = data.get('xpType', '')
+		category = data.get('category', '')
+		
+		# Format slots
+		formatted_slots = {}
+		for slot in data.get('slots', []):
+			formatted_slots[slot['name']] = {
+				"slot_type": int(slot['type']),
+				"ingredient": slot['ingredient'],
+				"quantity": int(slot['quantity'])
+			}
+
+		# Format experiment weights
+		formatted_weights = {}
+		for cat in data.get('experimentWeights', []):
+			weight_group = {}
+			for w in cat['weights']:
+				weight_group[w['stat']] = float(w['value'])
+			formatted_weights[cat['category']] = weight_group
+
+		json_obj = {
+			"id": schematic_id,
+			"custom_object_name": name, # Kept original casing for display
+			"base_profession": "Unknown", # Modal didn't ask for profession either! I'll infer or leave blank.
+			"category": category,
+			"certification": data.get('certification', ''),
+			"complexity": int(data.get('complexity', 0)),
+			"experience_type": xp_type,
+			"experience": int(data.get('baseXp', 0)),
+			"assembly_skill": data.get('assemblySkill', ''),
+			"experimentation_skill": data.get('experimentSkill', ''),
+			"customization_skill": data.get('customizationSkill', ''),
+			"slots": formatted_slots,
+			"experiment_weights": formatted_weights,
+			"rankings": {},
+			"last_updated": int(time.time())
+		}
+		
+		# 2. File Writing
+		# Base path: SWGBuddy/assets/schematics/<server_id>/<category>/<id>.json
+		# __file__ is inside services/. Go up two levels to SWGBuddy root.
+		root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+		target_dir = os.path.join(root_dir, 'assets', 'schematics', server_id, category.lower().replace(" ", "_"))
+		os.makedirs(target_dir, exist_ok=True)
+		
+		file_path = os.path.join(target_dir, f"{schematic_id}.json")
+		
+		# Prevent overwriting core files? For now, we allow it (User is Admin).
+		with open(file_path, 'w', encoding='utf-8') as f:
+			json.dump(json_obj, f, indent=4)
+			
+		# 3. Update CacheManager
+		# We need to manually inject this into the Shared Dictionary so other processes see it immediately
+		# without a full reload.
+		if self.cache and self.cache._shared_data:
+			server_data = self.cache.get_server_data(server_id)
+			if server_data:
+				# Update Maps
+				# Note: modifying nested objects in Manager.dict requires re-assignment!
+				
+				# 1. Map
+				s_map = server_data.get('schematic_map', {}).copy()
+				# Inject file path so ranking service can find it later if it reloads
+				json_obj['file_path'] = file_path 
+				s_map[schematic_id] = json_obj
+				server_data['schematic_map'] = s_map
+				
+				# 2. Index
+				s_idx = list(server_data.get('schematic_index', []))
+				# Remove existing if update
+				s_idx = [x for x in s_idx if x['id'] != schematic_id]
+				s_idx.append({
+					'id': schematic_id,
+					'name': name,
+					'profession': json_obj['base_profession'],
+					'category': category.lower().replace(" ", "_")
+				})
+				# Sort index by name
+				s_idx.sort(key=lambda x: x['name'])
+				server_data['schematic_index'] = s_idx
+				
+				# Commit back to shared memory
+				self.cache._shared_data[server_id] = server_data
+
+		return json_obj
 
 	# ----------------------------------------------------------------------
 	# DB UTILS

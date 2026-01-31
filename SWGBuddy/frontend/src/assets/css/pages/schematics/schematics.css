@@ -208,8 +208,8 @@
     letter-spacing: 1px;
 }
 
-.specs-container { display: flex; gap: 20px; width: 100%; }
-.specs-left-column { flex: 0 0 50%; display: flex; gap: 10px; }
+.specs-container { display: flex; gap: 20px; width: 100%; flex-direction: column;}
+.specs-left-column { flex: 0 0 40%;}
 
 .info-table-wrapper {
     flex: 1;
@@ -328,7 +328,8 @@
 
 .exp-cat-list {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+	flex-wrap: wrap;
     gap: 8px;
     margin-top: 5px;
 }
@@ -339,6 +340,7 @@
     border: 1px solid transparent;
     border-radius: 4px;
     transition: all 0.2s ease;
+	width: 15%;
 }
 
 .exp-cat-item.selected {
