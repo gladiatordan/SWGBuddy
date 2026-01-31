@@ -56,49 +56,37 @@ const SchematicContainer = () => {
     };
 
     // --- INITIALIZATION & ROUTING EFFECTS ---
-
-    // 1. Check URL on mount/update for Active Schematic
-    useEffect(() => {
-        const idFromUrl = searchParams.get('id');
-        const modalFromUrl = searchParams.get('modal');
-
-        // Handle Schematic ID
-        if (idFromUrl && (!activeTab.schematic || activeTab.schematic.id !== idFromUrl)) {
-            // Check if it's already in another tab
-            const existingTab = tabs.find(t => t.schematic && t.schematic.id === idFromUrl);
-            if (existingTab) {
-                if (activeTabId !== existingTab.id) setActiveTabId(existingTab.id);
-            } else if (indexData.length > 0) {
-                // Find in index and open new tab
-                const schem = indexData.find(i => i.id === idFromUrl);
-                if (schem) {
-                    // Replace empty first tab or add new?
-                    // Simple logic: if only 1 tab and it's empty, replace it.
-                    if (tabs.length === 1 && !tabs[0].schematic) {
-                        fetchDetailsForTab(schem, tabs[0].id);
-                    } else {
-                        handleBackgroundOpen(schem); // Will add and fetch
-                    }
-                }
+	const openAndFocusSchematic = (schematic) => {
+        // 1. If already open in a tab, switch to it
+        const existingTab = tabs.find(t => t.schematic?.id === schematic.id);
+        if (existingTab) {
+            if (activeTabId !== existingTab.id) {
+                setActiveTabId(existingTab.id);
             }
+            return;
         }
 
-        // Handle Modals
-        if (modalFromUrl === 'add') {
-            if (!isAddModalOpen) setIsAddModalOpen(true);
-        } else if (modalFromUrl === 'resource') {
-            // Resource Modal logic typically needs a resource ID too
-            // Not fully implementing deep link for specific resource ID here unless needed
-            // But if we wanted to: const resId = searchParams.get('resourceId');
+        // 2. If we have a single empty tab (initial state), reuse it
+        if (tabs.length === 1 && !tabs[0].schematic) {
+            const firstTabId = tabs[0].id;
+            setActiveTabId(firstTabId);
+            fetchDetailsForTab(schematic, firstTabId);
+            return;
+        }
+
+        // 3. Otherwise, open a new tab and focus it
+        if (tabs.length >= 10) {
+            // Max tabs reached: Reuse active tab as fallback
+            fetchDetailsForTab(schematic, activeTabId);
         } else {
-            // Close modals if URL doesn't have them? 
-            // This enables "Back button closes modal" behavior
-            if (isAddModalOpen) setIsAddModalOpen(false);
+            const newId = Date.now();
+            setTabs(prev => [...prev, { id: newId, schematic: schematic, details: null, loading: true, activeSubTab: 'best' }]);
+            setActiveTabId(newId);
+            fetchDetailsForTab(schematic, newId);
         }
+    };
 
-    }, [searchParams, indexData]);
-
-    // Load Index
+    // 1. Load Index
     useEffect(() => {
         const loadIndex = async () => {
             if (!selectedServer) return;
@@ -115,6 +103,40 @@ const SchematicContainer = () => {
         };
         loadIndex();
     }, [selectedServer]);
+
+    // 2. Handle URL Routing (Deep Links)
+    useEffect(() => {
+        // Wait for index to load before attempting to resolve ID
+        if (isIndexLoading) return;
+
+        const idFromUrl = searchParams.get('id');
+        const modalFromUrl = searchParams.get('modal');
+
+        // Handle Schematic ID
+        if (idFromUrl) {
+            // If the URL has an ID, and the active tab isn't showing it...
+            if (!activeTab.schematic || activeTab.schematic.id !== idFromUrl) {
+                // Find it in the index
+                const schem = indexData.find(i => i.id === idFromUrl);
+                if (schem) {
+                    openAndFocusSchematic(schem);
+                }
+            }
+        }
+
+        // Handle Modals
+        if (modalFromUrl === 'add') {
+            if (!isAddModalOpen) setIsAddModalOpen(true);
+        } else if (modalFromUrl === 'resource') {
+            const rId = searchParams.get('resourceId');
+            // Logic to open resource modal if not open would go here
+            // But we need the full resource object usually. 
+            // For now, we skip deep linking specific resource modal unless we fetch it.
+        } else {
+            if (isAddModalOpen) setIsAddModalOpen(false);
+        }
+
+    }, [searchParams, indexData, isIndexLoading]); // Re-run when index finishes loading
 
     // --- REALTIME POLLING LOGIC ---
     const tabsRef = useRef(tabs);
@@ -155,13 +177,7 @@ const SchematicContainer = () => {
     const handleSaveSchematic = async (formData) => {
         try {
             await API.addSchematic(formData, selectedServer);
-            setIsAddModalOpen(false);
-            // Ideally, we trigger a refresh in Sidebar. 
-            // Since Sidebar fetches its own data on mount/server change, 
-            // we might want to force a remount or pass a "refreshTrigger" prop.
-            // For now, simple page reload or ignoring the immediate list update 
-            // might be the quickest path, but let's try a key update to force sidebar refresh:
-            // (See implementation below in return statement)
+            closeAddModal(); 
         } catch (err) {
             console.error("Failed to add schematic", err);
             throw err;
