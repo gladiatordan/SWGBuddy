@@ -19,7 +19,7 @@ const TaxonomySearch = ({
         
         // If it's already an array, assume it's pre-sorted/grouped
         if (Array.isArray(options)) {
-            // FIX: Normalize simple string/number arrays to objects
+            // Normalize simple string/number arrays to objects
             return options.map(opt => {
                 if (typeof opt === 'string' || typeof opt === 'number') {
                     return { label: String(opt), value: String(opt) };
@@ -151,7 +151,7 @@ const TaxonomySearch = ({
     if (disabled) return <div className="static-value">{selectedLabel || "Loading..."}</div>;
 
     return (
-        <div className="custom-dropdown" ref={wrapperRef}>
+        <div className="custom-dropdown" ref={wrapperRef} style={{ position: 'relative', zIndex: isOpen ? 1005 : 'auto' }}>
             <input 
                 type="text" 
                 className="dropdown-search-input" 
