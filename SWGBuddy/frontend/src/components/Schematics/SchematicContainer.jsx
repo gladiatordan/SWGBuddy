@@ -5,6 +5,7 @@ import { useServer } from '../../contexts/ServerContext';
 import SchematicSidebar from './SchematicSidebar';
 import { useResources } from '../../hooks/useResources';
 import { useSchematicRanker } from '../../hooks/useSchematicRanker';
+import AddSchematicModal from '../Modals/AddSchematicModal';
 
 // View Component
 import SchematicView from './SchematicView';
@@ -17,6 +18,8 @@ const SchematicContainer = () => {
     // Modal State
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedResource, setSelectedResource] = useState(null);
+
+	const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
     const [indexData, setIndexData] = useState([]);
     const [isIndexLoading, setIsIndexLoading] = useState(true); // kept for potential future UI use
@@ -83,6 +86,29 @@ const SchematicContainer = () => {
         return () => clearInterval(intervalId);
     }, [selectedServer]);
 
+	// ADDED: Save Handler
+    const handleSaveSchematic = async (formData) => {
+        try {
+            await API.addSchematic(formData, selectedServer);
+            setIsAddModalOpen(false);
+            // Ideally, we trigger a refresh in Sidebar. 
+            // Since Sidebar fetches its own data on mount/server change, 
+            // we might want to force a remount or pass a "refreshTrigger" prop.
+            // For now, simple page reload or ignoring the immediate list update 
+            // might be the quickest path, but let's try a key update to force sidebar refresh:
+            // (See implementation below in return statement)
+        } catch (err) {
+            console.error("Failed to add schematic", err);
+            throw err;
+        }
+    };
+
+	// Helper to force sidebar refresh
+    const [refreshKey, setRefreshKey] = useState(0);
+    const handleSaveAndRefresh = async (data) => {
+        await handleSaveSchematic(data);
+        setRefreshKey(prev => prev + 1); // Increment to re-render Sidebar
+    };
 
     // --- TAB MANAGEMENT ---
     const handleAddTab = () => {
@@ -210,8 +236,10 @@ const SchematicContainer = () => {
         <section id="schematics-container" className="schematics-layout page-container active">
             
             <SchematicSidebar 
+				key={refreshKey}
                 selectedId={activeTab?.schematic?.id}
                 onSelect={handleSelect}
+				onAddClick={() => setIsAddModalOpen(true)}
             />
 
             <div className="schematics-main-area">
@@ -255,6 +283,12 @@ const SchematicContainer = () => {
                 onClose={() => setIsModalOpen(false)}
                 resource={selectedResource}
                 onSave={handleModalSave}
+            />
+
+            <AddSchematicModal 
+                isOpen={isAddModalOpen} 
+                onClose={() => setIsAddModalOpen(false)} 
+                onSave={handleSaveAndRefresh}
             />
         </section>
     );

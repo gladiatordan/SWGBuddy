@@ -5,7 +5,7 @@ import { useAuth } from '../../contexts/AuthContext'; // Import Auth
 import TaxonomySearch from '../Common/TaxonomySearch';
 import AddSchematicModal from '../Modals/AddSchematicModal';
 
-const SchematicSidebar = ({ selectedId, onSelect }) => {
+const SchematicSidebar = ({ selectedId, onSelect, onAddClick }) => {
     const { selectedServer } = useServer();
     const { hasPermission } = useAuth(); // Get Permission Helper
     const [indexData, setIndexData] = useState([]);
@@ -16,24 +16,22 @@ const SchematicSidebar = ({ selectedId, onSelect }) => {
     // State for Recalculate Button
     const [isRecalculating, setIsRecalculating] = useState(false);
 
-	// Modal State
-    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-
     // Fetch Index
+    const loadIndex = async () => {
+        if (!selectedServer) return;
+        setIsLoading(true);
+        try {
+            const data = await API.fetchSchematicIndex(selectedServer);
+            setIndexData(data || []);
+        } catch (err) {
+            console.error("Failed to load schematic index", err);
+            setIndexData([]);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const loadIndex = async () => {
-            if (!selectedServer) return;
-            setIsLoading(true);
-            try {
-                const data = await API.fetchSchematicIndex(selectedServer);
-                setIndexData(data || []);
-            } catch (err) {
-                console.error("Failed to load schematic index", err);
-                setIndexData([]);
-            } finally {
-                setIsLoading(false);
-            }
-        };
         loadIndex();
     }, [selectedServer]);
 
@@ -89,18 +87,6 @@ const SchematicSidebar = ({ selectedId, onSelect }) => {
             alert("Failed to trigger recalculation: " + (err.response?.data?.error || err.message));
         } finally {
             setIsRecalculating(false);
-        }
-    };
-
-    const handleSaveSchematic = async (formData) => {
-        try {
-            await API.addSchematic(formData, selectedServer);
-            setIsAddModalOpen(false);
-            // Refresh the index to show the new item
-            await loadIndex();
-        } catch (err) {
-            console.error("Failed to add schematic", err);
-            throw err; // Propagate to modal for error display
         }
     };
 
@@ -183,19 +169,13 @@ const SchematicSidebar = ({ selectedId, onSelect }) => {
                 {hasPermission('ADMIN') && (
                     <button 
                         className="btn-primary" 
-                        onClick={() => setIsAddModalOpen(true)}
+                        onClick={onAddClick} 
                         style={{ width: '100%', fontSize: '0.85rem', padding: '8px' }}
                     >
                         <i className="fa-solid fa-plus"></i> Add Schematic
                     </button>
                 )}
             </div>
-			{/* Add Schematic Modal */}
-            <AddSchematicModal 
-                isOpen={isAddModalOpen} 
-                onClose={() => setIsAddModalOpen(false)} 
-                onSave={handleSaveSchematic}
-            />
         </aside>
     );
 };
