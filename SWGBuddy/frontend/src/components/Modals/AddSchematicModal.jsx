@@ -5,6 +5,29 @@ import TaxonomySearch from '../Common/TaxonomySearch';
 import { STAT_MAPPING } from '../../utils/resourceUtils';
 
 // --- Hardcoded Options ---
+const CATEGORY_OPTIONS = [
+	"None",
+	"Creatures",
+	"Armor",
+	"Chemical",
+	"Clothing",
+	"Droid",
+	"Food",
+	"Furniture",
+	"Generic Item",
+	"Genetics",
+	"Installation",
+	"Lightsaber",
+	"Droid Engineer",
+	"Tailor",
+	"Misc",
+	"Mission",
+	"Tissues",
+	"Ship Tools",
+	"Starship Components",
+	"Vehicle",
+	"Weapon"
+]
 
 const CERTIFICATION_OPTIONS = [
     "None", "Novice Entertainer", "Master Entertainer", "Entertainer Item Use I", "Entertainer Item Use II", "Entertainer Item Use III", "Entertainer Item Use IV",
@@ -105,6 +128,7 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
     // Form State
     const [formData, setFormData] = useState({
         name: '',
+		category: '',
         certification: '',
         assemblySkill: '',
         experimentSkill: '',
@@ -328,6 +352,16 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
                                 )}
                             </div>
                         </div>
+
+						<div className="form-group">
+							<label>Category</label>
+							<TaxonomySearch 
+								options={CATEGORY_OPTIONS}
+								value={formData.category}
+								onChange={val => setFormData({...formData, category: val})}
+								placeholder="Select Category..."
+							/>
+						</div>
 
                         <div className="form-group">
                             <label>Certification Required</label>

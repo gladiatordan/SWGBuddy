@@ -681,6 +681,22 @@ def check_schematic_updates():
     except Exception as e:
         return jsonify({"error": f"Update check error: {e}"}), 500
 
+@app.route('/api/schematics/add', methods=['POST'])
+def add_schematic():
+    if 'discord_id' not in session: 
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    data = request.json
+    server_id = data.get('server_id', 'cuemu')
+
+    # Send command to ValidationService
+    resp = send_command("add_schematic", data, server_id=server_id)
+    
+    if resp['status'] == 'success':
+        return jsonify({"success": True})
+    
+    return jsonify({"error": resp.get('error', 'Unknown error')}), 500
+
 @app.route('/api/admin/recalc-rankings', methods=['POST'])
 def recalc_rankings():
     if 'discord_id' not in session: 
