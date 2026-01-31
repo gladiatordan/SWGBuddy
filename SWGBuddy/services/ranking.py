@@ -262,6 +262,7 @@ class RankingService(Core):
 			pre_norm.append({'data': cand, 'norm': norm})
 
 		for combo_key, subset_cats in combos:
+			if combo_key == "default": continue # Skip default combo
 			target_weights = {}
 			for cat_info in subset_cats:
 				w = experiment_weights.get(cat_info['title'], {})
