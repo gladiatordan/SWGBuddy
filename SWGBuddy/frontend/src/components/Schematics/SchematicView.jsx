@@ -1,7 +1,128 @@
 // frontend/src/components/Schematics/SchematicView.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { STAT_MAPPING } from '../../utils/resourceUtils';
 import ResourceRow from '../ResourceTable/ResourceRow';
+
+const IngredientDisplay = ({ raw, indexData, onBackgroundOpen }) => {
+    const [showPopover, setShowPopover] = useState(false);
+
+    // 1. Check for List Format: Name[Opt1|Opt2]
+    // Matches "Battle Core[Basic|Standard]" -> group 1: "Battle Core", group 2: "Basic|Standard"
+    const match = raw ? raw.match(/^(.+)\[(.+)\]$/) : null;
+
+    if (match) {
+        const listName = match[1];
+        const options = match[2].split('|').map(s => s.trim());
+
+        return (
+            <span style={{ position: 'relative', display: 'inline-block' }}>
+                <span 
+                    onClick={(e) => { e.stopPropagation(); setShowPopover(!showPopover); }}
+                    style={{ 
+                        color: 'var(--accent-blue)', 
+                        cursor: 'pointer', 
+                        borderBottom: '1px dotted var(--accent-blue)',
+                        fontWeight: '500'
+                    }}
+                    title="Click to view compatible components"
+                >
+                    {listName}
+                </span>
+                
+                {showPopover && (
+                    <div className="ingredient-popover" style={{
+                        position: 'absolute',
+                        top: '100%',
+                        left: '0',
+                        marginTop: '5px',
+                        zIndex: 100,
+                        background: 'var(--bg-secondary)',
+                        border: '1px solid var(--border-color)',
+                        padding: '10px',
+                        borderRadius: '4px',
+                        minWidth: '220px',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                        textAlign: 'left'
+                    }}>
+                        <div style={{ 
+                            fontSize: '0.8rem', 
+                            color: 'var(--text-dim)', 
+                            marginBottom: '8px',
+                            borderBottom: '1px solid var(--border-dim)',
+                            paddingBottom: '4px',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                        }}>
+                            <span>Compatible Components</span>
+                            <span onClick={(e) => { e.stopPropagation(); setShowPopover(false); }} style={{cursor: 'pointer', fontSize: '1.2em', lineHeight: '0.5'}}>&times;</span>
+                        </div>
+                        <ul style={{ listStyle: 'none', padding: 0, margin: 0, maxHeight: '200px', overflowY: 'auto' }}>
+                            {options.map((opt, idx) => {
+                                // Check if this option exists in our schematic index
+                                const linked = indexData?.find(i => i.name.toLowerCase() === opt.toLowerCase());
+                                return (
+                                    <li key={idx} style={{ marginBottom: '4px' }}>
+                                        {linked ? (
+                                            <a 
+                                                href="#"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    onBackgroundOpen(linked);
+                                                }}
+                                                style={{ 
+                                                    color: 'var(--text-normal)', 
+                                                    textDecoration: 'none', 
+                                                    display: 'block', 
+                                                    padding: '4px 6px', 
+                                                    borderRadius: '3px',
+                                                    background: 'rgba(255,255,255,0.05)'
+                                                }}
+                                                onMouseEnter={e => e.target.style.background = 'rgba(255,255,255,0.15)'}
+                                                onMouseLeave={e => e.target.style.background = 'rgba(255,255,255,0.05)'}
+                                            >
+                                                {opt} <i className="fa-solid fa-arrow-up-right-from-square" style={{ fontSize: '0.7em', marginLeft: '5px', opacity: 0.5 }}></i>
+                                            </a>
+                                        ) : (
+                                            <span style={{ color: 'var(--text-dim)', padding: '2px 6px', display: 'block' }}>{opt}</span>
+                                        )}
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
+                )}
+            </span>
+        );
+    }
+
+    // 2. Single Name Fallback (Standard Logic)
+    const linked = indexData?.find(i => i.name.toLowerCase() === raw.toLowerCase());
+    
+    if (linked) {
+        return (
+            <span 
+                className="schematic-ingredient-link" 
+                title={`Open ${linked.name} in new tab`}
+                onClick={(e) => {
+                    e.stopPropagation(); 
+                    onBackgroundOpen(linked);
+                }}
+                style={{ 
+                    color: 'var(--accent-blue)', 
+                    cursor: 'pointer', 
+                    textDecoration: 'underline',
+                    fontWeight: '500'
+                }}
+            >
+                {raw} <i className="fa-solid fa-arrow-up-right-from-square" style={{fontSize: '0.7em', marginLeft: '4px'}}></i>
+            </span>
+        );
+    }
+
+    return <span>{raw}</span>;
+};
 
 const SchematicView = ({
     schematic,
@@ -40,17 +161,6 @@ const SchematicView = ({
         // Assuming the parent handled the lookup or we just display the key prettified:
         return key.replace(/_/g, ' '); 
     };
-    
-    // Note: If you need the exact taxonomy label from cache, pass `taxonomy` as a prop.
-    // For this refactor, we will rely on the parent passing processed data or accepting raw keys
-    // if the cache isn't available here. 
-    // *Correction*: The original code used `cache.taxonomy`. 
-    // To match legacy exactly, we should accept a `getIngredientLabel` helper or the taxonomy object.
-    // Let's assume the parent passes a resolved name or we use a simple formatter here 
-    // if the logic was simple.
-    // *Better approach*: The original used `getIngredientLabel` which accessed `cache`.
-    // We will let the View render what it's given. 
-    // However, `renderIngredients` logic is complex. Let's include it here.
 
     const formatWeights = (weights) => {
         return Object.entries(weights)
@@ -88,29 +198,13 @@ const SchematicView = ({
                 );
             }
 
-            const wrapLink = (text) => {
-                if (linkedSchematic) {
-                    return (
-                        <span 
-                            className="schematic-ingredient-link" 
-                            title={`Open ${linkedSchematic.name} in new tab`}
-                            onClick={(e) => {
-                                e.stopPropagation(); 
-                                onBackgroundOpen(linkedSchematic);
-                            }}
-                            style={{ 
-                                color: 'var(--accent-blue)', 
-                                cursor: 'pointer', 
-                                textDecoration: 'underline',
-                                fontWeight: '500'
-                            }}
-                        >
-                            {text} <i className="fa-solid fa-arrow-up-right-from-square" style={{fontSize: '0.7em', marginLeft: '4px'}}></i>
-                        </span>
-                    );
-                }
-                return text;
-            };
+            const parsedDisplay = (
+                <IngredientDisplay 
+                    raw={ingredientName} 
+                    indexData={indexData} 
+                    onBackgroundOpen={onBackgroundOpen} 
+                />
+            );
 
             switch (data.slot_type) {
                 case 0:
@@ -120,7 +214,7 @@ const SchematicView = ({
                     displayString = (
                         <span>
                             {data.quantity} {data.quantity > 1 ? 'identical ' : ''}
-                            {wrapLink(ingredientName)}
+                            {parsedDisplay}
                         </span>
                     );
                     if (data.quantity > 1) tooltip = "Identical means all components in this slot must share the same serial number.";
@@ -129,7 +223,7 @@ const SchematicView = ({
                     displayString = (
                         <span>
                             {data.quantity} {data.quantity > 1 ? 'similar ' : ''}
-                            {wrapLink(ingredientName)}
+                            {parsedDisplay}
                         </span>
                     );
                     if (data.quantity > 1) tooltip = "Similar means all components in this slot must share the same creator.";
@@ -138,7 +232,7 @@ const SchematicView = ({
                     displayString = (
                         <span>
                             (Optional) {data.quantity} {data.quantity > 1 ? 'identical ' : ''}
-                            {wrapLink(ingredientName)}
+                            {parsedDisplay}
                         </span>
                     );
                     if (data.quantity > 1) tooltip = "Identical means all components in this slot must share the same serial number.";
@@ -147,13 +241,13 @@ const SchematicView = ({
                     displayString = (
                         <span>
                             (Optional) {data.quantity} {data.quantity > 1 ? 'similar ' : ''}
-                            {wrapLink(ingredientName)}
+                            {parsedDisplay}
                         </span>
                     );
                     if (data.quantity > 1) tooltip = "Similar means all components in this slot must share the same creator.";
                     break;
                 default:
-                    displayString = <span>{data.quantity} {wrapLink(ingredientName)}</span>;
+                    displayString = <span>{data.quantity} {parsedDisplay}</span>;
             }
 
             return (
