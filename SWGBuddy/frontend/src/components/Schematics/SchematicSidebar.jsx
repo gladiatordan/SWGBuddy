@@ -166,7 +166,7 @@ const SchematicSidebar = ({ selectedId, onSelect, onAddClick }) => {
                 )}
 
                 {/* Admin Only: Add Schematic */}
-                {hasPermission('ADMIN') && (
+                {hasPermission('EDITOR') && (
                     <button 
                         className="btn-primary" 
                         onClick={onAddClick} 
