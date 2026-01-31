@@ -267,10 +267,10 @@ const SchematicView = ({
             </div>
 
             <div className="specs-container">
-                <div className="specs-left-column" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+                <div className="specs-left-column" style={{ display: 'grid', gap: '15px', width: '100%' }}>
                     
                     {/* Specifications */}
-                    <div className="info-table-wrapper">
+                    <div className="info-table-wrapper" style={{width: '40%'}}>
                         <div className="table-header">Specifications</div>
                         <table className="schematic-info-table">
                             <tbody>
@@ -322,7 +322,7 @@ const SchematicView = ({
                     </div>
 
                     {/* Ingredients Summary */}
-                    <div className="info-table-wrapper">
+                    <div className="info-table-wrapper" style={{width: '40%'}}>
                         <div className="table-header">Ingredients</div>
                         <table className="schematic-info-table">
                             <tbody>
@@ -330,33 +330,32 @@ const SchematicView = ({
                             </tbody>
                         </table>
                     </div>
+				</div>
 
-                    {/* Experimental Categories */}
-                    <div className="info-table-wrapper" style={{gridColumn: '1 / -1', width: '46.5%'}}>
-                        <div className="table-header">Experimental Categories</div>
-                        <div className="exp-cat-list">
-                            {details.experimental_categories && details.experimental_categories.length > 0 ? (
-                                details.experimental_categories.map((cat) => (
-                                    <div key={cat.id} className={`exp-cat-item ${cat.selected ? 'selected' : 'dimmed'}`}>
-                                        <div className="exp-cat-header">
-                                            <span className="exp-cat-label">{cat.label}</span>
-                                            <label className="toggle-switch">
-                                                <input type="checkbox" checked={cat.selected} onChange={() => onToggleCategory(cat.id)} />
-                                                <span className="slider round"></span>
-                                            </label>
-                                        </div>
-                                        <div className="exp-cat-weights">
-                                            {formatWeights(cat.weights)}
-                                        </div>
-                                    </div>
-                                ))
-                            ) : (
-                                <div className="empty-exp">No experiments available</div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-                <div style={{flex: '0 0 50%'}}></div>
+				{/* Experimental Categories */}
+				<div className="info-table-wrapper" style={{width: '100%'}}>
+					<div className="table-header">Experimental Categories</div>
+					<div className="exp-cat-list">
+						{details.experimental_categories && details.experimental_categories.length > 0 ? (
+							details.experimental_categories.map((cat) => (
+								<div key={cat.id} className={`exp-cat-item ${cat.selected ? 'selected' : 'dimmed'}`}>
+									<div className="exp-cat-header">
+										<span className="exp-cat-label">{cat.label}</span>
+										<label className="toggle-switch">
+											<input type="checkbox" checked={cat.selected} onChange={() => onToggleCategory(cat.id)} />
+											<span className="slider round"></span>
+										</label>
+									</div>
+									<div className="exp-cat-weights">
+										{formatWeights(cat.weights)}
+									</div>
+								</div>
+							))
+						) : (
+							<div className="empty-exp">No experiments available</div>
+						)}
+					</div>
+				</div>
             </div>
 
             {/* Resource Ranking Tables Section */}
