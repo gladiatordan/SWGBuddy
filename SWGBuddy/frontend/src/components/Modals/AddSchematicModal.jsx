@@ -109,7 +109,7 @@ const EXP_CATEGORY_OPTIONS = [
     "Detonator Craftsmanship", "Customized Fuse System", "Experimental Damage", "Experimental Duration", "Experimental Ease of Use", "Experimental Efficiency",
     "Experimental Elemental Damage", "Enhanced Core Volatility", "Cryo Core Experimentation", "Experimental Intelligence", "Experimental Mental Profile",
     "Experimental Physique Profile", "Proton Module", "Experimental Prowess Profile", "Experimental Psychological Profile", "Experimental Range", "Experimental Storage",
-    "Thermal Core", "Experimental Primary Agent", "Experimental Secondary Agent", "Experimental Residual"
+    "Thermal Core", "Experimental Primary Agent", "Experimental Secondary Agent", "Experimental Residual", "Condition"
 ];
 
 const STAT_OPTIONS = Object.values(STAT_MAPPING);
@@ -190,7 +190,7 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
         
         if (field === 'name') {
             // [a-z][A-Z] only, Title Case
-            const sanitized = val.replace(/[^a-zA-Z\s]/g, '');
+            const sanitized = val.replace(/[^a-zA-Z\s-]/g, '');
             newSlots[idx][field] = sanitized.replace(/\b\w/g, c => c.toUpperCase());
         } else if (field === 'type') {
             let intVal = parseInt(val, 10);
@@ -209,10 +209,10 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
         } else if (field === 'ingredient') {
              // If type > 0, sanitize text input [a-zA-Z|]
             if (newSlots[idx].type > 0) {
-                 const sanitized = val.replace(/[^a-zA-Z|]/g, '');
+                //  const sanitized = val.replace(/[^a-zA-Z|]/g, '');
                  // Split by |, title case each part
-                 const parts = sanitized.split('|').map(p => p.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()));
-                 newSlots[idx][field] = parts.join('|');
+                 const titleCased = val.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+                 newSlots[idx][field] = titleCased;
             } else {
                 newSlots[idx][field] = val; // Taxonomy value
             }
@@ -291,27 +291,38 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
         setLoading(true);
         setStatusMsg(null);
 
-        // Basic Validation
         if (!formData.name) {
              setStatusMsg({ type: 'error', text: "Schematic Name is required." });
              setLoading(false);
              return;
         }
-        // ... Add more if needed
 
-        // Prepare Payload
-        // Ensure weights are floats
+        // Validate Category
+        if (!formData.category || formData.category === 'None') {
+             setStatusMsg({ type: 'error', text: "Category is required." });
+             setLoading(false);
+             return;
+        }
+
+        // 1. Clean up Slot Ingredients (Trim spaces around pipes)
+        const cleanedSlots = formData.slots.map(slot => {
+            let ing = slot.ingredient;
+            if (slot.type > 0 && ing) {
+                // Split by |, trim each part, remove empty parts, join by |
+                ing = ing.split('|').map(s => s.trim()).filter(s => s).join('|');
+            }
+            return { ...slot, ingredient: ing };
+        });
+
+        // 2. Ensure weights are floats
         const finalExpWeights = formData.experimentWeights.map(cat => ({
             ...cat,
             weights: cat.weights.map(w => ({ ...w, value: parseFloat(w.value) || 0 }))
         }));
 
-        const payload = { ...formData, experimentWeights: finalExpWeights };
+        const payload = { ...formData, slots: cleanedSlots, experimentWeights: finalExpWeights };
         console.log("Saving Schematic:", payload);
         
-        // Mock Save for now as requested "just build the Modal, then... tie it into logic"
-        // But prompt says "AddSchematicModal.jsx... functionality to the Add Schematic button"
-        // I'll assume passing the data to onSave is enough for this step.
         try {
              await onSave(payload);
              setStatusMsg({ type: 'success', text: 'Schematic saved!' });
@@ -468,6 +479,7 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
                                              <span className="wp-prefix">Type</span>
                                              <input 
                                                 type="number" 
+												className="stat-input-no-spinner"
                                                 value={slot.type}
                                                 onChange={e => handleSlotChange(idx, 'type', e.target.value)}
                                                 min="0" max="4"
@@ -477,7 +489,7 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
                                         {slot.type === 0 ? (
                                              <div style={{ flex: 1, minWidth: 0 }}>
                                                 <TaxonomySearch 
-                                                    options={cache?.valid_resources || {}} 
+                                                    options={cache?.filter_list || {}} 
                                                     value={slot.ingredient}
                                                     onChange={val => handleSlotChange(idx, 'ingredient', val)}
                                                     placeholder="Resource Type"
@@ -499,6 +511,7 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
                                              <span className="wp-prefix">Qty</span>
                                              <input 
                                                 type="number" 
+												className="stat-input-no-spinner"
                                                 value={slot.quantity}
                                                 onChange={e => handleSlotChange(idx, 'quantity', e.target.value)}
                                                 placeholder="Qty"
@@ -553,6 +566,7 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
                                                     <input 
                                                         type="number" 
                                                         value={w.value}
+														className="stat-input-no-spinner"
                                                         onChange={e => updateStatWeight(catIdx, wIdx, 'value', e.target.value)}
                                                         step="0.01" min="0" max="1"
                                                     />
