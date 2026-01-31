@@ -317,7 +317,15 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
         // 2. Ensure weights are floats
         const finalExpWeights = formData.experimentWeights.map(cat => ({
             ...cat,
-            weights: cat.weights.map(w => ({ ...w, value: (parseFloat(w.value) || 0) / 100 }))
+            weights: cat.weights.map(w => {
+                // Find key where STAT_MAPPING[key] == w.stat
+                const statKey = Object.keys(STAT_MAPPING).find(key => STAT_MAPPING[key] === w.stat) || w.stat;
+                
+                return { 
+                    stat: statKey, 
+                    value: (parseFloat(w.value) || 0) / 100 
+                };
+            })
         }));
 
         const payload = { ...formData, slots: cleanedSlots, experimentWeights: finalExpWeights };
