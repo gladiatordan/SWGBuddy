@@ -196,7 +196,8 @@ class ValidationService(Core):
 
 		if is_new:
 			name = data.get('name')
-			if self._resource_exists(name, server_id):
+			# only enforce uniqueness on non-cuemu servers
+			if server_id != "cuemu" and self._resource_exists(name, server_id):
 				raise ValueError(f"Error: {name} already exists for {server_id}")
 			
 			if data.get('mark_types_inactive'):

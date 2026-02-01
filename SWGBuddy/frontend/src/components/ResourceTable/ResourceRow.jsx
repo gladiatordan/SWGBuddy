@@ -67,7 +67,7 @@ const ResourceRow = ({ resource, isEditor, onToggleStatus, onTogglePlanet, onCli
                             }}
                             style={{ cursor: isEditor ? 'pointer' : 'default' }}
                         >
-                            {p.charAt(0)}
+                            {p.charAt(0).toUpperCase()}
                         </span>
                     ))}
                 </div>

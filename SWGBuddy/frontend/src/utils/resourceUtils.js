@@ -186,22 +186,22 @@ export const formatAge = (dateString) => {
     // Years (approx 365 days)
     if (diffDay >= 365) {
         const years = Math.floor(diffDay / 365);
-        return `${years} year${years > 1 ? 's' : ''}`;
+        return `${years}Y`;
     }
     
     // Months (approx 30 days)
     if (diffDay >= 30) {
         const months = Math.floor(diffDay / 30);
-        return `${months} month${months > 1 ? 's' : ''}`;
+        return `${months}M`;
     }
     
     // Days
     if (diffDay >= 1) {
         // e.g. 5 days 4 hours
         const remainingHours = diffHour % 24;
-        return `${diffDay} day${diffDay > 1 ? 's' : ''} ${remainingHours} hour${remainingHours !== 1 ? 's' : ''}`;
+        return `${diffDay}D ${remainingHours}H`;
     }
     
     // Hours
-    return `${diffHour} hour${diffHour !== 1 ? 's' : ''}`;
+    return `${diffHour}H`;
 };

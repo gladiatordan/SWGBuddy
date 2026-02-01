@@ -209,7 +209,10 @@
     transition: background 0.2s;
 }
 
-.dropdown-item:hover { background: #1a1f26; }
+.dropdown-item:hover,
+.dropdown-item.active { 
+	background: #1a1f26; 
+	color: var(--accent-blue);}
 
 .toggle-icon {
     display: inline-block;
