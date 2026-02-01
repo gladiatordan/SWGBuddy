@@ -112,75 +112,75 @@ def send_command(action, payload, server_id='cuemu', timeout=10):
 	finally:
 		response_futures.pop(cid, None)
 
-@app.route('/')
-def index():
-	# 1. Parse Query Params
-	page = request.args.get('page', 'resources')
-	server_id = request.args.get('server', 'cuemu') # Default to cuemu if not specified
+# @app.route('/')
+# def index():
+# 	# 1. Parse Query Params
+# 	page = request.args.get('page', 'resources')
+# 	server_id = request.args.get('server', 'cuemu') # Default to cuemu if not specified
 
-	# 2. Define Default Metadata
-	og_title = "SWGBuddy Resource Tracker"
-	og_desc = "Track, share, and find Star Wars Galaxies resources."
+# 	# 2. Define Default Metadata
+# 	og_title = "SWGBuddy Resource Tracker"
+# 	og_desc = "Track, share, and find Star Wars Galaxies resources."
 
-	# 2. Router Logic for Metadata
-	if page == 'resources':
-		resource_name = request.args.get('resource')
-		if resource_name:
-			try:
-				with DatabaseContext.cursor() as cur:
-					# Query resource details for the embed
-					sql = """
-						SELECT rl.name, rl.res_weight_rating, rc.label as type_label, gs.name as server_name
-						FROM resource_log rl
-						JOIN resource_class rc ON rl.class_tree = rc.class_tree
-						JOIN game_servers gs ON rl.server_id = gs.id
-						WHERE rl.server_id = %s AND LOWER(rl.name) = LOWER(%s)
-						LIMIT 1
-					"""
-					cur.execute(sql, (server_id, resource_name))
-					row = cur.fetchone()
+# 	# 2. Router Logic for Metadata
+# 	if page == 'resources':
+# 		resource_name = request.args.get('resource')
+# 		if resource_name:
+# 			try:
+# 				with DatabaseContext.cursor() as cur:
+# 					# Query resource details for the embed
+# 					sql = """
+# 						SELECT rl.name, rl.res_weight_rating, rc.label as type_label, gs.name as server_name
+# 						FROM resource_log rl
+# 						JOIN resource_class rc ON rl.class_tree = rc.class_tree
+# 						JOIN game_servers gs ON rl.server_id = gs.id
+# 						WHERE rl.server_id = %s AND LOWER(rl.name) = LOWER(%s)
+# 						LIMIT 1
+# 					"""
+# 					cur.execute(sql, (server_id, resource_name))
+# 					row = cur.fetchone()
 					
-					if row:
-						# Format: "Calypsa (Corn) - 98.5%"
-						pct = int(row['res_weight_rating'] * 1000) / 10
-						og_title = f"{row['name']} ({row['type_label']}) - {pct}%"
-						og_desc = f"Server: {row['server_name']} | Type: {row['type_label']}"
-			except Exception as e:
-				print(f"Metadata injection error: {e}")
+# 					if row:
+# 						# Format: "Calypsa (Corn) - 98.5%"
+# 						pct = int(row['res_weight_rating'] * 1000) / 10
+# 						og_title = f"{row['name']} ({row['type_label']}) - {pct}%"
+# 						og_desc = f"Server: {row['server_name']} | Type: {row['type_label']}"
+# 			except Exception as e:
+# 				print(f"Metadata injection error: {e}")
 			
-	elif page == 'schematics':
-		schematic_id = request.args.get('schematic_id') # Example param
-		if schematic_id:
-			# Placeholder for Schematic Logic
-			# row = query_schematic(schematic_id)
-			# og_title = f"Schematic: {row['name']}"
-			og_title = "SWG Schematic"
-			og_desc = "Schematic details coming soon."
+# 	elif page == 'schematics':
+# 		schematic_id = request.args.get('schematic_id') # Example param
+# 		if schematic_id:
+# 			# Placeholder for Schematic Logic
+# 			# row = query_schematic(schematic_id)
+# 			# og_title = f"Schematic: {row['name']}"
+# 			og_title = "SWG Schematic"
+# 			og_desc = "Schematic details coming soon."
 	
 
-	# 4. Inject into HTML
-	# We manually read and replace to avoid React/Jinja conflicts
-	try:
-		# Determine path to templates/index.html
-		template_folder = app.template_folder or 'templates'
-		template_path = os.path.join(template_folder, 'index.html')
+# 	# 4. Inject into HTML
+# 	# We manually read and replace to avoid React/Jinja conflicts
+# 	try:
+# 		# Determine path to templates/index.html
+# 		template_folder = app.template_folder or 'templates'
+# 		template_path = os.path.join(template_folder, 'index.html')
 
-		# If running in dev without build, this might fail, fallback to render_template
-		if not os.path.exists(template_path):
-				return render_template("index.html")
+# 		# If running in dev without build, this might fail, fallback to render_template
+# 		if not os.path.exists(template_path):
+# 				return render_template("index.html")
 
-		with open(template_path, 'r', encoding='utf-8') as f:
-			html_content = f.read()
+# 		with open(template_path, 'r', encoding='utf-8') as f:
+# 			html_content = f.read()
 
-		# Replace Placeholders
-		html_content = html_content.replace('__OG_TITLE__', str(og_title))
-		html_content = html_content.replace('__OG_DESCRIPTION__', str(og_desc))
+# 		# Replace Placeholders
+# 		html_content = html_content.replace('__OG_TITLE__', str(og_title))
+# 		html_content = html_content.replace('__OG_DESCRIPTION__', str(og_desc))
 
-		return html_content
+# 		return html_content
 
-	except Exception as e:
-		print(f"Error serving index with injection: {e}")
-		return render_template("index.html")
+# 	except Exception as e:
+# 		print(f"Error serving index with injection: {e}")
+# 		return render_template("index.html")
 
 # --- AUTHENTICATION ---
 
@@ -729,17 +729,80 @@ def recalc_rankings():
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
-def serve(path):
-    # 1. Try to serve a static file if it exists (e.g., assets/index.css)
-    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
-        return send_from_directory(app.static_folder, path)
-    
-    # 2. If it's an API route that fell through, return 404 (optional, but good practice)
+def serve_spa(path):
+    # 1. API Protection: Don't serve HTML for API 404s
     if path.startswith('api/'):
         return jsonify(error="Not Found"), 404
-        
-    # 3. Otherwise, serve index.html for React Router to handle
-    return send_from_directory(app.static_folder, 'index.html')
+
+    # 2. Static File Serving
+    # Check if the path exists in the static folder (e.g. assets/css/main.css)
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+
+    # 3. Metadata Logic (SPA Injection)
+    # We determining context based on PATH first, then query params (Legacy)
+    og_title = "SWGBuddy Resource Tracker"
+    og_desc = "Track, share, and find Star Wars Galaxies resources."
+    
+    # Check Path (Modern React Routing)
+    is_resource_page = path == 'resources'
+    is_schematic_page = path == 'schematics'
+    
+    # Check Legacy Query Params (Backwards Compatibility)
+    if not is_resource_page and request.args.get('page') == 'resources':
+        is_resource_page = True
+    if not is_schematic_page and request.args.get('page') == 'schematics':
+        is_schematic_page = True
+
+    if is_resource_page:
+        resource_name = request.args.get('resource')
+        if resource_name:
+            try:
+                server_id = request.args.get('server', 'cuemu')
+                with DatabaseContext.cursor() as cur:
+                    sql = """
+                        SELECT rl.name, rl.res_weight_rating, rc.label as type_label, gs.name as server_name
+                        FROM resource_log rl
+                        JOIN resource_class rc ON rl.class_tree = rc.class_tree
+                        JOIN game_servers gs ON rl.server_id = gs.id
+                        WHERE rl.server_id = %s AND LOWER(rl.name) = LOWER(%s)
+                        LIMIT 1
+                    """
+                    cur.execute(sql, (server_id, resource_name))
+                    row = cur.fetchone()
+                    if row:
+                        pct = int(row['res_weight_rating'] * 1000) / 10
+                        og_title = f"{row['name']} ({row['type_label']}) - {pct}%"
+                        og_desc = f"Server: {row['server_name']} | Type: {row['type_label']}"
+            except Exception as e:
+                print(f"Metadata injection error: {e}")
+
+    elif is_schematic_page:
+        # Placeholder for Schematic Metadata
+        og_title = "SWG Schematics"
+        og_desc = "Browse crafting schematics."
+
+    # 4. Serve index.html with Injection
+    try:
+        # Always look in the template folder for the entry point
+        template_folder = app.template_folder or 'templates'
+        template_path = os.path.join(template_folder, 'index.html')
+
+        # Fallback to render_template if direct file read fails
+        if not os.path.exists(template_path):
+            return render_template("index.html")
+
+        with open(template_path, 'r', encoding='utf-8') as f:
+            html_content = f.read()
+
+        html_content = html_content.replace('__OG_TITLE__', str(og_title))
+        html_content = html_content.replace('__OG_DESCRIPTION__', str(og_desc))
+
+        return html_content
+
+    except Exception as e:
+        print(f"Error serving SPA: {e}")
+        return render_template("index.html")
 
 if __name__ == '__main__':
 	app.run(debug=True, port=5000)
