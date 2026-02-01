@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import API from '../../services/api';
 import { useServer } from '../../contexts/ServerContext';
+import { useAuth } from '../../contexts/AuthContext';
 import SchematicSidebar from './SchematicSidebar';
 import { useResources } from '../../hooks/useResources';
 import { useSchematicRanker } from '../../hooks/useSchematicRanker';
@@ -13,9 +14,10 @@ import SchematicView from './SchematicView';
 import ResourceModal from '../Modals/ResourceModal';
 
 const SchematicContainer = () => {
-    // 1. ADDED: setSelectedServer to allow URL to control server context
     const { selectedServer, setSelectedServer } = useServer();
-    const { resources: allResources, cache, actions } = useResources();
+    const { hasPermission } = useAuth(); // 2. Get Permission Helper
+    // Destructure 'loading' from useResources so we know when it's safe to check IDs
+    const { resources: allResources, cache, actions, loading: resourcesLoading } = useResources();
     const [searchParams, setSearchParams] = useSearchParams();
     
     // --- State Management ---
@@ -123,20 +125,55 @@ const SchematicContainer = () => {
 
     // 3. Handle URL Routing (Modals)
     useEffect(() => {
-        const modalFromUrl = searchParams.get('modal');
+		// 1. Wait for resources to be ready
+		if (resourcesLoading) return;
 
-        if (modalFromUrl === 'add-schematic') {
-            if (!isAddModalOpen) setIsAddModalOpen(true);
-        } else if (modalFromUrl === 'resource') {
-            const rId = searchParams.get('resourceId');
-            if (rId && !isModalOpen) {
-                if (selectedResource) setIsModalOpen(true);
-            }
-        } else {
-            if (isAddModalOpen) setIsAddModalOpen(false);
-            if (isModalOpen) setIsModalOpen(false);
-        }
-    }, [searchParams, selectedResource]); 
+		const modalParam = searchParams.get('modal');
+		const resourceIdParam = searchParams.get('resourceId');
+		const schematicIdParam = searchParams.get('id');
+
+		// Handle "Add Schematic" Modal
+		if (modalParam === 'add-schematic') {
+			if (hasPermission('EDITOR')) {
+				if (!isAddModalOpen) setIsAddModalOpen(true);
+			} else {
+				// Strip if no permission
+				updateParams({ modal: null });
+			}
+			return;
+		}
+
+		// Handle "Resource" Modal
+		if (modalParam === 'resource' && resourceIdParam) {
+			// Requirement: Must have an active schematic ID in the link
+			if (!schematicIdParam) {
+				console.warn("[Routing] Resource modal requested without schematic context. Stripping.");
+				updateParams({ modal: null, resourceId: null });
+				return;
+			}
+
+			// Perform lookup if selectedResource isn't set yet (e.g., on deep link refresh)
+			const targetResource = allResources.find(r => String(r.id) === String(resourceIdParam));
+			
+			if (targetResource) {
+				setSelectedResource(targetResource);
+				if (!isModalOpen) setIsModalOpen(true);
+			} else {
+				// Invalid resource ID: Strip from link
+				updateParams({ modal: null, resourceId: null });
+			}
+			return;
+		}
+
+		// Close modals if no relevant parameters are present
+		if (!modalParam) {
+			if (isAddModalOpen) setIsAddModalOpen(false);
+			if (isModalOpen) {
+				setIsModalOpen(false);
+				setSelectedResource(null);
+			}
+		}
+	}, [searchParams, resourcesLoading, allResources, hasPermission, isAddModalOpen, isModalOpen]); 
 
     // 4. Handle URL Routing - SCHEMATICS
     // Connects URL ID -> Tabs
