@@ -490,9 +490,9 @@ const ResourceModal = ({ isOpen, onClose, resource, onSave }) => {
 
     const isEditable = mode !== 'view';
     const canEdit = hasPermission('EDITOR'); 
-
+	const displayName = formData.name ? formData.name.charAt(0).toUpperCase() + formData.name.slice(1) : formData.name;
     // Change Title based on mode
-    let modalTitle = mode === 'add' ? "Add Resource" : (mode === 'edit' ? `Edit Details - ${formData.name}` : `Resource Details - ${formData.name}`);
+    let modalTitle = mode === 'add' ? "Add Resource" : (mode === 'edit' ? `Edit Details - ${displayName}` : `Resource Details - ${displayName}`);
 
     return (
         <div className="modal">

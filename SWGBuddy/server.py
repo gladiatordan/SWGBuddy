@@ -727,5 +727,19 @@ def recalc_rankings():
     
     return jsonify({"error": resp.get('error', 'Unknown error')}), 500
 
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    # 1. Try to serve a static file if it exists (e.g., assets/index.css)
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    
+    # 2. If it's an API route that fell through, return 404 (optional, but good practice)
+    if path.startswith('api/'):
+        return jsonify(error="Not Found"), 404
+        
+    # 3. Otherwise, serve index.html for React Router to handle
+    return send_from_directory(app.static_folder, 'index.html')
+
 if __name__ == '__main__':
 	app.run(debug=True, port=5000)
