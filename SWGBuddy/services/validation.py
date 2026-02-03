@@ -84,6 +84,8 @@ class ValidationService(Core):
 
 			if required_power > 0:
 				is_allowed, user_role = self._check_permission(user_ctx, server_id, required_power)
+				self.info(f"Permission check for action '{action}' by user '{user_ctx.get('username')}' (role: {user_role}): {'ALLOWED' if is_allowed else 'DENIED'}")
+				self.info(f"Required power for action '{action}': {required_power}")
 				if not is_allowed:
 					raise PermissionError(f"Insufficient Permissions.")
 
