@@ -360,6 +360,7 @@ class ValidationService(Core):
 		
 		# Simple heuristic mapping based on XP Type
 		xp_type = data.get('xpType', '')
+		profession = data.get('profession', '')
 		category = data.get('category', '')
 		
 		# Format slots
@@ -382,7 +383,7 @@ class ValidationService(Core):
 		json_obj = {
 			"id": schematic_id,
 			"custom_object_name": name, # Kept original casing for display
-			"base_profession": "Unknown", # Modal didn't ask for profession either! I'll infer or leave blank.
+			"base_profession": profession,
 			"category": category,
 			"certification": data.get('certification', ''),
 			"complexity": int(data.get('complexity', 0)),

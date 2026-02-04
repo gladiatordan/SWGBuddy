@@ -29,6 +29,11 @@ const CATEGORY_OPTIONS = [
 	"Weapon"
 ]
 
+const PROFESSION_OPTIONS = [
+	"None", "Armorsmith", "Artisan", "Bio-Engineer", "Chef", "Dancer", "Droid Engineer", "Entertainer", "Medic", "Musician", "Ranger", "Smuggler",
+	"Tailor", "Weaponsmith", "Architect", "Shipwright"
+];
+
 const CERTIFICATION_OPTIONS = [
     "None", "Novice Entertainer", "Master Entertainer", "Entertainer Item Use I", "Entertainer Item Use II", "Entertainer Item Use III", "Entertainer Item Use IV",
     "Novice Scout", "Trapping I: Makeshift Design", "Trapping II: Refined Design", "Trapping III: Martial Design", "Trapping IV: Elite Martial Design",
@@ -129,6 +134,7 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
     const [formData, setFormData] = useState({
         name: '',
 		category: '',
+		profession: '',
         certification: '',
         assemblySkill: '',
         experimentSkill: '',
@@ -379,6 +385,16 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
 								value={formData.category}
 								onChange={val => setFormData({...formData, category: val})}
 								placeholder="Select Category..."
+							/>
+						</div>
+
+						<div className="form-group">
+							<label>Profession</label>
+							<TaxonomySearch
+								options={PROFESSION_OPTIONS}
+								value={formData.profession}
+								onChange={val => setFormData({...formData, profession: val})}
+								placeholder="Select Profession..."
 							/>
 						</div>
 
