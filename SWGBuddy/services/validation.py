@@ -150,6 +150,19 @@ class ValidationService(Core):
 						"schematic": schematic_data,
 						"server_id": server_id
 					})
+
+			elif action == "update_schematic":
+				schematic_data = self._handle_update_schematic(payload, server_id, user_ctx)
+				self._log_command(server_id, user_ctx, action, payload)
+				self.info(f"User {user_ctx.get('username')} updated schematic: {payload.get('name')}")
+				
+				# Push to Ranking Service
+				if self.ranking_queue:
+					self.ranking_queue.put({
+						"action": "rank_schematic",
+						"schematic": schematic_data,
+						"server_id": server_id
+					})
 			
 			elif action == "recalculate_rankings":
 				# Forward to Ranking Service
@@ -349,6 +362,22 @@ class ValidationService(Core):
 			data['res_weight_rating'] = round(sum(valid_ratings) / len(valid_ratings), 3)
 		else:
 			data['res_weight_rating'] = 0.0
+
+	def _handle_update_schematic(self, data, server_id, user_ctx):
+		# For simplicity, we reuse the add schematic logic but ensure the file exists first
+		schematic_id = data.get('id')
+		if not schematic_id:
+			raise ValueError("Schematic ID is required for update.")
+
+		# Check if file exists
+		root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+		category = data.get('category', '')
+		file_path = os.path.join(root_dir, 'assets', 'schematics', server_id, category.lower().replace(" ", "_"), f"{schematic_id}.json")
+		if not os.path.isfile(file_path):
+			raise ValueError(f"Schematic with ID '{schematic_id}' does not exist for update.")
+
+		# Proceed to overwrite using add logic
+		return self._handle_add_schematic(data, server_id, user_ctx)
 	
 	def _handle_add_schematic(self, data, server_id, user_ctx):
 		# 1. Input Sanitization & Structuring

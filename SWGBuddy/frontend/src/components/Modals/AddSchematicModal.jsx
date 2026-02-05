@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useServer } from '../../contexts/ServerContext';
 import { useResources } from '../../hooks/useResources';
 import TaxonomySearch from '../Common/TaxonomySearch';
@@ -6,34 +6,15 @@ import { STAT_MAPPING } from '../../utils/resourceUtils';
 
 // --- Hardcoded Options ---
 const CATEGORY_OPTIONS = [
-	"None",
-	"Creatures",
-	"Armor",
-	"Chemical",
-	"Clothing",
-	"Droid",
-	"Food",
-	"Furniture",
-	"Generic Item",
-	"Genetics",
-	"Installation",
-	"Lightsaber",
-	"Droid Engineer",
-	"Tailor",
-	"Misc",
-	"Mission",
-	"Tissues",
-	"Ship Tools",
-	"Starship Components",
-	"Vehicle",
-	"Weapon"
-]
+	"None", "Creatures", "Armor", "Chemical", "Clothing", "Droid", "Food", "Furniture", "Generic Item", "Genetics", "Installation", "Lightsaber", "Droid Engineer", "Tailor", "Misc", "Mission", "Tissues", "Ship Tools", "Starship Components", "Vehicle", "Weapon"
+];
 
 const PROFESSION_OPTIONS = [
 	"None", "Armorsmith", "Artisan", "Bio-Engineer", "Chef", "Dancer", "Droid Engineer", "Entertainer", "Medic", "Musician", "Ranger", "Smuggler",
 	"Tailor", "Weaponsmith", "Architect", "Shipwright"
 ];
 
+// ... (Keep CERTIFICATION_OPTIONS, ASSEMBLY_OPTIONS, etc. exactly as they were in original file) ...
 const CERTIFICATION_OPTIONS = [
     "None", "Novice Entertainer", "Master Entertainer", "Entertainer Item Use I", "Entertainer Item Use II", "Entertainer Item Use III", "Entertainer Item Use IV",
     "Novice Scout", "Trapping I: Makeshift Design", "Trapping II: Refined Design", "Trapping III: Martial Design", "Trapping IV: Elite Martial Design",
@@ -117,6 +98,7 @@ const EXP_CATEGORY_OPTIONS = [
     "Thermal Core", "Experimental Primary Agent", "Experimental Secondary Agent", "Experimental Residual", "Condition"
 ];
 
+
 const STAT_OPTIONS = Object.values(STAT_MAPPING);
 
 const SLOT_TYPE_TOOLTIP = 
@@ -126,12 +108,12 @@ const SLOT_TYPE_TOOLTIP =
     "3 - Optional Identical\n" +
     "4 - Optional Similar";
 
-const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
+const AddSchematicModal = ({ isOpen, onClose, onSave, initialData }) => {
     const { selectedServer } = useServer();
     const { cache } = useResources(selectedServer);
 
-    // Form State
-    const [formData, setFormData] = useState({
+    // Default Blank State
+    const emptyState = {
         name: '',
 		category: '',
 		profession: '',
@@ -144,10 +126,70 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
         complexity: '',
         slots: [], // { name, type, ingredient, quantity }
         experimentWeights: [] // { category, weights: [{stat, value}] }
-    });
+    };
 
+    const [formData, setFormData] = useState(emptyState);
+    const [originalData, setOriginalData] = useState(null); // For Dirty Check
     const [loading, setLoading] = useState(false);
     const [statusMsg, setStatusMsg] = useState(null);
+
+    // --- Population Effect (Edit Mode) ---
+    useEffect(() => {
+        if (isOpen && initialData) {
+            // Transform 'details' (Backend Format) -> 'formData' (Frontend Form Format)
+            
+            // 1. Slots: Object { name: {type, qty, ing} } -> Array [{name, type, qty, ing}]
+            const mappedSlots = initialData.slots ? Object.entries(initialData.slots).map(([sName, sData]) => ({
+                name: sName,
+                type: sData.slot_type || 0,
+                quantity: sData.quantity || 0,
+                ingredient: sData.ingredient || ''
+            })) : [];
+
+            // 2. Weights: Array of Objects (with object weights) -> Array of Objects (with array weights)
+            // Backend: [{ label: "CatName", weights: { "OQ": 0.5, "SR": 0.5 } }]
+            // Form:    [{ category: "CatName", weights: [{ stat: "OQ", value: 50 }, { stat: "SR", value: 50 }] }]
+            const mappedWeights = initialData.experimental_categories ? initialData.experimental_categories.map(cat => ({
+                category: cat.label,
+                weights: cat.weights ? Object.entries(cat.weights).map(([st, val]) => ({
+                    stat: STAT_MAPPING[st] || st, // Map code to human readable if possible, or keep raw
+                    value: (val * 100).toFixed(0) // 0.5 -> 50
+                })) : []
+            })) : [];
+
+            const populated = {
+                id: initialData.id, // Important for Update
+                name: initialData.custom_object_name || '',
+                category: initialData.category || '',
+                profession: initialData.profession || '',
+                certification: initialData.certification || '',
+                assemblySkill: initialData.assembly_skill || '',
+                experimentSkill: initialData.experimentation_skill || '',
+                customizationSkill: initialData.customization_skill || '',
+                xpType: initialData.experience_type || '',
+                baseXp: initialData.experience || '',
+                complexity: initialData.complexity || '',
+                slots: mappedSlots,
+                experimentWeights: mappedWeights
+            };
+
+            setFormData(populated);
+            setOriginalData(populated);
+        } else if (isOpen) {
+            // Reset to empty on open if no initialData (Add Mode)
+            setFormData(emptyState);
+            setOriginalData(null);
+        }
+        setStatusMsg(null);
+    }, [isOpen, initialData]);
+
+    // --- Dirty Check Helper ---
+    const isDirty = useMemo(() => {
+        if (!initialData) return true; // Always dirty/saveable in Add Mode (if valid)
+        if (!originalData) return false;
+        return JSON.stringify(formData) !== JSON.stringify(originalData);
+    }, [formData, originalData, initialData]);
+
 
     // --- Helpers ---
     
@@ -156,9 +198,6 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
     };
 
     const handleNameChange = (val) => {
-        // Just enforce title case on what is typed? Or allow typing and format on blur?
-        // Prompt says "ensure every word is capitalized". Real-time formatting can be annoying if it messes with cursor.
-        // We will capitalize the first letter of every word as they type.
         const formatted = val.replace(/\b\w/g, c => c.toUpperCase());
         setFormData(prev => ({ ...prev, name: formatted }));
     };
@@ -195,14 +234,12 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
         const newSlots = [...formData.slots];
         
         if (field === 'name') {
-            // [a-z][A-Z] only, Title Case
             const sanitized = val.replace(/[^a-zA-Z\s-]/g, '');
             newSlots[idx][field] = sanitized.replace(/\b\w/g, c => c.toUpperCase());
         } else if (field === 'type') {
             let intVal = parseInt(val, 10);
             if (isNaN(intVal)) intVal = 0;
             newSlots[idx][field] = Math.max(0, Math.min(4, intVal));
-            // Reset ingredient if type changes between resource (0) and others
             newSlots[idx].ingredient = '';
         } else if (field === 'quantity') {
             if (val === '') newSlots[idx][field] = '';
@@ -213,14 +250,11 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
                 }
             }
         } else if (field === 'ingredient') {
-             // If type > 0, sanitize text input [a-zA-Z|]
             if (newSlots[idx].type > 0) {
-                //  const sanitized = val.replace(/[^a-zA-Z|]/g, '');
-                 // Split by |, title case each part
                  const titleCased = val.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
                  newSlots[idx][field] = titleCased;
             } else {
-                newSlots[idx][field] = val; // Taxonomy value
+                newSlots[idx][field] = val; 
             }
         }
 
@@ -267,17 +301,14 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
             if (val === '') {
                 newExp[catIdx].weights[weightIdx][field] = '';
             } else {
-				// Allow valid starting chars for decimals
 				if (val === '.' || val === '0.') {
 					newExp[catIdx].weights[weightIdx][field] = val;
 				} else {
 					let floatVal = parseFloat(val);
 					if (!isNaN(floatVal)) {
-						// Clamp 0-100 (Changed from 0-1)
 						if (floatVal > 100) floatVal = 100;
 						if (floatVal < 0) floatVal = 0;
 
-						// If input is within bounds, use raw string to preserve precision
 						if (parseFloat(val) >= 0 && parseFloat(val) <= 100) {
 							newExp[catIdx].weights[weightIdx][field] = val;
 						} else {
@@ -303,30 +334,26 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
              return;
         }
 
-        // Validate Category
         if (!formData.category || formData.category === 'None') {
              setStatusMsg({ type: 'error', text: "Category is required." });
              setLoading(false);
              return;
         }
 
-        // 1. Clean up Slot Ingredients (Trim spaces around pipes)
+        // 1. Clean up Slot Ingredients
         const cleanedSlots = formData.slots.map(slot => {
             let ing = slot.ingredient;
             if (slot.type > 0 && ing) {
-                // Split by |, trim each part, remove empty parts, join by |
                 ing = ing.split('|').map(s => s.trim()).filter(s => s).join('|');
             }
             return { ...slot, ingredient: ing };
         });
 
-        // 2. Ensure weights are floats
+        // 2. Ensure weights are floats (0.0 - 1.0)
         const finalExpWeights = formData.experimentWeights.map(cat => ({
             ...cat,
             weights: cat.weights.map(w => {
-                // Find key where STAT_MAPPING[key] == w.stat
                 const statKey = Object.keys(STAT_MAPPING).find(key => STAT_MAPPING[key] === w.stat) || w.stat;
-                
                 return { 
                     stat: statKey, 
                     value: (parseFloat(w.value) || 0) / 100 
@@ -335,11 +362,10 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
         }));
 
         const payload = { ...formData, slots: cleanedSlots, experimentWeights: finalExpWeights };
-        console.log("Saving Schematic:", payload);
         
         try {
              await onSave(payload);
-             setStatusMsg({ type: 'success', text: 'Schematic saved!' });
+             setStatusMsg({ type: 'success', text: initialData ? 'Schematic Updated!' : 'Schematic Saved!' });
              setTimeout(onClose, 1000);
         } catch(err) {
             setStatusMsg({ type: 'error', text: err.message || 'Error saving.' });
@@ -350,17 +376,19 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
 
     if (!isOpen) return null;
 
+    const isEditMode = !!initialData;
+
     return (
         <div className="modal">
             <div className="modal-content" style={{ width: '700px' }}>
                 <div className="modal-header">
-                    <h2>Add Schematic</h2>
+                    <h2>{isEditMode ? "Edit Schematic" : "Add Schematic"}</h2>
                     <button className="close-modal" onClick={onClose}>&times;</button>
                 </div>
 
                 <div className="modal-body">
                     <form onSubmit={handleSubmit}>
-                        
+                        {/* ... (Fields remain exactly the same as original) ... */}
                         {/* --- Metadata Section --- */}
                         <div className="form-group">
                             <label>Schematic Name</label>
@@ -621,7 +649,9 @@ const AddSchematicModal = ({ isOpen, onClose, onSave }) => {
 
                         <div className="modal-footer">
                             <div className="footer-actions">
-                                <button type="submit" className="btn-primary" disabled={loading}>Save Schematic</button>
+                                <button type="submit" className="btn-primary" disabled={loading || !isDirty}>
+                                    {isEditMode ? "Save Changes" : "Create Schematic"}
+                                </button>
                                 <button type="button" className="btn-danger" onClick={onClose}>Cancel</button>
                             </div>
                         </div>

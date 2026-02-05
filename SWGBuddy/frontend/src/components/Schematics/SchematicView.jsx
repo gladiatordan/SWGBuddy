@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { STAT_MAPPING } from '../../utils/resourceUtils';
 import ResourceRow from '../ResourceTable/ResourceRow';
 
+// ... (IngredientDisplay component remains unchanged) ...
 const IngredientDisplay = ({ raw, indexData, onBackgroundOpen }) => {
     const [showPopover, setShowPopover] = useState(false);
 
@@ -132,12 +133,14 @@ const SchematicView = ({
     hydratedRankings,
     indexData,
 	cache,
+    isEditor, // NEW Prop
+    onEdit,   // NEW Prop
     onToggleCategory,
     onSubTabChange,
     onResourceClick,
     onBackgroundOpen,
-    onTogglePlanet,   // Placeholder if needed for ResourceRow
-    onToggleStatus    // Placeholder if needed for ResourceRow
+    onTogglePlanet,   
+    onToggleStatus    
 }) => {
 
     // --- Helpers ---
@@ -356,11 +359,24 @@ const SchematicView = ({
 
     return (
         <div className="schematic-content">
-            <div className="schematic-header">
+            {/* Header Update: Added flex styling and Edit button */}
+            <div className="schematic-header" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                 <h2 className="schematic-title">{schematic.name}</h2>
+                {isEditor && (
+                    <button 
+                        className="btn-secondary" 
+                        onClick={() => onEdit(details)} 
+                        title="Edit Schematic"
+                        style={{ padding: '6px 12px', fontSize: '0.9rem' }}
+                    >
+                         <i className="fa-solid fa-pen-to-square" style={{ marginRight: '6px' }}></i>
+                         Edit Schematic
+                    </button>
+                )}
             </div>
 
             <div className="specs-container">
+                 {/* ... (Rest of component remains exactly unchanged) ... */}
                 <div className="specs-left-column" style={{ display: 'grid', gap: '15px', width: '100%' }}>
                     
                     {/* Specifications */}

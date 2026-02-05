@@ -24,6 +24,7 @@ const SchematicContainer = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedResource, setSelectedResource] = useState(null);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [editData, setEditData] = useState(null); // NEW: Holds data for Edit Mode
 
     const [indexData, setIndexData] = useState([]);
     const [isIndexLoading, setIsIndexLoading] = useState(true);
@@ -167,7 +168,10 @@ const SchematicContainer = () => {
 
 		// Close modals if no relevant parameters are present
 		if (!modalParam) {
-			if (isAddModalOpen) setIsAddModalOpen(false);
+			if (isAddModalOpen) {
+                setIsAddModalOpen(false);
+                setEditData(null); // Clear edit data on close
+            }
 			if (isModalOpen) {
 				setIsModalOpen(false);
 				setSelectedResource(null);
@@ -236,22 +240,25 @@ const SchematicContainer = () => {
         return () => clearInterval(intervalId);
     }, [selectedServer]);
 
-    // ADDED: Save Handler
-    const handleSaveSchematic = async (formData) => {
-        try {
-            await API.addSchematic(formData, selectedServer);
-            closeAddSchematicModal(); 
-        } catch (err) {
-            console.error("Failed to add schematic", err);
-            throw err;
-        }
-    };
-
-    // Helper to force sidebar refresh
+    // Added: Refresh handler for successful edits
     const [refreshKey, setRefreshKey] = useState(0);
+
     const handleSaveAndRefresh = async (data) => {
-        await handleSaveSchematic(data);
-        setRefreshKey(prev => prev + 1); 
+        // Determine if Add or Update
+        if (data.id) {
+            // Update
+            await API.updateSchematic(data, selectedServer);
+            // Refresh the specific tab
+            if (activeTab && activeTab.schematic && activeTab.schematic.id === data.id) {
+                await fetchDetailsForTab(activeTab.schematic, activeTab.id, false); // force loading state
+            }
+        } else {
+            // Add
+            await API.addSchematic(data, selectedServer);
+        }
+        
+        closeAddSchematicModal();
+        setRefreshKey(prev => prev + 1); // Refresh Sidebar
     };
 
     // --- TAB MANAGEMENT ---
@@ -397,6 +404,13 @@ const SchematicContainer = () => {
     // --- MODAL HANDLERS ---
     
     const openAddSchematicModal = () => {
+        setEditData(null); // Ensure clean slate for add
+        updateParams({ modal: 'add-schematic' });
+    };
+
+    // NEW: Open modal in Edit Mode
+    const openEditSchematicModal = (schematicData) => {
+        setEditData(schematicData); // Populate modal
         updateParams({ modal: 'add-schematic' });
     };
 
@@ -457,6 +471,8 @@ const SchematicContainer = () => {
                         hydratedRankings={hydratedRankings}
                         indexData={indexData}
                         cache={cache}
+                        isEditor={hasPermission('EDITOR')} // Pass permission
+                        onEdit={openEditSchematicModal}    // Pass handler
                         onToggleCategory={handleToggleCategory}
                         onSubTabChange={handleSubTabChange}
                         onResourceClick={handleResourceClick}
@@ -476,6 +492,7 @@ const SchematicContainer = () => {
                 isOpen={isAddModalOpen} 
                 onClose={closeAddSchematicModal} 
                 onSave={handleSaveAndRefresh}
+                initialData={editData} // Pass edit data (or null)
             />
         </section>
     );

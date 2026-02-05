@@ -706,6 +706,20 @@ def add_schematic():
     
     return jsonify({"error": resp.get('error', 'Unknown error')}), 500
 
+@app.route('/api/schematics/update', methods=['POST'])
+def update_schematic():
+	if 'discord_id' not in session: 
+		return jsonify({"error": "Unauthorized"}), 401
+	
+	data = request.json
+	server_id = data.get('server_id', 'cuemu')
+
+	# Send command to ValidationService
+	resp = send_command("update_schematic", data, server_id=server_id)
+	if resp['status'] == 'success':
+		return jsonify({"success": True})
+	return jsonify({"error": resp.get('error', 'Unknown error')}), 500
+
 @app.route('/api/admin/recalc-rankings', methods=['POST'])
 def recalc_rankings():
     if 'discord_id' not in session: 
