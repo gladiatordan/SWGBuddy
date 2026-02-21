@@ -9,7 +9,7 @@ import requests
 import secrets
 import urllib.parse
 from queue import Queue, Empty
-from flask import Flask, jsonify, request, render_template, redirect, url_for, session, current_app, abort
+from flask import Flask, jsonify, request, render_template, redirect, url_for, session, current_app, abort, send_from_directory
 from flask_cors import CORS
 from core.database import DatabaseContext
 
