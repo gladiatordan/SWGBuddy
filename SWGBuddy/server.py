@@ -246,7 +246,7 @@ def callback():
 		session['username'] = user_data['username']
 		session['avatar'] = user_data['avatar']
 
-		return redirect(url_for('index'))
+		return redirect('/')
 
 	except Exception as e:
 		print(f"Login Error: {e}")
@@ -255,7 +255,7 @@ def callback():
 @app.route('/logout')
 def logout():
 	session.clear()
-	return redirect(url_for('index'))
+	return redirect('/')
 
 @app.route('/api/me')
 def get_current_user():
